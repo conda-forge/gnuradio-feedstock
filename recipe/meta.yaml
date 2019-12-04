@@ -13,7 +13,7 @@ source:
     - 0001-python-Do-not-link-against-python-lib-for-building-a.patch
 
 build:
-  number: 0
+  number: 1
   skip: True  # [win and py2k]
 
 requirements:
@@ -108,7 +108,6 @@ outputs:
         - swig
         - volk
       run:
-        - boost-cpp
         - click
         - click-plugins
         - fftw
@@ -162,7 +161,6 @@ outputs:
         - volk
       run:
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
-        - boost-cpp
         - {{ pin_compatible('log4cpp') }}
         - pyqt
         - python
@@ -190,7 +188,6 @@ outputs:
         - uhd
       run:
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
-        - boost-cpp
         - {{ pin_compatible('log4cpp') }}
         - python
     test:
@@ -217,7 +214,6 @@ outputs:
         - zeromq
       run:
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
-        - boost-cpp
         - {{ pin_compatible('log4cpp') }}
         - python
         - pyzmq
