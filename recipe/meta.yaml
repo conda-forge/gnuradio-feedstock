@@ -75,6 +75,10 @@ requirements:
     - cppzmq
     - zeromq
 
+  run:
+    # here to make the linter happy, overridden by metapackage output
+    - python
+
 test:
   requires:
     - sqlite
