@@ -112,6 +112,7 @@ outputs:
         - swig
         - volk
       run:
+        - boost-cpp
         - click
         - click-plugins
         - fftw
@@ -164,6 +165,7 @@ outputs:
         - qwt
         - volk
       run:
+        - boost-cpp
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
         - {{ pin_compatible('log4cpp') }}
         - pyqt
@@ -191,6 +193,7 @@ outputs:
         - python
         - uhd
       run:
+        - boost-cpp
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
         - {{ pin_compatible('log4cpp') }}
         - python
@@ -217,6 +220,7 @@ outputs:
         - python
         - zeromq
       run:
+        - boost-cpp
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
         - {{ pin_compatible('log4cpp') }}
         - python
