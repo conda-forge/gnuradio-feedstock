@@ -13,7 +13,7 @@ source:
     - 0001-python-Do-not-link-against-python-lib-for-building-a.patch
 
 build:
-  number: 2
+  number: 3
   skip: True  # [win and py2k]
 
 requirements:
