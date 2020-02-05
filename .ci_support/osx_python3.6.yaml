@@ -17,7 +17,7 @@ cxx_compiler_version:
 fftw:
 - '3'
 gsl:
-- '2.5'
+- '2.6'
 libblas:
 - 3.8 *netlib
 libcblas:
