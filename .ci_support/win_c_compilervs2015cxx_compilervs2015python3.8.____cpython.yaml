@@ -1,19 +1,13 @@
 boost_cpp:
 - '1.72'
 c_compiler:
-- gcc
-c_compiler_version:
-- '7'
+- vs2015
 channel_sources:
 - conda-forge,defaults
 channel_targets:
 - conda-forge main
 cxx_compiler:
-- gxx
-cxx_compiler_version:
-- '7'
-docker_image:
-- condaforge/linux-anvil-comp7
+- vs2015
 fftw:
 - '3'
 gsl:
@@ -37,12 +31,16 @@ pin_run_as_build:
   sqlite:
     max_pin: x
   zeromq:
-    max_pin: x.x
+    max_pin: x.x.x
 python:
-- '2.7'
+- 3.8.* *_cpython
 qt:
 - '5.12'
 sqlite:
 - '3'
 zeromq:
 - 4.3.2
+zip_keys:
+- - python
+  - c_compiler
+  - cxx_compiler
