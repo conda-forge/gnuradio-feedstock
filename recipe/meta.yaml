@@ -66,10 +66,10 @@ requirements:
     - alsa-lib  # [linux]
     - portaudio  # [linux]
   # gnuradio companion
-    - gtk3  # [unix]
-    - lxml  # [unix]
-    - pygobject  # [unix]
-    - pyyaml  # [unix]
+    - gtk3
+    - lxml
+    - pygobject
+    - pyyaml
   # gnuradio.qtgui
     - pyqt
     - qt
@@ -151,9 +151,8 @@ outputs:
     about:
       summary: 'GNU Radio core functionality and modules'
   - name: gnuradio-grc
-    build:
-      skip: True  # [not unix]
-    script: install_grc.sh
+    script: install_grc.sh  # [not win]
+    script: install_grc.bat  # [win]
     requirements:
       build:
         - {{ compiler('c') }}
