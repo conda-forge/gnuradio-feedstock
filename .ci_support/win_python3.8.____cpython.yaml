@@ -33,14 +33,10 @@ pin_run_as_build:
   zeromq:
     max_pin: x.x.x
 python:
-- 3.7.* *_cpython
+- 3.8.* *_cpython
 qt:
 - '5.12'
 sqlite:
 - '3'
 zeromq:
 - 4.3.2
-zip_keys:
-- - python
-  - c_compiler
-  - cxx_compiler
