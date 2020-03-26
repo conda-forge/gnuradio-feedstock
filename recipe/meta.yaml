@@ -131,8 +131,8 @@ outputs:
       commands:
         - gnuradio-config-info -v --prefix --sysconfdir --prefsdir --userprefsdir --prefs --builddate --enabled-components --cc --cxx --cflags
         # run a few example scripts to show that at least some things work
-        - python "$CONDA_PREFIX/share/gnuradio/examples/volk_benchmark/volk_math.py" -L test -N 1e6 -I 3 --all  # [not win]
-        - python "%CONDA_PREFIX%/Library/share/gnuradio/examples/volk_benchmark/volk_math.py" -L test -N 1e6 -I 3 --all  # [win]
+        - python "$PREFIX/share/gnuradio/examples/volk_benchmark/volk_math.py" -L test -N 1e6 -I 3 --all  # [not win]
+        - python "%PREFIX%\\Library\\share\\gnuradio\\examples\\volk_benchmark\\volk_math.py" -L test -N 1e6 -I 3 --all  # [win]
       imports:
         - gnuradio.analog
         - gnuradio.audio
@@ -176,7 +176,8 @@ outputs:
         - pyyaml
     test:
       commands:
-        - grcc "$CONDA_PREFIX/share/gnuradio/examples/metadata/file_metadata_vector_sink.grc"
+        - grcc "$PREFIX/share/gnuradio/examples/metadata/file_metadata_vector_sink.grc"  # [not win]
+        - python "%PREFIX%\\Library\\bin\\grcc.py" "%PREFIX%\\Library\\share\\gnuradio\\examples\\metadata\\file_metadata_vector_sink.grc"  # [win]
         - python file_metadata_vector_sink.py
     about:
       summary: 'GNU Radio Companion graphical flowgraph interface'
