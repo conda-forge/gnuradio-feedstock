@@ -178,7 +178,7 @@ outputs:
       commands:
         - grcc "$PREFIX/share/gnuradio/examples/metadata/file_metadata_vector_sink.grc"  # [not win]
         - python "%PREFIX%\\Library\\bin\\grcc.py" "%PREFIX%\\Library\\share\\gnuradio\\examples\\metadata\\file_metadata_vector_sink.grc"  # [win]
-        - python file_metadata_vector_sink.py
+        - python file_metadata_vector_sink.py  # [not win]
     about:
       summary: 'GNU Radio Companion graphical flowgraph interface'
   - name: gnuradio-qtgui
