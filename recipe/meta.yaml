@@ -13,7 +13,7 @@ source:
     - 0001-python-Do-not-link-against-python-lib-for-building-a.patch
 
 build:
-  number: 4
+  number: 5
   skip: True  # [win and py2k]
 
 requirements:
@@ -65,6 +65,11 @@ requirements:
   # gnuradio.audio
     - alsa-lib  # [linux]
     - portaudio  # [linux]
+  # gnuradio companion
+    - gtk3
+    - lxml
+    - pygobject
+    - pyyaml
   # gnuradio.qtgui
     - pyqt
     - qt
@@ -126,8 +131,8 @@ outputs:
       commands:
         - gnuradio-config-info -v --prefix --sysconfdir --prefsdir --userprefsdir --prefs --builddate --enabled-components --cc --cxx --cflags
         # run a few example scripts to show that at least some things work
-        - python "$CONDA_PREFIX/share/gnuradio/examples/volk_benchmark/volk_math.py" -L test -N 1e6 -I 3 --all  # [not win]
-        - python "%CONDA_PREFIX%/Library/share/gnuradio/examples/volk_benchmark/volk_math.py" -L test -N 1e6 -I 3 --all  # [win]
+        - python "$PREFIX/share/gnuradio/examples/volk_benchmark/volk_math.py" -L test -N 1e6 -I 3 --all  # [not win]
+        - python "%PREFIX%\\Library\\share\\gnuradio\\examples\\volk_benchmark\\volk_math.py" -L test -N 1e6 -I 3 --all  # [win]
       imports:
         - gnuradio.analog
         - gnuradio.audio
@@ -145,6 +150,37 @@ outputs:
         - pmt
     about:
       summary: 'GNU Radio core functionality and modules'
+  - name: gnuradio-grc
+    script: install_grc.sh  # [not win]
+    script: install_grc.bat  # [win]
+    requirements:
+      build:
+        - {{ compiler('c') }}
+        - {{ compiler('cxx') }}
+        - cmake
+        - ninja
+        - pkg-config  # [not win]
+      host:
+        - gnuradio-core
+        - boost-cpp
+        - gtk3
+        - log4cpp
+        - python
+      run:
+        - boost-cpp
+        - {{ pin_subpackage('gnuradio-core', exact=True) }}
+        - {{ pin_compatible('log4cpp') }}
+        - lxml
+        - pygobject
+        - python
+        - pyyaml
+    test:
+      commands:
+        - grcc "$PREFIX/share/gnuradio/examples/metadata/file_metadata_vector_sink.grc"  # [not win]
+        - python "%PREFIX%\\Library\\bin\\grcc.py" "%PREFIX%\\Library\\share\\gnuradio\\examples\\metadata\\file_metadata_vector_sink.grc"  # [win]
+        - python file_metadata_vector_sink.py  # [not win]
+    about:
+      summary: 'GNU Radio Companion graphical flowgraph interface'
   - name: gnuradio-qtgui
     script: install_qtgui.sh  # [not win]
     script: install_qtgui.bat  # [win]
@@ -236,6 +272,7 @@ outputs:
     requirements:
       run:
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
+        - {{ pin_subpackage('gnuradio-grc', exact=True) }}
         - {{ pin_subpackage('gnuradio-qtgui', exact=True) }}
         - {{ pin_subpackage('gnuradio-uhd', exact=True) }}
         - {{ pin_subpackage('gnuradio-zeromq', exact=True) }}
