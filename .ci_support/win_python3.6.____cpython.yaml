@@ -1,13 +1,13 @@
 boost_cpp:
 - '1.72'
 c_compiler:
-- vs2015
+- vs2017
 channel_sources:
 - conda-forge,defaults
 channel_targets:
 - conda-forge main
 cxx_compiler:
-- vs2015
+- vs2017
 fftw:
 - '3'
 gsl:
