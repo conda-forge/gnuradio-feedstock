@@ -43,10 +43,12 @@ pin_run_as_build:
   zeromq:
     max_pin: x.x
 python:
-- 3.7.* *_cpython
+- 3.6.* *_cpython
 qt:
 - '5.12'
 sqlite:
 - '3'
+target_platform:
+- osx-64
 zeromq:
 - 4.3.2
