@@ -9,7 +9,6 @@ cd build
 :: the following are disabled:
 ::   DOXYGEN/SPHINX because we don't need docs in the conda package
 ::   TESTING because we don't intend to run the unit tests, just import test
-::   GR_VIDEO_SDL needs sdl1 (conda-forge has sdl2)
 :: the following can be disabled to speed up the build (dependencies remain in
 :: meta.yaml):
 ::   GR_CTRLPORT
@@ -48,7 +47,7 @@ cmake -G "Ninja" ^
     -DENABLE_GR_TRELLIS=ON ^
     -DENABLE_GR_UHD=ON ^
     -DENABLE_GR_UTILS=ON ^
-    -DENABLE_GR_VIDEO_SDL=OFF ^
+    -DENABLE_GR_VIDEO_SDL=ON ^
     -DENABLE_GR_VOCODER=ON ^
     -DENABLE_GR_WAVELET=ON ^
     -DENABLE_GR_ZEROMQ=ON ^
@@ -61,5 +60,5 @@ cmake -G "Ninja" ^
 if errorlevel 1 exit 1
 
 :: build
-cmake --build . -- -j%CPU_COUNT%
+cmake --build . --config Release -- -j%CPU_COUNT%
 if errorlevel 1 exit 1

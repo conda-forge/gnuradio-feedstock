@@ -76,6 +76,8 @@ requirements:
     - qwt
   # gnuradio.uhd
     - uhd
+  # gnuradio.video_sdl
+    - sdl  # [not osx]
   # gnuradio.zeromq
     - cppzmq
     - zeromq
@@ -238,6 +240,34 @@ outputs:
         - gnuradio.uhd
     about:
       summary: GNU Radio UHD module for Ettus USRP radios
+  - name: gnuradio-video-sdl
+    build:
+      skip: True  # [osx]
+    script: install_video_sdl.sh  # [not win]
+    script: install_video_sdl.bat  # [win]
+    requirements:
+      build:
+        - {{ compiler('c') }}
+        - {{ compiler('cxx') }}
+        - cmake
+        - ninja
+        - pkg-config  # [not win]
+      host:
+        - gnuradio-core
+        - boost-cpp
+        - log4cpp
+        - python
+        - sdl
+      run:
+        - boost-cpp
+        - {{ pin_subpackage('gnuradio-core', exact=True) }}
+        - {{ pin_compatible('log4cpp') }}
+        - python
+    test:
+      imports:
+        - gnuradio.video_sdl
+    about:
+      summary: GNU Radio SDL module providing video components
   - name: gnuradio-zeromq
     script: install_zeromq.sh  # [not win]
     script: install_zeromq.bat  # [win]
@@ -275,6 +305,7 @@ outputs:
         - {{ pin_subpackage('gnuradio-grc', exact=True) }}
         - {{ pin_subpackage('gnuradio-qtgui', exact=True) }}
         - {{ pin_subpackage('gnuradio-uhd', exact=True) }}
+        - {{ pin_subpackage('gnuradio-video-sdl', exact=True) }}
         - {{ pin_subpackage('gnuradio-zeromq', exact=True) }}
         # explicitly add python so that build string is generated correctly
         - python
@@ -283,6 +314,7 @@ outputs:
         - gnuradio.gr
         - gnuradio.qtgui
         - gnuradio.uhd
+        - gnuradio.video_sdl
         - gnuradio.zeromq
     about:
       summary: GNU Radio core library and standard modules

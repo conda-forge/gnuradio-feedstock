@@ -16,6 +16,5 @@ cmake -P gr-fft/cmake_install.cmake
 cmake -P gr-filter/cmake_install.cmake
 cmake -P gr-trellis/cmake_install.cmake
 cmake -P gr-utils/cmake_install.cmake
-cmake -P gr-video-sdl/cmake_install.cmake
 cmake -P gr-vocoder/cmake_install.cmake
 cmake -P gr-wavelet/cmake_install.cmake

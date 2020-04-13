@@ -30,8 +30,6 @@ cmake -P gr-trellis/cmake_install.cmake
 if errorlevel 1 exit 1
 cmake -P gr-utils/cmake_install.cmake
 if errorlevel 1 exit 1
-cmake -P gr-video-sdl/cmake_install.cmake
-if errorlevel 1 exit 1
 cmake -P gr-vocoder/cmake_install.cmake
 if errorlevel 1 exit 1
 cmake -P gr-wavelet/cmake_install.cmake
