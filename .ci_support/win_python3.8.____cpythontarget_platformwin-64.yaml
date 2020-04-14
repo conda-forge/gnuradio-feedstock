@@ -1,13 +1,13 @@
 boost_cpp:
 - '1.72'
 c_compiler:
-- vs2015
+- vs2017
 channel_sources:
 - conda-forge,defaults
 channel_targets:
 - conda-forge main
 cxx_compiler:
-- vs2015
+- vs2017
 fftw:
 - '3'
 gsl:
@@ -33,10 +33,12 @@ pin_run_as_build:
   zeromq:
     max_pin: x.x.x
 python:
-- 3.6.* *_cpython
+- 3.8.* *_cpython
 qt:
 - '5.12'
 sqlite:
 - '3'
+target_platform:
+- win-64
 zeromq:
 - 4.3.2

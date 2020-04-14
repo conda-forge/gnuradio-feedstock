@@ -1,4 +1,4 @@
-{% set version = "3.8.0.0" %}
+{% set version = "3.8.1.0" %}
 
 package:
   name: gnuradio
@@ -6,15 +6,15 @@ package:
 
 source:
   url: https://github.com/gnuradio/gnuradio/releases/download/v{{ version }}/gnuradio-{{ version }}.tar.gz
-  sha256: 3a9c90111f22f2f6f30450731dc671ad28ce824fc1a7bc8ea0783da9b95a7092
+  sha256: e15311e7da9fe2bb790cc36321d7eb2d93b9dfa0c1552fa5d534dd99d22873be
   patches:
     - 0001-Use-raw-strings-for-paths-substituted-directly-into-.patch
     - 0001-Don-t-use-hard-coded-path-constants.patch
     - 0001-python-Do-not-link-against-python-lib-for-building-a.patch
 
 build:
-  number: 5
-  skip: True  # [win and py2k]
+  number: 0
+  skip: true  # [win and py2k]
 
 requirements:
   build:
@@ -76,6 +76,8 @@ requirements:
     - qwt
   # gnuradio.uhd
     - uhd
+  # gnuradio.video_sdl
+    - sdl  # [not osx]
   # gnuradio.zeromq
     - cppzmq
     - zeromq
@@ -149,7 +151,7 @@ outputs:
         - gnuradio.wavelet
         - pmt
     about:
-      summary: 'GNU Radio core functionality and modules'
+      summary: GNU Radio core functionality and modules
   - name: gnuradio-grc
     script: install_grc.sh  # [not win]
     script: install_grc.bat  # [win]
@@ -180,7 +182,7 @@ outputs:
         - python "%PREFIX%\\Library\\bin\\grcc.py" "%PREFIX%\\Library\\share\\gnuradio\\examples\\metadata\\file_metadata_vector_sink.grc"  # [win]
         - python file_metadata_vector_sink.py  # [not win]
     about:
-      summary: 'GNU Radio Companion graphical flowgraph interface'
+      summary: GNU Radio Companion graphical flowgraph interface
   - name: gnuradio-qtgui
     script: install_qtgui.sh  # [not win]
     script: install_qtgui.bat  # [win]
@@ -211,7 +213,7 @@ outputs:
       imports:
         - gnuradio.qtgui
     about:
-      summary: 'GNU Radio QT module providing graphical components'
+      summary: GNU Radio QT module providing graphical components
   - name: gnuradio-uhd
     script: install_uhd.sh  # [not win]
     script: install_uhd.bat  # [win]
@@ -237,7 +239,35 @@ outputs:
       imports:
         - gnuradio.uhd
     about:
-      summary: 'GNU Radio UHD module for Ettus USRP radios'
+      summary: GNU Radio UHD module for Ettus USRP radios
+  - name: gnuradio-video-sdl
+    build:
+      skip: True  # [osx]
+    script: install_video_sdl.sh  # [not win]
+    script: install_video_sdl.bat  # [win]
+    requirements:
+      build:
+        - {{ compiler('c') }}
+        - {{ compiler('cxx') }}
+        - cmake
+        - ninja
+        - pkg-config  # [not win]
+      host:
+        - gnuradio-core
+        - boost-cpp
+        - log4cpp
+        - python
+        - sdl
+      run:
+        - boost-cpp
+        - {{ pin_subpackage('gnuradio-core', exact=True) }}
+        - {{ pin_compatible('log4cpp') }}
+        - python
+    test:
+      imports:
+        - gnuradio.video_sdl
+    about:
+      summary: GNU Radio SDL module providing video components
   - name: gnuradio-zeromq
     script: install_zeromq.sh  # [not win]
     script: install_zeromq.bat  # [win]
@@ -265,7 +295,7 @@ outputs:
       imports:
         - gnuradio.zeromq
     about:
-      summary: 'GNU Radio ZeroMQ module for message passing functionality'
+      summary: GNU Radio ZeroMQ module for message passing functionality
   # gnuradio metapackage inherits unspecified metadata in
   # (requirements, build, about) sections from parent recipe
   - name: gnuradio
@@ -275,6 +305,7 @@ outputs:
         - {{ pin_subpackage('gnuradio-grc', exact=True) }}
         - {{ pin_subpackage('gnuradio-qtgui', exact=True) }}
         - {{ pin_subpackage('gnuradio-uhd', exact=True) }}
+        - {{ pin_subpackage('gnuradio-video-sdl', exact=True) }}
         - {{ pin_subpackage('gnuradio-zeromq', exact=True) }}
         # explicitly add python so that build string is generated correctly
         - python
@@ -283,16 +314,17 @@ outputs:
         - gnuradio.gr
         - gnuradio.qtgui
         - gnuradio.uhd
+        - gnuradio.video_sdl
         - gnuradio.zeromq
     about:
-      summary: 'GNU Radio core library and standard modules'
+      summary: GNU Radio core library and standard modules
 
 about:
   home: https://gnuradio.org/
   license: GPL-3.0-or-later
   license_family: GPL
   license_file: COPYING
-  summary: 'The free and open software radio ecosystem'
+  summary: The free and open software radio ecosystem
   description: |
     GNU Radio is a free software development toolkit that provides the signal
     processing runtime and processing blocks to implement software radios using
