@@ -11,7 +11,6 @@ source:
     - 0001-Use-raw-strings-for-paths-substituted-directly-into-.patch
     - 0001-Don-t-use-hard-coded-path-constants.patch
     - 0001-python-Do-not-link-against-python-lib-for-building-a.patch
-    #- 0001-cmake-Install-python-wrapper-exe-for-scripts-on-Wind.patch  # [win]
 
 build:
   number: 0
@@ -59,7 +58,6 @@ requirements:
     # (only needed at runtime, except gnuradio CMake checks for it at build)
     # specify version so pin is ignored
     - numpy >=1.1
-    - pip  # [win]
     - python
     - six
     - swig
@@ -116,7 +114,6 @@ outputs:
         - libusb
         - log4cpp
         - mpir
-        - pip  # [win]
         - portaudio  # [linux]
         - python
         - swig
@@ -180,6 +177,7 @@ outputs:
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
         - {{ pin_compatible('log4cpp') }}
         - lxml
+        - menuinst  # [win]
         - pygobject
         - python
         - pyyaml

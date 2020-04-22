@@ -1,4 +1,5 @@
 setlocal EnableDelayedExpansion
+@echo on
 
 cd build
 

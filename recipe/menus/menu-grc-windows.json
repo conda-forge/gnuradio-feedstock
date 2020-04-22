@@ -5,13 +5,13 @@
             {
                 "script": "${PYTHON_SCRIPTS}/gnuradio-companion.exe",
                 "name": "GNU Radio Companion (${ENV_NAME})",
-                "workdir": "${PREFIX}",
+                "workdir": "${USERPROFILE}",
                 "icon": "${MENU_DIR}/grc-icon-128.png",
             },
             {
                 "pyscript": "${PREFIX}/bin/gnuradio-companion.py",
                 "name": "GNU Radio Companion - script (${ENV_NAME})",
-                "workdir": "${PREFIX}",
+                "workdir": "${USERPROFILE}",
                 "icon": "${MENU_DIR}/grc-icon-128.png",
             },
         ]

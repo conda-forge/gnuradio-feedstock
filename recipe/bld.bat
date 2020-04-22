@@ -1,4 +1,5 @@
 setlocal EnableDelayedExpansion
+@echo on
 
 :: Make a build folder and change to it
 mkdir build
