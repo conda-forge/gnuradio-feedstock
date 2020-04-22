@@ -11,6 +11,7 @@ source:
     - 0001-Use-raw-strings-for-paths-substituted-directly-into-.patch
     - 0001-Don-t-use-hard-coded-path-constants.patch
     - 0001-python-Do-not-link-against-python-lib-for-building-a.patch
+    - 0001-cmake-Install-python-wrapper-exe-for-scripts-on-Wind.patch  # [win]
 
 build:
   number: 0
@@ -58,6 +59,7 @@ requirements:
     # (only needed at runtime, except gnuradio CMake checks for it at build)
     # specify version so pin is ignored
     - numpy >=1.1
+    - pip  # [win]
     - python
     - six
     - swig
@@ -114,6 +116,7 @@ outputs:
         - libusb
         - log4cpp
         - mpir
+        - pip  # [win]
         - portaudio  # [linux]
         - python
         - swig
@@ -153,6 +156,10 @@ outputs:
     about:
       summary: GNU Radio core functionality and modules
   - name: gnuradio-grc
+    build:  # [win]
+      entry_points:  # [win]
+        - gnuradio-companion = gnuradio.grc.main:main  # [win]
+        - grcc = gnuradio.grc.compiler:main  # [win]
     script: install_grc.sh  # [not win]
     script: install_grc.bat  # [win]
     requirements:
@@ -181,6 +188,10 @@ outputs:
         - grcc "$PREFIX/share/gnuradio/examples/metadata/file_metadata_vector_sink.grc"  # [not win]
         - python "%PREFIX%\\Library\\bin\\grcc.py" "%PREFIX%\\Library\\share\\gnuradio\\examples\\metadata\\file_metadata_vector_sink.grc"  # [win]
         - python file_metadata_vector_sink.py  # [not win]
+        - if not exist %PREFIX%\\Library\\bin\\gnuradio-companion.exe exit 1  # [win]
+        - if not exist %PREFIX%\\Library\\bin\\grcc.exe exit 1  # [win]
+        - if not exist %PREFIX%\\Scripts\\gnuradio-companion.exe exit 1  # [win]
+        - if not exist %PREFIX%\\Scripts\\grcc.exe exit 1  # [win]
     about:
       summary: GNU Radio Companion graphical flowgraph interface
   - name: gnuradio-qtgui
