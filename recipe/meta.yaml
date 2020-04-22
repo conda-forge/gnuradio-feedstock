@@ -11,6 +11,7 @@ source:
     - 0001-Use-raw-strings-for-paths-substituted-directly-into-.patch
     - 0001-Don-t-use-hard-coded-path-constants.patch
     - 0001-python-Do-not-link-against-python-lib-for-building-a.patch
+    - 0001-cmake-Shorten-swig-command-line-by-removing-duplicat.patch
     - 0001-cmake-Install-python-wrapper-exe-for-scripts-on-Wind.patch  # [win]
 
 build:
