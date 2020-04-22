@@ -1,6 +1,9 @@
 setlocal EnableDelayedExpansion
 @echo on
 
+if not exist "%PREFIX%\Menu" mkdir "%PREFIX%\Menu"
+copy "%RECIPE_DIR%\menus\menu-gr_filter_design-windows.json" "%PREFIX%\Menu"
+
 cd build
 
 cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake

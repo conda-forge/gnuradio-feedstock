@@ -95,6 +95,10 @@ test:
 
 outputs:
   - name: gnuradio-core
+    build:  # [win]
+      entry_points:  # [win]
+        - gr_filter_design = gnuradio.filter.filter_design:main  # [win]
+        - gr_modtool = gnuradio.modtool.cli.base:cli  # [win]
     script: install_core.sh  # [not win]
     script: install_core.bat  # [win]
     build:
@@ -128,6 +132,7 @@ outputs:
         - fftw
         - {{ pin_compatible('log4cpp') }}
         - mako
+        - menuinst  # [win]
         - numpy
         - {{ pin_compatible('portaudio') }}  # [linux]
         - python
@@ -227,6 +232,9 @@ outputs:
     about:
       summary: GNU Radio QT module providing graphical components
   - name: gnuradio-uhd
+    build:  # [win]
+      entry_points:  # [win]
+        - uhd_siggen = gnuradio.uhd.uhd_siggen_base:main  # [win]
     script: install_uhd.sh  # [not win]
     script: install_uhd.bat  # [win]
     requirements:
