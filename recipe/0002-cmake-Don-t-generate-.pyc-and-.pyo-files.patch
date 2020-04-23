@@ -1,4 +1,4 @@
-From 47adbc2246cd33ae65577d87714bed21d723f6c5 Mon Sep 17 00:00:00 2001
+From 3790b2d965d20d9905a8f2603e8e3eec787fcf7c Mon Sep 17 00:00:00 2001
 From: Ryan Volz <rvolz@mit.edu>
 Date: Wed, 22 Apr 2020 18:02:24 -0400
 Subject: [PATCH 2/3] cmake: Don't generate .pyc and .pyo files.
@@ -8,7 +8,7 @@ Subject: [PATCH 2/3] cmake: Don't generate .pyc and .pyo files.
  1 file changed, 2 insertions(+), 9 deletions(-)
 
 diff --git a/cmake/Modules/GrPython.cmake b/cmake/Modules/GrPython.cmake
-index 0eecd4a95..84505cc46 100644
+index 6f811155d..3f0589072 100644
 --- a/cmake/Modules/GrPython.cmake
 +++ b/cmake/Modules/GrPython.cmake
 @@ -189,9 +189,6 @@ function(GR_PYTHON_INSTALL)
@@ -32,7 +32,7 @@ index 0eecd4a95..84505cc46 100644
          endforeach(pygen_path)
  
      ####################################################################
-@@ -330,9 +323,9 @@ function(GR_PYTHON_INSTALL)
+@@ -340,9 +333,9 @@ function(GR_PYTHON_INSTALL)
              )
          endforeach(pyfile)
  
