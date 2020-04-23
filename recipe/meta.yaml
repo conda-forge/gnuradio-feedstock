@@ -144,8 +144,7 @@ outputs:
         # run a few example scripts to show that at least some things work
         - python "$PREFIX/share/gnuradio/examples/volk_benchmark/volk_math.py" -L test -N 1e6 -I 3 --all  # [not win]
         - python "%PREFIX%\\Library\\share\\gnuradio\\examples\\volk_benchmark\\volk_math.py" -L test -N 1e6 -I 3 --all  # [win]
-        - if not exist %PREFIX%\\Scripts\\gr_filter_design.exe exit 1  # [win]
-        - if not exist %PREFIX%\\Scripts\\gr_modtool.exe exit 1  # [win]
+        - if not exist %PREFIX%\\Library\\bin\\gr_filter_design.exe exit 1  # [win]
       imports:
         - gnuradio.analog
         - gnuradio.audio
@@ -198,9 +197,6 @@ outputs:
         - python "%PREFIX%\\Library\\bin\\grcc.py" "%PREFIX%\\Library\\share\\gnuradio\\examples\\metadata\\file_metadata_vector_sink.grc"  # [win]
         - python file_metadata_vector_sink.py  # [not win]
         - if not exist %PREFIX%\\Library\\bin\\gnuradio-companion.exe exit 1  # [win]
-        - if not exist %PREFIX%\\Library\\bin\\grcc.exe exit 1  # [win]
-        - if not exist %PREFIX%\\Scripts\\gnuradio-companion.exe exit 1  # [win]
-        - if not exist %PREFIX%\\Scripts\\grcc.exe exit 1  # [win]
     about:
       summary: GNU Radio Companion graphical flowgraph interface
   - name: gnuradio-qtgui
@@ -259,8 +255,6 @@ outputs:
         - {{ pin_compatible('log4cpp') }}
         - python
     test:
-      commands:
-        - if not exist %PREFIX%\\Scripts\\uhd_siggen.exe exit 1  # [win]
       imports:
         - gnuradio.uhd
     about:

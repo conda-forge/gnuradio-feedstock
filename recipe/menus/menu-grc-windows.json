@@ -3,14 +3,8 @@
     "menu_items":
         [
             {
-                "script": "${PYTHON_SCRIPTS}/gnuradio-companion.exe",
+                "script": "${PREFIX}/Library/bin/gnuradio-companion.exe",
                 "name": "GNU Radio Companion (${ENV_NAME})",
-                "workdir": "${USERPROFILE}",
-                "icon": "${MENU_DIR}/grc-icon-128.png",
-            },
-            {
-                "pyscript": "${PREFIX}/bin/gnuradio-companion.py",
-                "name": "GNU Radio Companion - script (${ENV_NAME})",
                 "workdir": "${USERPROFILE}",
                 "icon": "${MENU_DIR}/grc-icon-128.png",
             },

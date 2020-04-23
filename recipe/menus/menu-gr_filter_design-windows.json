@@ -3,7 +3,7 @@
     "menu_items":
         [
             {
-                "script": "${PYTHON_SCRIPTS}/gr_filter_design.exe",
+                "script": "${PREFIX}/Library/bin/gr_filter_design.exe",
                 "name": "GNU Radio Filter Design Tool (${ENV_NAME})",
                 "workdir": "${USERPROFILE}",
             },
