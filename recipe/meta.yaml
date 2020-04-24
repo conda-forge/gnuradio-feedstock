@@ -96,13 +96,12 @@ test:
 
 outputs:
   - name: gnuradio-core
-    build:  # [win]
-      entry_points:  # [win]
-        - gr_filter_design = gnuradio.filter.filter_design:main  # [win]
-        - gr_modtool = gnuradio.modtool.cli.base:cli  # [win]
     script: install_core.sh  # [not win]
     script: install_core.bat  # [win]
     build:
+      entry_points:  # [win]
+        - gr_filter_design = gnuradio.filter.filter_design:main  # [win]
+        - gr_modtool = gnuradio.modtool.cli.base:cli  # [win]
       run_exports:
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
     requirements:
@@ -144,7 +143,8 @@ outputs:
         # run a few example scripts to show that at least some things work
         - python "$PREFIX/share/gnuradio/examples/volk_benchmark/volk_math.py" -L test -N 1e6 -I 3 --all  # [not win]
         - python "%PREFIX%\\Library\\share\\gnuradio\\examples\\volk_benchmark\\volk_math.py" -L test -N 1e6 -I 3 --all  # [win]
-        - if not exist %PREFIX%\\Library\\bin\\gr_filter_design.exe exit 1  # [win]
+        - if not exist %PREFIX%\\Scripts\\gr_filter_design.exe exit 1  # [win]
+        - if not exist %PREFIX%\\Scripts\\gr_modtool.exe exit 1  # [win]
       imports:
         - gnuradio.analog
         - gnuradio.audio
@@ -163,12 +163,12 @@ outputs:
     about:
       summary: GNU Radio core functionality and modules
   - name: gnuradio-grc
+    script: install_grc.sh  # [not win]
+    script: install_grc.bat  # [win]
     build:  # [win]
       entry_points:  # [win]
         - gnuradio-companion = gnuradio.grc.main:main  # [win]
         - grcc = gnuradio.grc.compiler:main  # [win]
-    script: install_grc.sh  # [not win]
-    script: install_grc.bat  # [win]
     requirements:
       build:
         - {{ compiler('c') }}
@@ -196,7 +196,8 @@ outputs:
         - grcc "$PREFIX/share/gnuradio/examples/metadata/file_metadata_vector_sink.grc"  # [not win]
         - python "%PREFIX%\\Library\\bin\\grcc.py" "%PREFIX%\\Library\\share\\gnuradio\\examples\\metadata\\file_metadata_vector_sink.grc"  # [win]
         - python file_metadata_vector_sink.py  # [not win]
-        - if not exist %PREFIX%\\Library\\bin\\gnuradio-companion.exe exit 1  # [win]
+        - if not exist %PREFIX%\\Scripts\\gnuradio-companion.exe exit 1  # [win]
+        - if not exist %PREFIX%\\Scripts\\grcc.exe exit 1  # [win]
     about:
       summary: GNU Radio Companion graphical flowgraph interface
   - name: gnuradio-qtgui
@@ -231,11 +232,11 @@ outputs:
     about:
       summary: GNU Radio QT module providing graphical components
   - name: gnuradio-uhd
+    script: install_uhd.sh  # [not win]
+    script: install_uhd.bat  # [win]
     build:  # [win]
       entry_points:  # [win]
         - uhd_siggen = gnuradio.uhd.uhd_siggen_base:main  # [win]
-    script: install_uhd.sh  # [not win]
-    script: install_uhd.bat  # [win]
     requirements:
       build:
         - {{ compiler('c') }}
@@ -255,6 +256,8 @@ outputs:
         - {{ pin_compatible('log4cpp') }}
         - python
     test:
+      commands:
+        - if not exist %PREFIX%\\Scripts\\uhd_siggen.exe exit 1  # [win]
       imports:
         - gnuradio.uhd
     about:
