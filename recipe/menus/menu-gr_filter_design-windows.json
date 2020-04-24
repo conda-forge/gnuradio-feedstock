@@ -5,7 +5,7 @@
             {
                 "script": "${PYTHON_SCRIPTS}/gr_filter_design.exe",
                 "name": "GNU Radio Filter Design Tool (${ENV_NAME})",
-                "workdir": "${USERPROFILE}",
-            },
+                "workdir": "${USERPROFILE}"
+            }
         ]
 }
