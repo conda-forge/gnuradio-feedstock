@@ -1,0 +1,12 @@
+{
+    "menu_name": "GNU Radio",
+    "menu_items":
+        [
+            {
+                "script": "${PREFIX}/Library/bin/gnuradio-companion.exe",
+                "name": "GNU Radio Companion (${ENV_NAME})",
+                "workdir": "${USERPROFILE}",
+                "icon": "${MENU_DIR}/grc-icon-128.png",
+            },
+        ]
+}
