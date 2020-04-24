@@ -4,9 +4,9 @@
         [
             {
                 "script": "${PYTHON_SCRIPTS}/gnuradio-companion.exe",
-                "name": "GNU Radio Companion (${ENV_NAME})",
+                "name": "GNU Radio Companion",
                 "workdir": "${USERPROFILE}",
-                "icon": "${MENU_DIR}/grc-icon-128.png"
+                "icon": "${MENU_DIR}/grc.ico"
             }
         ]
 }
