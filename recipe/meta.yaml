@@ -16,7 +16,7 @@ source:
     - 0002-cmake-Don-t-generate-.pyc-and-.pyo-files.patch
 
 build:
-  number: 2
+  number: 3
   skip: true  # [win and py2k]
 
 requirements:
