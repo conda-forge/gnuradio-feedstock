@@ -16,7 +16,7 @@ source:
     - 0002-cmake-Don-t-generate-.pyc-and-.pyo-files.patch
 
 build:
-  number: 3
+  number: 4
   skip: true  # [win and py2k]
 
 requirements:
@@ -103,7 +103,7 @@ outputs:
         - gr_filter_design = gnuradio.filter.filter_design:main  # [win]
         - gr_modtool = gnuradio.modtool.cli.base:cli  # [win]
       run_exports:
-        - {{ pin_subpackage('gnuradio-core', exact=True) }}
+        - {{ pin_subpackage('gnuradio-core', max_pin='x.x.x') }}
     requirements:
       build:
         - {{ compiler('c') }}
