@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 mkdir build
 cd build
@@ -23,7 +23,7 @@ cmake_config_args=(
     -DLIB_SUFFIX=""
     -DPYTHON_EXECUTABLE=$PYTHON
     -DBoost_NO_BOOST_CMAKE=ON
-    -DGR_PYTHON_DIR=`$PYTHON -c "import site; print(site.getsitepackages()[0])"`
+    -DGR_PYTHON_DIR=$SP_DIR
     -DQWT_LIBRARIES="$PREFIX/lib/libqwt$SHLIB_EXT"
     -DENABLE_DOXYGEN=OFF
     -DENABLE_GNURADIO_RUNTIME=ON
