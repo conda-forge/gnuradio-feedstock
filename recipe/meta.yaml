@@ -96,6 +96,11 @@ test:
   requires:
     - sqlite
 
+app:
+  entry: gnuradio-companion
+  icon: grc-icon.png
+  summary: "GNU Radio Companion"
+
 outputs:
   - name: gnuradio-core
     script: install_core.sh  # [not win]
@@ -366,11 +371,6 @@ about:
 
   doc_url: https://gnuradio.org/doc/doxygen/
   dev_url: https://github.com/gnuradio/gnuradio
-
-app:
-  entry: gnuradio-companion
-  icon: grc-icon.png
-  summary: "GNU Radio Companion"
 
 extra:
   recipe-maintainers:
