@@ -18,7 +18,7 @@ source:
     - 0001-Use-an-ImageSurface-rather-than-UI-back-end.patch  # [osx]
 
 build:
-  number: 7
+  number: 8
   skip: true  # [win and py2k]
 
 requirements:
@@ -366,6 +366,11 @@ about:
 
   doc_url: https://gnuradio.org/doc/doxygen/
   dev_url: https://github.com/gnuradio/gnuradio
+
+app:
+  entry: gnuradio-companion
+  icon: grc-icon.png
+  summary: "GNU Radio Companion"
 
 extra:
   recipe-maintainers:
