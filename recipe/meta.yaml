@@ -89,12 +89,25 @@ requirements:
     - zeromq
 
   run:
-    # here to make the linter happy, overridden by metapackage output
+  # this is the metapackage that depends on all the subpackages
+    - {{ pin_subpackage('gnuradio-core', exact=True) }}
+    - {{ pin_subpackage('gnuradio-grc', exact=True) }}
+    - {{ pin_subpackage('gnuradio-qtgui', exact=True) }}
+    - {{ pin_subpackage('gnuradio-uhd', exact=True) }}
+    - {{ pin_subpackage('gnuradio-video-sdl', exact=True) }}  # [not osx]
+    - {{ pin_subpackage('gnuradio-zeromq', exact=True) }}
+  # explicitly add python so that build string is generated correctly
     - python
 
 test:
   requires:
     - sqlite
+  imports:
+    - gnuradio.gr
+    - gnuradio.qtgui
+    - gnuradio.uhd
+    - gnuradio.video_sdl  # [not osx]
+    - gnuradio.zeromq
 
 app:
   entry: gnuradio-companion
@@ -325,28 +338,6 @@ outputs:
         - gnuradio.zeromq
     about:
       summary: GNU Radio ZeroMQ module for message passing functionality
-  # gnuradio metapackage inherits unspecified metadata in
-  # (requirements, build, about) sections from parent recipe
-  - name: gnuradio
-    requirements:
-      run:
-        - {{ pin_subpackage('gnuradio-core', exact=True) }}
-        - {{ pin_subpackage('gnuradio-grc', exact=True) }}
-        - {{ pin_subpackage('gnuradio-qtgui', exact=True) }}
-        - {{ pin_subpackage('gnuradio-uhd', exact=True) }}
-        - {{ pin_subpackage('gnuradio-video-sdl', exact=True) }}  # [not osx]
-        - {{ pin_subpackage('gnuradio-zeromq', exact=True) }}
-        # explicitly add python so that build string is generated correctly
-        - python
-    test:
-      imports:
-        - gnuradio.gr
-        - gnuradio.qtgui
-        - gnuradio.uhd
-        - gnuradio.video_sdl  # [not osx]
-        - gnuradio.zeromq
-    about:
-      summary: GNU Radio core library and standard modules
 
 about:
   home: https://gnuradio.org/
