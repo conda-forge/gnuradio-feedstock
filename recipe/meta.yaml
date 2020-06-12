@@ -329,7 +329,7 @@ outputs:
         - {{ pin_subpackage('gnuradio-grc', exact=True) }}
         - {{ pin_subpackage('gnuradio-qtgui', exact=True) }}
         - {{ pin_subpackage('gnuradio-uhd', exact=True) }}
-        - {{ pin_subpackage('gnuradio-video-sdl', exact=True) }}
+        - {{ pin_subpackage('gnuradio-video-sdl', exact=True) }}  # [not osx]
         - {{ pin_subpackage('gnuradio-zeromq', exact=True) }}
         # explicitly add python so that build string is generated correctly
         - python
@@ -338,7 +338,7 @@ outputs:
         - gnuradio.gr
         - gnuradio.qtgui
         - gnuradio.uhd
-        - gnuradio.video_sdl
+        - gnuradio.video_sdl  # [not osx]
         - gnuradio.zeromq
     about:
       summary: GNU Radio core library and standard modules
