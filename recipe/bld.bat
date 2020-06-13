@@ -3,7 +3,9 @@ setlocal EnableDelayedExpansion
 
 :: Make a build folder and change to it
 mkdir build
+if errorlevel 1 exit 1
 cd build
+if errorlevel 1 exit 1
 
 :: configure
 :: enable gnuradio components explicitly so we get build error when unsatisfied
@@ -27,7 +29,7 @@ cmake -G "Ninja" ^
     -DCMAKE_BUILD_TYPE:STRING=Release ^
     -DPYTHON_EXECUTABLE:PATH="%PYTHON%" ^
     -DBoost_NO_BOOST_CMAKE=ON ^
-    -DGR_PYTHON_DIR:PATH="%PREFIX%\Lib\site-packages" ^
+    -DGR_PYTHON_DIR:PATH="%SP_DIR%" ^
     -DMPIR_LIBRARY="%LIBRARY_LIB%\mpir.lib" ^
     -DMPIRXX_LIBRARY="%LIBRARY_LIB%\mpir.lib" ^
     -DPORTAUDIO_LIBRARIES="%LIBRARY_BIN%\libportaudio-2.dll" ^
