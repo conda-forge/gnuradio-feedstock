@@ -40,5 +40,7 @@ sqlite:
 - '3'
 target_platform:
 - win-64
+uhd:
+- 3.15.0
 zeromq:
 - 4.3.2
