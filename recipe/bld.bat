@@ -1,9 +1,6 @@
 setlocal EnableDelayedExpansion
 @echo on
 
-:: set pkg-config path so that host deps can be found
-set "PKG_CONFIG_PATH=%LIBRARY_LIB%\pkgconfig;%LIBRARY_PREFIX%\share\pkgconfig"
-
 :: Make a build folder and change to it
 mkdir build
 if errorlevel 1 exit 1

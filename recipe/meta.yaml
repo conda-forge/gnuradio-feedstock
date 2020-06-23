@@ -27,7 +27,7 @@ requirements:
     - {{ compiler('cxx') }}
     - cmake >=3.8
     - ninja
-    - pkg-config
+    - pkg-config  # [not win]
    # libudev needed to link against libusb on linux
     - {{ cdt('libudev') }}  # [linux]
    # below are needed to link with Qt for qtgui
