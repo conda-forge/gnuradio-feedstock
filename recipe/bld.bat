@@ -30,6 +30,8 @@ cmake -G "Ninja" ^
     -DPYTHON_EXECUTABLE:PATH="%PYTHON%" ^
     -DBoost_NO_BOOST_CMAKE=ON ^
     -DGR_PYTHON_DIR:PATH="%SP_DIR%" ^
+    -DLIBCODEC2_INCLUDE_DIRS="%LIBRARY_INC%\codec2" ^
+    -DLIBCODEC2_LIBRARIES="%LIBRARY_LIB%\libcodec2.lib" ^
     -DMPIR_LIBRARY="%LIBRARY_LIB%\mpir.lib" ^
     -DMPIRXX_LIBRARY="%LIBRARY_LIB%\mpir.lib" ^
     -DPORTAUDIO_LIBRARIES="%LIBRARY_BIN%\libportaudio-2.dll" ^

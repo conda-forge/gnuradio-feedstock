@@ -18,7 +18,7 @@ source:
     - 0001-Use-an-ImageSurface-rather-than-UI-back-end.patch  # [osx]
 
 build:
-  number: 9
+  number: 10
   skip: true  # [win and py2k]
 
 requirements:
@@ -50,6 +50,7 @@ requirements:
     - boost-cpp
     - click
     - click-plugins
+    - codec2
     - fftw
     - gsl
     # blas needed to link with gsl
@@ -134,6 +135,7 @@ outputs:
       host:
         - alsa-lib  # [linux]
         - boost-cpp
+        - codec2
         - fftw
         - gsl
         - libblas
