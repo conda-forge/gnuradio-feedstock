@@ -340,6 +340,10 @@ outputs:
         - gnuradio.zeromq
     about:
       summary: GNU Radio ZeroMQ module for message passing functionality
+  # need an output with a script defined to work-around "empty" output detection
+  # with python in both build (due to ninja) and host environments
+  - name: gnuradio
+    script: echo "Packaging gnuradio metapackage."
 
 about:
   home: https://gnuradio.org/
