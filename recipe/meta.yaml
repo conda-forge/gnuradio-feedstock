@@ -200,6 +200,7 @@ outputs:
         - pkg-config  # [not win]
       host:
         - boost-cpp
+        - {{ pin_subpackage('gnuradio-core', exact=True) }}
         - gtk3
         - log4cpp
         - python
@@ -233,6 +234,7 @@ outputs:
         - pkg-config  # [not win]
       host:
         - boost-cpp
+        - {{ pin_subpackage('gnuradio-core', exact=True) }}
         - log4cpp
         - pyqt
         - python
@@ -266,6 +268,7 @@ outputs:
         - pkg-config  # [not win]
       host:
         - boost-cpp
+        - {{ pin_subpackage('gnuradio-core', exact=True) }}
         - log4cpp
         - python
         - uhd
@@ -295,6 +298,7 @@ outputs:
         - pkg-config  # [not win]
       host:
         - boost-cpp
+        - {{ pin_subpackage('gnuradio-core', exact=True) }}
         - log4cpp
         - python
         - sdl
@@ -321,6 +325,7 @@ outputs:
       host:
         - boost-cpp
         - cppzmq
+        - {{ pin_subpackage('gnuradio-core', exact=True) }}
         - log4cpp
         - python
         - zeromq
