@@ -1,3 +1,5 @@
 conda_forge_output_validation: true
 bot:
   automerge: true
+azure:
+  store_build_artifacts: true

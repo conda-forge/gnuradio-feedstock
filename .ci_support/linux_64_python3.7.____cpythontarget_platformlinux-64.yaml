@@ -1,13 +1,21 @@
+alsa_lib:
+- 1.2.3
 boost_cpp:
 - '1.72'
 c_compiler:
-- vs2017
+- gcc
+c_compiler_version:
+- '7'
 channel_sources:
 - conda-forge,defaults
 channel_targets:
 - conda-forge main
 cxx_compiler:
-- vs2017
+- gxx
+cxx_compiler_version:
+- '7'
+docker_image:
+- condaforge/linux-anvil-comp7
 fftw:
 - '3'
 gsl:
@@ -17,7 +25,7 @@ libblas:
 libcblas:
 - 3.8 *netlib
 numpy:
-- '1.14'
+- '1.16'
 pin_run_as_build:
   boost-cpp:
     max_pin: x.x.x
@@ -31,7 +39,7 @@ pin_run_as_build:
   sqlite:
     max_pin: x
   zeromq:
-    max_pin: x.x.x
+    max_pin: x.x
 python:
 - 3.7.* *_cpython
 qt:
@@ -39,7 +47,7 @@ qt:
 sqlite:
 - '3'
 target_platform:
-- win-64
+- linux-64
 uhd:
 - 3.15.0
 zeromq:

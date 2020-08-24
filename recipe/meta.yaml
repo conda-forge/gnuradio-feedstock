@@ -1,4 +1,4 @@
-{% set version = "3.8.1.0" %}
+{% set version = "3.8.2.0" %}
 
 package:
   name: gnuradio
@@ -6,7 +6,7 @@ package:
 
 source:
   url: https://github.com/gnuradio/gnuradio/releases/download/v{{ version }}/gnuradio-{{ version }}.tar.gz
-  sha256: e15311e7da9fe2bb790cc36321d7eb2d93b9dfa0c1552fa5d534dd99d22873be
+  sha256: 3e293541a9ac8d78660762bae8b80c0f6195b3494e1c50c01a9fd79cc60bb624
   patches:
     - 0001-Use-raw-strings-for-paths-substituted-directly-into-.patch
     - 0001-Don-t-use-hard-coded-path-constants.patch
@@ -18,7 +18,7 @@ source:
     - 0001-Use-an-ImageSurface-rather-than-UI-back-end.patch  # [osx]
 
 build:
-  number: 10
+  number: 0
   skip: true  # [win and py2k]
 
 requirements:
@@ -113,14 +113,14 @@ test:
 app:
   entry: gnuradio-companion
   icon: grc-icon.png
-  summary: "GNU Radio Companion"
+  summary: GNU Radio Companion
 
 outputs:
   - name: gnuradio-core
     script: install_core.sh  # [not win]
     script: install_core.bat  # [win]
     build:
-      entry_points:  # [win]
+      entry_points:   # [win]
         - gr_filter_design = gnuradio.filter.filter_design:main  # [win]
         - gr_modtool = gnuradio.modtool.cli.base:cli  # [win]
       run_exports:
@@ -187,8 +187,8 @@ outputs:
   - name: gnuradio-grc
     script: install_grc.sh  # [not win]
     script: install_grc.bat  # [win]
-    build:  # [win]
-      entry_points:  # [win]
+    build:   # [win]
+      entry_points:   # [win]
         - gnuradio-companion = gnuradio.grc.main:main  # [win]
         - grcc = gnuradio.grc.compiler:main  # [win]
     requirements:
@@ -199,8 +199,8 @@ outputs:
         - ninja
         - pkg-config  # [not win]
       host:
-        - gnuradio-core
         - boost-cpp
+        - {{ pin_subpackage('gnuradio-core', exact=True) }}
         - gtk3
         - log4cpp
         - python
@@ -233,8 +233,8 @@ outputs:
         - ninja
         - pkg-config  # [not win]
       host:
-        - gnuradio-core
         - boost-cpp
+        - {{ pin_subpackage('gnuradio-core', exact=True) }}
         - log4cpp
         - pyqt
         - python
@@ -256,8 +256,8 @@ outputs:
   - name: gnuradio-uhd
     script: install_uhd.sh  # [not win]
     script: install_uhd.bat  # [win]
-    build:  # [win]
-      entry_points:  # [win]
+    build:   # [win]
+      entry_points:   # [win]
         - uhd_siggen = gnuradio.uhd.uhd_siggen_base:main  # [win]
     requirements:
       build:
@@ -267,8 +267,8 @@ outputs:
         - ninja
         - pkg-config  # [not win]
       host:
-        - gnuradio-core
         - boost-cpp
+        - {{ pin_subpackage('gnuradio-core', exact=True) }}
         - log4cpp
         - python
         - uhd
@@ -286,7 +286,7 @@ outputs:
       summary: GNU Radio UHD module for Ettus USRP radios
   - name: gnuradio-video-sdl
     build:
-      skip: True  # [osx]
+      skip: true  # [osx]
     script: install_video_sdl.sh  # [not win]
     script: install_video_sdl.bat  # [win]
     requirements:
@@ -297,8 +297,8 @@ outputs:
         - ninja
         - pkg-config  # [not win]
       host:
-        - gnuradio-core
         - boost-cpp
+        - {{ pin_subpackage('gnuradio-core', exact=True) }}
         - log4cpp
         - python
         - sdl
@@ -323,9 +323,9 @@ outputs:
         - ninja
         - pkg-config  # [not win]
       host:
-        - gnuradio-core
         - boost-cpp
         - cppzmq
+        - {{ pin_subpackage('gnuradio-core', exact=True) }}
         - log4cpp
         - python
         - zeromq
@@ -340,6 +340,11 @@ outputs:
         - gnuradio.zeromq
     about:
       summary: GNU Radio ZeroMQ module for message passing functionality
+  # need an output with a script defined to work-around "empty" output detection
+  # with python in both build (due to ninja) and host environments
+  - name: gnuradio
+    script: install_gnuradio.sh  # [not win]
+    script: install_gnuradio.bat  # [win]
 
 about:
   home: https://gnuradio.org/
