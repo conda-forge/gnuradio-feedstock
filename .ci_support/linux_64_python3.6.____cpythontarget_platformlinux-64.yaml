@@ -18,8 +18,6 @@ docker_image:
 - condaforge/linux-anvil-comp7
 fftw:
 - '3'
-gnuradio_core:
-- 3.8.1
 gsl:
 - '2.6'
 libblas:
