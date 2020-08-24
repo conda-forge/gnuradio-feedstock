@@ -343,7 +343,8 @@ outputs:
   # need an output with a script defined to work-around "empty" output detection
   # with python in both build (due to ninja) and host environments
   - name: gnuradio
-    script: echo "Packaging gnuradio metapackage."
+    script: install_gnuradio.sh  # [not win]
+    script: install_gnuradio.bat  # [win]
 
 about:
   home: https://gnuradio.org/
