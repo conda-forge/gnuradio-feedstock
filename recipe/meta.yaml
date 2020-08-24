@@ -199,7 +199,6 @@ outputs:
         - ninja
         - pkg-config  # [not win]
       host:
-        - gnuradio-core
         - boost-cpp
         - gtk3
         - log4cpp
@@ -233,7 +232,6 @@ outputs:
         - ninja
         - pkg-config  # [not win]
       host:
-        - gnuradio-core
         - boost-cpp
         - log4cpp
         - pyqt
@@ -267,7 +265,6 @@ outputs:
         - ninja
         - pkg-config  # [not win]
       host:
-        - gnuradio-core
         - boost-cpp
         - log4cpp
         - python
@@ -297,7 +294,6 @@ outputs:
         - ninja
         - pkg-config  # [not win]
       host:
-        - gnuradio-core
         - boost-cpp
         - log4cpp
         - python
@@ -323,7 +319,6 @@ outputs:
         - ninja
         - pkg-config  # [not win]
       host:
-        - gnuradio-core
         - boost-cpp
         - cppzmq
         - log4cpp
