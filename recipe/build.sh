@@ -4,7 +4,7 @@ mkdir build
 cd build
 # enable gnuradio components explicitly so we get build error when unsatisfied
 # the following are disabled:
-#   DOXYGEN/SPHINX because we don't need docs in the conda package
+#   DOXYGEN because we don't need docs in the conda package
 #   TESTING because we don't intend to run the unit tests, just import test
 # the following can be disabled to speed up the build (dependencies remain in
 # meta.yaml):
@@ -30,6 +30,7 @@ cmake_config_args=(
     -DENABLE_GR_ANALOG=ON
     -DENABLE_GR_AUDIO=ON
     -DENABLE_GR_BLOCKS=ON
+    -DENABLE_GR_BLOCKTOOL=ON
     -DENABLE_GR_CHANNELS=ON
     -DENABLE_GR_CTRLPORT=ON
     -DENABLE_GR_DIGITAL=ON
@@ -37,6 +38,8 @@ cmake_config_args=(
     -DENABLE_GR_FEC=ON
     -DENABLE_GR_FFT=ON
     -DENABLE_GR_FILTER=ON
+    -DENABLE_GR_MODTOOL=ON
+    -DENABLE_GR_NETWORK=ON
     -DENABLE_GR_QTGUI=ON
     -DENABLE_GR_TRELLIS=ON
     -DENABLE_GR_UHD=ON
@@ -45,10 +48,9 @@ cmake_config_args=(
     -DENABLE_GR_WAVELET=ON
     -DENABLE_GR_ZEROMQ=ON
     -DENABLE_GRC=ON
+    -DENABLE_POSTINSTALL=OFF
     -DENABLE_PYTHON=ON
-    -DENABLE_SPHINX=OFF
     -DENABLE_TESTING=OFF
-    -DENABLE_INTERNAL_VOLK=OFF
 )
 
 if [[ $target_platform == linux* ]] ; then

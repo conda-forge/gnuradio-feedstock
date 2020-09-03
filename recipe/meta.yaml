@@ -1,17 +1,16 @@
-{% set version = "3.8.2.0" %}
+{% set version = "3.9.0.0.dev20200902" %}
 
 package:
   name: gnuradio
   version: {{ version }}
 
 source:
-  url: https://github.com/gnuradio/gnuradio/releases/download/v{{ version }}/gnuradio-{{ version }}.tar.gz
-  sha256: 3e293541a9ac8d78660762bae8b80c0f6195b3494e1c50c01a9fd79cc60bb624
+  #url: https://github.com/gnuradio/gnuradio/releases/download/v{{ version }}/gnuradio-{{ version }}.tar.gz
+  #sha256: 3e293541a9ac8d78660762bae8b80c0f6195b3494e1c50c01a9fd79cc60bb624
+  url: https://github.com/gnuradio/gnuradio/archive/7470a7a3771dd90defb826b464dfe62977cb1eb6.zip
+  sha256: bc6516162b04d22b95ebb781d1156210dd9d1c6de454fc69d2ab063019b5603a
   patches:
-    - 0001-Use-raw-strings-for-paths-substituted-directly-into-.patch
     - 0001-Don-t-use-hard-coded-path-constants.patch
-    - 0001-python-Do-not-link-against-python-lib-for-building-a.patch
-    - 0001-cmake-Shorten-swig-command-line-by-removing-duplicat.patch
     - 0001-cmake-Install-python-wrapper-exe-for-scripts-on-Wind.patch
     - 0002-cmake-Don-t-generate-.pyc-and-.pyo-files.patch
     - 0001-Fix-drag-n-drop-issue-with-quartz-macos-backend.patch
@@ -19,7 +18,6 @@ source:
 
 build:
   number: 0
-  skip: true  # [win and py2k]
 
 requirements:
   build:
@@ -56,7 +54,8 @@ requirements:
     # blas needed to link with gsl
     - libblas
     - libcblas
-    - libusb >=1
+    - libsndfile
+    - libusb
     - log4cpp
     - mako
     - mpir
@@ -65,10 +64,11 @@ requirements:
     # specify version so pin is ignored
     - numpy >=1.1
     - pip  # [win]
+    - pybind11
+    #- pygccxml
     - python
     - six
-    - swig
-    - volk >=2
+    - volk
   # gnuradio.audio
     - alsa-lib  # [linux]
     - portaudio  # [linux]
@@ -140,12 +140,13 @@ outputs:
         - gsl
         - libblas
         - libcblas
+        - libsndfile
         - libusb
         - log4cpp
         - mpir
         - portaudio  # [linux]
+        - pybind11
         - python
-        - swig
         - volk
       run:
         - boost-cpp

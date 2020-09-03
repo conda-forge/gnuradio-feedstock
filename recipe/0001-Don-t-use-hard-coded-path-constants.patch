@@ -1,6 +1,6 @@
-From 0617c89d215c11d11e43c75dca009e64029dc984 Mon Sep 17 00:00:00 2001
-From: Ryan Volz <rvolz@mit.edu>
-Date: Mon, 5 Aug 2019 11:06:13 -0400
+From dc13ae196d84d498ae702109ff024ce5dc489d57 Mon Sep 17 00:00:00 2001
+From: Ryan Volz <ryan.volz@gmail.com>
+Date: Thu, 3 Sep 2020 14:21:13 -0400
 Subject: [PATCH] Don't use hard-coded path constants.
 
 This replaces the path constants for the prefix, system configuration,
@@ -12,16 +12,16 @@ avoid unescaped character problems. For relocatable prefix string
 replacement, conda always substitutes in forward-slash paths anyway, so
 it's just easier to use them from the start.
 ---
- CMakeLists.txt                       | 20 +++++++++++-----
- gnuradio-runtime/lib/CMakeLists.txt  |  4 ----
- gnuradio-runtime/lib/constants.cc.in | 36 +++++++++++++++-------------
- 3 files changed, 33 insertions(+), 27 deletions(-)
+ CMakeLists.txt                       | 20 ++++++++++-----
+ gnuradio-runtime/lib/CMakeLists.txt  |  4 ---
+ gnuradio-runtime/lib/constants.cc.in | 37 +++++++++++++++-------------
+ 3 files changed, 34 insertions(+), 27 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 059575563..8184c68f5 100644
+index dc253a144..acd5be570 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -309,12 +309,20 @@ endif(ENABLE_PERFORMANCE_COUNTERS)
+@@ -271,12 +271,20 @@ endif(ENABLE_PERFORMANCE_COUNTERS)
  ########################################################################
  # Variables replaced when configuring the package config files
  ########################################################################
@@ -49,10 +49,10 @@ index 059575563..8184c68f5 100644
  ########################################################################
  # On Apple only, set install name and use rpath correctly, if not already set
 diff --git a/gnuradio-runtime/lib/CMakeLists.txt b/gnuradio-runtime/lib/CMakeLists.txt
-index 5aa90a5e1..b5086042c 100644
+index 65673ad69..a2f6a720a 100644
 --- a/gnuradio-runtime/lib/CMakeLists.txt
 +++ b/gnuradio-runtime/lib/CMakeLists.txt
-@@ -30,10 +30,6 @@ execute_process(COMMAND ${PYTHON_EXECUTABLE} -c
+@@ -18,10 +18,6 @@ execute_process(COMMAND ${PYTHON_EXECUTABLE} -c
  message(STATUS "Loading build date ${BUILD_DATE} into constants...")
  message(STATUS "Loading version ${VERSION} into constants...")
  
@@ -64,10 +64,10 @@ index 5aa90a5e1..b5086042c 100644
  
  #########################################################################
 diff --git a/gnuradio-runtime/lib/constants.cc.in b/gnuradio-runtime/lib/constants.cc.in
-index b368e9dc3..7588c1d2d 100644
+index 0f316935d..2a5b6b210 100644
 --- a/gnuradio-runtime/lib/constants.cc.in
 +++ b/gnuradio-runtime/lib/constants.cc.in
-@@ -26,6 +26,8 @@
+@@ -14,6 +14,8 @@
  
  #include <stdlib.h>
  #include <gnuradio/constants.h>
@@ -76,15 +76,16 @@ index b368e9dc3..7588c1d2d 100644
  
  namespace gr {
  
-@@ -36,33 +38,33 @@ namespace gr {
+@@ -24,33 +26,34 @@ namespace gr {
      const char *prefix = getenv("GR_PREFIX");
      if (prefix != NULL) return prefix;
  
 -    return "@prefix@";
 +    boost::filesystem::path prefix_rel_lib = "@prefix_relative_to_lib@";
 +    boost::filesystem::path gr_runtime_lib_path = boost::dll::this_line_location();
++    //Normalize before decomposing path so result is reliable
 +    boost::filesystem::path prefix_path =
-+        gr_runtime_lib_path.remove_filename() / prefix_rel_lib;
++        gr_runtime_lib_path.lexically_normal().parent_path() / prefix_rel_lib;
 +    return prefix_path.lexically_normal().string();
    }
  
