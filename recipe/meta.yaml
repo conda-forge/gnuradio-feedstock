@@ -15,6 +15,7 @@ source:
     - 0002-cmake-Don-t-generate-.pyc-and-.pyo-files.patch
     - 0001-Fix-drag-n-drop-issue-with-quartz-macos-backend.patch
     - 0001-Use-an-ImageSurface-rather-than-UI-back-end.patch  # [osx]
+    - 0001-gr-audio-osx-Fix-compilation.patch
 
 build:
   number: 0
