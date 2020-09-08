@@ -18,6 +18,7 @@ source:
     - 0001-gr-audio-osx-Fix-compilation.patch
     - 0001-cmake-python-Fix-linking-when-runtime-py-interpreter.patch
     - 0001-cmake-pybind-Use-PYTHON_EXECUTABLE-instead-of-python.patch
+    - 0001-runtime-lib-Fix-compile-error-with-format-string-pre.patch
 
 build:
   number: 0

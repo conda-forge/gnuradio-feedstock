@@ -1,0 +1,26 @@
+From 7bc9e0590734abd3b368a353f3f6451307fffbbf Mon Sep 17 00:00:00 2001
+From: Ryan Volz <ryan.volz@gmail.com>
+Date: Tue, 8 Sep 2020 17:07:34 -0400
+Subject: [PATCH] runtime: lib: Fix compile error with format string, present
+ on Windows.
+
+---
+ gnuradio-runtime/lib/vmcircbuf_createfilemapping.cc | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/gnuradio-runtime/lib/vmcircbuf_createfilemapping.cc b/gnuradio-runtime/lib/vmcircbuf_createfilemapping.cc
+index 04860103c..3b79a09e3 100644
+--- a/gnuradio-runtime/lib/vmcircbuf_createfilemapping.cc
++++ b/gnuradio-runtime/lib/vmcircbuf_createfilemapping.cc
+@@ -46,7 +46,7 @@ static void werror(char* where, DWORD last_error)
+                   buf,
+                   sizeof(buf) / sizeof(TCHAR), // buffer size
+                   NULL);
+-    GR_LOG_ERROR(logger, boost::format("%s: Error %d: %s" % where % last_error % buf));
++    GR_LOG_ERROR(logger, boost::format("%s: Error %d: %s") % where % last_error % buf);
+     return;
+ }
+ #endif
+-- 
+2.20.1
+
