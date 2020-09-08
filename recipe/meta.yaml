@@ -16,6 +16,7 @@ source:
     - 0001-Fix-drag-n-drop-issue-with-quartz-macos-backend.patch
     - 0001-Use-an-ImageSurface-rather-than-UI-back-end.patch  # [osx]
     - 0001-gr-audio-osx-Fix-compilation.patch
+    - 0001-cmake-python-Fix-linking-when-runtime-py-interpreter.patch
 
 build:
   number: 0
