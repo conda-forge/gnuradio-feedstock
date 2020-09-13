@@ -1,4 +1,4 @@
-{% set version = "3.9.0.0.dev20200902" %}
+{% set version = "3.9.0.0.dev20200911" %}
 
 package:
   name: gnuradio
@@ -7,8 +7,8 @@ package:
 source:
   #url: https://github.com/gnuradio/gnuradio/releases/download/v{{ version }}/gnuradio-{{ version }}.tar.gz
   #sha256: 3e293541a9ac8d78660762bae8b80c0f6195b3494e1c50c01a9fd79cc60bb624
-  url: https://github.com/gnuradio/gnuradio/archive/7470a7a3771dd90defb826b464dfe62977cb1eb6.zip
-  sha256: bc6516162b04d22b95ebb781d1156210dd9d1c6de454fc69d2ab063019b5603a
+  url: https://github.com/gnuradio/gnuradio/archive/df505f9e272a3ca4b901980c94d6256840848133.zip
+  sha256: e2ea4b8bbe9f5c7871fe547caee4bd8faafa9ef7f863acc7d2b803f0eea12305
   patches:
     - 0001-Don-t-use-hard-coded-path-constants.patch
     - 0001-cmake-Install-python-wrapper-exe-for-scripts-on-Wind.patch
