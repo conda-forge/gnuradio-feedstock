@@ -1,0 +1,60 @@
+From 55da1db01e3a36109050313a5258b68a5e7ae364 Mon Sep 17 00:00:00 2001
+From: Ryan Volz <ryan.volz@gmail.com>
+Date: Mon, 14 Sep 2020 10:43:20 -0400
+Subject: [PATCH 1/2] cmake: Fix pybind11 compiler definitions with MSVC.
+
+-Wall is not set for MSVC, and -Wno-unused-variable doesn't exist, so
+put it behind an if statement.
+---
+ cmake/Modules/GrPybind.cmake | 20 ++++++++++++++++----
+ 1 file changed, 16 insertions(+), 4 deletions(-)
+
+diff --git a/cmake/Modules/GrPybind.cmake b/cmake/Modules/GrPybind.cmake
+index fd5c9a251..12ff23487 100644
+--- a/cmake/Modules/GrPybind.cmake
++++ b/cmake/Modules/GrPybind.cmake
+@@ -40,7 +40,11 @@ target_include_directories(${name}_python PUBLIC
+     ${PYBIND11_INCLUDE_DIR}
+ )
+ target_link_libraries(${name}_python PUBLIC ${Boost_LIBRARIES} ${PYTHON_LIBRARIES} gnuradio-${MODULE_NAME})
+-target_compile_options(${name}_python PRIVATE -Wno-unused-variable) # disable warnings for docstring templates
++if(CMAKE_CXX_COMPILER_ID MATCHES "Clang" OR
++   CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
++    target_compile_options(${name}_python PRIVATE -Wno-unused-variable) # disable warnings for docstring templates
++endif(CMAKE_CXX_COMPILER_ID MATCHES "Clang" OR
++      CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+ add_dependencies(${name}_python ${name}_docstrings)
+ 
+ endmacro(GR_PYBIND_MAKE)
+@@ -153,8 +157,12 @@ target_include_directories(${name}_python PUBLIC
+     ${PYBIND11_INCLUDE_DIR}
+ )
+ target_link_libraries(${name}_python PUBLIC ${Boost_LIBRARIES} ${PYTHON_LIBRARIES} gnuradio-${MODULE_NAME})
+-target_compile_options(${name}_python PRIVATE -Wno-unused-variable) # disable warnings for docstring templates
+-add_dependencies(${name}_python ${name}_docstrings ${regen_targets}) 
++if(CMAKE_CXX_COMPILER_ID MATCHES "Clang" OR
++   CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
++    target_compile_options(${name}_python PRIVATE -Wno-unused-variable) # disable warnings for docstring templates
++endif(CMAKE_CXX_COMPILER_ID MATCHES "Clang" OR
++      CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
++add_dependencies(${name}_python ${name}_docstrings ${regen_targets})
+ 
+ endmacro(GR_PYBIND_MAKE_CHECK_HASH)
+ 
+@@ -274,7 +282,11 @@ target_include_directories(${name}_python PUBLIC
+     ${PYBIND11_INCLUDE_DIR}
+ )
+ target_link_libraries(${name}_python PUBLIC ${Boost_LIBRARIES} ${PYTHON_LIBRARIES} gnuradio-${MODULE_NAME})
+-target_compile_options(${name}_python PRIVATE -Wno-unused-variable) # disable warnings for docstring templates
++if(CMAKE_CXX_COMPILER_ID MATCHES "Clang" OR
++   CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
++    target_compile_options(${name}_python PRIVATE -Wno-unused-variable) # disable warnings for docstring templates
++endif(CMAKE_CXX_COMPILER_ID MATCHES "Clang" OR
++      CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+ add_dependencies(${name}_python ${name}_docstrings ${regen_targets})
+ 
+ endmacro(GR_PYBIND_MAKE_OOT)
+\ No newline at end of file
+-- 
+2.20.1
+
