@@ -72,7 +72,6 @@ requirements:
     - numpy >=1.1
     - pip  # [win]
     - pybind11
-    #- pygccxml
     - python
     - six
     - volk
