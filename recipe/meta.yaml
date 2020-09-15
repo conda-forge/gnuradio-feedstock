@@ -21,6 +21,7 @@ source:
     - 0001-cmake-Set-VERSION_PATH-to-be-only-git-fixing-RC_MAIN.patch
     - 0001-cmake-Fix-pybind11-compiler-definitions-with-MSVC.patch
     - 0002-cmake-python-Fix-linking-when-runtime-py-interpreter.patch
+    - 0001-runtime-lib-Include-missing-algorithm-header.patch
 
 build:
   number: 0

@@ -1,0 +1,26 @@
+From dab67c01105150bd519a2ed8c6fb83e5f981b8bd Mon Sep 17 00:00:00 2001
+From: Ryan Volz <ryan.volz@gmail.com>
+Date: Tue, 15 Sep 2020 13:44:19 -0400
+Subject: [PATCH] runtime: lib: Include missing <algorithm> header.
+
+This fixes compilation with MSVC on conda-forge, although why this
+wasn't needed earlier is a mystery.
+---
+ gnuradio-runtime/lib/io_signature.cc | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/gnuradio-runtime/lib/io_signature.cc b/gnuradio-runtime/lib/io_signature.cc
+index e5fd2bdd7..b330e56c3 100644
+--- a/gnuradio-runtime/lib/io_signature.cc
++++ b/gnuradio-runtime/lib/io_signature.cc
+@@ -13,6 +13,7 @@
+ #endif
+ 
+ #include <gnuradio/io_signature.h>
++#include <algorithm>
+ #include <iostream>
+ #include <stdexcept>
+ 
+-- 
+2.20.1
+
