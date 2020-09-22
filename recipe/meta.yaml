@@ -80,8 +80,6 @@ requirements:
     - portaudio  # [linux]
   # gnuradio companion
     - gtk3
-    # remove glib when 2.66 is fixed
-    - glib <2.66  # [win]
     - lxml
     - pygobject
     - pyyaml
