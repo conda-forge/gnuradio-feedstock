@@ -1,0 +1,65 @@
+From 3d48d0df8de208dd106c6e5a34d80c5b77e1c308 Mon Sep 17 00:00:00 2001
+From: Ryan Volz <ryan.volz@gmail.com>
+Date: Tue, 15 Sep 2020 13:44:19 -0400
+Subject: [PATCH] lib, include: Include missing headers.
+
+This fixes compilation with MSVC on conda-forge, although why this
+wasn't needed earlier is a mystery.
+---
+ gnuradio-runtime/lib/io_signature.cc        | 1 +
+ gr-fec/include/gnuradio/fec/fec_mtrx.h      | 1 +
+ gr-fec/include/gnuradio/fec/ldpc_G_matrix.h | 1 +
+ gr-fec/lib/polar_common.cc                  | 1 +
+ 4 files changed, 4 insertions(+)
+
+diff --git a/gnuradio-runtime/lib/io_signature.cc b/gnuradio-runtime/lib/io_signature.cc
+index e5fd2bdd7..b330e56c3 100644
+--- a/gnuradio-runtime/lib/io_signature.cc
++++ b/gnuradio-runtime/lib/io_signature.cc
+@@ -13,6 +13,7 @@
+ #endif
+ 
+ #include <gnuradio/io_signature.h>
++#include <algorithm>
+ #include <iostream>
+ #include <stdexcept>
+ 
+diff --git a/gr-fec/include/gnuradio/fec/fec_mtrx.h b/gr-fec/include/gnuradio/fec/fec_mtrx.h
+index 8a0a93f46..d0edc06c1 100644
+--- a/gr-fec/include/gnuradio/fec/fec_mtrx.h
++++ b/gr-fec/include/gnuradio/fec/fec_mtrx.h
+@@ -12,6 +12,7 @@
+ #include <gnuradio/fec/api.h>
+ #include <cstdlib>
+ #include <memory>
++#include <string>
+ 
+ namespace gr {
+ namespace fec {
+diff --git a/gr-fec/include/gnuradio/fec/ldpc_G_matrix.h b/gr-fec/include/gnuradio/fec/ldpc_G_matrix.h
+index 7910dc3a1..75e0d8000 100644
+--- a/gr-fec/include/gnuradio/fec/ldpc_G_matrix.h
++++ b/gr-fec/include/gnuradio/fec/ldpc_G_matrix.h
+@@ -12,6 +12,7 @@
+ #include <gnuradio/fec/api.h>
+ #include <gnuradio/fec/fec_mtrx.h>
+ #include <memory>
++#include <string>
+ 
+ namespace gr {
+ namespace fec {
+diff --git a/gr-fec/lib/polar_common.cc b/gr-fec/lib/polar_common.cc
+index 6df894766..1b2a13137 100644
+--- a/gr-fec/lib/polar_common.cc
++++ b/gr-fec/lib/polar_common.cc
+@@ -19,6 +19,7 @@
+ #include <gnuradio/blocks/pack_k_bits.h>
+ #include <gnuradio/blocks/unpack_k_bits.h>
+ 
++#include <algorithm>
+ #include <cmath>
+ #include <iostream>
+ #include <stdexcept>
+-- 
+2.20.1
+
