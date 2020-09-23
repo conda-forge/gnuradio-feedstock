@@ -22,6 +22,7 @@ source:
     - 0001-cmake-Fix-pybind11-compiler-definitions-with-MSVC.patch
     - 0002-cmake-python-Fix-linking-when-runtime-py-interpreter.patch
     - 0001-lib-include-Include-missing-headers.patch
+    - 0001-filter-include-Mark-move-constructor-assignment-as-n.patch
 
 build:
   number: 0
