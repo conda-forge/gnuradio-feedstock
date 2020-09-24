@@ -1,7 +1,7 @@
 From d2f507fe050c5e1d6aee78384c37da816d2c2323 Mon Sep 17 00:00:00 2001
 From: Ryan Volz <ryan.volz@gmail.com>
 Date: Wed, 23 Sep 2020 17:33:42 -0400
-Subject: [PATCH] filter: include: Mark move constructor/assignment as
+Subject: [PATCH 1/2] filter: include: Mark move constructor/assignment as
  noexcept.
 
 With this, MSVC will actually use the move operations instead of trying

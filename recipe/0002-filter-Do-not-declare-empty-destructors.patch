@@ -1,0 +1,1131 @@
+From 4fe6c0a30ed43d00ea1a6cc4477b216baa833475 Mon Sep 17 00:00:00 2001
+From: Ryan Volz <ryan.volz@gmail.com>
+Date: Thu, 24 Sep 2020 11:45:12 -0400
+Subject: [PATCH 2/2] filter: Do not declare empty destructors.
+
+Let the compiler implicitly define them, which fixes compilation with
+MSVC. Having an explicit desctructor causes MSVC to implicitly
+delete move constructor/assignment, and it then tries to fall back to
+copy constructor/assignment in fir_filter which has been deleted
+explicitly and so fails.
+---
+ gr-filter/include/gnuradio/filter/filterbank.h               | 2 --
+ gr-filter/include/gnuradio/filter/fir_filter.h               | 1 -
+ gr-filter/include/gnuradio/filter/mmse_fir_interpolator_cc.h | 1 -
+ gr-filter/include/gnuradio/filter/mmse_fir_interpolator_ff.h | 1 -
+ .../include/gnuradio/filter/mmse_interp_differentiator_cc.h  | 1 -
+ .../include/gnuradio/filter/mmse_interp_differentiator_ff.h  | 1 -
+ gr-filter/include/gnuradio/filter/pfb_arb_resampler.h        | 2 --
+ gr-filter/include/gnuradio/filter/polyphase_filterbank.h     | 2 --
+ gr-filter/lib/dc_blocker_cc_impl.cc                          | 2 --
+ gr-filter/lib/dc_blocker_cc_impl.h                           | 1 -
+ gr-filter/lib/dc_blocker_ff_impl.cc                          | 2 --
+ gr-filter/lib/dc_blocker_ff_impl.h                           | 1 -
+ gr-filter/lib/filter_delay_fc_impl.cc                        | 2 --
+ gr-filter/lib/filter_delay_fc_impl.h                         | 1 -
+ gr-filter/lib/filterbank.cc                                  | 2 --
+ gr-filter/lib/filterbank_vcvcf_impl.cc                       | 2 --
+ gr-filter/lib/filterbank_vcvcf_impl.h                        | 1 -
+ gr-filter/lib/fir_filter.cc                                  | 5 -----
+ gr-filter/lib/fir_filter_blk_impl.cc                         | 5 -----
+ gr-filter/lib/fir_filter_blk_impl.h                          | 2 --
+ gr-filter/lib/freq_xlating_fir_filter_impl.cc                | 5 -----
+ gr-filter/lib/freq_xlating_fir_filter_impl.h                 | 1 -
+ gr-filter/lib/hilbert_fc_impl.cc                             | 2 --
+ gr-filter/lib/hilbert_fc_impl.h                              | 2 --
+ gr-filter/lib/iir_filter_ccc_impl.cc                         | 2 --
+ gr-filter/lib/iir_filter_ccc_impl.h                          | 1 -
+ gr-filter/lib/iir_filter_ccd_impl.cc                         | 2 --
+ gr-filter/lib/iir_filter_ccd_impl.h                          | 1 -
+ gr-filter/lib/iir_filter_ccf_impl.cc                         | 2 --
+ gr-filter/lib/iir_filter_ccf_impl.h                          | 1 -
+ gr-filter/lib/iir_filter_ccz_impl.cc                         | 2 --
+ gr-filter/lib/iir_filter_ccz_impl.h                          | 1 -
+ gr-filter/lib/iir_filter_ffd_impl.cc                         | 2 --
+ gr-filter/lib/iir_filter_ffd_impl.h                          | 1 -
+ gr-filter/lib/interp_fir_filter_impl.cc                      | 5 -----
+ gr-filter/lib/interp_fir_filter_impl.h                       | 2 --
+ gr-filter/lib/ival_decimator_impl.cc                         | 5 -----
+ gr-filter/lib/ival_decimator_impl.h                          | 1 -
+ gr-filter/lib/mmse_fir_interpolator_cc.cc                    | 2 --
+ gr-filter/lib/mmse_fir_interpolator_ff.cc                    | 2 --
+ gr-filter/lib/mmse_interp_differentiator_cc.cc               | 2 --
+ gr-filter/lib/mmse_interp_differentiator_ff.cc               | 2 --
+ gr-filter/lib/mmse_interpolator_cc_impl.cc                   | 2 --
+ gr-filter/lib/mmse_interpolator_cc_impl.h                    | 1 -
+ gr-filter/lib/mmse_interpolator_ff_impl.cc                   | 2 --
+ gr-filter/lib/mmse_interpolator_ff_impl.h                    | 1 -
+ gr-filter/lib/mmse_resampler_cc_impl.cc                      | 2 --
+ gr-filter/lib/mmse_resampler_cc_impl.h                       | 1 -
+ gr-filter/lib/mmse_resampler_ff_impl.cc                      | 2 --
+ gr-filter/lib/mmse_resampler_ff_impl.h                       | 1 -
+ gr-filter/lib/pfb_arb_resampler.cc                           | 2 --
+ gr-filter/lib/pfb_arb_resampler_ccc_impl.cc                  | 2 --
+ gr-filter/lib/pfb_arb_resampler_ccc_impl.h                   | 2 --
+ gr-filter/lib/pfb_arb_resampler_ccf_impl.cc                  | 2 --
+ gr-filter/lib/pfb_arb_resampler_ccf_impl.h                   | 2 --
+ gr-filter/lib/pfb_arb_resampler_fff_impl.cc                  | 2 --
+ gr-filter/lib/pfb_arb_resampler_fff_impl.h                   | 2 --
+ gr-filter/lib/pfb_channelizer_ccf_impl.cc                    | 2 --
+ gr-filter/lib/pfb_channelizer_ccf_impl.h                     | 2 --
+ gr-filter/lib/pfb_decimator_ccf_impl.cc                      | 2 --
+ gr-filter/lib/pfb_decimator_ccf_impl.h                       | 2 --
+ gr-filter/lib/pfb_interpolator_ccf_impl.cc                   | 2 --
+ gr-filter/lib/pfb_interpolator_ccf_impl.h                    | 2 --
+ gr-filter/lib/pfb_synthesizer_ccf_impl.cc                    | 2 --
+ gr-filter/lib/pfb_synthesizer_ccf_impl.h                     | 1 -
+ gr-filter/lib/polyphase_filterbank.cc                        | 2 --
+ gr-filter/lib/rational_resampler_base_impl.cc                | 5 -----
+ gr-filter/lib/rational_resampler_base_impl.h                 | 2 --
+ gr-filter/lib/single_pole_iir_filter_cc_impl.cc              | 2 --
+ gr-filter/lib/single_pole_iir_filter_cc_impl.h               | 1 -
+ gr-filter/lib/single_pole_iir_filter_ff_impl.cc              | 2 --
+ gr-filter/lib/single_pole_iir_filter_ff_impl.h               | 1 -
+ gr-filter/python/filter/bindings/filterbank_python.cc        | 2 +-
+ gr-filter/python/filter/bindings/fir_filter_python.cc        | 2 +-
+ .../filter/bindings/mmse_fir_interpolator_cc_python.cc       | 2 +-
+ .../filter/bindings/mmse_fir_interpolator_ff_python.cc       | 2 +-
+ .../filter/bindings/mmse_interp_differentiator_cc_python.cc  | 2 +-
+ .../filter/bindings/mmse_interp_differentiator_ff_python.cc  | 2 +-
+ gr-filter/python/filter/bindings/pfb_arb_resampler_python.cc | 2 +-
+ .../python/filter/bindings/polyphase_filterbank_python.cc    | 2 +-
+ 80 files changed, 8 insertions(+), 147 deletions(-)
+
+diff --git a/gr-filter/include/gnuradio/filter/filterbank.h b/gr-filter/include/gnuradio/filter/filterbank.h
+index d4018f258..47235e9fb 100644
+--- a/gr-filter/include/gnuradio/filter/filterbank.h
++++ b/gr-filter/include/gnuradio/filter/filterbank.h
+@@ -57,8 +57,6 @@ public:
+      */
+     filterbank(const std::vector<std::vector<float>>& taps);
+ 
+-    ~filterbank();
+-
+     /*!
+      * Update the filterbank's filter taps.
+      *
+diff --git a/gr-filter/include/gnuradio/filter/fir_filter.h b/gr-filter/include/gnuradio/filter/fir_filter.h
+index 1418fd67c..52c9f7ed1 100644
+--- a/gr-filter/include/gnuradio/filter/fir_filter.h
++++ b/gr-filter/include/gnuradio/filter/fir_filter.h
+@@ -26,7 +26,6 @@ class FILTER_API fir_filter
+ {
+ public:
+     fir_filter(int decimation, const std::vector<TAP_T>& taps);
+-    ~fir_filter();
+ 
+     // Disallow copy.
+     //
+diff --git a/gr-filter/include/gnuradio/filter/mmse_fir_interpolator_cc.h b/gr-filter/include/gnuradio/filter/mmse_fir_interpolator_cc.h
+index 92a1f3cad..300b4043f 100644
+--- a/gr-filter/include/gnuradio/filter/mmse_fir_interpolator_cc.h
++++ b/gr-filter/include/gnuradio/filter/mmse_fir_interpolator_cc.h
+@@ -39,7 +39,6 @@ class FILTER_API mmse_fir_interpolator_cc
+ {
+ public:
+     mmse_fir_interpolator_cc();
+-    ~mmse_fir_interpolator_cc();
+ 
+     unsigned ntaps() const;
+     unsigned nsteps() const;
+diff --git a/gr-filter/include/gnuradio/filter/mmse_fir_interpolator_ff.h b/gr-filter/include/gnuradio/filter/mmse_fir_interpolator_ff.h
+index 004d33def..6f07c12df 100644
+--- a/gr-filter/include/gnuradio/filter/mmse_fir_interpolator_ff.h
++++ b/gr-filter/include/gnuradio/filter/mmse_fir_interpolator_ff.h
+@@ -39,7 +39,6 @@ class FILTER_API mmse_fir_interpolator_ff
+ {
+ public:
+     mmse_fir_interpolator_ff();
+-    ~mmse_fir_interpolator_ff();
+ 
+     unsigned ntaps() const;
+     unsigned nsteps() const;
+diff --git a/gr-filter/include/gnuradio/filter/mmse_interp_differentiator_cc.h b/gr-filter/include/gnuradio/filter/mmse_interp_differentiator_cc.h
+index bf7541ae0..3da40654d 100644
+--- a/gr-filter/include/gnuradio/filter/mmse_interp_differentiator_cc.h
++++ b/gr-filter/include/gnuradio/filter/mmse_interp_differentiator_cc.h
+@@ -38,7 +38,6 @@ class FILTER_API mmse_interp_differentiator_cc
+ {
+ public:
+     mmse_interp_differentiator_cc();
+-    ~mmse_interp_differentiator_cc();
+ 
+     unsigned ntaps() const;
+     unsigned nsteps() const;
+diff --git a/gr-filter/include/gnuradio/filter/mmse_interp_differentiator_ff.h b/gr-filter/include/gnuradio/filter/mmse_interp_differentiator_ff.h
+index 8a458c569..f1f56bf4e 100644
+--- a/gr-filter/include/gnuradio/filter/mmse_interp_differentiator_ff.h
++++ b/gr-filter/include/gnuradio/filter/mmse_interp_differentiator_ff.h
+@@ -37,7 +37,6 @@ class FILTER_API mmse_interp_differentiator_ff
+ {
+ public:
+     mmse_interp_differentiator_ff();
+-    ~mmse_interp_differentiator_ff();
+ 
+     unsigned ntaps() const;
+     unsigned nsteps() const;
+diff --git a/gr-filter/include/gnuradio/filter/pfb_arb_resampler.h b/gr-filter/include/gnuradio/filter/pfb_arb_resampler.h
+index 95d4c5bb2..7e67a4f26 100644
+--- a/gr-filter/include/gnuradio/filter/pfb_arb_resampler.h
++++ b/gr-filter/include/gnuradio/filter/pfb_arb_resampler.h
+@@ -131,8 +131,6 @@ public:
+                           const std::vector<float>& taps,
+                           unsigned int filter_size);
+ 
+-    ~pfb_arb_resampler_ccf();
+-
+     /*!
+      * Resets the filterbank's filter taps with the new prototype filter
+      * \param taps (vector/list of floats) The prototype filter to populate the
+diff --git a/gr-filter/include/gnuradio/filter/polyphase_filterbank.h b/gr-filter/include/gnuradio/filter/polyphase_filterbank.h
+index 81131f9eb..05b2ce653 100644
+--- a/gr-filter/include/gnuradio/filter/polyphase_filterbank.h
++++ b/gr-filter/include/gnuradio/filter/polyphase_filterbank.h
+@@ -109,8 +109,6 @@ public:
+                          const std::vector<float>& taps,
+                          bool fft_forward = false);
+ 
+-    ~polyphase_filterbank();
+-
+     /*!
+      * Update the filterbank's filter taps from a prototype
+      * filter.
+diff --git a/gr-filter/lib/dc_blocker_cc_impl.cc b/gr-filter/lib/dc_blocker_cc_impl.cc
+index 11e3380a1..f72e9f7a9 100644
+--- a/gr-filter/lib/dc_blocker_cc_impl.cc
++++ b/gr-filter/lib/dc_blocker_cc_impl.cc
+@@ -29,8 +29,6 @@ moving_averager_c::moving_averager_c(int D)
+ {
+ }
+ 
+-moving_averager_c::~moving_averager_c() {}
+-
+ gr_complex moving_averager_c::filter(gr_complex x)
+ {
+     d_out_d1 = d_out;
+diff --git a/gr-filter/lib/dc_blocker_cc_impl.h b/gr-filter/lib/dc_blocker_cc_impl.h
+index b2d772561..eb45f7b97 100644
+--- a/gr-filter/lib/dc_blocker_cc_impl.h
++++ b/gr-filter/lib/dc_blocker_cc_impl.h
+@@ -22,7 +22,6 @@ class moving_averager_c
+ {
+ public:
+     moving_averager_c(int D);
+-    ~moving_averager_c();
+ 
+     gr_complex filter(gr_complex x);
+     gr_complex delayed_sig() { return d_out; }
+diff --git a/gr-filter/lib/dc_blocker_ff_impl.cc b/gr-filter/lib/dc_blocker_ff_impl.cc
+index 51d142114..bd8fce750 100644
+--- a/gr-filter/lib/dc_blocker_ff_impl.cc
++++ b/gr-filter/lib/dc_blocker_ff_impl.cc
+@@ -25,8 +25,6 @@ moving_averager_f::moving_averager_f(int D)
+ {
+ }
+ 
+-moving_averager_f::~moving_averager_f() {}
+-
+ float moving_averager_f::filter(float x)
+ {
+     d_out_d1 = d_out;
+diff --git a/gr-filter/lib/dc_blocker_ff_impl.h b/gr-filter/lib/dc_blocker_ff_impl.h
+index 8192fb3f8..35ef111be 100644
+--- a/gr-filter/lib/dc_blocker_ff_impl.h
++++ b/gr-filter/lib/dc_blocker_ff_impl.h
+@@ -22,7 +22,6 @@ class moving_averager_f
+ {
+ public:
+     moving_averager_f(int D);
+-    ~moving_averager_f();
+ 
+     float filter(float x);
+     float delayed_sig() { return d_out; }
+diff --git a/gr-filter/lib/filter_delay_fc_impl.cc b/gr-filter/lib/filter_delay_fc_impl.cc
+index a3e3c5e8d..b3b70a277 100644
+--- a/gr-filter/lib/filter_delay_fc_impl.cc
++++ b/gr-filter/lib/filter_delay_fc_impl.cc
+@@ -38,8 +38,6 @@ filter_delay_fc_impl::filter_delay_fc_impl(const std::vector<float>& taps)
+     set_alignment(std::max(1, alignment_multiple));
+ }
+ 
+-filter_delay_fc_impl::~filter_delay_fc_impl() {}
+-
+ std::vector<float> filter_delay_fc_impl::taps() { return d_fir.taps(); }
+ 
+ void filter_delay_fc_impl::set_taps(const std::vector<float>& taps)
+diff --git a/gr-filter/lib/filter_delay_fc_impl.h b/gr-filter/lib/filter_delay_fc_impl.h
+index ae7530429..19fb04dc2 100644
+--- a/gr-filter/lib/filter_delay_fc_impl.h
++++ b/gr-filter/lib/filter_delay_fc_impl.h
+@@ -28,7 +28,6 @@ private:
+ 
+ public:
+     filter_delay_fc_impl(const std::vector<float>& taps);
+-    ~filter_delay_fc_impl();
+ 
+     std::vector<float> taps();
+     void set_taps(const std::vector<float>& taps);
+diff --git a/gr-filter/lib/filterbank.cc b/gr-filter/lib/filterbank.cc
+index 7e2dff533..20bdf29ca 100644
+--- a/gr-filter/lib/filterbank.cc
++++ b/gr-filter/lib/filterbank.cc
+@@ -38,8 +38,6 @@ filterbank::filterbank(const std::vector<std::vector<float>>& taps)
+     set_taps(d_taps);
+ }
+ 
+-filterbank::~filterbank() {}
+-
+ void filterbank::set_taps(const std::vector<std::vector<float>>& taps)
+ {
+     // Check that the number of filters is correct.
+diff --git a/gr-filter/lib/filterbank_vcvcf_impl.cc b/gr-filter/lib/filterbank_vcvcf_impl.cc
+index a532ba68b..620f18dfe 100644
+--- a/gr-filter/lib/filterbank_vcvcf_impl.cc
++++ b/gr-filter/lib/filterbank_vcvcf_impl.cc
+@@ -34,8 +34,6 @@ filterbank_vcvcf_impl::filterbank_vcvcf_impl(const std::vector<std::vector<float
+     set_history(d_ntaps + 1);
+ }
+ 
+-filterbank_vcvcf_impl::~filterbank_vcvcf_impl() {}
+-
+ void filterbank_vcvcf_impl::set_taps(const std::vector<std::vector<float>>& taps)
+ {
+     gr::thread::scoped_lock guard(d_mutex);
+diff --git a/gr-filter/lib/filterbank_vcvcf_impl.h b/gr-filter/lib/filterbank_vcvcf_impl.h
+index 3535672b8..460ae8288 100644
+--- a/gr-filter/lib/filterbank_vcvcf_impl.h
++++ b/gr-filter/lib/filterbank_vcvcf_impl.h
+@@ -27,7 +27,6 @@ private:
+ 
+ public:
+     filterbank_vcvcf_impl(const std::vector<std::vector<float>>& taps);
+-    ~filterbank_vcvcf_impl();
+ 
+     void set_taps(const std::vector<std::vector<float>>& taps);
+     void print_taps();
+diff --git a/gr-filter/lib/fir_filter.cc b/gr-filter/lib/fir_filter.cc
+index 5f5e06604..a0ad2cc09 100644
+--- a/gr-filter/lib/fir_filter.cc
++++ b/gr-filter/lib/fir_filter.cc
+@@ -27,11 +27,6 @@ fir_filter<IN_T, OUT_T, TAP_T>::fir_filter(int decimation, const std::vector<TAP
+     set_taps(taps);
+ }
+ 
+-template <class IN_T, class OUT_T, class TAP_T>
+-fir_filter<IN_T, OUT_T, TAP_T>::~fir_filter()
+-{
+-}
+-
+ template <class IN_T, class OUT_T, class TAP_T>
+ void fir_filter<IN_T, OUT_T, TAP_T>::set_taps(const std::vector<TAP_T>& taps)
+ {
+diff --git a/gr-filter/lib/fir_filter_blk_impl.cc b/gr-filter/lib/fir_filter_blk_impl.cc
+index 088576616..a3cf20994 100644
+--- a/gr-filter/lib/fir_filter_blk_impl.cc
++++ b/gr-filter/lib/fir_filter_blk_impl.cc
+@@ -44,11 +44,6 @@ fir_filter_blk_impl<IN_T, OUT_T, TAP_T>::fir_filter_blk_impl(
+     this->set_alignment(std::max(1, alignment_multiple));
+ }
+ 
+-template <class IN_T, class OUT_T, class TAP_T>
+-fir_filter_blk_impl<IN_T, OUT_T, TAP_T>::~fir_filter_blk_impl()
+-{
+-}
+-
+ template <class IN_T, class OUT_T, class TAP_T>
+ void fir_filter_blk_impl<IN_T, OUT_T, TAP_T>::set_taps(const std::vector<TAP_T>& taps)
+ {
+diff --git a/gr-filter/lib/fir_filter_blk_impl.h b/gr-filter/lib/fir_filter_blk_impl.h
+index 94d414f17..f86e76a35 100644
+--- a/gr-filter/lib/fir_filter_blk_impl.h
++++ b/gr-filter/lib/fir_filter_blk_impl.h
+@@ -27,8 +27,6 @@ private:
+ public:
+     fir_filter_blk_impl(int decimation, const std::vector<TAP_T>& taps);
+ 
+-    ~fir_filter_blk_impl();
+-
+     void set_taps(const std::vector<TAP_T>& taps);
+     std::vector<TAP_T> taps() const;
+ 
+diff --git a/gr-filter/lib/freq_xlating_fir_filter_impl.cc b/gr-filter/lib/freq_xlating_fir_filter_impl.cc
+index 57f83ffb5..244f99f0a 100644
+--- a/gr-filter/lib/freq_xlating_fir_filter_impl.cc
++++ b/gr-filter/lib/freq_xlating_fir_filter_impl.cc
+@@ -56,11 +56,6 @@ freq_xlating_fir_filter_impl<IN_T, OUT_T, TAP_T>::freq_xlating_fir_filter_impl(
+                           [this](pmt::pmt_t msg) { this->handle_set_center_freq(msg); });
+ }
+ 
+-template <class IN_T, class OUT_T, class TAP_T>
+-freq_xlating_fir_filter_impl<IN_T, OUT_T, TAP_T>::~freq_xlating_fir_filter_impl()
+-{
+-}
+-
+ template <class IN_T, class OUT_T, class TAP_T>
+ void freq_xlating_fir_filter_impl<IN_T, OUT_T, TAP_T>::build_composite_fir()
+ {
+diff --git a/gr-filter/lib/freq_xlating_fir_filter_impl.h b/gr-filter/lib/freq_xlating_fir_filter_impl.h
+index e355ad634..541568121 100644
+--- a/gr-filter/lib/freq_xlating_fir_filter_impl.h
++++ b/gr-filter/lib/freq_xlating_fir_filter_impl.h
+@@ -39,7 +39,6 @@ public:
+                                  const std::vector<TAP_T>& taps,
+                                  double center_freq,
+                                  double sampling_freq);
+-    virtual ~freq_xlating_fir_filter_impl();
+ 
+     void set_center_freq(double center_freq);
+     double center_freq() const;
+diff --git a/gr-filter/lib/hilbert_fc_impl.cc b/gr-filter/lib/hilbert_fc_impl.cc
+index 9433970f0..1cc37c6ea 100644
+--- a/gr-filter/lib/hilbert_fc_impl.cc
++++ b/gr-filter/lib/hilbert_fc_impl.cc
+@@ -38,8 +38,6 @@ hilbert_fc_impl::hilbert_fc_impl(unsigned int ntaps, firdes::win_type window, do
+     set_alignment(std::max(1, alignment_multiple));
+ }
+ 
+-hilbert_fc_impl::~hilbert_fc_impl() {}
+-
+ int hilbert_fc_impl::work(int noutput_items,
+                           gr_vector_const_void_star& input_items,
+                           gr_vector_void_star& output_items)
+diff --git a/gr-filter/lib/hilbert_fc_impl.h b/gr-filter/lib/hilbert_fc_impl.h
+index 80adc982f..b7df8b88b 100644
+--- a/gr-filter/lib/hilbert_fc_impl.h
++++ b/gr-filter/lib/hilbert_fc_impl.h
+@@ -29,8 +29,6 @@ public:
+                     firdes::win_type window = firdes::WIN_HAMMING,
+                     double beta = 6.76);
+ 
+-    ~hilbert_fc_impl();
+-
+     int work(int noutput_items,
+              gr_vector_const_void_star& input_items,
+              gr_vector_void_star& output_items);
+diff --git a/gr-filter/lib/iir_filter_ccc_impl.cc b/gr-filter/lib/iir_filter_ccc_impl.cc
+index 3bb3cb982..3229d5969 100644
+--- a/gr-filter/lib/iir_filter_ccc_impl.cc
++++ b/gr-filter/lib/iir_filter_ccc_impl.cc
+@@ -37,8 +37,6 @@ iir_filter_ccc_impl::iir_filter_ccc_impl(const std::vector<gr_complex>& fftaps,
+ {
+ }
+ 
+-iir_filter_ccc_impl::~iir_filter_ccc_impl() {}
+-
+ void iir_filter_ccc_impl::set_taps(const std::vector<gr_complex>& fftaps,
+                                    const std::vector<gr_complex>& fbtaps)
+ {
+diff --git a/gr-filter/lib/iir_filter_ccc_impl.h b/gr-filter/lib/iir_filter_ccc_impl.h
+index 1316b5bf5..de42aa222 100644
+--- a/gr-filter/lib/iir_filter_ccc_impl.h
++++ b/gr-filter/lib/iir_filter_ccc_impl.h
+@@ -29,7 +29,6 @@ public:
+     iir_filter_ccc_impl(const std::vector<gr_complex>& fftaps,
+                         const std::vector<gr_complex>& fbtaps,
+                         bool oldstyle = true);
+-    ~iir_filter_ccc_impl();
+ 
+     void set_taps(const std::vector<gr_complex>& fftaps,
+                   const std::vector<gr_complex>& fbtaps);
+diff --git a/gr-filter/lib/iir_filter_ccd_impl.cc b/gr-filter/lib/iir_filter_ccd_impl.cc
+index 847316fe0..176e60bea 100644
+--- a/gr-filter/lib/iir_filter_ccd_impl.cc
++++ b/gr-filter/lib/iir_filter_ccd_impl.cc
+@@ -37,8 +37,6 @@ iir_filter_ccd_impl::iir_filter_ccd_impl(const std::vector<double>& fftaps,
+ {
+ }
+ 
+-iir_filter_ccd_impl::~iir_filter_ccd_impl() {}
+-
+ void iir_filter_ccd_impl::set_taps(const std::vector<double>& fftaps,
+                                    const std::vector<double>& fbtaps)
+ {
+diff --git a/gr-filter/lib/iir_filter_ccd_impl.h b/gr-filter/lib/iir_filter_ccd_impl.h
+index cdbc210d7..4d169bec3 100644
+--- a/gr-filter/lib/iir_filter_ccd_impl.h
++++ b/gr-filter/lib/iir_filter_ccd_impl.h
+@@ -29,7 +29,6 @@ public:
+     iir_filter_ccd_impl(const std::vector<double>& fftaps,
+                         const std::vector<double>& fbtaps,
+                         bool oldstyle = true);
+-    ~iir_filter_ccd_impl();
+ 
+     void set_taps(const std::vector<double>& fftaps, const std::vector<double>& fbtaps);
+ 
+diff --git a/gr-filter/lib/iir_filter_ccf_impl.cc b/gr-filter/lib/iir_filter_ccf_impl.cc
+index 2584065b3..f5fbf98c1 100644
+--- a/gr-filter/lib/iir_filter_ccf_impl.cc
++++ b/gr-filter/lib/iir_filter_ccf_impl.cc
+@@ -37,8 +37,6 @@ iir_filter_ccf_impl::iir_filter_ccf_impl(const std::vector<float>& fftaps,
+ {
+ }
+ 
+-iir_filter_ccf_impl::~iir_filter_ccf_impl() {}
+-
+ void iir_filter_ccf_impl::set_taps(const std::vector<float>& fftaps,
+                                    const std::vector<float>& fbtaps)
+ {
+diff --git a/gr-filter/lib/iir_filter_ccf_impl.h b/gr-filter/lib/iir_filter_ccf_impl.h
+index b60a329d4..5905d1446 100644
+--- a/gr-filter/lib/iir_filter_ccf_impl.h
++++ b/gr-filter/lib/iir_filter_ccf_impl.h
+@@ -29,7 +29,6 @@ public:
+     iir_filter_ccf_impl(const std::vector<float>& fftaps,
+                         const std::vector<float>& fbtaps,
+                         bool oldstyle = true);
+-    ~iir_filter_ccf_impl();
+ 
+     void set_taps(const std::vector<float>& fftaps, const std::vector<float>& fbtaps);
+ 
+diff --git a/gr-filter/lib/iir_filter_ccz_impl.cc b/gr-filter/lib/iir_filter_ccz_impl.cc
+index 1e6e48ef0..6402d3bca 100644
+--- a/gr-filter/lib/iir_filter_ccz_impl.cc
++++ b/gr-filter/lib/iir_filter_ccz_impl.cc
+@@ -37,8 +37,6 @@ iir_filter_ccz_impl::iir_filter_ccz_impl(const std::vector<gr_complexd>& fftaps,
+ {
+ }
+ 
+-iir_filter_ccz_impl::~iir_filter_ccz_impl() {}
+-
+ void iir_filter_ccz_impl::set_taps(const std::vector<gr_complexd>& fftaps,
+                                    const std::vector<gr_complexd>& fbtaps)
+ {
+diff --git a/gr-filter/lib/iir_filter_ccz_impl.h b/gr-filter/lib/iir_filter_ccz_impl.h
+index 2180c0ece..b7814dc4e 100644
+--- a/gr-filter/lib/iir_filter_ccz_impl.h
++++ b/gr-filter/lib/iir_filter_ccz_impl.h
+@@ -29,7 +29,6 @@ public:
+     iir_filter_ccz_impl(const std::vector<gr_complexd>& fftaps,
+                         const std::vector<gr_complexd>& fbtaps,
+                         bool oldstyle = true);
+-    ~iir_filter_ccz_impl();
+ 
+     void set_taps(const std::vector<gr_complexd>& fftaps,
+                   const std::vector<gr_complexd>& fbtaps);
+diff --git a/gr-filter/lib/iir_filter_ffd_impl.cc b/gr-filter/lib/iir_filter_ffd_impl.cc
+index 8211902d3..45f15966a 100644
+--- a/gr-filter/lib/iir_filter_ffd_impl.cc
++++ b/gr-filter/lib/iir_filter_ffd_impl.cc
+@@ -37,8 +37,6 @@ iir_filter_ffd_impl::iir_filter_ffd_impl(const std::vector<double>& fftaps,
+ {
+ }
+ 
+-iir_filter_ffd_impl::~iir_filter_ffd_impl() {}
+-
+ void iir_filter_ffd_impl::set_taps(const std::vector<double>& fftaps,
+                                    const std::vector<double>& fbtaps)
+ {
+diff --git a/gr-filter/lib/iir_filter_ffd_impl.h b/gr-filter/lib/iir_filter_ffd_impl.h
+index ff67ebbd4..23194eede 100644
+--- a/gr-filter/lib/iir_filter_ffd_impl.h
++++ b/gr-filter/lib/iir_filter_ffd_impl.h
+@@ -29,7 +29,6 @@ public:
+     iir_filter_ffd_impl(const std::vector<double>& fftaps,
+                         const std::vector<double>& fbtaps,
+                         bool oldstyle = true);
+-    ~iir_filter_ffd_impl();
+ 
+     void set_taps(const std::vector<double>& fftaps, const std::vector<double>& fbtaps);
+ 
+diff --git a/gr-filter/lib/interp_fir_filter_impl.cc b/gr-filter/lib/interp_fir_filter_impl.cc
+index 0b7e47a40..8163d0fb0 100644
+--- a/gr-filter/lib/interp_fir_filter_impl.cc
++++ b/gr-filter/lib/interp_fir_filter_impl.cc
+@@ -57,11 +57,6 @@ interp_fir_filter_impl<IN_T, OUT_T, TAP_T>::interp_fir_filter_impl(
+     install_taps(d_new_taps);
+ }
+ 
+-template <class IN_T, class OUT_T, class TAP_T>
+-interp_fir_filter_impl<IN_T, OUT_T, TAP_T>::~interp_fir_filter_impl()
+-{
+-}
+-
+ template <class IN_T, class OUT_T, class TAP_T>
+ void interp_fir_filter_impl<IN_T, OUT_T, TAP_T>::set_taps(const std::vector<TAP_T>& taps)
+ {
+diff --git a/gr-filter/lib/interp_fir_filter_impl.h b/gr-filter/lib/interp_fir_filter_impl.h
+index cbf3a3ef3..47502ace7 100644
+--- a/gr-filter/lib/interp_fir_filter_impl.h
++++ b/gr-filter/lib/interp_fir_filter_impl.h
+@@ -32,8 +32,6 @@ private:
+ public:
+     interp_fir_filter_impl(unsigned interpolation, const std::vector<TAP_T>& taps);
+ 
+-    ~interp_fir_filter_impl();
+-
+     void set_taps(const std::vector<TAP_T>& taps);
+     std::vector<TAP_T> taps() const;
+ 
+diff --git a/gr-filter/lib/ival_decimator_impl.cc b/gr-filter/lib/ival_decimator_impl.cc
+index c7f438ea0..54b6b534f 100644
+--- a/gr-filter/lib/ival_decimator_impl.cc
++++ b/gr-filter/lib/ival_decimator_impl.cc
+@@ -43,11 +43,6 @@ ival_decimator_impl::ival_decimator_impl(int decimation, int data_size)
+     gr::block::set_output_multiple(2);
+ }
+ 
+-/*
+- * Our virtual destructor.
+- */
+-ival_decimator_impl::~ival_decimator_impl() {}
+-
+ int ival_decimator_impl::work(int noutput_items,
+                               gr_vector_const_void_star& input_items,
+                               gr_vector_void_star& output_items)
+diff --git a/gr-filter/lib/ival_decimator_impl.h b/gr-filter/lib/ival_decimator_impl.h
+index e541dc115..9d0757a79 100644
+--- a/gr-filter/lib/ival_decimator_impl.h
++++ b/gr-filter/lib/ival_decimator_impl.h
+@@ -24,7 +24,6 @@ private:
+ 
+ public:
+     ival_decimator_impl(int decimation, int data_size);
+-    ~ival_decimator_impl();
+ 
+     // Where all the action really happens
+     int work(int noutput_items,
+diff --git a/gr-filter/lib/mmse_fir_interpolator_cc.cc b/gr-filter/lib/mmse_fir_interpolator_cc.cc
+index f81b45298..34883cb3e 100644
+--- a/gr-filter/lib/mmse_fir_interpolator_cc.cc
++++ b/gr-filter/lib/mmse_fir_interpolator_cc.cc
+@@ -34,8 +34,6 @@ std::vector<kernel::fir_filter_ccf> build_filters()
+ 
+ mmse_fir_interpolator_cc::mmse_fir_interpolator_cc() : filters(build_filters()) {}
+ 
+-mmse_fir_interpolator_cc::~mmse_fir_interpolator_cc() {}
+-
+ unsigned mmse_fir_interpolator_cc::ntaps() const { return NTAPS; }
+ 
+ unsigned mmse_fir_interpolator_cc::nsteps() const { return NSTEPS; }
+diff --git a/gr-filter/lib/mmse_fir_interpolator_ff.cc b/gr-filter/lib/mmse_fir_interpolator_ff.cc
+index 53130ddff..52c213401 100644
+--- a/gr-filter/lib/mmse_fir_interpolator_ff.cc
++++ b/gr-filter/lib/mmse_fir_interpolator_ff.cc
+@@ -34,8 +34,6 @@ std::vector<kernel::fir_filter_fff> build_filters()
+ 
+ mmse_fir_interpolator_ff::mmse_fir_interpolator_ff() : filters(build_filters()) {}
+ 
+-mmse_fir_interpolator_ff::~mmse_fir_interpolator_ff() {}
+-
+ unsigned mmse_fir_interpolator_ff::ntaps() const { return NTAPS; }
+ 
+ unsigned mmse_fir_interpolator_ff::nsteps() const { return NSTEPS; }
+diff --git a/gr-filter/lib/mmse_interp_differentiator_cc.cc b/gr-filter/lib/mmse_interp_differentiator_cc.cc
+index 952604135..9728b283a 100644
+--- a/gr-filter/lib/mmse_interp_differentiator_cc.cc
++++ b/gr-filter/lib/mmse_interp_differentiator_cc.cc
+@@ -37,8 +37,6 @@ mmse_interp_differentiator_cc::mmse_interp_differentiator_cc() : filters(build_f
+ {
+ }
+ 
+-mmse_interp_differentiator_cc::~mmse_interp_differentiator_cc() {}
+-
+ unsigned mmse_interp_differentiator_cc::ntaps() const { return DNTAPS; }
+ 
+ unsigned mmse_interp_differentiator_cc::nsteps() const { return DNSTEPS; }
+diff --git a/gr-filter/lib/mmse_interp_differentiator_ff.cc b/gr-filter/lib/mmse_interp_differentiator_ff.cc
+index 3a925149f..339d9728b 100644
+--- a/gr-filter/lib/mmse_interp_differentiator_ff.cc
++++ b/gr-filter/lib/mmse_interp_differentiator_ff.cc
+@@ -36,8 +36,6 @@ mmse_interp_differentiator_ff::mmse_interp_differentiator_ff() : filters(build_f
+ {
+ }
+ 
+-mmse_interp_differentiator_ff::~mmse_interp_differentiator_ff() {}
+-
+ unsigned mmse_interp_differentiator_ff::ntaps() const { return DNTAPS; }
+ 
+ unsigned mmse_interp_differentiator_ff::nsteps() const { return DNSTEPS; }
+diff --git a/gr-filter/lib/mmse_interpolator_cc_impl.cc b/gr-filter/lib/mmse_interpolator_cc_impl.cc
+index a442044e6..02eb6e38f 100644
+--- a/gr-filter/lib/mmse_interpolator_cc_impl.cc
++++ b/gr-filter/lib/mmse_interpolator_cc_impl.cc
+@@ -45,8 +45,6 @@ mmse_interpolator_cc_impl::mmse_interpolator_cc_impl(float phase_shift,
+     set_inverse_relative_rate(d_mu_inc);
+ }
+ 
+-mmse_interpolator_cc_impl::~mmse_interpolator_cc_impl() {}
+-
+ void mmse_interpolator_cc_impl::forecast(int noutput_items,
+                                          gr_vector_int& ninput_items_required)
+ {
+diff --git a/gr-filter/lib/mmse_interpolator_cc_impl.h b/gr-filter/lib/mmse_interpolator_cc_impl.h
+index a275c0c74..998034e35 100644
+--- a/gr-filter/lib/mmse_interpolator_cc_impl.h
++++ b/gr-filter/lib/mmse_interpolator_cc_impl.h
+@@ -26,7 +26,6 @@ private:
+ 
+ public:
+     mmse_interpolator_cc_impl(float phase_shift, float interp_ratio);
+-    ~mmse_interpolator_cc_impl();
+ 
+     void forecast(int noutput_items, gr_vector_int& ninput_items_required);
+     int general_work(int noutput_items,
+diff --git a/gr-filter/lib/mmse_interpolator_ff_impl.cc b/gr-filter/lib/mmse_interpolator_ff_impl.cc
+index b1b3c3654..6b3ec48de 100644
+--- a/gr-filter/lib/mmse_interpolator_ff_impl.cc
++++ b/gr-filter/lib/mmse_interpolator_ff_impl.cc
+@@ -45,8 +45,6 @@ mmse_interpolator_ff_impl::mmse_interpolator_ff_impl(float phase_shift,
+     set_inverse_relative_rate(d_mu_inc);
+ }
+ 
+-mmse_interpolator_ff_impl::~mmse_interpolator_ff_impl() {}
+-
+ void mmse_interpolator_ff_impl::forecast(int noutput_items,
+                                          gr_vector_int& ninput_items_required)
+ {
+diff --git a/gr-filter/lib/mmse_interpolator_ff_impl.h b/gr-filter/lib/mmse_interpolator_ff_impl.h
+index bd1ada076..38f92ec1b 100644
+--- a/gr-filter/lib/mmse_interpolator_ff_impl.h
++++ b/gr-filter/lib/mmse_interpolator_ff_impl.h
+@@ -26,7 +26,6 @@ private:
+ 
+ public:
+     mmse_interpolator_ff_impl(float phase_shift, float interp_ratio);
+-    ~mmse_interpolator_ff_impl();
+ 
+     void forecast(int noutput_items, gr_vector_int& ninput_items_required);
+     int general_work(int noutput_items,
+diff --git a/gr-filter/lib/mmse_resampler_cc_impl.cc b/gr-filter/lib/mmse_resampler_cc_impl.cc
+index edf20b2b9..2a2054c62 100644
+--- a/gr-filter/lib/mmse_resampler_cc_impl.cc
++++ b/gr-filter/lib/mmse_resampler_cc_impl.cc
+@@ -42,8 +42,6 @@ mmse_resampler_cc_impl::mmse_resampler_cc_impl(float phase_shift, float resamp_r
+                     [this](pmt::pmt_t msg) { this->handle_msg(msg); });
+ }
+ 
+-mmse_resampler_cc_impl::~mmse_resampler_cc_impl() {}
+-
+ void mmse_resampler_cc_impl::handle_msg(pmt::pmt_t msg)
+ {
+     if (!pmt::is_dict(msg))
+diff --git a/gr-filter/lib/mmse_resampler_cc_impl.h b/gr-filter/lib/mmse_resampler_cc_impl.h
+index 8bfd69311..5b4cd2fef 100644
+--- a/gr-filter/lib/mmse_resampler_cc_impl.h
++++ b/gr-filter/lib/mmse_resampler_cc_impl.h
+@@ -26,7 +26,6 @@ private:
+ 
+ public:
+     mmse_resampler_cc_impl(float phase_shift, float resamp_ratio);
+-    ~mmse_resampler_cc_impl();
+ 
+     void handle_msg(pmt::pmt_t msg);
+ 
+diff --git a/gr-filter/lib/mmse_resampler_ff_impl.cc b/gr-filter/lib/mmse_resampler_ff_impl.cc
+index 894bf368c..5f4825006 100644
+--- a/gr-filter/lib/mmse_resampler_ff_impl.cc
++++ b/gr-filter/lib/mmse_resampler_ff_impl.cc
+@@ -43,8 +43,6 @@ mmse_resampler_ff_impl::mmse_resampler_ff_impl(float phase_shift, float resamp_r
+                     [this](pmt::pmt_t msg) { this->handle_msg(msg); });
+ }
+ 
+-mmse_resampler_ff_impl::~mmse_resampler_ff_impl() {}
+-
+ void mmse_resampler_ff_impl::handle_msg(pmt::pmt_t msg)
+ {
+     if (!pmt::is_dict(msg))
+diff --git a/gr-filter/lib/mmse_resampler_ff_impl.h b/gr-filter/lib/mmse_resampler_ff_impl.h
+index c94f6a4ec..72935448c 100644
+--- a/gr-filter/lib/mmse_resampler_ff_impl.h
++++ b/gr-filter/lib/mmse_resampler_ff_impl.h
+@@ -26,7 +26,6 @@ private:
+ 
+ public:
+     mmse_resampler_ff_impl(float phase_shift, float resamp_ratio);
+-    ~mmse_resampler_ff_impl();
+ 
+     void handle_msg(pmt::pmt_t msg);
+ 
+diff --git a/gr-filter/lib/pfb_arb_resampler.cc b/gr-filter/lib/pfb_arb_resampler.cc
+index 7d3d4d6cd..7aee3dca2 100644
+--- a/gr-filter/lib/pfb_arb_resampler.cc
++++ b/gr-filter/lib/pfb_arb_resampler.cc
+@@ -75,8 +75,6 @@ pfb_arb_resampler_ccf::pfb_arb_resampler_ccf(float rate,
+     d_est_phase_change = d_last_filter - (end_filter + accum_frac);
+ }
+ 
+-pfb_arb_resampler_ccf::~pfb_arb_resampler_ccf() {}
+-
+ void pfb_arb_resampler_ccf::create_taps(const std::vector<float>& newtaps,
+                                         std::vector<std::vector<float>>& ourtaps,
+                                         std::vector<fir_filter_ccf>& ourfilter)
+diff --git a/gr-filter/lib/pfb_arb_resampler_ccc_impl.cc b/gr-filter/lib/pfb_arb_resampler_ccc_impl.cc
+index cd77eee1a..5100a2d6e 100644
+--- a/gr-filter/lib/pfb_arb_resampler_ccc_impl.cc
++++ b/gr-filter/lib/pfb_arb_resampler_ccc_impl.cc
+@@ -39,8 +39,6 @@ pfb_arb_resampler_ccc_impl::pfb_arb_resampler_ccc_impl(
+     set_relative_rate(rate);
+ }
+ 
+-pfb_arb_resampler_ccc_impl::~pfb_arb_resampler_ccc_impl() {}
+-
+ void pfb_arb_resampler_ccc_impl::forecast(int noutput_items,
+                                           gr_vector_int& ninput_items_required)
+ {
+diff --git a/gr-filter/lib/pfb_arb_resampler_ccc_impl.h b/gr-filter/lib/pfb_arb_resampler_ccc_impl.h
+index 2d6db46d3..5d53552b3 100644
+--- a/gr-filter/lib/pfb_arb_resampler_ccc_impl.h
++++ b/gr-filter/lib/pfb_arb_resampler_ccc_impl.h
+@@ -31,8 +31,6 @@ public:
+                                const std::vector<gr_complex>& taps,
+                                unsigned int filter_size);
+ 
+-    ~pfb_arb_resampler_ccc_impl();
+-
+     void forecast(int noutput_items, gr_vector_int& ninput_items_required);
+ 
+     void set_taps(const std::vector<gr_complex>& taps);
+diff --git a/gr-filter/lib/pfb_arb_resampler_ccf_impl.cc b/gr-filter/lib/pfb_arb_resampler_ccf_impl.cc
+index 94a7a7579..ce2b49ba5 100644
+--- a/gr-filter/lib/pfb_arb_resampler_ccf_impl.cc
++++ b/gr-filter/lib/pfb_arb_resampler_ccf_impl.cc
+@@ -41,8 +41,6 @@ pfb_arb_resampler_ccf_impl::pfb_arb_resampler_ccf_impl(float rate,
+     set_relative_rate(rate);
+ }
+ 
+-pfb_arb_resampler_ccf_impl::~pfb_arb_resampler_ccf_impl() {}
+-
+ void pfb_arb_resampler_ccf_impl::forecast(int noutput_items,
+                                           gr_vector_int& ninput_items_required)
+ {
+diff --git a/gr-filter/lib/pfb_arb_resampler_ccf_impl.h b/gr-filter/lib/pfb_arb_resampler_ccf_impl.h
+index b86ad0432..2912fae97 100644
+--- a/gr-filter/lib/pfb_arb_resampler_ccf_impl.h
++++ b/gr-filter/lib/pfb_arb_resampler_ccf_impl.h
+@@ -31,8 +31,6 @@ public:
+                                const std::vector<float>& taps,
+                                unsigned int filter_size);
+ 
+-    ~pfb_arb_resampler_ccf_impl();
+-
+     void forecast(int noutput_items, gr_vector_int& ninput_items_required);
+ 
+     void set_taps(const std::vector<float>& taps);
+diff --git a/gr-filter/lib/pfb_arb_resampler_fff_impl.cc b/gr-filter/lib/pfb_arb_resampler_fff_impl.cc
+index 09d6783a9..708f0d85e 100644
+--- a/gr-filter/lib/pfb_arb_resampler_fff_impl.cc
++++ b/gr-filter/lib/pfb_arb_resampler_fff_impl.cc
+@@ -41,8 +41,6 @@ pfb_arb_resampler_fff_impl::pfb_arb_resampler_fff_impl(float rate,
+     set_relative_rate(rate);
+ }
+ 
+-pfb_arb_resampler_fff_impl::~pfb_arb_resampler_fff_impl() {}
+-
+ void pfb_arb_resampler_fff_impl::forecast(int noutput_items,
+                                           gr_vector_int& ninput_items_required)
+ {
+diff --git a/gr-filter/lib/pfb_arb_resampler_fff_impl.h b/gr-filter/lib/pfb_arb_resampler_fff_impl.h
+index fdadb890f..c0777efc0 100644
+--- a/gr-filter/lib/pfb_arb_resampler_fff_impl.h
++++ b/gr-filter/lib/pfb_arb_resampler_fff_impl.h
+@@ -31,8 +31,6 @@ public:
+                                const std::vector<float>& taps,
+                                unsigned int filter_size);
+ 
+-    ~pfb_arb_resampler_fff_impl();
+-
+     void forecast(int noutput_items, gr_vector_int& ninput_items_required);
+ 
+     void set_taps(const std::vector<float>& taps);
+diff --git a/gr-filter/lib/pfb_channelizer_ccf_impl.cc b/gr-filter/lib/pfb_channelizer_ccf_impl.cc
+index 7aa949332..0848b75f3 100644
+--- a/gr-filter/lib/pfb_channelizer_ccf_impl.cc
++++ b/gr-filter/lib/pfb_channelizer_ccf_impl.cc
+@@ -91,8 +91,6 @@ pfb_channelizer_ccf_impl::pfb_channelizer_ccf_impl(unsigned int nfilts,
+     set_tag_propagation_policy(TPP_ONE_TO_ONE);
+ }
+ 
+-pfb_channelizer_ccf_impl::~pfb_channelizer_ccf_impl() {}
+-
+ void pfb_channelizer_ccf_impl::set_taps(const std::vector<float>& taps)
+ {
+     gr::thread::scoped_lock guard(d_mutex);
+diff --git a/gr-filter/lib/pfb_channelizer_ccf_impl.h b/gr-filter/lib/pfb_channelizer_ccf_impl.h
+index 0feb2b9cb..312bb7e79 100644
+--- a/gr-filter/lib/pfb_channelizer_ccf_impl.h
++++ b/gr-filter/lib/pfb_channelizer_ccf_impl.h
+@@ -37,8 +37,6 @@ public:
+                              const std::vector<float>& taps,
+                              float oversample_rate);
+ 
+-    ~pfb_channelizer_ccf_impl();
+-
+     void set_taps(const std::vector<float>& taps);
+     void print_taps();
+     std::vector<std::vector<float>> taps() const;
+diff --git a/gr-filter/lib/pfb_decimator_ccf_impl.cc b/gr-filter/lib/pfb_decimator_ccf_impl.cc
+index e96d3d706..1b818e3b2 100644
+--- a/gr-filter/lib/pfb_decimator_ccf_impl.cc
++++ b/gr-filter/lib/pfb_decimator_ccf_impl.cc
+@@ -81,8 +81,6 @@ bool pfb_decimator_ccf_impl::stop()
+     return block::stop();
+ }
+ 
+-pfb_decimator_ccf_impl::~pfb_decimator_ccf_impl() {}
+-
+ void pfb_decimator_ccf_impl::set_taps(const std::vector<float>& taps)
+ {
+     gr::thread::scoped_lock guard(d_mutex);
+diff --git a/gr-filter/lib/pfb_decimator_ccf_impl.h b/gr-filter/lib/pfb_decimator_ccf_impl.h
+index e9fa54f8f..6e121e95f 100644
+--- a/gr-filter/lib/pfb_decimator_ccf_impl.h
++++ b/gr-filter/lib/pfb_decimator_ccf_impl.h
+@@ -52,8 +52,6 @@ public:
+                            bool use_fft_rotator = true,
+                            bool use_fft_filters = true);
+ 
+-    ~pfb_decimator_ccf_impl();
+-
+     // No copy because d_tmp.
+     pfb_decimator_ccf_impl(const pfb_decimator_ccf_impl&) = delete;
+     pfb_decimator_ccf_impl& operator=(const pfb_decimator_ccf_impl&) = delete;
+diff --git a/gr-filter/lib/pfb_interpolator_ccf_impl.cc b/gr-filter/lib/pfb_interpolator_ccf_impl.cc
+index 9a77c783e..7a1bd6ef1 100644
+--- a/gr-filter/lib/pfb_interpolator_ccf_impl.cc
++++ b/gr-filter/lib/pfb_interpolator_ccf_impl.cc
+@@ -38,8 +38,6 @@ pfb_interpolator_ccf_impl::pfb_interpolator_ccf_impl(unsigned int interp,
+     set_history(d_taps_per_filter);
+ }
+ 
+-pfb_interpolator_ccf_impl::~pfb_interpolator_ccf_impl() {}
+-
+ void pfb_interpolator_ccf_impl::set_taps(const std::vector<float>& taps)
+ {
+     gr::thread::scoped_lock guard(d_mutex);
+diff --git a/gr-filter/lib/pfb_interpolator_ccf_impl.h b/gr-filter/lib/pfb_interpolator_ccf_impl.h
+index 602568436..e0396c102 100644
+--- a/gr-filter/lib/pfb_interpolator_ccf_impl.h
++++ b/gr-filter/lib/pfb_interpolator_ccf_impl.h
+@@ -32,8 +32,6 @@ private:
+ public:
+     pfb_interpolator_ccf_impl(unsigned int interp, const std::vector<float>& taps);
+ 
+-    ~pfb_interpolator_ccf_impl();
+-
+     void set_taps(const std::vector<float>& taps);
+     void print_taps();
+     std::vector<std::vector<float>> taps() const;
+diff --git a/gr-filter/lib/pfb_synthesizer_ccf_impl.cc b/gr-filter/lib/pfb_synthesizer_ccf_impl.cc
+index d33ee84e6..ec9feb05f 100644
+--- a/gr-filter/lib/pfb_synthesizer_ccf_impl.cc
++++ b/gr-filter/lib/pfb_synthesizer_ccf_impl.cc
+@@ -66,8 +66,6 @@ pfb_synthesizer_ccf_impl::pfb_synthesizer_ccf_impl(unsigned int numchans,
+     set_output_multiple(d_numchans);
+ }
+ 
+-pfb_synthesizer_ccf_impl::~pfb_synthesizer_ccf_impl() {}
+-
+ void pfb_synthesizer_ccf_impl::set_taps(const std::vector<float>& taps)
+ {
+     gr::thread::scoped_lock guard(d_mutex);
+diff --git a/gr-filter/lib/pfb_synthesizer_ccf_impl.h b/gr-filter/lib/pfb_synthesizer_ccf_impl.h
+index e24f5dcbc..6ba7159c6 100644
+--- a/gr-filter/lib/pfb_synthesizer_ccf_impl.h
++++ b/gr-filter/lib/pfb_synthesizer_ccf_impl.h
+@@ -53,7 +53,6 @@ public:
+     pfb_synthesizer_ccf_impl(unsigned int numchans,
+                              const std::vector<float>& taps,
+                              bool twox);
+-    ~pfb_synthesizer_ccf_impl();
+ 
+     void set_taps(const std::vector<float>& taps);
+     std::vector<std::vector<float>> taps() const;
+diff --git a/gr-filter/lib/polyphase_filterbank.cc b/gr-filter/lib/polyphase_filterbank.cc
+index a44309e70..7f6c4f2d8 100644
+--- a/gr-filter/lib/polyphase_filterbank.cc
++++ b/gr-filter/lib/polyphase_filterbank.cc
+@@ -38,8 +38,6 @@ polyphase_filterbank::polyphase_filterbank(unsigned int nfilts,
+     set_taps(taps);
+ }
+ 
+-polyphase_filterbank::~polyphase_filterbank() {}
+-
+ void polyphase_filterbank::set_taps(const std::vector<float>& taps)
+ {
+     unsigned int i, j;
+diff --git a/gr-filter/lib/rational_resampler_base_impl.cc b/gr-filter/lib/rational_resampler_base_impl.cc
+index 1bfb09533..489d1cfbb 100644
+--- a/gr-filter/lib/rational_resampler_base_impl.cc
++++ b/gr-filter/lib/rational_resampler_base_impl.cc
+@@ -60,11 +60,6 @@ rational_resampler_base_impl<IN_T, OUT_T, TAP_T>::rational_resampler_base_impl(
+     install_taps(d_new_taps);
+ }
+ 
+-template <class IN_T, class OUT_T, class TAP_T>
+-rational_resampler_base_impl<IN_T, OUT_T, TAP_T>::~rational_resampler_base_impl()
+-{
+-}
+-
+ template <class IN_T, class OUT_T, class TAP_T>
+ void rational_resampler_base_impl<IN_T, OUT_T, TAP_T>::set_taps(
+     const std::vector<TAP_T>& taps)
+diff --git a/gr-filter/lib/rational_resampler_base_impl.h b/gr-filter/lib/rational_resampler_base_impl.h
+index 52408660f..b30881465 100644
+--- a/gr-filter/lib/rational_resampler_base_impl.h
++++ b/gr-filter/lib/rational_resampler_base_impl.h
+@@ -36,8 +36,6 @@ public:
+                                  unsigned decimation,
+                                  const std::vector<TAP_T>& taps);
+ 
+-    ~rational_resampler_base_impl();
+-
+     unsigned history() const { return d_history; }
+     void set_history(unsigned history) { d_history = history; }
+ 
+diff --git a/gr-filter/lib/single_pole_iir_filter_cc_impl.cc b/gr-filter/lib/single_pole_iir_filter_cc_impl.cc
+index 3c75adf75..e11a85d22 100644
+--- a/gr-filter/lib/single_pole_iir_filter_cc_impl.cc
++++ b/gr-filter/lib/single_pole_iir_filter_cc_impl.cc
+@@ -36,8 +36,6 @@ single_pole_iir_filter_cc_impl::single_pole_iir_filter_cc_impl(double alpha,
+     set_taps(alpha);
+ }
+ 
+-single_pole_iir_filter_cc_impl::~single_pole_iir_filter_cc_impl() {}
+-
+ void single_pole_iir_filter_cc_impl::set_taps(double alpha)
+ {
+     for (unsigned int i = 0; i < d_vlen; i++) {
+diff --git a/gr-filter/lib/single_pole_iir_filter_cc_impl.h b/gr-filter/lib/single_pole_iir_filter_cc_impl.h
+index c15e67b52..8097f2acc 100644
+--- a/gr-filter/lib/single_pole_iir_filter_cc_impl.h
++++ b/gr-filter/lib/single_pole_iir_filter_cc_impl.h
+@@ -28,7 +28,6 @@ private:
+ 
+ public:
+     single_pole_iir_filter_cc_impl(double alpha, unsigned int vlen);
+-    ~single_pole_iir_filter_cc_impl();
+ 
+     void set_taps(double alpha);
+ 
+diff --git a/gr-filter/lib/single_pole_iir_filter_ff_impl.cc b/gr-filter/lib/single_pole_iir_filter_ff_impl.cc
+index 80bd02f91..8b2e5d360 100644
+--- a/gr-filter/lib/single_pole_iir_filter_ff_impl.cc
++++ b/gr-filter/lib/single_pole_iir_filter_ff_impl.cc
+@@ -35,8 +35,6 @@ single_pole_iir_filter_ff_impl::single_pole_iir_filter_ff_impl(double alpha,
+     set_taps(alpha);
+ }
+ 
+-single_pole_iir_filter_ff_impl::~single_pole_iir_filter_ff_impl() {}
+-
+ void single_pole_iir_filter_ff_impl::set_taps(double alpha)
+ {
+     for (unsigned int i = 0; i < d_vlen; i++) {
+diff --git a/gr-filter/lib/single_pole_iir_filter_ff_impl.h b/gr-filter/lib/single_pole_iir_filter_ff_impl.h
+index dfa73fd34..e9e43a56e 100644
+--- a/gr-filter/lib/single_pole_iir_filter_ff_impl.h
++++ b/gr-filter/lib/single_pole_iir_filter_ff_impl.h
+@@ -27,7 +27,6 @@ private:
+ 
+ public:
+     single_pole_iir_filter_ff_impl(double alpha, unsigned int vlen);
+-    ~single_pole_iir_filter_ff_impl();
+ 
+     void set_taps(double alpha);
+ 
+diff --git a/gr-filter/python/filter/bindings/filterbank_python.cc b/gr-filter/python/filter/bindings/filterbank_python.cc
+index 56a88c41c..5e8fe340a 100644
+--- a/gr-filter/python/filter/bindings/filterbank_python.cc
++++ b/gr-filter/python/filter/bindings/filterbank_python.cc
+@@ -14,7 +14,7 @@
+ /* BINDTOOL_GEN_AUTOMATIC(0)                                                       */
+ /* BINDTOOL_USE_PYGCCXML(0)                                                        */
+ /* BINDTOOL_HEADER_FILE(filterbank.h)                                        */
+-/* BINDTOOL_HEADER_FILE_HASH(be850101db6157f52549d1616dc228a0)                     */
++/* BINDTOOL_HEADER_FILE_HASH(83fe60b94676b634405273d06f9a9de2)                     */
+ /***********************************************************************************/
+ 
+ #include <pybind11/complex.h>
+diff --git a/gr-filter/python/filter/bindings/fir_filter_python.cc b/gr-filter/python/filter/bindings/fir_filter_python.cc
+index 7fca2d41b..7848e14c6 100644
+--- a/gr-filter/python/filter/bindings/fir_filter_python.cc
++++ b/gr-filter/python/filter/bindings/fir_filter_python.cc
+@@ -14,7 +14,7 @@
+ /* BINDTOOL_GEN_AUTOMATIC(0)                                                       */
+ /* BINDTOOL_USE_PYGCCXML(0)                                                        */
+ /* BINDTOOL_HEADER_FILE(fir_filter.h)                                        */
+-/* BINDTOOL_HEADER_FILE_HASH(34aa8fbb799dad34346a83097efa6819)                     */
++/* BINDTOOL_HEADER_FILE_HASH(9443ca1ebc643ab1e441dfce01933df0)                     */
+ /***********************************************************************************/
+ 
+ #include <pybind11/complex.h>
+diff --git a/gr-filter/python/filter/bindings/mmse_fir_interpolator_cc_python.cc b/gr-filter/python/filter/bindings/mmse_fir_interpolator_cc_python.cc
+index 587f0b3b8..08869b8bc 100644
+--- a/gr-filter/python/filter/bindings/mmse_fir_interpolator_cc_python.cc
++++ b/gr-filter/python/filter/bindings/mmse_fir_interpolator_cc_python.cc
+@@ -14,7 +14,7 @@
+ /* BINDTOOL_GEN_AUTOMATIC(0)                                                       */
+ /* BINDTOOL_USE_PYGCCXML(0)                                                        */
+ /* BINDTOOL_HEADER_FILE(mmse_fir_interpolator_cc.h) */
+-/* BINDTOOL_HEADER_FILE_HASH(c618917f7ba9048d2b73da399ca5cf60)                     */
++/* BINDTOOL_HEADER_FILE_HASH(3e655623f15d1399828663052c1f4793)                     */
+ /***********************************************************************************/
+ 
+ #include <pybind11/complex.h>
+diff --git a/gr-filter/python/filter/bindings/mmse_fir_interpolator_ff_python.cc b/gr-filter/python/filter/bindings/mmse_fir_interpolator_ff_python.cc
+index 6d61c9078..a8cfab741 100644
+--- a/gr-filter/python/filter/bindings/mmse_fir_interpolator_ff_python.cc
++++ b/gr-filter/python/filter/bindings/mmse_fir_interpolator_ff_python.cc
+@@ -14,7 +14,7 @@
+ /* BINDTOOL_GEN_AUTOMATIC(0)                                                       */
+ /* BINDTOOL_USE_PYGCCXML(0)                                                        */
+ /* BINDTOOL_HEADER_FILE(mmse_fir_interpolator_ff.h) */
+-/* BINDTOOL_HEADER_FILE_HASH(a5230c4b6ad2c4241956c24184a499c5)                     */
++/* BINDTOOL_HEADER_FILE_HASH(dab8e1f1a92f44a547e3324144a6afea)                     */
+ /***********************************************************************************/
+ 
+ #include <pybind11/complex.h>
+diff --git a/gr-filter/python/filter/bindings/mmse_interp_differentiator_cc_python.cc b/gr-filter/python/filter/bindings/mmse_interp_differentiator_cc_python.cc
+index b6b2eb3c5..4a3292069 100644
+--- a/gr-filter/python/filter/bindings/mmse_interp_differentiator_cc_python.cc
++++ b/gr-filter/python/filter/bindings/mmse_interp_differentiator_cc_python.cc
+@@ -14,7 +14,7 @@
+ /* BINDTOOL_GEN_AUTOMATIC(0)                                                       */
+ /* BINDTOOL_USE_PYGCCXML(0)                                                        */
+ /* BINDTOOL_HEADER_FILE(mmse_interp_differentiator_cc.h) */
+-/* BINDTOOL_HEADER_FILE_HASH(7aceb77ae6aefbaff71960b27310ffe1)                     */
++/* BINDTOOL_HEADER_FILE_HASH(aad01964470a3921293b3769b3c96799)                     */
+ /***********************************************************************************/
+ 
+ #include <pybind11/complex.h>
+diff --git a/gr-filter/python/filter/bindings/mmse_interp_differentiator_ff_python.cc b/gr-filter/python/filter/bindings/mmse_interp_differentiator_ff_python.cc
+index 0e1ae53c8..a4c22d536 100644
+--- a/gr-filter/python/filter/bindings/mmse_interp_differentiator_ff_python.cc
++++ b/gr-filter/python/filter/bindings/mmse_interp_differentiator_ff_python.cc
+@@ -14,7 +14,7 @@
+ /* BINDTOOL_GEN_AUTOMATIC(0)                                                       */
+ /* BINDTOOL_USE_PYGCCXML(0)                                                        */
+ /* BINDTOOL_HEADER_FILE(mmse_interp_differentiator_ff.h) */
+-/* BINDTOOL_HEADER_FILE_HASH(8f07bad55ded4360fdf5b74807e0635b)                     */
++/* BINDTOOL_HEADER_FILE_HASH(9e491c7a1339f371cf0bb471f15a9344)                     */
+ /***********************************************************************************/
+ 
+ #include <pybind11/complex.h>
+diff --git a/gr-filter/python/filter/bindings/pfb_arb_resampler_python.cc b/gr-filter/python/filter/bindings/pfb_arb_resampler_python.cc
+index 42c222692..85f9b40c8 100644
+--- a/gr-filter/python/filter/bindings/pfb_arb_resampler_python.cc
++++ b/gr-filter/python/filter/bindings/pfb_arb_resampler_python.cc
+@@ -14,7 +14,7 @@
+ /* BINDTOOL_GEN_AUTOMATIC(0)                                                       */
+ /* BINDTOOL_USE_PYGCCXML(0)                                                        */
+ /* BINDTOOL_HEADER_FILE(pfb_arb_resampler.h)                                        */
+-/* BINDTOOL_HEADER_FILE_HASH(7cc3fce37ee5e8d755875d6741d1bac5)                     */
++/* BINDTOOL_HEADER_FILE_HASH(eb7e851840b907f2ecf84b042beb0634)                     */
+ /***********************************************************************************/
+ 
+ #include <pybind11/complex.h>
+diff --git a/gr-filter/python/filter/bindings/polyphase_filterbank_python.cc b/gr-filter/python/filter/bindings/polyphase_filterbank_python.cc
+index c0872fe60..42fdd231f 100644
+--- a/gr-filter/python/filter/bindings/polyphase_filterbank_python.cc
++++ b/gr-filter/python/filter/bindings/polyphase_filterbank_python.cc
+@@ -14,7 +14,7 @@
+ /* BINDTOOL_GEN_AUTOMATIC(0)                                                       */
+ /* BINDTOOL_USE_PYGCCXML(0)                                                        */
+ /* BINDTOOL_HEADER_FILE(polyphase_filterbank.h)                                        */
+-/* BINDTOOL_HEADER_FILE_HASH(8651c06a82eb420afdb769759d3fa4bd)                     */
++/* BINDTOOL_HEADER_FILE_HASH(3313428572d366320d9d2777658af1c6)                     */
+ /***********************************************************************************/
+ 
+ #include <pybind11/complex.h>
+-- 
+2.20.1
+
