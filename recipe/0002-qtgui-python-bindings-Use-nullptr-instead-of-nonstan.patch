@@ -1,4 +1,4 @@
-From ab605a1e1a2e6686404b87ffc4b8fa48b8be5490 Mon Sep 17 00:00:00 2001
+From 7fad64d723ef675131927bb08d0e392152b84284 Mon Sep 17 00:00:00 2001
 From: Ryan Volz <ryan.volz@gmail.com>
 Date: Thu, 1 Oct 2020 16:48:28 -0400
 Subject: [PATCH 2/2] qtgui: python: bindings: Use nullptr instead of
@@ -6,9 +6,24 @@ Subject: [PATCH 2/2] qtgui: python: bindings: Use nullptr instead of
 
 This fixes compilation with MSVC.
 ---
- gr-qtgui/python/qtgui/bindings/ber_sink_b_python.cc   | 2 +-
- gr-qtgui/python/qtgui/bindings/const_sink_c_python.cc | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ gr-qtgui/python/qtgui/bindings/ber_sink_b_python.cc         | 2 +-
+ gr-qtgui/python/qtgui/bindings/const_sink_c_python.cc       | 2 +-
+ gr-qtgui/python/qtgui/bindings/edit_box_msg_python.cc       | 2 +-
+ gr-qtgui/python/qtgui/bindings/eye_sink_c_python.cc         | 2 +-
+ gr-qtgui/python/qtgui/bindings/eye_sink_f_python.cc         | 2 +-
+ gr-qtgui/python/qtgui/bindings/freq_sink_c_python.cc        | 2 +-
+ gr-qtgui/python/qtgui/bindings/freq_sink_f_python.cc        | 2 +-
+ gr-qtgui/python/qtgui/bindings/histogram_sink_f_python.cc   | 2 +-
+ gr-qtgui/python/qtgui/bindings/number_sink_python.cc        | 2 +-
+ gr-qtgui/python/qtgui/bindings/sink_f_python.cc             | 2 +-
+ gr-qtgui/python/qtgui/bindings/time_raster_sink_b_python.cc | 2 +-
+ gr-qtgui/python/qtgui/bindings/time_raster_sink_f_python.cc | 2 +-
+ gr-qtgui/python/qtgui/bindings/time_sink_c_python.cc        | 2 +-
+ gr-qtgui/python/qtgui/bindings/time_sink_f_python.cc        | 2 +-
+ gr-qtgui/python/qtgui/bindings/vector_sink_f_python.cc      | 2 +-
+ gr-qtgui/python/qtgui/bindings/waterfall_sink_c_python.cc   | 2 +-
+ gr-qtgui/python/qtgui/bindings/waterfall_sink_f_python.cc   | 2 +-
+ 17 files changed, 17 insertions(+), 17 deletions(-)
 
 diff --git a/gr-qtgui/python/qtgui/bindings/ber_sink_b_python.cc b/gr-qtgui/python/qtgui/bindings/ber_sink_b_python.cc
 index 2ba5a2121..7d8071d8d 100644
@@ -34,6 +49,201 @@ index 0411614c8..bd0fd5912 100644
 -             py::arg("parent") = __null,
 +             py::arg("parent") = nullptr,
               D(const_sink_c, make))
+ 
+ 
+diff --git a/gr-qtgui/python/qtgui/bindings/edit_box_msg_python.cc b/gr-qtgui/python/qtgui/bindings/edit_box_msg_python.cc
+index a5d4498a3..e65d81721 100644
+--- a/gr-qtgui/python/qtgui/bindings/edit_box_msg_python.cc
++++ b/gr-qtgui/python/qtgui/bindings/edit_box_msg_python.cc
+@@ -49,7 +49,7 @@ void bind_edit_box_msg(py::module& m)
+              py::arg("is_pair") = true,
+              py::arg("is_static") = true,
+              py::arg("key") = "",
+-             py::arg("parent") = __null,
++             py::arg("parent") = nullptr,
+              D(edit_box_msg, make))
+ 
+ 
+diff --git a/gr-qtgui/python/qtgui/bindings/eye_sink_c_python.cc b/gr-qtgui/python/qtgui/bindings/eye_sink_c_python.cc
+index 388bfaac0..0b03f6a6c 100644
+--- a/gr-qtgui/python/qtgui/bindings/eye_sink_c_python.cc
++++ b/gr-qtgui/python/qtgui/bindings/eye_sink_c_python.cc
+@@ -53,7 +53,7 @@ void bind_eye_sink_c(py::module& m)
+              py::arg("samp_rate"),
+              py::arg("name"),
+              py::arg("nconnections") = 1,
+-             py::arg("parent") = __null,
++             py::arg("parent") = nullptr,
+              D(eye_sink_c, make))
+ 
+ 
+diff --git a/gr-qtgui/python/qtgui/bindings/eye_sink_f_python.cc b/gr-qtgui/python/qtgui/bindings/eye_sink_f_python.cc
+index a44f95504..2f77edb56 100644
+--- a/gr-qtgui/python/qtgui/bindings/eye_sink_f_python.cc
++++ b/gr-qtgui/python/qtgui/bindings/eye_sink_f_python.cc
+@@ -50,7 +50,7 @@ void bind_eye_sink_f(py::module& m)
+              py::arg("samp_rate"),
+              py::arg("name"),
+              py::arg("nconnections") = 1,
+-             py::arg("parent") = __null,
++             py::arg("parent") = nullptr,
+              D(eye_sink_f, make))
+ 
+ 
+diff --git a/gr-qtgui/python/qtgui/bindings/freq_sink_c_python.cc b/gr-qtgui/python/qtgui/bindings/freq_sink_c_python.cc
+index 597072bb6..bdb0f9b6a 100644
+--- a/gr-qtgui/python/qtgui/bindings/freq_sink_c_python.cc
++++ b/gr-qtgui/python/qtgui/bindings/freq_sink_c_python.cc
+@@ -52,7 +52,7 @@ void bind_freq_sink_c(py::module& m)
+              py::arg("bw"),
+              py::arg("name"),
+              py::arg("nconnections") = 1,
+-             py::arg("parent") = __null,
++             py::arg("parent") = nullptr,
+              D(freq_sink_c, make))
+ 
+ 
+diff --git a/gr-qtgui/python/qtgui/bindings/freq_sink_f_python.cc b/gr-qtgui/python/qtgui/bindings/freq_sink_f_python.cc
+index 5ea96f3fe..35ac7a5f6 100644
+--- a/gr-qtgui/python/qtgui/bindings/freq_sink_f_python.cc
++++ b/gr-qtgui/python/qtgui/bindings/freq_sink_f_python.cc
+@@ -52,7 +52,7 @@ void bind_freq_sink_f(py::module& m)
+              py::arg("bw"),
+              py::arg("name"),
+              py::arg("nconnections") = 1,
+-             py::arg("parent") = __null,
++             py::arg("parent") = nullptr,
+              D(freq_sink_f, make))
+ 
+ 
+diff --git a/gr-qtgui/python/qtgui/bindings/histogram_sink_f_python.cc b/gr-qtgui/python/qtgui/bindings/histogram_sink_f_python.cc
+index 704c4a37d..f0ff24abc 100644
+--- a/gr-qtgui/python/qtgui/bindings/histogram_sink_f_python.cc
++++ b/gr-qtgui/python/qtgui/bindings/histogram_sink_f_python.cc
+@@ -53,7 +53,7 @@ void bind_histogram_sink_f(py::module& m)
+              py::arg("xmax"),
+              py::arg("name"),
+              py::arg("nconnections") = 1,
+-             py::arg("parent") = __null,
++             py::arg("parent") = nullptr,
+              D(histogram_sink_f, make))
+ 
+ 
+diff --git a/gr-qtgui/python/qtgui/bindings/number_sink_python.cc b/gr-qtgui/python/qtgui/bindings/number_sink_python.cc
+index 042069ade..8d7c4c361 100644
+--- a/gr-qtgui/python/qtgui/bindings/number_sink_python.cc
++++ b/gr-qtgui/python/qtgui/bindings/number_sink_python.cc
+@@ -50,7 +50,7 @@ void bind_number_sink(py::module& m)
+              py::arg("average") = 0,
+              py::arg("graph_type") = ::gr::qtgui::graph_t::NUM_GRAPH_HORIZ,
+              py::arg("nconnections") = 1,
+-             py::arg("parent") = __null,
++             py::arg("parent") = nullptr,
+              D(number_sink, make))
+ 
+ 
+diff --git a/gr-qtgui/python/qtgui/bindings/sink_f_python.cc b/gr-qtgui/python/qtgui/bindings/sink_f_python.cc
+index 4c71bb281..e2635b72b 100644
+--- a/gr-qtgui/python/qtgui/bindings/sink_f_python.cc
++++ b/gr-qtgui/python/qtgui/bindings/sink_f_python.cc
+@@ -52,7 +52,7 @@ void bind_sink_f(py::module& m)
+              py::arg("plotwaterfall"),
+              py::arg("plottime"),
+              py::arg("plotconst"),
+-             py::arg("parent") = __null,
++             py::arg("parent") = nullptr,
+              D(sink_f, make))
+ 
+ 
+diff --git a/gr-qtgui/python/qtgui/bindings/time_raster_sink_b_python.cc b/gr-qtgui/python/qtgui/bindings/time_raster_sink_b_python.cc
+index d713330ee..b4cd8c1c9 100644
+--- a/gr-qtgui/python/qtgui/bindings/time_raster_sink_b_python.cc
++++ b/gr-qtgui/python/qtgui/bindings/time_raster_sink_b_python.cc
+@@ -54,7 +54,7 @@ void bind_time_raster_sink_b(py::module& m)
+              py::arg("offset"),
+              py::arg("name"),
+              py::arg("nconnections") = 1,
+-             py::arg("parent") = __null,
++             py::arg("parent") = nullptr,
+              D(time_raster_sink_b, make))
+ 
+ 
+diff --git a/gr-qtgui/python/qtgui/bindings/time_raster_sink_f_python.cc b/gr-qtgui/python/qtgui/bindings/time_raster_sink_f_python.cc
+index 662265ef3..8c640d610 100644
+--- a/gr-qtgui/python/qtgui/bindings/time_raster_sink_f_python.cc
++++ b/gr-qtgui/python/qtgui/bindings/time_raster_sink_f_python.cc
+@@ -54,7 +54,7 @@ void bind_time_raster_sink_f(py::module& m)
+              py::arg("offset"),
+              py::arg("name"),
+              py::arg("nconnections") = 1,
+-             py::arg("parent") = __null,
++             py::arg("parent") = nullptr,
+              D(time_raster_sink_f, make))
+ 
+ 
+diff --git a/gr-qtgui/python/qtgui/bindings/time_sink_c_python.cc b/gr-qtgui/python/qtgui/bindings/time_sink_c_python.cc
+index 29ebd25f9..f28614f92 100644
+--- a/gr-qtgui/python/qtgui/bindings/time_sink_c_python.cc
++++ b/gr-qtgui/python/qtgui/bindings/time_sink_c_python.cc
+@@ -53,7 +53,7 @@ void bind_time_sink_c(py::module& m)
+              py::arg("samp_rate"),
+              py::arg("name"),
+              py::arg("nconnections") = 1,
+-             py::arg("parent") = __null,
++             py::arg("parent") = nullptr,
+              D(time_sink_c, make))
+ 
+ 
+diff --git a/gr-qtgui/python/qtgui/bindings/time_sink_f_python.cc b/gr-qtgui/python/qtgui/bindings/time_sink_f_python.cc
+index c7b637412..20d65ac78 100644
+--- a/gr-qtgui/python/qtgui/bindings/time_sink_f_python.cc
++++ b/gr-qtgui/python/qtgui/bindings/time_sink_f_python.cc
+@@ -50,7 +50,7 @@ void bind_time_sink_f(py::module& m)
+              py::arg("samp_rate"),
+              py::arg("name"),
+              py::arg("nconnections") = 1,
+-             py::arg("parent") = __null,
++             py::arg("parent") = nullptr,
+              D(time_sink_f, make))
+ 
+ 
+diff --git a/gr-qtgui/python/qtgui/bindings/vector_sink_f_python.cc b/gr-qtgui/python/qtgui/bindings/vector_sink_f_python.cc
+index 119ac14ac..be616dd18 100644
+--- a/gr-qtgui/python/qtgui/bindings/vector_sink_f_python.cc
++++ b/gr-qtgui/python/qtgui/bindings/vector_sink_f_python.cc
+@@ -53,7 +53,7 @@ void bind_vector_sink_f(py::module& m)
+              py::arg("y_axis_label"),
+              py::arg("name"),
+              py::arg("nconnections") = 1,
+-             py::arg("parent") = __null,
++             py::arg("parent") = nullptr,
+              D(vector_sink_f, make))
+ 
+ 
+diff --git a/gr-qtgui/python/qtgui/bindings/waterfall_sink_c_python.cc b/gr-qtgui/python/qtgui/bindings/waterfall_sink_c_python.cc
+index c596946ef..240bcefbe 100644
+--- a/gr-qtgui/python/qtgui/bindings/waterfall_sink_c_python.cc
++++ b/gr-qtgui/python/qtgui/bindings/waterfall_sink_c_python.cc
+@@ -53,7 +53,7 @@ void bind_waterfall_sink_c(py::module& m)
+              py::arg("bw"),
+              py::arg("name"),
+              py::arg("nconnections") = 1,
+-             py::arg("parent") = __null,
++             py::arg("parent") = nullptr,
+              D(waterfall_sink_c, make))
+ 
+ 
+diff --git a/gr-qtgui/python/qtgui/bindings/waterfall_sink_f_python.cc b/gr-qtgui/python/qtgui/bindings/waterfall_sink_f_python.cc
+index 2e84054c3..c3a48d6a3 100644
+--- a/gr-qtgui/python/qtgui/bindings/waterfall_sink_f_python.cc
++++ b/gr-qtgui/python/qtgui/bindings/waterfall_sink_f_python.cc
+@@ -53,7 +53,7 @@ void bind_waterfall_sink_f(py::module& m)
+              py::arg("bw"),
+              py::arg("name"),
+              py::arg("nconnections") = 1,
+-             py::arg("parent") = __null,
++             py::arg("parent") = nullptr,
+              D(waterfall_sink_f, make))
  
  
 -- 
