@@ -15,16 +15,19 @@ source:
     - 0002-cmake-Don-t-generate-.pyc-and-.pyo-files.patch
     - 0001-Fix-drag-n-drop-issue-with-quartz-macos-backend.patch
     - 0001-Use-an-ImageSurface-rather-than-UI-back-end.patch  # [osx]
-    - 0001-gr-audio-osx-Fix-compilation.patch
-    - 0001-cmake-pybind-Use-PYTHON_EXECUTABLE-instead-of-python.patch
-    - 0001-Fix-Windows-logging.patch
+    - 0001-gr-audio-osx-Fix-compilation.patch  # submitted (fix_compile_gr_audio_osx)
+    - 0001-cmake-pybind-Use-PYTHON_EXECUTABLE-instead-of-python.patch  # submitted (fix_python_exe_windows)
+    - 0001-Fix-Windows-logging.patch  # submitted (japm48/fix-win-logging, previously fix_vmcircbuf_format_string)
     - 0001-cmake-Set-VERSION_PATH-to-be-only-git-fixing-RC_MAIN.patch
-    - 0001-cmake-Fix-pybind11-compiler-definitions-with-MSVC.patch
-    - 0002-cmake-python-Fix-linking-when-runtime-py-interpreter.patch
-    - 0001-lib-include-Include-missing-headers.patch
-    - 0001-filter-Do-not-declare-empty-destructors.patch
-    - 0002-filter-Add-explicit-move-constructors-to-fix-build-w.patch
-    - 0001-digital-python-bindings-Use-nullptr-instead-of-nonst.patch
+    - 0001-vocoder-cmake-Use-pybind-macros-to-manage-bindings.patch  # can submit (vocoder_pybind11_cmake)
+    - 0001-cmake-Fix-pybind11-compiler-definitions-with-MSVC.patch  # submitted (fix_pybind_msvc_compile_defs)
+    - 0002-cmake-python-Fix-linking-when-runtime-py-interpreter.patch  # can submit, wait for previous (python_link_fix)
+    - 0001-lib-include-Include-missing-headers.patch  # can submit (fix_missing_algorithm_header)
+    - 0001-filter-Do-not-declare-empty-destructors.patch  # bug discussion (fix_filter_move_semantics)
+    - 0002-filter-Add-explicit-move-constructors-to-fix-build-w.patch  # bug discussion (fix_filter_move_semantics)
+    - 0001-digital-python-bindings-Use-nullptr-instead-of-nonst.patch  # can submit (fix_gccnull_pullptr)
+    - 0001-network-lib-Use-std-functions-for-sleep-instead-of-u.patch  # can submit (fix_network_msvc_compile)
+    - 0002-network-lib-Rename-s_host-variable-so-MSVC-doesn-t-b.patch  # can submit (fix_network_msvc_compile)
 
 build:
   number: 0

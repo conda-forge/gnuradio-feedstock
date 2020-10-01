@@ -1,7 +1,7 @@
-From 6e0065c88f5108a91e84873d849b6bce96acfcd8 Mon Sep 17 00:00:00 2001
+From d7038ff4554b4dffad3a0cc646fd46c223ef0a87 Mon Sep 17 00:00:00 2001
 From: Ryan Volz <ryan.volz@gmail.com>
 Date: Tue, 8 Sep 2020 12:03:57 -0400
-Subject: [PATCH 2/2] cmake: python: Fix linking when runtime py interpreter !=
+Subject: [PATCH] cmake: python: Fix linking when runtime py interpreter !=
  build time.
 
 This fixes a segmentation fault with the Pybind11 bindings when trying
@@ -23,12 +23,11 @@ For future reference and a general description of best practices for
 linking Python extension modules, see
 https://blog.tim-smith.us/2015/09/python-extension-modules-os-x.
 ---
- cmake/Modules/GrPybind.cmake                  |  6 ++--
- cmake/Modules/GrPython.cmake                  | 36 +++++++++++++++----
- gnuradio-runtime/lib/CMakeLists.txt           | 32 ++++++++++-------
- gr-qtgui/lib/CMakeLists.txt                   |  8 +++--
- .../python/vocoder/bindings/CMakeLists.txt    |  2 +-
- 5 files changed, 59 insertions(+), 25 deletions(-)
+ cmake/Modules/GrPybind.cmake        |  6 ++---
+ cmake/Modules/GrPython.cmake        | 36 ++++++++++++++++++++++++-----
+ gnuradio-runtime/lib/CMakeLists.txt | 32 ++++++++++++++-----------
+ gr-qtgui/lib/CMakeLists.txt         |  8 +++++--
+ 4 files changed, 58 insertions(+), 24 deletions(-)
 
 diff --git a/cmake/Modules/GrPybind.cmake b/cmake/Modules/GrPybind.cmake
 index 12ff23487..1669f1001 100644
@@ -182,19 +181,6 @@ index f3adae9c7..94fbc7b82 100644
 +    PRIVATE Python::Python
    )
  endif(ENABLE_PYTHON)
- 
-diff --git a/gr-vocoder/python/vocoder/bindings/CMakeLists.txt b/gr-vocoder/python/vocoder/bindings/CMakeLists.txt
-index 48f73546c..07fb356ce 100644
---- a/gr-vocoder/python/vocoder/bindings/CMakeLists.txt
-+++ b/gr-vocoder/python/vocoder/bindings/CMakeLists.txt
-@@ -75,7 +75,7 @@ target_include_directories(vocoder_python PUBLIC
-     ${CMAKE_CURRENT_SOURCE_DIR}/../../../include
-     ${PYBIND11_INCLUDE_DIR}
- )
--target_link_libraries(vocoder_python PUBLIC ${Boost_LIBRARIES} ${PYTHON_LIBRARIES} gnuradio-runtime gnuradio-vocoder)
-+target_link_libraries(vocoder_python PUBLIC ${Boost_LIBRARIES} Python::Module gnuradio-runtime gnuradio-vocoder)
- target_compile_options(vocoder_python PRIVATE -Wno-unused-variable) # disable warnings for docstring templates
- add_dependencies(vocoder_python vocoder_docstrings)
  
 -- 
 2.20.1

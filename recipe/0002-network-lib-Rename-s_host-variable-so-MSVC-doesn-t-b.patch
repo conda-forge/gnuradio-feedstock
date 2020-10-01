@@ -1,0 +1,34 @@
+From 29b236c1dd776fa7fd0a30b8bbdada8174cc2813 Mon Sep 17 00:00:00 2001
+From: Ryan Volz <ryan.volz@gmail.com>
+Date: Thu, 1 Oct 2020 16:05:41 -0400
+Subject: [PATCH 2/2] network: lib: Rename s_host variable so MSVC doesn't
+ barf.
+
+I don't know why, but MSVC fails with the variable name as "s_host", so
+make it "str_host" instead.
+---
+ gr-network/lib/udp_sink_impl.cc | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/gr-network/lib/udp_sink_impl.cc b/gr-network/lib/udp_sink_impl.cc
+index 7dce7625e..9d4349af5 100644
+--- a/gr-network/lib/udp_sink_impl.cc
++++ b/gr-network/lib/udp_sink_impl.cc
+@@ -118,11 +118,11 @@ udp_sink_impl::udp_sink_impl(size_t itemsize,
+ 
+     d_udpsocket = new boost::asio::ip::udp::socket(d_io_service);
+ 
+-    std::string s_port = (boost::format("%d") % port).str();
+-    std::string s_host = host.empty() ? std::string("localhost") : host;
++    std::string str_port = (boost::format("%d") % port).str();
++    std::string str_host = host.empty() ? std::string("localhost") : host;
+     boost::asio::ip::udp::resolver resolver(d_io_service);
+     boost::asio::ip::udp::resolver::query query(
+-        s_host, s_port, boost::asio::ip::resolver_query_base::passive);
++        str_host, str_port, boost::asio::ip::resolver_query_base::passive);
+ 
+     boost::system::error_code err;
+     d_endpoint = *resolver.resolve(query, err);
+-- 
+2.20.1
+
