@@ -17,7 +17,7 @@ source:
     - 0001-Use-an-ImageSurface-rather-than-UI-back-end.patch  # [osx]
     - 0001-gr-audio-osx-Fix-compilation.patch
     - 0001-cmake-pybind-Use-PYTHON_EXECUTABLE-instead-of-python.patch
-    - 0001-runtime-lib-Fix-compile-error-with-format-string-pre.patch
+    - 0001-Fix-Windows-logging.patch
     - 0001-cmake-Set-VERSION_PATH-to-be-only-git-fixing-RC_MAIN.patch
     - 0001-cmake-Fix-pybind11-compiler-definitions-with-MSVC.patch
     - 0002-cmake-python-Fix-linking-when-runtime-py-interpreter.patch
