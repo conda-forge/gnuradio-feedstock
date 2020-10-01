@@ -24,6 +24,7 @@ source:
     - 0001-lib-include-Include-missing-headers.patch
     - 0001-filter-Do-not-declare-empty-destructors.patch
     - 0002-filter-Add-explicit-move-constructors-to-fix-build-w.patch
+    - 0001-digital-python-bindings-Use-nullptr-instead-of-nonst.patch
 
 build:
   number: 0
