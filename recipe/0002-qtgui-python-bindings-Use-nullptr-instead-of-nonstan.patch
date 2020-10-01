@@ -1,0 +1,41 @@
+From ab605a1e1a2e6686404b87ffc4b8fa48b8be5490 Mon Sep 17 00:00:00 2001
+From: Ryan Volz <ryan.volz@gmail.com>
+Date: Thu, 1 Oct 2020 16:48:28 -0400
+Subject: [PATCH 2/2] qtgui: python: bindings: Use nullptr instead of
+ nonstandard __null.
+
+This fixes compilation with MSVC.
+---
+ gr-qtgui/python/qtgui/bindings/ber_sink_b_python.cc   | 2 +-
+ gr-qtgui/python/qtgui/bindings/const_sink_c_python.cc | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/gr-qtgui/python/qtgui/bindings/ber_sink_b_python.cc b/gr-qtgui/python/qtgui/bindings/ber_sink_b_python.cc
+index 2ba5a2121..7d8071d8d 100644
+--- a/gr-qtgui/python/qtgui/bindings/ber_sink_b_python.cc
++++ b/gr-qtgui/python/qtgui/bindings/ber_sink_b_python.cc
+@@ -48,7 +48,7 @@ void bind_ber_sink_b(py::module& m)
+              py::arg("berminerrors") = 100,
+              py::arg("berLimit") = -7.,
+              py::arg("curvenames") = std::vector<std::string>(),
+-             py::arg("parent") = __null,
++             py::arg("parent") = nullptr,
+              D(ber_sink_b, make))
+ 
+ 
+diff --git a/gr-qtgui/python/qtgui/bindings/const_sink_c_python.cc b/gr-qtgui/python/qtgui/bindings/const_sink_c_python.cc
+index 0411614c8..bd0fd5912 100644
+--- a/gr-qtgui/python/qtgui/bindings/const_sink_c_python.cc
++++ b/gr-qtgui/python/qtgui/bindings/const_sink_c_python.cc
+@@ -49,7 +49,7 @@ void bind_const_sink_c(py::module& m)
+              py::arg("size"),
+              py::arg("name"),
+              py::arg("nconnections") = 1,
+-             py::arg("parent") = __null,
++             py::arg("parent") = nullptr,
+              D(const_sink_c, make))
+ 
+ 
+-- 
+2.20.1
+
