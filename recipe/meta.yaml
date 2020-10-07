@@ -1,4 +1,4 @@
-{% set version = "3.9.0.0.dev20200911" %}
+{% set version = "3.9.0.0.dev20201007" %}
 
 package:
   name: gnuradio
@@ -7,29 +7,24 @@ package:
 source:
   #url: https://github.com/gnuradio/gnuradio/releases/download/v{{ version }}/gnuradio-{{ version }}.tar.gz
   #sha256: 3e293541a9ac8d78660762bae8b80c0f6195b3494e1c50c01a9fd79cc60bb624
-  url: https://github.com/gnuradio/gnuradio/archive/df505f9e272a3ca4b901980c94d6256840848133.zip
-  sha256: e2ea4b8bbe9f5c7871fe547caee4bd8faafa9ef7f863acc7d2b803f0eea12305
+  url: https://github.com/gnuradio/gnuradio/archive/d4b68580cced4118a0f05efe711226ecfb4d22be.zip
+  sha256: 550d3f6a83e7346bf101f05c19a68a9cfdf2dc2577b59bb8d7b7b3ec6b7180c2
   patches:
     - 0001-Don-t-use-hard-coded-path-constants.patch
     - 0001-cmake-Install-python-wrapper-exe-for-scripts-on-Wind.patch
     - 0002-cmake-Don-t-generate-.pyc-and-.pyo-files.patch
     - 0001-Fix-drag-n-drop-issue-with-quartz-macos-backend.patch
     - 0001-Use-an-ImageSurface-rather-than-UI-back-end.patch  # [osx]
-    - 0001-gr-audio-osx-Fix-compilation.patch  # submitted (fix_compile_gr_audio_osx)
-    - 0001-cmake-pybind-Use-PYTHON_EXECUTABLE-instead-of-python.patch  # submitted (fix_python_exe_windows)
     - 0001-Fix-Windows-logging.patch  # submitted (japm48/fix-win-logging, previously fix_vmcircbuf_format_string)
     - 0001-cmake-Set-VERSION_PATH-to-be-only-git-fixing-RC_MAIN.patch
     - 0001-vocoder-cmake-Use-pybind-macros-to-manage-bindings.patch  # submitted (vocoder_pybind11_cmake)
     - 0001-cmake-Fix-pybind11-compiler-definitions-with-MSVC.patch  # submitted (fix_pybind_msvc_compile_defs)
     - 0002-cmake-python-Fix-linking-when-runtime-py-interpreter.patch  # can submit, wait for previous (python_link_fix)
-    - 0001-lib-include-Include-missing-headers.patch  # submitted (fix_missing_algorithm_header)
     - 0001-filter-Do-not-declare-empty-destructors.patch  # bug discussion (fix_filter_move_semantics)
     - 0002-filter-Add-explicit-move-constructors-to-fix-build-w.patch  # bug discussion (fix_filter_move_semantics)
-    - 0001-digital-python-bindings-Use-nullptr-instead-of-nonst.patch  # submitted (fix_gccnull_nullptr)
-    - 0002-qtgui-python-bindings-Use-nullptr-instead-of-nonstan.patch  # submitted (fix_gcc_nullptr)
     - 0001-network-lib-Use-std-functions-for-sleep-instead-of-u.patch  # submitted (fix_network_msvc_compile)
     - 0002-network-lib-Rename-s_host-variable-so-MSVC-doesn-t-b.patch  # submitted (fix_network_msvc_compile)
-    - 0001-uhd-include-Fix-UHD_API-GR_UHD_API-typo-so-Windows-b.patch  # submitted (fix_uhd_api_typo)
+    - 0001-fec-lib-Remove-use-of-FEC_API-in-internal-headers-an.patch  # (fix_reed_solomon_fec_api)
 
 build:
   number: 0

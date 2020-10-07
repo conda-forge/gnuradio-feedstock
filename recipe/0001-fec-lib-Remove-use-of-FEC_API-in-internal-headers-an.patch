@@ -1,0 +1,177 @@
+From 9935ffb4e5f625c2e996eab544a29cf1349340f2 Mon Sep 17 00:00:00 2001
+From: Ryan Volz <ryan.volz@gmail.com>
+Date: Wed, 7 Oct 2020 14:07:08 -0400
+Subject: [PATCH] fec: lib: Remove use of FEC_API in internal headers and
+ definitions.
+
+This fixes building with MSVC. Since these files first get built into an
+object that is *not* a shared library, FEC_API was resolving to
+__declspec(dllimport), which should never be used for function
+definitions. Removing FEC_API from these internal headers and from the
+function definitions allows them to compile, and then the appropriate
+functions are exported when built into the gnuradio-fec shared library.
+---
+ gr-fec/lib/reed-solomon/char.h            | 18 ++++++++----------
+ gr-fec/lib/reed-solomon/decode_rs.h       |  4 +---
+ gr-fec/lib/reed-solomon/decode_rs_ccsds.c |  4 +---
+ gr-fec/lib/reed-solomon/encode_rs.h       |  4 +---
+ gr-fec/lib/reed-solomon/encode_rs_ccsds.c |  4 +---
+ gr-fec/lib/reed-solomon/fixed.h           |  6 ++----
+ gr-fec/lib/reed-solomon/int.h             |  8 +++-----
+ 7 files changed, 17 insertions(+), 31 deletions(-)
+
+diff --git a/gr-fec/lib/reed-solomon/char.h b/gr-fec/lib/reed-solomon/char.h
+index 80435b633..cfc300099 100644
+--- a/gr-fec/lib/reed-solomon/char.h
++++ b/gr-fec/lib/reed-solomon/char.h
+@@ -6,8 +6,6 @@
+ 
+ #define DTYPE unsigned char
+ 
+-#include <gnuradio/fec/api.h>
+-
+ /* Reed-Solomon codec control block */
+ struct rs {
+     unsigned int mm;         /* Bits per symbol */
+@@ -48,11 +46,11 @@ static inline unsigned int modnn(struct rs* rs, unsigned int x)
+ #define INIT_RS init_rs_char
+ #define FREE_RS free_rs_char
+ 
+-FEC_API void ENCODE_RS(void* p, DTYPE* data, DTYPE* parity);
+-FEC_API int DECODE_RS(void* p, DTYPE* data, int* eras_pos, int no_eras);
+-FEC_API void* INIT_RS(unsigned int symsize,
+-                      unsigned int gfpoly,
+-                      unsigned int fcr,
+-                      unsigned int prim,
+-                      unsigned int nroots);
+-FEC_API void FREE_RS(void* p);
++void ENCODE_RS(void* p, DTYPE* data, DTYPE* parity);
++int DECODE_RS(void* p, DTYPE* data, int* eras_pos, int no_eras);
++void* INIT_RS(unsigned int symsize,
++              unsigned int gfpoly,
++              unsigned int fcr,
++              unsigned int prim,
++              unsigned int nroots);
++void FREE_RS(void* p);
+diff --git a/gr-fec/lib/reed-solomon/decode_rs.h b/gr-fec/lib/reed-solomon/decode_rs.h
+index a2feeb090..1c18f0565 100644
+--- a/gr-fec/lib/reed-solomon/decode_rs.h
++++ b/gr-fec/lib/reed-solomon/decode_rs.h
+@@ -3,8 +3,6 @@
+  * May be used under the terms of the GNU General Public License (GPL)
+  */
+ 
+-#include <gnuradio/fec/api.h>
+-
+ #ifdef DEBUG
+ #include <stdio.h>
+ #endif
+@@ -17,7 +15,7 @@
+ 
+ #define min(a, b) ((a) < (b) ? (a) : (b))
+ 
+-FEC_API int DECODE_RS(
++int DECODE_RS(
+ #ifndef FIXED
+     void* p,
+ #endif
+diff --git a/gr-fec/lib/reed-solomon/decode_rs_ccsds.c b/gr-fec/lib/reed-solomon/decode_rs_ccsds.c
+index 9196260e6..be6e2018e 100644
+--- a/gr-fec/lib/reed-solomon/decode_rs_ccsds.c
++++ b/gr-fec/lib/reed-solomon/decode_rs_ccsds.c
+@@ -8,9 +8,7 @@
+ #include "ccsds.h"
+ #include "fixed.h"
+ 
+-#include <gnuradio/fec/api.h>
+-
+-FEC_API int decode_rs_ccsds(unsigned char* data, int* eras_pos, int no_eras)
++int decode_rs_ccsds(unsigned char* data, int* eras_pos, int no_eras)
+ {
+     int i, r;
+     unsigned char cdata[NN];
+diff --git a/gr-fec/lib/reed-solomon/encode_rs.h b/gr-fec/lib/reed-solomon/encode_rs.h
+index 75051426d..45e1ab720 100644
+--- a/gr-fec/lib/reed-solomon/encode_rs.h
++++ b/gr-fec/lib/reed-solomon/encode_rs.h
+@@ -3,11 +3,9 @@
+  * May be used under the terms of the GNU General Public License (GPL)
+  */
+ 
+-#include <gnuradio/fec/api.h>
+-
+ #include <string.h>
+ 
+-FEC_API void ENCODE_RS(
++void ENCODE_RS(
+ #ifndef FIXED
+     void* p,
+ #endif
+diff --git a/gr-fec/lib/reed-solomon/encode_rs_ccsds.c b/gr-fec/lib/reed-solomon/encode_rs_ccsds.c
+index 1ebd3a443..7080b3f41 100644
+--- a/gr-fec/lib/reed-solomon/encode_rs_ccsds.c
++++ b/gr-fec/lib/reed-solomon/encode_rs_ccsds.c
+@@ -8,9 +8,7 @@
+ #include "ccsds.h"
+ #include "fixed.h"
+ 
+-#include <gnuradio/fec/api.h>
+-
+-FEC_API void encode_rs_ccsds(unsigned char* data, unsigned char* parity)
++void encode_rs_ccsds(unsigned char* data, unsigned char* parity)
+ {
+     int i;
+     unsigned char cdata[NN - NROOTS];
+diff --git a/gr-fec/lib/reed-solomon/fixed.h b/gr-fec/lib/reed-solomon/fixed.h
+index feb3105b0..a37c2fe8d 100644
+--- a/gr-fec/lib/reed-solomon/fixed.h
++++ b/gr-fec/lib/reed-solomon/fixed.h
+@@ -7,8 +7,6 @@
+  */
+ #define DTYPE unsigned char
+ 
+-#include <gnuradio/fec/api.h>
+-
+ static inline int mod255(int x)
+ {
+     while (x >= 255) {
+@@ -37,5 +35,5 @@ extern unsigned char CCSDS_poly[];
+ #define ENCODE_RS encode_rs_8
+ #define DECODE_RS decode_rs_8
+ 
+-FEC_API void ENCODE_RS(DTYPE* data, DTYPE* parity);
+-FEC_API int DECODE_RS(DTYPE* data, int* eras_pos, int no_eras);
+\ No newline at end of file
++void ENCODE_RS(DTYPE* data, DTYPE* parity);
++int DECODE_RS(DTYPE* data, int* eras_pos, int no_eras);
+diff --git a/gr-fec/lib/reed-solomon/int.h b/gr-fec/lib/reed-solomon/int.h
+index 80dd50d3f..431596641 100644
+--- a/gr-fec/lib/reed-solomon/int.h
++++ b/gr-fec/lib/reed-solomon/int.h
+@@ -5,8 +5,6 @@
+  */
+ #define DTYPE int
+ 
+-#include <gnuradio/fec/api.h>
+-
+ /* Reed-Solomon codec control block */
+ struct FEC_API rs {
+     unsigned int mm;     /* Bits per symbol */
+@@ -46,11 +44,11 @@ static inline int modnn(struct rs* rs, int x)
+ #define INIT_RS init_rs_int
+ #define FREE_RS free_rs_int
+ 
+-FEC_API void ENCODE_RS(void* p, DTYPE* data, DTYPE* parity);
+-FEC_API int DECODE_RS(void* p, DTYPE* data, int* eras_pos, int no_eras);
++void ENCODE_RS(void* p, DTYPE* data, DTYPE* parity);
++int DECODE_RS(void* p, DTYPE* data, int* eras_pos, int no_eras);
+ void* INIT_RS(unsigned int symsize,
+               unsigned int gfpoly,
+               unsigned int fcr,
+               unsigned int prim,
+               unsigned int nroots);
+-FEC_API void FREE_RS(void* p);
++void FREE_RS(void* p);
+-- 
+2.20.1
+
