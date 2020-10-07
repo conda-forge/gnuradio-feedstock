@@ -24,7 +24,7 @@ source:
     - 0002-filter-Add-explicit-move-constructors-to-fix-build-w.patch  # bug discussion (fix_filter_move_semantics)
     - 0001-network-lib-Use-std-functions-for-sleep-instead-of-u.patch  # submitted (fix_network_msvc_compile)
     - 0002-network-lib-Rename-s_host-variable-so-MSVC-doesn-t-b.patch  # submitted (fix_network_msvc_compile)
-    - 0001-fec-lib-Remove-use-of-FEC_API-in-internal-headers-an.patch  # (fix_reed_solomon_fec_api)
+    - 0001-fec-lib-Remove-use-of-FEC_API-for-function-definitio.patch  # (fix_reed_solomon_fec_api)
 
 build:
   number: 0
