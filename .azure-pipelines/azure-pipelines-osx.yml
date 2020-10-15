@@ -8,16 +8,24 @@ jobs:
     vmImage: macOS-10.15
   strategy:
     matrix:
-      osx_64_python3.6.____cpythontarget_platformosx-64:
-        CONFIG: osx_64_python3.6.____cpythontarget_platformosx-64
+      osx_64_boost_cpp1.72.0python3.6.____cpythontarget_platformosx-64:
+        CONFIG: osx_64_boost_cpp1.72.0python3.6.____cpythontarget_platformosx-64
         UPLOAD_PACKAGES: 'True'
-      osx_64_python3.7.____cpythontarget_platformosx-64:
-        CONFIG: osx_64_python3.7.____cpythontarget_platformosx-64
+      osx_64_boost_cpp1.72.0python3.7.____cpythontarget_platformosx-64:
+        CONFIG: osx_64_boost_cpp1.72.0python3.7.____cpythontarget_platformosx-64
         UPLOAD_PACKAGES: 'True'
-      osx_64_python3.8.____cpythontarget_platformosx-64:
-        CONFIG: osx_64_python3.8.____cpythontarget_platformosx-64
+      osx_64_boost_cpp1.72.0python3.8.____cpythontarget_platformosx-64:
+        CONFIG: osx_64_boost_cpp1.72.0python3.8.____cpythontarget_platformosx-64
         UPLOAD_PACKAGES: 'True'
-    maxParallel: 8
+      osx_64_boost_cpp1.74.0python3.6.____cpythontarget_platformosx-64:
+        CONFIG: osx_64_boost_cpp1.74.0python3.6.____cpythontarget_platformosx-64
+        UPLOAD_PACKAGES: 'True'
+      osx_64_boost_cpp1.74.0python3.7.____cpythontarget_platformosx-64:
+        CONFIG: osx_64_boost_cpp1.74.0python3.7.____cpythontarget_platformosx-64
+        UPLOAD_PACKAGES: 'True'
+      osx_64_boost_cpp1.74.0python3.8.____cpythontarget_platformosx-64:
+        CONFIG: osx_64_boost_cpp1.74.0python3.8.____cpythontarget_platformosx-64
+        UPLOAD_PACKAGES: 'True'
   timeoutInMinutes: 360
 
   steps:

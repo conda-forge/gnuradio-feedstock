@@ -1,5 +1,5 @@
 boost_cpp:
-- '1.72'
+- 1.72.0
 c_compiler:
 - vs2017
 channel_sources:
@@ -33,7 +33,7 @@ pin_run_as_build:
   zeromq:
     max_pin: x.x.x
 python:
-- 3.7.* *_cpython
+- 3.8.* *_cpython
 qt:
 - '5.12'
 sqlite:
@@ -44,3 +44,6 @@ uhd:
 - 3.15.0
 zeromq:
 - 4.3.2
+zip_keys:
+- - numpy
+  - python
