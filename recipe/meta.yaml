@@ -25,6 +25,7 @@ source:
     - 0001-network-lib-Use-std-functions-for-sleep-instead-of-u.patch  # merged (fix_network_msvc_compile)
     - 0002-network-lib-Rename-s_host-variable-so-MSVC-doesn-t-b.patch  # merged (fix_network_msvc_compile)
     - 0001-fec-lib-Remove-use-of-FEC_API-for-function-definitio.patch  # submitted (fix_reed_solomon_fec_api)
+    - 0001-audio-lib-windows-Add-cctype-header-for-std-isdigit.patch  # submitted (fix_isdigit_cctype_header)
 
 build:
   number: 0
