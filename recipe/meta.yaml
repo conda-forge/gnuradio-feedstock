@@ -18,7 +18,7 @@ source:
     - 0001-Use-an-ImageSurface-rather-than-UI-back-end.patch  # [osx]
 
 build:
-  number: 1
+  number: 2
   skip: true  # [win and py2k]
 
 requirements:
