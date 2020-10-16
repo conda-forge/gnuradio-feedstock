@@ -16,9 +16,11 @@ source:
     - 0002-cmake-Don-t-generate-.pyc-and-.pyo-files.patch
     - 0001-Fix-drag-n-drop-issue-with-quartz-macos-backend.patch
     - 0001-Use-an-ImageSurface-rather-than-UI-back-end.patch  # [osx]
+    - 0001-gnuradio-bind-placeholders.patch
+    - 0001-audio-lib-windows-Add-cctype-header-for-std-isdigit.patch
 
 build:
-  number: 1
+  number: 2
   skip: true  # [win and py2k]
 
 requirements:
