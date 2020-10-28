@@ -8,19 +8,38 @@ jobs:
     vmImage: ubuntu-16.04
   strategy:
     matrix:
-      linux_64_python3.6.____cpythontarget_platformlinux-64:
-        CONFIG: linux_64_python3.6.____cpythontarget_platformlinux-64
+      linux_64_boost_cpp1.72.0numpy1.16python3.6.____cpythontarget_platformlinux-64:
+        CONFIG: linux_64_boost_cpp1.72.0numpy1.16python3.6.____cpythontarget_platformlinux-64
         UPLOAD_PACKAGES: 'True'
         DOCKER_IMAGE: condaforge/linux-anvil-comp7
-      linux_64_python3.7.____cpythontarget_platformlinux-64:
-        CONFIG: linux_64_python3.7.____cpythontarget_platformlinux-64
+      linux_64_boost_cpp1.72.0numpy1.16python3.7.____cpythontarget_platformlinux-64:
+        CONFIG: linux_64_boost_cpp1.72.0numpy1.16python3.7.____cpythontarget_platformlinux-64
         UPLOAD_PACKAGES: 'True'
         DOCKER_IMAGE: condaforge/linux-anvil-comp7
-      linux_64_python3.8.____cpythontarget_platformlinux-64:
-        CONFIG: linux_64_python3.8.____cpythontarget_platformlinux-64
+      linux_64_boost_cpp1.72.0numpy1.16python3.8.____cpythontarget_platformlinux-64:
+        CONFIG: linux_64_boost_cpp1.72.0numpy1.16python3.8.____cpythontarget_platformlinux-64
         UPLOAD_PACKAGES: 'True'
         DOCKER_IMAGE: condaforge/linux-anvil-comp7
-    maxParallel: 8
+      linux_64_boost_cpp1.72.0numpy1.19python3.9.____cpythontarget_platformlinux-64:
+        CONFIG: linux_64_boost_cpp1.72.0numpy1.19python3.9.____cpythontarget_platformlinux-64
+        UPLOAD_PACKAGES: 'True'
+        DOCKER_IMAGE: condaforge/linux-anvil-comp7
+      linux_64_boost_cpp1.74.0numpy1.16python3.6.____cpythontarget_platformlinux-64:
+        CONFIG: linux_64_boost_cpp1.74.0numpy1.16python3.6.____cpythontarget_platformlinux-64
+        UPLOAD_PACKAGES: 'True'
+        DOCKER_IMAGE: condaforge/linux-anvil-comp7
+      linux_64_boost_cpp1.74.0numpy1.16python3.7.____cpythontarget_platformlinux-64:
+        CONFIG: linux_64_boost_cpp1.74.0numpy1.16python3.7.____cpythontarget_platformlinux-64
+        UPLOAD_PACKAGES: 'True'
+        DOCKER_IMAGE: condaforge/linux-anvil-comp7
+      linux_64_boost_cpp1.74.0numpy1.16python3.8.____cpythontarget_platformlinux-64:
+        CONFIG: linux_64_boost_cpp1.74.0numpy1.16python3.8.____cpythontarget_platformlinux-64
+        UPLOAD_PACKAGES: 'True'
+        DOCKER_IMAGE: condaforge/linux-anvil-comp7
+      linux_64_boost_cpp1.74.0numpy1.19python3.9.____cpythontarget_platformlinux-64:
+        CONFIG: linux_64_boost_cpp1.74.0numpy1.19python3.9.____cpythontarget_platformlinux-64
+        UPLOAD_PACKAGES: 'True'
+        DOCKER_IMAGE: condaforge/linux-anvil-comp7
   timeoutInMinutes: 360
 
   steps:
@@ -55,5 +74,5 @@ jobs:
     condition: succeededOrFailed()
 
   - publish: build_artifacts/
-    artifact: conda_artifacts_$(build.BuildId)_$(CONFIG)
+    artifact: conda_artifacts_$(CONFIG)_$(system.JobId)
     condition: eq(variables.CONDA_BLD_DIR_EXISTS, 'true')

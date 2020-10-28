@@ -8,16 +8,30 @@ jobs:
     vmImage: macOS-10.15
   strategy:
     matrix:
-      osx_64_python3.6.____cpythontarget_platformosx-64:
-        CONFIG: osx_64_python3.6.____cpythontarget_platformosx-64
+      osx_64_boost_cpp1.72.0numpy1.16python3.6.____cpythontarget_platformosx-64:
+        CONFIG: osx_64_boost_cpp1.72.0numpy1.16python3.6.____cpythontarget_platformosx-64
         UPLOAD_PACKAGES: 'True'
-      osx_64_python3.7.____cpythontarget_platformosx-64:
-        CONFIG: osx_64_python3.7.____cpythontarget_platformosx-64
+      osx_64_boost_cpp1.72.0numpy1.16python3.7.____cpythontarget_platformosx-64:
+        CONFIG: osx_64_boost_cpp1.72.0numpy1.16python3.7.____cpythontarget_platformosx-64
         UPLOAD_PACKAGES: 'True'
-      osx_64_python3.8.____cpythontarget_platformosx-64:
-        CONFIG: osx_64_python3.8.____cpythontarget_platformosx-64
+      osx_64_boost_cpp1.72.0numpy1.16python3.8.____cpythontarget_platformosx-64:
+        CONFIG: osx_64_boost_cpp1.72.0numpy1.16python3.8.____cpythontarget_platformosx-64
         UPLOAD_PACKAGES: 'True'
-    maxParallel: 8
+      osx_64_boost_cpp1.72.0numpy1.19python3.9.____cpythontarget_platformosx-64:
+        CONFIG: osx_64_boost_cpp1.72.0numpy1.19python3.9.____cpythontarget_platformosx-64
+        UPLOAD_PACKAGES: 'True'
+      osx_64_boost_cpp1.74.0numpy1.16python3.6.____cpythontarget_platformosx-64:
+        CONFIG: osx_64_boost_cpp1.74.0numpy1.16python3.6.____cpythontarget_platformosx-64
+        UPLOAD_PACKAGES: 'True'
+      osx_64_boost_cpp1.74.0numpy1.16python3.7.____cpythontarget_platformosx-64:
+        CONFIG: osx_64_boost_cpp1.74.0numpy1.16python3.7.____cpythontarget_platformosx-64
+        UPLOAD_PACKAGES: 'True'
+      osx_64_boost_cpp1.74.0numpy1.16python3.8.____cpythontarget_platformosx-64:
+        CONFIG: osx_64_boost_cpp1.74.0numpy1.16python3.8.____cpythontarget_platformosx-64
+        UPLOAD_PACKAGES: 'True'
+      osx_64_boost_cpp1.74.0numpy1.19python3.9.____cpythontarget_platformosx-64:
+        CONFIG: osx_64_boost_cpp1.74.0numpy1.19python3.9.____cpythontarget_platformosx-64
+        UPLOAD_PACKAGES: 'True'
   timeoutInMinutes: 360
 
   steps:
@@ -41,5 +55,5 @@ jobs:
     condition: succeededOrFailed()
 
   - publish: /Users/runner/miniforge3/conda-bld/
-    artifact: conda_artifacts_$(build.BuildId)_$(CONFIG)
+    artifact: conda_artifacts_$(CONFIG)_$(system.JobId)
     condition: eq(variables.CONDA_BLD_DIR_EXISTS, 'true')

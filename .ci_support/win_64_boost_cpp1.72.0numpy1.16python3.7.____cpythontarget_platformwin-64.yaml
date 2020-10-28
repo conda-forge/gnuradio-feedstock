@@ -44,3 +44,6 @@ uhd:
 - 4.0.0
 zeromq:
 - 4.3.2
+zip_keys:
+- - numpy
+  - python
