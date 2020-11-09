@@ -18,9 +18,11 @@ source:
     - 0001-Use-an-ImageSurface-rather-than-UI-back-end.patch  # [osx]
     - 0001-gnuradio-bind-placeholders.patch
     - 0001-audio-lib-windows-Add-cctype-header-for-std-isdigit.patch
+    # can remove the following patch for versions after 3.8.2.0
+    - 0001-grc-try-except-around-gsettings-for-when-those-setti.patch
 
 build:
-  number: 2
+  number: 3
   skip: true  # [win and py2k]
 
 requirements:
