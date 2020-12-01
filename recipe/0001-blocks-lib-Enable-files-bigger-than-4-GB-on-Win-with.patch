@@ -1,0 +1,26 @@
+From 577d99d4890c0fee7478ed8eb9c1367a3810595d Mon Sep 17 00:00:00 2001
+From: Ryan Volz <ryan.volz@gmail.com>
+Date: Tue, 1 Dec 2020 10:12:55 -0500
+Subject: [PATCH] blocks: lib: Enable files bigger than 4 GB on Win with
+ _fstat64.
+
+---
+ gr-blocks/lib/file_source_impl.cc | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/gr-blocks/lib/file_source_impl.cc b/gr-blocks/lib/file_source_impl.cc
+index ee8f08d98..65c80b534 100644
+--- a/gr-blocks/lib/file_source_impl.cc
++++ b/gr-blocks/lib/file_source_impl.cc
+@@ -37,7 +37,7 @@
+ #ifdef _MSC_VER
+ #define GR_FSEEK _fseeki64
+ #define GR_FTELL _ftelli64
+-#define GR_FSTAT _fstat
++#define GR_FSTAT _fstat64
+ #define GR_FILENO _fileno
+ #define GR_STAT _stat
+ #define S_ISREG(m) (((m)&S_IFMT) == S_IFREG)
+-- 
+2.25.1
+
