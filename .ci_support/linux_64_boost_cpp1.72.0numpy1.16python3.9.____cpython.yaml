@@ -1,7 +1,7 @@
 alsa_lib:
 - 1.2.3
 boost_cpp:
-- 1.74.0
+- 1.72.0
 c_compiler:
 - gcc
 c_compiler_version:
@@ -43,7 +43,7 @@ pin_run_as_build:
   zeromq:
     max_pin: x.x
 python:
-- 3.8.* *_cpython
+- 3.9.* *_cpython
 qt:
 - '5.12'
 sqlite:
@@ -53,7 +53,7 @@ target_platform:
 uhd:
 - 3.15.0
 zeromq:
-- 4.3.2
+- 4.3.3
 zip_keys:
 - - c_compiler_version
   - cxx_compiler_version
