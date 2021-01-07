@@ -1,2 +1,4 @@
+channel_targets:
+  - conda-forge gnuradio_rc
 uhd:
   - 4.0.0
