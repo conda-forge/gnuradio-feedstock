@@ -33,7 +33,7 @@ pin_run_as_build:
   zeromq:
     max_pin: x.x.x
 python:
-- 3.9.* *_cpython
+- 3.7.* *_cpython
 qt:
 - '5.12'
 sqlite:
@@ -43,7 +43,7 @@ target_platform:
 uhd:
 - 4.0.0
 zeromq:
-- 4.3.2
+- 4.3.3
 zip_keys:
 - - numpy
   - python
