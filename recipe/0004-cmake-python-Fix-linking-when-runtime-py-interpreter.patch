@@ -1,4 +1,4 @@
-From cdb8a827b31d7ca461a7f805724c195e59250f96 Mon Sep 17 00:00:00 2001
+From 0a1ad5441f4a4e96106833be80c17365c634e6a0 Mon Sep 17 00:00:00 2001
 From: Ryan Volz <ryan.volz@gmail.com>
 Date: Tue, 8 Sep 2020 12:03:57 -0400
 Subject: [PATCH 4/4] cmake: python: Fix linking when runtime py interpreter !=
@@ -25,9 +25,9 @@ https://blog.tim-smith.us/2015/09/python-extension-modules-os-x.
 ---
  cmake/Modules/GrPybind.cmake        |  6 ++---
  cmake/Modules/GrPython.cmake        | 36 ++++++++++++++++++++++++-----
- gnuradio-runtime/lib/CMakeLists.txt | 10 ++++++--
+ gnuradio-runtime/lib/CMakeLists.txt |  9 ++++++--
  gr-qtgui/lib/CMakeLists.txt         |  8 +++++--
- 4 files changed, 47 insertions(+), 13 deletions(-)
+ 4 files changed, 46 insertions(+), 13 deletions(-)
 
 diff --git a/cmake/Modules/GrPybind.cmake b/cmake/Modules/GrPybind.cmake
 index 3eb01c8cd..bc92a5af3 100644
@@ -117,18 +117,10 @@ index ff7927c05..fab1827a4 100644
  ########################################################################
  # Check for the existence of a python module:
 diff --git a/gnuradio-runtime/lib/CMakeLists.txt b/gnuradio-runtime/lib/CMakeLists.txt
-index 815489108..4f51fb0ea 100644
+index 815489108..d11af3666 100644
 --- a/gnuradio-runtime/lib/CMakeLists.txt
 +++ b/gnuradio-runtime/lib/CMakeLists.txt
-@@ -193,6 +193,7 @@ set(
- 
- endif(ENABLE_GR_CTRLPORT)
- 
-+<<<<<<< HEAD
- target_link_libraries(gnuradio-runtime PUBLIC
-   gnuradio-pmt
-   Volk::volk
-@@ -203,13 +204,18 @@ target_link_libraries(gnuradio-runtime PUBLIC
+@@ -203,13 +203,18 @@ target_link_libraries(gnuradio-runtime PUBLIC
    Boost::thread
    Log4Cpp::log4cpp
    MPLib::mplib
