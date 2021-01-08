@@ -1,0 +1,27 @@
+From 0ab7cdefe2209fd5f73ab2a50245d34e44b83db7 Mon Sep 17 00:00:00 2001
+From: Ryan Volz <ryan.volz@gmail.com>
+Date: Thu, 7 Jan 2021 19:09:54 -0500
+Subject: [PATCH 5/6] runtime: lib: Fix GR_RUNTIME_API declaration in
+ terminate_handler.h.
+
+Signed-off-by: Ryan Volz <ryan.volz@gmail.com>
+---
+ gnuradio-runtime/lib/terminate_handler.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/gnuradio-runtime/lib/terminate_handler.h b/gnuradio-runtime/lib/terminate_handler.h
+index a7a671b06..0ce68d207 100644
+--- a/gnuradio-runtime/lib/terminate_handler.h
++++ b/gnuradio-runtime/lib/terminate_handler.h
+@@ -13,7 +13,7 @@
+ #include <gnuradio/api.h>
+ 
+ namespace gr {
+-void install_terminate_handler() GR_RUNTIME_API;
++GR_RUNTIME_API void install_terminate_handler();
+ }
+ 
+ #endif /* INCLUDED_TERMINATE_HANDLER_H */
+-- 
+2.25.1
+
