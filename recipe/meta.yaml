@@ -18,6 +18,7 @@ source:
     - 0004-cmake-python-Fix-linking-when-runtime-py-interpreter.patch
     - 0005-runtime-lib-Fix-GR_RUNTIME_API-declaration-in-termin.patch
     - 0006-runtime-lib-Put-include-cxxabi.h-behind-HAVE_LIBINUW.patch
+    - 0007-cmake-Make-VERSION_PATCH-numeric-to-fix-RC_MAINT_VER.patch
 
 build:
   number: 0

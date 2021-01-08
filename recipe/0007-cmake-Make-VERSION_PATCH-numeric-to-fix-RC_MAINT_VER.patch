@@ -1,0 +1,31 @@
+From d4941dffd3d78e2bdce618d90507e760849706b2 Mon Sep 17 00:00:00 2001
+From: Ryan Volz <ryan.volz@gmail.com>
+Date: Thu, 7 Jan 2021 20:15:40 -0500
+Subject: [PATCH 7/7] cmake: Make VERSION_PATCH numeric to fix RC_MAINT_VERSION
+ (on Windows).
+
+Signed-off-by: Ryan Volz <ryan.volz@gmail.com>
+---
+ CMakeLists.txt | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 8abc05db7..37f5cd9b1 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -45,10 +45,11 @@ GR_REGISTER_COMPONENT("testing-support" ENABLE_TESTING
+          Boost_unit_test_framework_FOUND )
+ 
+ # Set the version information here
++# ALL VALUES MUST BE NUMERIC or "git" for GrVersion parsing to RC_MAINT_VERSION
+ SET(VERSION_MAJOR 3)
+ SET(VERSION_API   9)
+ SET(VERSION_ABI   0)
+-SET(VERSION_PATCH RC2)
++SET(VERSION_PATCH 0)
+ include(GrVersion) #setup version info
+ 
+ # Minimum dependency versions for central dependencies:
+-- 
+2.25.1
+
