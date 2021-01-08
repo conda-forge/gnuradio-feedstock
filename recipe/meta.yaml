@@ -19,6 +19,7 @@ source:
     - 0005-runtime-lib-Fix-GR_RUNTIME_API-declaration-in-termin.patch
     - 0006-runtime-lib-Put-include-cxxabi.h-behind-HAVE_LIBINUW.patch
     - 0007-cmake-Make-VERSION_PATCH-numeric-to-fix-RC_MAINT_VER.patch
+    - 0008-filter-Fix-polyphase_filterbank-for-MSVC-w-default-m.patch
 
 build:
   number: 0
