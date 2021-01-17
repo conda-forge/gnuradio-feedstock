@@ -1,4 +1,4 @@
-{% set version = "3.8.2.0" %}
+{% set version = "3.9.0.0" %}
 
 package:
   name: gnuradio
@@ -6,7 +6,7 @@ package:
 
 source:
   url: https://github.com/gnuradio/gnuradio/releases/download/v{{ version }}/gnuradio-{{ version }}.tar.gz
-  sha256: 3e293541a9ac8d78660762bae8b80c0f6195b3494e1c50c01a9fd79cc60bb624
+  sha256: f5e48d0dd13d483a2af89196b9b79f4fbbed03c271d4728ffc249c36961e050a
   patches:
     - 0001-Use-raw-strings-for-paths-substituted-directly-into-.patch
     - 0001-Don-t-use-hard-coded-path-constants.patch
@@ -23,7 +23,7 @@ source:
     - 0001-blocks-lib-Enable-files-bigger-than-4-GB-on-Win-with.patch
 
 build:
-  number: 5
+  number: 0
   skip: true  # [win and py2k]
 
 requirements:
