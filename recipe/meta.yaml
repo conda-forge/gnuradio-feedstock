@@ -1,4 +1,4 @@
-{% set version = "3.8.2.0" %}
+{% set version = "3.9.0.0" %}
 
 package:
   name: gnuradio
@@ -6,25 +6,15 @@ package:
 
 source:
   url: https://github.com/gnuradio/gnuradio/releases/download/v{{ version }}/gnuradio-{{ version }}.tar.gz
-  sha256: 3e293541a9ac8d78660762bae8b80c0f6195b3494e1c50c01a9fd79cc60bb624
+  sha256: f5e48d0dd13d483a2af89196b9b79f4fbbed03c271d4728ffc249c36961e050a
   patches:
-    - 0001-Use-raw-strings-for-paths-substituted-directly-into-.patch
-    - 0001-Don-t-use-hard-coded-path-constants.patch
-    - 0001-python-Do-not-link-against-python-lib-for-building-a.patch
-    - 0001-cmake-Shorten-swig-command-line-by-removing-duplicat.patch
+    - 0001-Use-an-ImageSurface-rather-than-UI-back-end.patch  # [osx]
     - 0001-cmake-Install-python-wrapper-exe-for-scripts-on-Wind.patch
     - 0002-cmake-Don-t-generate-.pyc-and-.pyo-files.patch
-    - 0001-Fix-drag-n-drop-issue-with-quartz-macos-backend.patch
-    - 0001-Use-an-ImageSurface-rather-than-UI-back-end.patch  # [osx]
-    - 0001-gnuradio-bind-placeholders.patch
-    - 0001-audio-lib-windows-Add-cctype-header-for-std-isdigit.patch
-    # can remove the following patches for versions after 3.8.2.0
-    - 0001-grc-try-except-around-gsettings-for-when-those-setti.patch
-    - 0001-blocks-lib-Enable-files-bigger-than-4-GB-on-Win-with.patch
+    - 0003-Don-t-use-hard-coded-path-constants.patch
 
 build:
-  number: 5
-  skip: true  # [win and py2k]
+  number: 0
 
 requirements:
   build:
@@ -61,7 +51,8 @@ requirements:
     # blas needed to link with gsl
     - libblas
     - libcblas
-    - libusb >=1
+    - libsndfile
+    - libusb
     - log4cpp
     - mako
     - mpir
@@ -70,10 +61,10 @@ requirements:
     # specify version so pin is ignored
     - numpy >=1.1
     - pip  # [win]
+    - pybind11
     - python
     - six
-    - swig
-    - volk >=2
+    - volk
   # gnuradio.audio
     - alsa-lib  # [linux]
     - portaudio  # [linux]
@@ -145,12 +136,13 @@ outputs:
         - gsl
         - libblas
         - libcblas
+        - libsndfile
         - libusb
         - log4cpp
         - mpir
         - portaudio  # [linux]
+        - pybind11
         - python
-        - swig
         - volk
       run:
         - boost-cpp

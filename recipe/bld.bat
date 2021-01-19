@@ -10,7 +10,7 @@ if errorlevel 1 exit 1
 :: configure
 :: enable gnuradio components explicitly so we get build error when unsatisfied
 :: the following are disabled:
-::   DOXYGEN/SPHINX because we don't need docs in the conda package
+::   DOXYGEN because we don't need docs in the conda package
 ::   TESTING because we don't intend to run the unit tests, just import test
 :: the following can be disabled to speed up the build (dependencies remain in
 :: meta.yaml):
@@ -30,17 +30,19 @@ cmake -G "Ninja" ^
     -DPYTHON_EXECUTABLE:PATH="%PYTHON%" ^
     -DBoost_NO_BOOST_CMAKE=ON ^
     -DGR_PYTHON_DIR:PATH="%SP_DIR%" ^
-    -DLIBCODEC2_INCLUDE_DIRS="%LIBRARY_INC%\codec2" ^
+    -DLIBCODEC2_INCLUDE_DIR="%LIBRARY_INC%\codec2" ^
     -DLIBCODEC2_LIBRARIES="%LIBRARY_LIB%\libcodec2.lib" ^
     -DMPIR_LIBRARY="%LIBRARY_LIB%\mpir.lib" ^
     -DMPIRXX_LIBRARY="%LIBRARY_LIB%\mpir.lib" ^
     -DPORTAUDIO_LIBRARIES="%LIBRARY_BIN%\libportaudio-2.dll" ^
     -DQWT_LIBRARIES="%LIBRARY_LIB%\qwt.lib" ^
     -DENABLE_DOXYGEN=OFF ^
+    -DENABLE_EXAMPLES=ON ^
     -DENABLE_GNURADIO_RUNTIME=ON ^
     -DENABLE_GR_ANALOG=ON ^
     -DENABLE_GR_AUDIO=ON ^
     -DENABLE_GR_BLOCKS=ON ^
+    -DENABLE_GR_BLOCKTOOL=ON ^
     -DENABLE_GR_CHANNELS=ON ^
     -DENABLE_GR_CTRLPORT=ON ^
     -DENABLE_GR_DIGITAL=ON ^
@@ -48,6 +50,8 @@ cmake -G "Ninja" ^
     -DENABLE_GR_FEC=ON ^
     -DENABLE_GR_FFT=ON ^
     -DENABLE_GR_FILTER=ON ^
+    -DENABLE_GR_MODTOOL=ON ^
+    -DENABLE_GR_NETWORK=ON ^
     -DENABLE_GR_QTGUI=ON ^
     -DENABLE_GR_TRELLIS=ON ^
     -DENABLE_GR_UHD=ON ^
@@ -57,10 +61,9 @@ cmake -G "Ninja" ^
     -DENABLE_GR_WAVELET=ON ^
     -DENABLE_GR_ZEROMQ=ON ^
     -DENABLE_GRC=ON ^
+    -DENABLE_POSTINSTALL=OFF ^
     -DENABLE_PYTHON=ON ^
-    -DENABLE_SPHINX=OFF ^
     -DENABLE_TESTING=OFF ^
-    -DENABLE_INTERNAL_VOLK=OFF ^
     ..
 if errorlevel 1 exit 1
 

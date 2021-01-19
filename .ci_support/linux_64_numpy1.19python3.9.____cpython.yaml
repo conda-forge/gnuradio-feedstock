@@ -27,7 +27,7 @@ libblas:
 libcblas:
 - 3.8 *netlib
 numpy:
-- '1.16'
+- '1.19'
 pin_run_as_build:
   boost-cpp:
     max_pin: x.x.x
@@ -43,7 +43,7 @@ pin_run_as_build:
   zeromq:
     max_pin: x.x
 python:
-- 3.7.* *_cpython
+- 3.9.* *_cpython
 qt:
 - '5.12'
 sqlite:
@@ -57,5 +57,7 @@ zeromq:
 zip_keys:
 - - c_compiler_version
   - cxx_compiler_version
-- - numpy
-  - python
+- - cdt_name
+  - docker_image
+- - python
+  - numpy
