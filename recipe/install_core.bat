@@ -30,6 +30,8 @@ cmake -P gr-fft/cmake_install.cmake
 if errorlevel 1 exit 1
 cmake -P gr-filter/cmake_install.cmake
 if errorlevel 1 exit 1
+cmake -P gr-network/cmake_install.cmake
+if errorlevel 1 exit 1
 cmake -P gr-trellis/cmake_install.cmake
 if errorlevel 1 exit 1
 cmake -P gr-utils/cmake_install.cmake
