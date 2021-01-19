@@ -12,9 +12,13 @@ source:
     - 0001-cmake-Install-python-wrapper-exe-for-scripts-on-Wind.patch
     - 0002-cmake-Don-t-generate-.pyc-and-.pyo-files.patch
     - 0003-Don-t-use-hard-coded-path-constants.patch
+    - 0001-removed-ssize_t-which-is-not-standard-C-and-we-re-a-.patch
+    - 0002-MSVC-get-rid-of-unused-workaround-headers.patch
+    - 0003-CMake-Remove-unused-compile-header-checks.patch
+    - 0004-cmake-Don-t-define-HAVE_CONFIG_H-for-MSVC-now-that-i.patch
 
 build:
-  number: 0
+  number: 1
 
 requirements:
   build:

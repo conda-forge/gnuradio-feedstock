@@ -1,0 +1,26 @@
+From c6498112ef89da5f406f45afde05dba8c2ec737d Mon Sep 17 00:00:00 2001
+From: Ryan Volz <ryan.volz@gmail.com>
+Date: Tue, 19 Jan 2021 12:19:33 -0500
+Subject: [PATCH 4/4] cmake: Don't define HAVE_CONFIG_H for MSVC now that it's
+ gone.
+
+Signed-off-by: Ryan Volz <ryan.volz@gmail.com>
+---
+ CMakeLists.txt | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 83f15f06c..b0e83eb64 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -188,7 +188,6 @@ if(MSVC)
+         -D_CRT_SECURE_NO_DEPRECATE
+         -D_CRT_NONSTDC_NO_DEPRECATE
+     )
+-    add_definitions(-DHAVE_CONFIG_H)
+     add_compile_options(/MP) #build with multiple processors
+     add_compile_options(/bigobj) #allow for larger object files
+ endif(MSVC)
+-- 
+2.25.1
+

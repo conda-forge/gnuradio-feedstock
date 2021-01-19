@@ -1,0 +1,166 @@
+From 9a70237a80bcb1202788147839afb0a3298d86d7 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Marcus=20M=C3=BCller?= <mmueller@gnuradio.org>
+Date: Sat, 16 Jan 2021 21:28:42 +0100
+Subject: [PATCH 1/4] removed ssize_t, which is not standard C, and we're a C++
+ project
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Signed-off-by: Marcus Müller <mmueller@gnuradio.org>
+---
+ cmake/msvc/config.h                        | 6 ------
+ gr-audio/lib/portaudio/portaudio_sink.cc   | 2 +-
+ gr-audio/lib/portaudio/portaudio_source.cc | 2 +-
+ gr-blocks/lib/file_descriptor_sink_impl.cc | 5 ++---
+ gr-blocks/lib/udp_sink_impl.cc             | 9 ++++++---
+ gr-blocks/lib/udp_source_impl.cc           | 8 ++++----
+ gr-blocks/lib/udp_source_impl.h            | 6 ++++--
+ 7 files changed, 18 insertions(+), 20 deletions(-)
+
+diff --git a/cmake/msvc/config.h b/cmake/msvc/config.h
+index a055f59fe..ec307a8a1 100644
+--- a/cmake/msvc/config.h
++++ b/cmake/msvc/config.h
+@@ -12,12 +12,6 @@
+ #define inline __inline
+ #endif
+ 
+-////////////////////////////////////////////////////////////////////////
+-// signed size_t
+-////////////////////////////////////////////////////////////////////////
+-#include <stddef.h>
+-typedef ptrdiff_t ssize_t;
+-
+ ////////////////////////////////////////////////////////////////////////
+ // rint functions
+ ////////////////////////////////////////////////////////////////////////
+diff --git a/gr-audio/lib/portaudio/portaudio_sink.cc b/gr-audio/lib/portaudio/portaudio_sink.cc
+index 47c173c9c..6fbec768f 100644
+--- a/gr-audio/lib/portaudio/portaudio_sink.cc
++++ b/gr-audio/lib/portaudio/portaudio_sink.cc
+@@ -72,7 +72,7 @@ void portaudio_sink::create_ringbuffer(void)
+ 
+ void portaudio_underrun_notification(gr::logger_ptr logger)
+ {
+-    ssize_t r = ::write(2, "aU", 2);
++    auto r = ::write(2, "aU", 2);
+     if (r == -1) {
+         GR_LOG_ERROR(logger, "portaudio_source_callback write error to stderr.");
+     }
+diff --git a/gr-audio/lib/portaudio/portaudio_source.cc b/gr-audio/lib/portaudio/portaudio_source.cc
+index f742549f6..30ec8a7cd 100644
+--- a/gr-audio/lib/portaudio/portaudio_source.cc
++++ b/gr-audio/lib/portaudio/portaudio_source.cc
+@@ -110,7 +110,7 @@ int portaudio_source_callback(const void* inputBuffer,
+ 
+     else { // overrun
+         self->d_noverruns++;
+-        ssize_t r = ::write(2, "aO", 2); // FIXME change to non-blocking call
++        auto r = ::write(2, "aO", 2); // FIXME change to non-blocking call
+         if (r == -1) {
+             gr::logger_ptr logger, debug_logger;
+             gr::configure_default_loggers(
+diff --git a/gr-blocks/lib/file_descriptor_sink_impl.cc b/gr-blocks/lib/file_descriptor_sink_impl.cc
+index a065dfbdc..416e107c3 100644
+--- a/gr-blocks/lib/file_descriptor_sink_impl.cc
++++ b/gr-blocks/lib/file_descriptor_sink_impl.cc
+@@ -19,6 +19,7 @@
+ #include <stdio.h>
+ #include <sys/stat.h>
+ #include <sys/types.h>
++#include <cstddef>
+ #include <cstdio>
+ #include <stdexcept>
+ 
+@@ -53,9 +54,7 @@ int file_descriptor_sink_impl::work(int noutput_items,
+     unsigned long byte_size = noutput_items * d_itemsize;
+ 
+     while (byte_size > 0) {
+-        ssize_t r;
+-
+-        r = write(d_fd, inbuf, byte_size);
++        auto r = write(d_fd, inbuf, byte_size);
+         if (r == -1) {
+             if (errno == EINTR)
+                 continue;
+diff --git a/gr-blocks/lib/udp_sink_impl.cc b/gr-blocks/lib/udp_sink_impl.cc
+index 3eff348ee..72b0f8129 100644
+--- a/gr-blocks/lib/udp_sink_impl.cc
++++ b/gr-blocks/lib/udp_sink_impl.cc
+@@ -101,13 +101,16 @@ int udp_sink_impl::work(int noutput_items,
+                         gr_vector_void_star& output_items)
+ {
+     const char* in = (const char*)input_items[0];
+-    ssize_t r = 0, bytes_sent = 0, bytes_to_send = 0;
+-    ssize_t total_size = noutput_items * d_itemsize;
++    size_t r = 0;
++    std::ptrdiff_t bytes_sent = 0, bytes_to_send = 0;
++    const size_t total_size = noutput_items * d_itemsize;
+ 
+     gr::thread::scoped_lock guard(d_mutex); // protect d_socket
+ 
+     while (bytes_sent < total_size) {
+-        bytes_to_send = std::min((ssize_t)d_payload_size, (total_size - bytes_sent));
++        bytes_to_send = bytes_to_send =
++            std::min(static_cast<std::ptrdiff_t>(d_payload_size),
++                     static_cast<std::ptrdiff_t>(total_size - bytes_sent));
+ 
+         if (d_connected) {
+             try {
+diff --git a/gr-blocks/lib/udp_source_impl.cc b/gr-blocks/lib/udp_source_impl.cc
+index e13fc60e3..e49e62838 100644
+--- a/gr-blocks/lib/udp_source_impl.cc
++++ b/gr-blocks/lib/udp_source_impl.cc
+@@ -179,12 +179,12 @@ int udp_source_impl::work(int noutput_items,
+         return d_residual;
+     }
+ 
+-    int bytes_left_in_buffer = (int)(d_residual - d_sent);
+-    int bytes_to_send = std::min<int>(d_itemsize * noutput_items, bytes_left_in_buffer);
++    const std::ptrdiff_t bytes_left_in_buffer = d_residual - d_sent;
++    auto bytes_to_send =
++        std::min<std::ptrdiff_t>(d_itemsize * noutput_items, bytes_left_in_buffer);
+ 
+     // Copy the received data in the residual buffer to the output stream
+     memcpy(out, d_residbuf.data() + d_sent, bytes_to_send);
+-    int nitems = bytes_to_send / d_itemsize;
+ 
+     // Keep track of where we are if we don't have enough output
+     // space to send all the data in the residbuf.
+@@ -195,7 +195,7 @@ int udp_source_impl::work(int noutput_items,
+         d_sent += bytes_to_send;
+     }
+ 
+-    return nitems;
++    return bytes_to_send / d_itemsize;
+ }
+ 
+ } /* namespace blocks */
+diff --git a/gr-blocks/lib/udp_source_impl.h b/gr-blocks/lib/udp_source_impl.h
+index 608b44504..a2dc2dc9d 100644
+--- a/gr-blocks/lib/udp_source_impl.h
++++ b/gr-blocks/lib/udp_source_impl.h
+@@ -15,6 +15,7 @@
+ #include <gnuradio/thread/thread.h>
+ #include <boost/asio.hpp>
+ #include <boost/format.hpp>
++#include <cstddef>
+ #include <memory>
+ 
+ namespace gr {
+@@ -29,8 +30,9 @@ private:
+     bool d_connected;             // are we connected?
+     std::vector<char> d_rxbuf;    // get UDP buffer items
+     std::vector<char> d_residbuf; // hold buffer between calls
+-    ssize_t d_residual; // hold information about number of bytes stored in residbuf
+-    ssize_t d_sent;     // track how much of d_residbuf we've outputted
++    std::ptrdiff_t
++        d_residual; // hold information about number of bytes stored in residbuf
++    size_t d_sent;  // track how much of d_residbuf we've outputted
+ 
+     static const int
+         BUF_SIZE_PAYLOADS; //!< The d_residbuf size in multiples of d_payload_size
+-- 
+2.25.1
+

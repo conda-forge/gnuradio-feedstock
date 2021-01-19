@@ -1,0 +1,191 @@
+From d0e5be3130ebb0451b81ba0b028c2769425abb58 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Marcus=20M=C3=BCller?= <mmueller@gnuradio.org>
+Date: Sat, 16 Jan 2021 22:09:49 +0100
+Subject: [PATCH 2/4] MSVC: get rid of unused workaround headers
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Signed-off-by: Marcus Müller <mmueller@gnuradio.org>
+---
+ cmake/msvc/config.h              | 44 --------------------------------
+ cmake/msvc/sys/time.h            | 17 ------------
+ cmake/msvc/unistd.h              |  7 ++---
+ gr-blocks/tests/benchmark_nco.cc |  9 ++++---
+ gr-blocks/tests/benchmark_vco.cc | 10 +++++---
+ 5 files changed, 15 insertions(+), 72 deletions(-)
+ delete mode 100644 cmake/msvc/config.h
+ delete mode 100644 cmake/msvc/sys/time.h
+
+diff --git a/cmake/msvc/config.h b/cmake/msvc/config.h
+deleted file mode 100644
+index ec307a8a1..000000000
+--- a/cmake/msvc/config.h
++++ /dev/null
+@@ -1,44 +0,0 @@
+-#ifndef _MSC_VER // [
+-#error "Use this header only with Microsoft Visual C++ compilers!"
+-#endif // _MSC_VER ]
+-
+-#ifndef _MSC_CONFIG_H_ // [
+-#define _MSC_CONFIG_H_
+-
+-////////////////////////////////////////////////////////////////////////
+-// enable inline functions for C code
+-////////////////////////////////////////////////////////////////////////
+-#ifndef __cplusplus
+-#define inline __inline
+-#endif
+-
+-////////////////////////////////////////////////////////////////////////
+-// rint functions
+-////////////////////////////////////////////////////////////////////////
+-#if _MSC_VER < 1800
+-#include <math.h>
+-static inline long lrint(double x) { return (long)(x > 0.0 ? x + 0.5 : x - 0.5); }
+-static inline long lrintf(float x) { return (long)(x > 0.0f ? x + 0.5f : x - 0.5f); }
+-static inline long long llrint(double x)
+-{
+-    return (long long)(x > 0.0 ? x + 0.5 : x - 0.5);
+-}
+-static inline long long llrintf(float x)
+-{
+-    return (long long)(x > 0.0f ? x + 0.5f : x - 0.5f);
+-}
+-static inline double rint(double x) { return (x > 0.0) ? floor(x + 0.5) : ceil(x - 0.5); }
+-static inline float rintf(float x)
+-{
+-    return (x > 0.0f) ? floorf(x + 0.5f) : ceilf(x - 0.5f);
+-}
+-#endif
+-
+-////////////////////////////////////////////////////////////////////////
+-// random and srandom
+-////////////////////////////////////////////////////////////////////////
+-#include <stdlib.h>
+-static inline long int random(void) { return rand(); }
+-static inline void srandom(unsigned int seed) { srand(seed); }
+-
+-#endif // _MSC_CONFIG_H_ ]
+diff --git a/cmake/msvc/sys/time.h b/cmake/msvc/sys/time.h
+deleted file mode 100644
+index df178d303..000000000
+--- a/cmake/msvc/sys/time.h
++++ /dev/null
+@@ -1,17 +0,0 @@
+-#ifndef _MSC_VER // [
+-#error "Use this header only with Microsoft Visual C++ compilers!"
+-#endif // _MSC_VER ]
+-
+-#ifndef _MSC_SYS_TIME_H_
+-#define _MSC_SYS_TIME_H_
+-
+-#include < time.h >
+-
+-#if _MSC_VER < 1900
+-struct timespec {
+-    time_t tv_sec; /*! \brief Seconds since 00:00:00 GMT, 1 January 1970 */
+-    long tv_nsec;  /*! \brief Additional nanoseconds since tv_sec */
+-};
+-#endif
+-
+-#endif //_MSC_SYS_TIME_H_
+diff --git a/cmake/msvc/unistd.h b/cmake/msvc/unistd.h
+index de412e42a..bb781160d 100644
+--- a/cmake/msvc/unistd.h
++++ b/cmake/msvc/unistd.h
+@@ -1,10 +1,11 @@
++#ifndef _MSC_UNISTD_H_ // [
++#define _MSC_UNISTD_H_
+ #ifndef _MSC_VER // [
+ #error "Use this header only with Microsoft Visual C++ compilers!"
+ #endif // _MSC_VER ]
+ 
+-#ifndef _MSC_UNISTD_H_ // [
+-#define _MSC_UNISTD_H_
+-
++// Just for getpid in the vmcircbuf classes
++// (at least as far as I can tell 2021)
+ #include <process.h>
+ 
+ #endif // _MSC_UNISTD_H_ ]
+diff --git a/gr-blocks/tests/benchmark_nco.cc b/gr-blocks/tests/benchmark_nco.cc
+index d9a9a3a56..197018229 100644
+--- a/gr-blocks/tests/benchmark_nco.cc
++++ b/gr-blocks/tests/benchmark_nco.cc
+@@ -16,16 +16,17 @@
+ #include <gnuradio/math.h>
+ #include <gnuradio/nco.h>
+ 
+-#include <sys/time.h>
+-#include <unistd.h>
+-
+ #ifdef HAVE_SYS_RESOURCE_H
++/* from man gtrusage
++   "including <sys/time.h> is not required these days"
++   So, we don't */
+ #include <sys/resource.h>
+ #endif
+ 
+ #include <cstdio>
+ #include <cstdlib>
+ #include <cstring>
++#include <ctime>
+ 
+ #define ITERATIONS 20000000
+ #define BLOCK_SIZE (10 * 1000) // fits in cache
+@@ -84,7 +85,7 @@ static void benchmark(void test(float* x, float* y), const char* implementation_
+ 
+     double total = user + sys;
+ #else
+-    clock_end = (double)clock() * (1000000. / CLOCKS_PER_SEC);
++    clock_end = (double)std::clock() * (1000000. / CLOCKS_PER_SEC);
+     double total = clock_end - clock_start;
+ #endif
+ 
+diff --git a/gr-blocks/tests/benchmark_vco.cc b/gr-blocks/tests/benchmark_vco.cc
+index 52ce63e8a..13a6c428d 100644
+--- a/gr-blocks/tests/benchmark_vco.cc
++++ b/gr-blocks/tests/benchmark_vco.cc
+@@ -16,16 +16,18 @@
+ #include <gnuradio/math.h>
+ #include <gnuradio/vco.h>
+ 
+-#include <sys/time.h>
+-#include <unistd.h>
+ 
+ #ifdef HAVE_SYS_RESOURCE_H
++/* from man gtrusage
++ "including <sys/time.h> is not required these days"
++ So, we don't */
+ #include <sys/resource.h>
+ #endif
+ 
+ #include <cstdio>
+ #include <cstdlib>
+ #include <cstring>
++#include <ctime>
+ 
+ #define ITERATIONS 5000000
+ #define BLOCK_SIZE (10 * 1000) // fits in cache
+@@ -66,7 +68,7 @@ static void benchmark(void test(float* x, const float* y),
+         exit(1);
+     }
+ #else
+-    clock_start = (double)clock() * (1000000. / CLOCKS_PER_SEC);
++    clock_start = (double)std::clock() * (1000000. / CLOCKS_PER_SEC);
+ #endif
+     // do the actual work
+ 
+@@ -90,7 +92,7 @@ static void benchmark(void test(float* x, const float* y),
+ 
+     double total = user + sys;
+ #else
+-    clock_end = (double)clock() * (1000000. / CLOCKS_PER_SEC);
++    clock_end = (double)std::clock() * (1000000. / CLOCKS_PER_SEC);
+     double total = clock_end - clock_start;
+ #endif
+ 
+-- 
+2.25.1
+
