@@ -23,7 +23,7 @@ source:
     - 0001-blocks-lib-Enable-files-bigger-than-4-GB-on-Win-with.patch
 
 build:
-  number: 5
+  number: 6
   skip: true  # [win and py2k]
 
 requirements:
