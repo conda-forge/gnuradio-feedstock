@@ -1,5 +1,7 @@
 conda_forge_output_validation: true
 bot:
   automerge: true
+  abi_migration_branches:
+   - 3.8
 azure:
   store_build_artifacts: true
