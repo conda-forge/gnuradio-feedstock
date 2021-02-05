@@ -12,9 +12,10 @@ source:
     - 0001-cmake-Install-python-wrapper-exe-for-scripts-on-Wind.patch
     - 0002-cmake-Don-t-generate-.pyc-and-.pyo-files.patch
     - 0003-Don-t-use-hard-coded-path-constants.patch
+    - sine_table_cmake.patch
 
 build:
-  number: 1
+  number: 2
 
 requirements:
   build:
