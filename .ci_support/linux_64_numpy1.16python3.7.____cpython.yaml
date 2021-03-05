@@ -27,7 +27,7 @@ libblas:
 libcblas:
 - 3.8 *netlib
 numpy:
-- '1.19'
+- '1.16'
 pin_run_as_build:
   boost-cpp:
     max_pin: x.x.x
@@ -55,7 +55,7 @@ uhd:
 volk:
 - '2.4'
 zeromq:
-- 4.3.3
+- 4.3.4
 zip_keys:
 - - c_compiler_version
   - cxx_compiler_version
