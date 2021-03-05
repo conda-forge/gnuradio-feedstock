@@ -14,7 +14,7 @@ source:
     - 0003-Don-t-use-hard-coded-path-constants.patch
 
 build:
-  number: 1
+  number: 2
 
 requirements:
   build:
