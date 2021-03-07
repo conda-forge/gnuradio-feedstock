@@ -1,4 +1,4 @@
-From dc13ae196d84d498ae702109ff024ce5dc489d57 Mon Sep 17 00:00:00 2001
+From f8ddd04a7dddf7548cac401fd34debb21d3f2411 Mon Sep 17 00:00:00 2001
 From: Ryan Volz <ryan.volz@gmail.com>
 Date: Thu, 3 Sep 2020 14:21:13 -0400
 Subject: [PATCH 3/4] Don't use hard-coded path constants.
@@ -18,10 +18,10 @@ it's just easier to use them from the start.
  3 files changed, 34 insertions(+), 27 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index dc253a144..acd5be570 100644
+index e2ac0ff5f..83f15f06c 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -271,12 +271,20 @@ endif(ENABLE_PERFORMANCE_COUNTERS)
+@@ -279,12 +279,20 @@ endif(ENABLE_PERFORMANCE_COUNTERS)
  ########################################################################
  # Variables replaced when configuring the package config files
  ########################################################################
@@ -49,10 +49,10 @@ index dc253a144..acd5be570 100644
  ########################################################################
  # On Apple only, set install name and use rpath correctly, if not already set
 diff --git a/gnuradio-runtime/lib/CMakeLists.txt b/gnuradio-runtime/lib/CMakeLists.txt
-index 65673ad69..a2f6a720a 100644
+index 223a51493..178cd3677 100644
 --- a/gnuradio-runtime/lib/CMakeLists.txt
 +++ b/gnuradio-runtime/lib/CMakeLists.txt
-@@ -18,10 +18,6 @@ execute_process(COMMAND ${PYTHON_EXECUTABLE} -c
+@@ -23,10 +23,6 @@ string(TIMESTAMP BUILD_DATE "%a, %d %b %Y %H:%M:%S" UTC)
  message(STATUS "Loading build date ${BUILD_DATE} into constants...")
  message(STATUS "Loading version ${VERSION} into constants...")
  
@@ -61,8 +61,8 @@ index 65673ad69..a2f6a720a 100644
 -string(REPLACE "\\" "\\\\" SYSCONFDIR "${SYSCONFDIR}")
 -string(REPLACE "\\" "\\\\" GR_PREFSDIR "${GR_PREFSDIR}")
  
- 
- #########################################################################
+ #Generate the constants file, now that we actually know which components will be enabled.
+ configure_file(
 diff --git a/gnuradio-runtime/lib/constants.cc.in b/gnuradio-runtime/lib/constants.cc.in
 index 0f316935d..2a5b6b210 100644
 --- a/gnuradio-runtime/lib/constants.cc.in
