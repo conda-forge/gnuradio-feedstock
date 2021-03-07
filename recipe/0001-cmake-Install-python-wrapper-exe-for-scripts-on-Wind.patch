@@ -1,4 +1,4 @@
-From abc1645c2e1171f341ab089365d1bb85834ea841 Mon Sep 17 00:00:00 2001
+From f324dd3929fa1f25b25605fc88657ab4aa7e9acd Mon Sep 17 00:00:00 2001
 From: Ryan Volz <rvolz@mit.edu>
 Date: Tue, 21 Apr 2020 17:46:01 -0400
 Subject: [PATCH 1/4] cmake: Install python wrapper exe for scripts on Windows.
@@ -8,10 +8,10 @@ Subject: [PATCH 1/4] cmake: Install python wrapper exe for scripts on Windows.
  1 file changed, 33 insertions(+), 1 deletion(-)
 
 diff --git a/cmake/Modules/GrPython.cmake b/cmake/Modules/GrPython.cmake
-index ff7927c05..dc9cd94b5 100644
+index 8149cb5cb..c20360bd0 100644
 --- a/cmake/Modules/GrPython.cmake
 +++ b/cmake/Modules/GrPython.cmake
-@@ -288,12 +288,44 @@ function(GR_PYTHON_INSTALL)
+@@ -312,12 +312,44 @@ function(GR_PYTHON_INSTALL)
          foreach(pyfile ${GR_PYTHON_INSTALL_PROGRAMS})
              get_filename_component(pyfile_name ${pyfile} NAME)
              get_filename_component(pyfile ${pyfile} ABSOLUTE)

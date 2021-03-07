@@ -12,9 +12,10 @@ source:
     - 0001-cmake-Install-python-wrapper-exe-for-scripts-on-Wind.patch
     - 0002-cmake-Don-t-generate-.pyc-and-.pyo-files.patch
     - 0003-Don-t-use-hard-coded-path-constants.patch
+    - 0004-cmake-Format-numpy-include-path-in-CMake-style-for-c.patch
 
 build:
-  number: 2
+  number: 3
 
 requirements:
   build:
