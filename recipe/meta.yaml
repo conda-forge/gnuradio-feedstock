@@ -1,12 +1,12 @@
-{% set version = "3.8.2.0" %}
+{% set version = "3.8.3.0" %}
 
 package:
   name: gnuradio
   version: {{ version }}
 
 source:
-  url: https://github.com/gnuradio/gnuradio/releases/download/v{{ version }}/gnuradio-{{ version }}.tar.gz
-  sha256: 3e293541a9ac8d78660762bae8b80c0f6195b3494e1c50c01a9fd79cc60bb624
+  url: https://github.com/gnuradio/gnuradio/archive/refs/tags/v{{ version }}.tar.gz
+  sha256: 7135067362625a6e56fa3f57f6cd100effa2d4615f5993aad67eeef208cfb05f
   patches:
     - 0001-Use-raw-strings-for-paths-substituted-directly-into-.patch
     - 0001-Don-t-use-hard-coded-path-constants.patch
@@ -16,14 +16,9 @@ source:
     - 0002-cmake-Don-t-generate-.pyc-and-.pyo-files.patch
     - 0001-Fix-drag-n-drop-issue-with-quartz-macos-backend.patch
     - 0001-Use-an-ImageSurface-rather-than-UI-back-end.patch  # [osx]
-    - 0001-gnuradio-bind-placeholders.patch
-    - 0001-audio-lib-windows-Add-cctype-header-for-std-isdigit.patch
-    # can remove the following patches for versions after 3.8.2.0
-    - 0001-grc-try-except-around-gsettings-for-when-those-setti.patch
-    - 0001-blocks-lib-Enable-files-bigger-than-4-GB-on-Win-with.patch
 
 build:
-  number: 8
+  number: 0
   skip: true  # [win and py2k]
 
 requirements:
