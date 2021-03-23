@@ -1,13 +1,19 @@
+MACOSX_DEPLOYMENT_TARGET:
+- '10.9'
 boost_cpp:
 - 1.74.0
 c_compiler:
-- vs2017
+- clang
+c_compiler_version:
+- '11'
 channel_sources:
 - conda-forge,defaults
 channel_targets:
 - conda-forge main
 cxx_compiler:
-- vs2017
+- clangxx
+cxx_compiler_version:
+- '11'
 fftw:
 - '3'
 gsl:
@@ -16,8 +22,10 @@ libblas:
 - 3.8 *netlib
 libcblas:
 - 3.8 *netlib
+macos_machine:
+- x86_64-apple-darwin13.4.0
 numpy:
-- '1.19'
+- '1.17'
 pin_run_as_build:
   boost-cpp:
     max_pin: x.x.x
@@ -31,15 +39,15 @@ pin_run_as_build:
   sqlite:
     max_pin: x
   zeromq:
-    max_pin: x.x.x
+    max_pin: x.x
 python:
-- 3.9.* *_cpython
+- 3.8.* *_cpython
 qt:
 - '5.12'
 sqlite:
 - '3'
 target_platform:
-- win-64
+- osx-64
 uhd:
 - 3.15.0
 volk:
@@ -47,5 +55,7 @@ volk:
 zeromq:
 - 4.3.4
 zip_keys:
+- - c_compiler_version
+  - cxx_compiler_version
 - - python
   - numpy
