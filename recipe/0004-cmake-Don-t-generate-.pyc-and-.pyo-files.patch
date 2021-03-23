@@ -1,0 +1,49 @@
+From 3137016319f25874d7d22721c8356346381b860d Mon Sep 17 00:00:00 2001
+From: Ryan Volz <rvolz@mit.edu>
+Date: Wed, 22 Apr 2020 18:02:24 -0400
+Subject: [PATCH 4/8] cmake: Don't generate .pyc and .pyo files.
+
+---
+ cmake/Modules/GrPython.cmake | 11 ++---------
+ 1 file changed, 2 insertions(+), 9 deletions(-)
+
+diff --git a/cmake/Modules/GrPython.cmake b/cmake/Modules/GrPython.cmake
+index b0409ac2f..64fba2ca9 100644
+--- a/cmake/Modules/GrPython.cmake
++++ b/cmake/Modules/GrPython.cmake
+@@ -234,9 +234,6 @@ function(GR_PYTHON_INSTALL)
+ 
+         #create install rule and add generated files to target list
+         set(python_install_gen_targets ${pycfiles} ${pyofiles})
+-        install(FILES ${python_install_gen_targets}
+-            DESTINATION ${GR_PYTHON_INSTALL_DESTINATION}
+-        )
+ 
+     ####################################################################
+     elseif(GR_PYTHON_INSTALL_DIRECTORY)
+@@ -310,10 +307,6 @@ function(GR_PYTHON_INSTALL)
+             # install relative to current binary dir
+             file(RELATIVE_PATH pygen_path_rel "${CMAKE_CURRENT_BINARY_DIR}" "${pygen_path}")
+             list(SORT pygen_path_targets)
+-            install(
+-                FILES ${pygen_path_targets}
+-                DESTINATION "${GR_PYTHON_INSTALL_DESTINATION}/${pygen_path_rel}"
+-            )
+         endforeach(pygen_path)
+ 
+     ####################################################################
+@@ -385,9 +378,9 @@ function(GR_PYTHON_INSTALL)
+             )
+         endforeach(pyfile)
+ 
+-    endif()
++        GR_UNIQUE_TARGET("pygen" ${python_install_gen_targets})
+ 
+-    GR_UNIQUE_TARGET("pygen" ${python_install_gen_targets})
++    endif()
+ 
+ endfunction(GR_PYTHON_INSTALL)
+ 
+-- 
+2.30.2
+

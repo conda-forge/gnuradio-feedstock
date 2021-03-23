@@ -8,14 +8,14 @@ source:
   url: https://github.com/gnuradio/gnuradio/archive/refs/tags/v{{ version }}.tar.gz
   sha256: 7135067362625a6e56fa3f57f6cd100effa2d4615f5993aad67eeef208cfb05f
   patches:
-    - 0001-Use-raw-strings-for-paths-substituted-directly-into-.patch
     - 0001-Don-t-use-hard-coded-path-constants.patch
-    - 0001-python-Do-not-link-against-python-lib-for-building-a.patch
-    - 0001-cmake-Shorten-swig-command-line-by-removing-duplicat.patch
-    - 0001-cmake-Install-python-wrapper-exe-for-scripts-on-Wind.patch
-    - 0002-cmake-Don-t-generate-.pyc-and-.pyo-files.patch
-    - 0001-Fix-drag-n-drop-issue-with-quartz-macos-backend.patch
-    - 0001-Use-an-ImageSurface-rather-than-UI-back-end.patch  # [osx]
+    - 0002-python-Do-not-link-against-python-lib-for-building-a.patch
+    - 0003-cmake-Install-python-wrapper-exe-for-scripts-on-Wind.patch
+    - 0004-cmake-Don-t-generate-.pyc-and-.pyo-files.patch
+    - 0005-cmake-Shorten-swig-command-line-by-removing-duplicat.patch
+    - 0006-Use-raw-strings-for-paths-substituted-directly-into-.patch
+    - 0007-Use-an-ImageSurface-rather-than-UI-back-end.patch  # [osx]
+    - 0008-Fix-drag-n-drop-issue-with-Quartz-macOS-backend.patch
 
 build:
   number: 0
