@@ -1,21 +1,19 @@
-{% set version = "3.9.0.0" %}
+{% set version = "3.9.1.0" %}
 
 package:
   name: gnuradio
   version: {{ version }}
 
 source:
-  url: https://github.com/gnuradio/gnuradio/releases/download/v{{ version }}/gnuradio-{{ version }}.tar.gz
-  sha256: f5e48d0dd13d483a2af89196b9b79f4fbbed03c271d4728ffc249c36961e050a
+  url: https://github.com/gnuradio/gnuradio/archive/refs/tags/v{{ version }}.tar.gz
+  sha256: 62865cde70c5631b7a4405147476e21461bc4d713f90f6cfac0a24bba36f6b97
   patches:
     - 0001-Use-an-ImageSurface-rather-than-UI-back-end.patch  # [osx]
     - 0001-cmake-Install-python-wrapper-exe-for-scripts-on-Wind.patch
     - 0002-cmake-Don-t-generate-.pyc-and-.pyo-files.patch
-    - 0003-Don-t-use-hard-coded-path-constants.patch
-    - 0004-cmake-Format-numpy-include-path-in-CMake-style-for-c.patch
 
 build:
-  number: 3
+  number: 0
 
 requirements:
   build:
@@ -176,6 +174,7 @@ outputs:
         - gnuradio.fft
         - gnuradio.filter
         - gnuradio.gr
+        - gnuradio.network
         - gnuradio.trellis
         - gnuradio.vocoder
         - gnuradio.wavelet

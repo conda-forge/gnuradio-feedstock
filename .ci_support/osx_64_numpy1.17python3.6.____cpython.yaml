@@ -1,23 +1,19 @@
-alsa_lib:
-- 1.2.3
+MACOSX_DEPLOYMENT_TARGET:
+- '10.9'
 boost_cpp:
 - 1.74.0
 c_compiler:
-- gcc
+- clang
 c_compiler_version:
-- '9'
-cdt_name:
-- cos6
+- '11'
 channel_sources:
 - conda-forge,defaults
 channel_targets:
 - conda-forge main
 cxx_compiler:
-- gxx
+- clangxx
 cxx_compiler_version:
-- '9'
-docker_image:
-- quay.io/condaforge/linux-anvil-comp7
+- '11'
 fftw:
 - '3'
 gsl:
@@ -26,8 +22,10 @@ libblas:
 - 3.8 *netlib
 libcblas:
 - 3.8 *netlib
+macos_machine:
+- x86_64-apple-darwin13.4.0
 numpy:
-- '1.16'
+- '1.17'
 pin_run_as_build:
   boost-cpp:
     max_pin: x.x.x
@@ -49,7 +47,7 @@ qt:
 sqlite:
 - '3'
 target_platform:
-- linux-64
+- osx-64
 uhd:
 - 3.15.0
 volk:
@@ -59,7 +57,5 @@ zeromq:
 zip_keys:
 - - c_compiler_version
   - cxx_compiler_version
-- - cdt_name
-  - docker_image
 - - python
   - numpy
