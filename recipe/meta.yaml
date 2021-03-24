@@ -1,4 +1,4 @@
-{% set version = "3.9.1.0" %}
+{% set version = "3.10.0.0git" %}
 
 package:
   name: gnuradio
@@ -6,7 +6,7 @@ package:
 
 source:
   url: https://github.com/gnuradio/gnuradio/archive/refs/tags/v{{ version }}.tar.gz
-  sha256: 62865cde70c5631b7a4405147476e21461bc4d713f90f6cfac0a24bba36f6b97
+  sha256: 119ac5d05eaa06681000403710eba39babc645175585de98cfc71f1bf32ab137
   patches:
     - 0001-Use-an-ImageSurface-rather-than-UI-back-end.patch  # [osx]
     - 0001-cmake-Install-python-wrapper-exe-for-scripts-on-Wind.patch
