@@ -1,4 +1,4 @@
-From 3137016319f25874d7d22721c8356346381b860d Mon Sep 17 00:00:00 2001
+From c3f8d31d85ac698b9f1e2d4f366cf5af0520861b Mon Sep 17 00:00:00 2001
 From: Ryan Volz <rvolz@mit.edu>
 Date: Wed, 22 Apr 2020 18:02:24 -0400
 Subject: [PATCH 4/8] cmake: Don't generate .pyc and .pyo files.

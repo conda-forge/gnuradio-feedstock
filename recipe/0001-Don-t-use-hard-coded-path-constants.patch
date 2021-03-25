@@ -1,4 +1,4 @@
-From 81a33b3fe8338549ec390cfb09b364c23a31c6d6 Mon Sep 17 00:00:00 2001
+From 7711a583a0bafe81cf5988e2779e3e8532070f54 Mon Sep 17 00:00:00 2001
 From: Ryan Volz <rvolz@mit.edu>
 Date: Mon, 5 Aug 2019 11:06:13 -0400
 Subject: [PATCH 1/8] Don't use hard-coded path constants.
@@ -12,15 +12,24 @@ avoid unescaped character problems. For relocatable prefix string
 replacement, conda always substitutes in forward-slash paths anyway, so
 it's just easier to use them from the start.
 ---
- CMakeLists.txt                       | 16 +++++++++----
+ CMakeLists.txt                       | 18 ++++++++++----
  gnuradio-runtime/lib/CMakeLists.txt  |  4 ----
  gnuradio-runtime/lib/constants.cc.in | 36 +++++++++++++++-------------
- 3 files changed, 31 insertions(+), 25 deletions(-)
+ 3 files changed, 32 insertions(+), 26 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 71915d5eb..e47313bfb 100644
+index 71915d5eb..2b4ec6329 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
+@@ -296,7 +296,7 @@ SET(GR_THEMES_DIR      ${GR_PKG_DATA_DIR}/themes CACHE PATH "Path to install QTG
+ # Special exception if prefix is /usr so we don't make a /usr/etc.
+ SET(GR_CONF_DIR etc CACHE PATH "Path to install config files")
+ string(COMPARE EQUAL "${CMAKE_INSTALL_PREFIX}" "/usr" isusr)
+-if(isusr OR MSVC)
++if(isusr)
+   SET(SYSCONFDIR "/${GR_CONF_DIR}" CACHE PATH "System configuration directory")
+ else()
+   SET(SYSCONFDIR "${CMAKE_INSTALL_PREFIX}/${GR_CONF_DIR}" CACHE PATH "System configuration directory" FORCE)
 @@ -318,13 +318,21 @@ endif(ENABLE_PERFORMANCE_COUNTERS)
  ########################################################################
  # Variables replaced when configuring the package config files
