@@ -53,6 +53,7 @@ requirements:
     - click-plugins
     - codec2
     - fftw
+    - gmp  # [not win]
     - gsl
     # blas needed to link with gsl
     - libblas
@@ -60,7 +61,7 @@ requirements:
     - libusb >=1
     - log4cpp
     - mako
-    - mpir
+    - mpir  # [win]
     # we don't build against numpy C lib
     # (only needed at runtime, except gnuradio CMake checks for it at build)
     # specify version so pin is ignored
@@ -138,12 +139,13 @@ outputs:
         - boost-cpp
         - codec2
         - fftw
+        - gmp  # [not win]
         - gsl
         - libblas
         - libcblas
         - libusb
         - log4cpp
-        - mpir
+        - mpir  # [win]
         - portaudio  # [linux]
         - python
         - swig
