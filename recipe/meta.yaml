@@ -17,6 +17,7 @@ source:
     - 0007-Use-an-ImageSurface-rather-than-UI-back-end.patch  # [osx]
     - 0008-Fix-drag-n-drop-issue-with-Quartz-macOS-backend.patch
     - 0009-cmake-Move-swath-of-add_definitions-to-gnuradio-runt.patch
+    - 0010-cmake-Fix-codec2-and-MPIR-find-modules-for-Windows-c.patch
 
 build:
   number: 1

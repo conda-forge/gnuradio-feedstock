@@ -1,8 +1,8 @@
 From 20150a999e2697bc49609b7b84b106380781e3df Mon Sep 17 00:00:00 2001
 From: Ryan Volz <ryan.volz@gmail.com>
 Date: Fri, 26 Mar 2021 13:06:47 -0400
-Subject: [PATCH 9/9] cmake: Move swath of add_definitions to gnuradio-runtime
- target.
+Subject: [PATCH 09/10] cmake: Move swath of add_definitions to
+ gnuradio-runtime target.
 
 Besides being a more modern CMake style, this has the benefit of
 propagating the public definitions to any consumers of the
