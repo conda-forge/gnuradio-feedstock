@@ -1,7 +1,7 @@
 From d4df16f3f27ef976259b6ac2fefa4e1da83dda08 Mon Sep 17 00:00:00 2001
 From: Ryan Volz <rvolz@mit.edu>
 Date: Tue, 21 Apr 2020 17:46:01 -0400
-Subject: [PATCH 3/8] cmake: Install python wrapper exe for scripts on Windows.
+Subject: [PATCH 3/9] cmake: Install python wrapper exe for scripts on Windows.
 
 ---
  cmake/Modules/GrPython.cmake | 34 +++++++++++++++++++++++++++++++++-

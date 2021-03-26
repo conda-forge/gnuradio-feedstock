@@ -1,7 +1,7 @@
 From 576cbabbdd0d14475ec9b13784b13ed112576aeb Mon Sep 17 00:00:00 2001
 From: Ryan Volz <rvolz@mit.edu>
 Date: Wed, 22 Apr 2020 12:44:56 -0400
-Subject: [PATCH 5/8] cmake: Shorten swig command line by removing duplicate
+Subject: [PATCH 5/9] cmake: Shorten swig command line by removing duplicate
  include dirs.
 
 ---

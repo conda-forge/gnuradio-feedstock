@@ -1,7 +1,7 @@
 From 800e1f0f9150ff7fa0d9242ce0a1b101f69596e4 Mon Sep 17 00:00:00 2001
 From: Emmanuel Blot <emmanuel.blot@free.fr>
 Date: Tue, 13 Aug 2019 10:23:45 +0200
-Subject: [PATCH 8/8] Fix drag n' drop issue with Quartz (macOS) backend
+Subject: [PATCH 8/9] Fix drag n' drop issue with Quartz (macOS) backend
 
 ---
  grc/gui/Constants.py | 3 ++-

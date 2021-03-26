@@ -16,9 +16,10 @@ source:
     - 0006-Use-raw-strings-for-paths-substituted-directly-into-.patch
     - 0007-Use-an-ImageSurface-rather-than-UI-back-end.patch  # [osx]
     - 0008-Fix-drag-n-drop-issue-with-Quartz-macOS-backend.patch
+    - 0009-cmake-Move-swath-of-add_definitions-to-gnuradio-runt.patch
 
 build:
-  number: 0
+  number: 1
   skip: true  # [win and py2k]
 
 requirements:
