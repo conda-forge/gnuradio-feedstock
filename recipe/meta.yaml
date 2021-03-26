@@ -24,9 +24,9 @@ requirements:
     - cmake >=3.8
     - ninja
     - pkg-config  # [not win]
-   # libudev needed to link against libusb on linux
+    # libudev needed to link against libusb through uhd on linux
     - {{ cdt('libudev') }}  # [linux]
-   # below are needed to link with Qt for qtgui
+    # below are needed to link with Qt for qtgui
     - {{ cdt('libice') }}  # [linux]
     - {{ cdt('libselinux') }}  # [linux]
     - {{ cdt('libsm') }}  # [linux]
@@ -51,10 +51,8 @@ requirements:
     - gmp  # [not win]
     - gsl
     # blas needed to link with gsl
-    - libblas
-    - libcblas
+    - libcblas  # [linux]
     - libsndfile
-    - libusb
     - log4cpp
     - mako
     - mpir  # [win]
@@ -140,10 +138,8 @@ outputs:
         - fftw
         - gmp  # [not win]
         - gsl
-        - libblas
-        - libcblas
+        - libcblas  # [linux]
         - libsndfile
-        - libusb
         - log4cpp
         - mpir  # [win]
         - portaudio  # [linux]
