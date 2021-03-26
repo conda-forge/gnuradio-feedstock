@@ -340,6 +340,27 @@ outputs:
         - gnuradio.zeromq
     about:
       summary: GNU Radio ZeroMQ module for message passing functionality
+  - name: gnuradio-build-deps
+    requirements:
+      host:
+        - {{ compiler('c') }}
+        - {{ compiler('cxx') }}
+        - {{ pin_subpackage('gnuradio-core', exact=True) }}
+      run:
+        - {{ compiler('c') }}
+        - {{ compiler('cxx') }}
+        - cmake
+        - ninja
+        - pkg-config
+        - swig
+      run_constrained:
+        - {{ pin_subpackage('gnuradio-core', exact=True) }}
+    about:
+      summary: Meta-package for GNU Radio deps used to manually build OOT modules
+      description: >
+        Install this meta-package into an environment with `gnuradio` or
+        `gnuradio-core` in order to be able to build out-of-tree modules
+        manually. DO NOT USE THIS IN CONDA RECIPES.
   # need an output with a script defined to work-around "empty" output detection
   # with python in both build (due to ninja) and host environments
   - name: gnuradio
