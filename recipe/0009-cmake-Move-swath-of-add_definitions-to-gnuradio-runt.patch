@@ -1,8 +1,8 @@
-From 20150a999e2697bc49609b7b84b106380781e3df Mon Sep 17 00:00:00 2001
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Ryan Volz <ryan.volz@gmail.com>
 Date: Fri, 26 Mar 2021 13:06:47 -0400
-Subject: [PATCH 09/10] cmake: Move swath of add_definitions to
- gnuradio-runtime target.
+Subject: [PATCH] cmake: Move swath of add_definitions to gnuradio-runtime
+ target.
 
 Besides being a more modern CMake style, this has the benefit of
 propagating the public definitions to any consumers of the
@@ -10,12 +10,12 @@ gnuradio-runtime library, which includes OOT modules. For example, OOT
 modules would previously have to know to define "NOMINMAX" on MSVC, but
 now that happens transitively.
 ---
- CMakeLists.txt                      | 29 ---------
- gnuradio-runtime/lib/CMakeLists.txt | 96 +++++++++++++++++++++--------
- 2 files changed, 70 insertions(+), 55 deletions(-)
+ CMakeLists.txt                      | 22 --------
+ gnuradio-runtime/lib/CMakeLists.txt | 83 ++++++++++++++++++++---------
+ 2 files changed, 57 insertions(+), 48 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 2b4ec6329..6dbfb95a7 100644
+index 2b4ec6329..720e11bdf 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -200,9 +200,6 @@ include(GrMiscUtils) #compiler flag check
@@ -28,12 +28,10 @@ index 2b4ec6329..6dbfb95a7 100644
  
  if(CMAKE_CXX_COMPILER_ID MATCHES "Clang" OR
     CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
-@@ -216,29 +213,6 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "Clang" OR
- endif(CMAKE_CXX_COMPILER_ID MATCHES "Clang" OR
-       CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+@@ -218,27 +215,11 @@ endif(CMAKE_CXX_COMPILER_ID MATCHES "Clang" OR
  
--if(MSVC)
--    include_directories(${CMAKE_SOURCE_DIR}/cmake/msvc) #missing headers
+ if(MSVC)
+     include_directories(${CMAKE_SOURCE_DIR}/cmake/msvc) #missing headers
 -    add_definitions(-D_USE_MATH_DEFINES) #enables math constants on all supported versions of MSVC
 -    add_definitions(-D_WIN32_WINNT=0x0502) #Minimum version: "Windows Server 2003 with SP1, Windows XP with SP2"
 -    add_definitions(-DNOMINMAX) #disables stupidity and enables std::min and std::max
@@ -43,11 +41,11 @@ index 2b4ec6329..6dbfb95a7 100644
 -        -D_CRT_SECURE_NO_DEPRECATE
 -        -D_CRT_NONSTDC_NO_DEPRECATE
 -    )
--    add_definitions(-DHAVE_CONFIG_H)
--    add_compile_options(/MP) #build with multiple processors
--    add_compile_options(/bigobj) #allow for larger object files
--endif(MSVC)
--
+     add_definitions(-DHAVE_CONFIG_H)
+     add_compile_options(/MP) #build with multiple processors
+     add_compile_options(/bigobj) #allow for larger object files
+ endif(MSVC)
+ 
 -if(WIN32)
 -    add_definitions(-D_USE_MATH_DEFINES)
 -    if (CMAKE_SIZEOF_VOID_P EQUAL 8)
@@ -58,7 +56,7 @@ index 2b4ec6329..6dbfb95a7 100644
  # Record Compiler Info for record
  STRING(TOUPPER ${CMAKE_BUILD_TYPE} GRCBTU)
  SET(COMPILER_INFO "")
-@@ -309,7 +283,6 @@ OPTION(ENABLE_PERFORMANCE_COUNTERS "Enable block performance counters" ON)
+@@ -309,7 +290,6 @@ OPTION(ENABLE_PERFORMANCE_COUNTERS "Enable block performance counters" ON)
  if(ENABLE_PERFORMANCE_COUNTERS)
    message(STATUS "ADDING PERF COUNTERS")
    SET(GR_PERFORMANCE_COUNTERS True)
@@ -66,7 +64,7 @@ index 2b4ec6329..6dbfb95a7 100644
  else(ENABLE_PERFORMANCE_COUNTERS)
    SET(GR_PERFORMANCE_COUNTERS False)
    message(STATUS "NO PERF COUNTERS")
-@@ -503,7 +476,6 @@ list(APPEND GR_TEST_PYTHON_DIRS
+@@ -503,7 +483,6 @@ list(APPEND GR_TEST_PYTHON_DIRS
  # multiprecision arithmetic library header to include
  include(FindPkgConfig)
  find_package(MPLIB)
@@ -74,7 +72,7 @@ index 2b4ec6329..6dbfb95a7 100644
  
  ########################################################################
  # Add subdirectories (in order of deps)
-@@ -532,7 +504,6 @@ add_subdirectory(gr-zeromq)
+@@ -532,7 +511,6 @@ add_subdirectory(gr-zeromq)
  # Defining GR_CTRLPORT for gnuradio/config.h
  if(ENABLE_GR_CTRLPORT)
    SET(GR_CTRLPORT True)
@@ -83,7 +81,7 @@ index 2b4ec6329..6dbfb95a7 100644
    if(CTRLPORT_BACKENDS GREATER 0)
      SET(GR_RPCSERVER_ENABLED True)
 diff --git a/gnuradio-runtime/lib/CMakeLists.txt b/gnuradio-runtime/lib/CMakeLists.txt
-index b5086042c..0984b9547 100644
+index b5086042c..54b7b4934 100644
 --- a/gnuradio-runtime/lib/CMakeLists.txt
 +++ b/gnuradio-runtime/lib/CMakeLists.txt
 @@ -118,6 +118,32 @@ target_sources(gnuradio-runtime PRIVATE
@@ -139,7 +137,7 @@ index b5086042c..0984b9547 100644
  # Save the number of backends for testing against later
  set(
    CTRLPORT_BACKENDS ${CTRLPORT_BACKENDS}
-@@ -196,31 +220,51 @@ set(
+@@ -196,31 +220,38 @@ set(
  
  endif(ENABLE_GR_CTRLPORT)
  
@@ -178,13 +176,7 @@ index b5086042c..0984b9547 100644
 +endif(GR_IS_BIG_ENDIAN)
  
 +if(MSVC)
-+  # missing headers
-+  target_include_directories(gnuradio-runtime PRIVATE ${CMAKE_SOURCE_DIR}/cmake/msvc)
-+  target_compile_definitions(gnuradio-runtime PRIVATE -DHAVE_CONFIG_H)
-+
 +  target_compile_definitions(gnuradio-runtime PUBLIC
-+    # enables math constants on all supported versions of MSVC
-+    -D_USE_MATH_DEFINES
 +    # Minimum version: "Windows Server 2003 with SP1, Windows XP with SP2"
 +    -D_WIN32_WINNT=0x0502
 +    # disables stupidity and enables std::min and std::max
@@ -194,13 +186,6 @@ index b5086042c..0984b9547 100644
 +    -D_CRT_SECURE_NO_WARNINGS
 +    -D_CRT_SECURE_NO_DEPRECATE
 +    -D_CRT_NONSTDC_NO_DEPRECATE
-+  )
-+
-+  target_compile_options(gnuradio-runtime PRIVATE
-+    # build with multiple processors
-+    /MP
-+    # allow for larger object files
-+    /bigobj
 +  )
 +endif(MSVC)
 +

@@ -1,8 +1,7 @@
-From 3cac398a8f4fa0f03218e5a67ce149eaae3db303 Mon Sep 17 00:00:00 2001
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Ryan Volz <ryan.volz@gmail.com>
 Date: Fri, 26 Mar 2021 16:30:12 -0400
-Subject: [PATCH 10/10] cmake: Fix codec2 and MPIR find modules for Windows
- (conda).
+Subject: [PATCH] cmake: Fix codec2 and MPIR find modules for Windows (conda).
 
 ---
  cmake/Modules/FindCodec2.cmake | 9 ++++-----
