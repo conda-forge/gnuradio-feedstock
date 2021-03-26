@@ -127,6 +127,9 @@ outputs:
         - gr_modtool = gnuradio.modtool.cli.base:cli  # [win]
       run_exports:
         - {{ pin_subpackage('gnuradio-core', max_pin='x.x.x') }}
+        # log4cpp is used in block headers, so everything compiling against
+        # gnuradio-core will almost-definitely need log4cpp at runtime
+        - {{ pin_compatible('log4cpp', max_pin='x.x') }}
     requirements:
       build:
         - {{ compiler('c') }}
@@ -155,7 +158,6 @@ outputs:
         - click
         - click-plugins
         - fftw
-        - {{ pin_compatible('log4cpp') }}
         - mako
         - menuinst  # [win]
         - numpy
@@ -210,7 +212,6 @@ outputs:
       run:
         - boost-cpp
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
-        - {{ pin_compatible('log4cpp') }}
         - lxml
         - menuinst  # [win]
         - pygobject
@@ -247,7 +248,6 @@ outputs:
       run:
         - boost-cpp
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
-        - {{ pin_compatible('log4cpp') }}
         - pyqt
         - python
         - {{ pin_compatible('qwt', max_pin='x.x') }}
@@ -278,7 +278,6 @@ outputs:
       run:
         - boost-cpp
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
-        - {{ pin_compatible('log4cpp') }}
         - python
     test:
       commands:
@@ -308,7 +307,6 @@ outputs:
       run:
         - boost-cpp
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
-        - {{ pin_compatible('log4cpp') }}
         - python
     test:
       imports:
@@ -335,7 +333,6 @@ outputs:
       run:
         - boost-cpp
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
-        - {{ pin_compatible('log4cpp') }}
         - python
         - pyzmq
     test:
