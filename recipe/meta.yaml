@@ -16,9 +16,11 @@ source:
     - 0006-Use-raw-strings-for-paths-substituted-directly-into-.patch
     - 0007-Use-an-ImageSurface-rather-than-UI-back-end.patch  # [osx]
     - 0008-Fix-drag-n-drop-issue-with-Quartz-macOS-backend.patch
+    - 0009-cmake-Move-swath-of-add_definitions-to-gnuradio-runt.patch
+    - 0010-cmake-Fix-codec2-and-MPIR-find-modules-for-Windows-c.patch
 
 build:
-  number: 0
+  number: 1
   skip: true  # [win and py2k]
 
 requirements:
@@ -28,9 +30,9 @@ requirements:
     - cmake >=3.8
     - ninja
     - pkg-config  # [not win]
-   # libudev needed to link against libusb on linux
+    # libudev needed to link against libusb through uhd on linux
     - {{ cdt('libudev') }}  # [linux]
-   # below are needed to link with Qt for qtgui
+    # below are needed to link with Qt for qtgui
     - {{ cdt('libice') }}  # [linux]
     - {{ cdt('libselinux') }}  # [linux]
     - {{ cdt('libsm') }}  # [linux]
@@ -52,14 +54,13 @@ requirements:
     - click-plugins
     - codec2
     - fftw
+    - gmp  # [not win]
     - gsl
     # blas needed to link with gsl
-    - libblas
-    - libcblas
-    - libusb >=1
+    - libcblas  # [linux]
     - log4cpp
     - mako
-    - mpir
+    - mpir  # [win]
     # we don't build against numpy C lib
     # (only needed at runtime, except gnuradio CMake checks for it at build)
     # specify version so pin is ignored
@@ -125,6 +126,9 @@ outputs:
         - gr_modtool = gnuradio.modtool.cli.base:cli  # [win]
       run_exports:
         - {{ pin_subpackage('gnuradio-core', max_pin='x.x.x') }}
+        # log4cpp is used in block headers, so everything compiling against
+        # gnuradio-core will almost-definitely need log4cpp at runtime
+        - {{ pin_compatible('log4cpp', max_pin='x.x') }}
     requirements:
       build:
         - {{ compiler('c') }}
@@ -137,12 +141,11 @@ outputs:
         - boost-cpp
         - codec2
         - fftw
+        - gmp  # [not win]
         - gsl
-        - libblas
-        - libcblas
-        - libusb
+        - libcblas  # [linux]
         - log4cpp
-        - mpir
+        - mpir  # [win]
         - portaudio  # [linux]
         - python
         - swig
@@ -152,7 +155,6 @@ outputs:
         - click
         - click-plugins
         - fftw
-        - {{ pin_compatible('log4cpp') }}
         - mako
         - menuinst  # [win]
         - numpy
@@ -207,7 +209,6 @@ outputs:
       run:
         - boost-cpp
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
-        - {{ pin_compatible('log4cpp') }}
         - lxml
         - menuinst  # [win]
         - pygobject
@@ -244,7 +245,6 @@ outputs:
       run:
         - boost-cpp
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
-        - {{ pin_compatible('log4cpp') }}
         - pyqt
         - python
         - {{ pin_compatible('qwt', max_pin='x.x') }}
@@ -275,7 +275,6 @@ outputs:
       run:
         - boost-cpp
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
-        - {{ pin_compatible('log4cpp') }}
         - python
     test:
       commands:
@@ -305,7 +304,6 @@ outputs:
       run:
         - boost-cpp
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
-        - {{ pin_compatible('log4cpp') }}
         - python
     test:
       imports:
@@ -332,7 +330,6 @@ outputs:
       run:
         - boost-cpp
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
-        - {{ pin_compatible('log4cpp') }}
         - python
         - pyzmq
     test:
@@ -340,6 +337,27 @@ outputs:
         - gnuradio.zeromq
     about:
       summary: GNU Radio ZeroMQ module for message passing functionality
+  - name: gnuradio-build-deps
+    requirements:
+      host:
+        - {{ compiler('c') }}
+        - {{ compiler('cxx') }}
+        - {{ pin_subpackage('gnuradio-core', exact=True) }}
+      run:
+        - {{ compiler('c') }}
+        - {{ compiler('cxx') }}
+        - cmake
+        - ninja
+        - pkg-config
+        - swig
+      run_constrained:
+        - {{ pin_subpackage('gnuradio-core', exact=True) }}
+    about:
+      summary: Meta-package for GNU Radio deps used to manually build OOT modules
+      description: >
+        Install this meta-package into an environment with `gnuradio` or
+        `gnuradio-core` in order to be able to build out-of-tree modules
+        manually. DO NOT USE THIS IN CONDA RECIPES.
   # need an output with a script defined to work-around "empty" output detection
   # with python in both build (due to ninja) and host environments
   - name: gnuradio

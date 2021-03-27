@@ -1,7 +1,7 @@
-From 7711a583a0bafe81cf5988e2779e3e8532070f54 Mon Sep 17 00:00:00 2001
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Ryan Volz <rvolz@mit.edu>
 Date: Mon, 5 Aug 2019 11:06:13 -0400
-Subject: [PATCH 1/8] Don't use hard-coded path constants.
+Subject: [PATCH] Don't use hard-coded path constants.
 
 This replaces the path constants for the prefix, system configuration,
 and preferences directories with a runtime prefix lookup based on the
