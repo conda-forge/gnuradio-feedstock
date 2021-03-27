@@ -1,13 +1,17 @@
 About gnuradio
 ==============
 
-Home: 
+Home: https://gnuradio.org/
 
-Package license: 
+Package license: GPL-3.0-or-later
 
 Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/gnuradio-feedstock/blob/master/LICENSE.txt)
 
 Summary: GNU Radio core functionality and modules
+
+Development: https://github.com/gnuradio/gnuradio
+
+Documentation: https://gnuradio.org/doc/doxygen/
 
 Current build status
 ====================
