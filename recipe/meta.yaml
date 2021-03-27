@@ -185,6 +185,12 @@ outputs:
         - gnuradio.wavelet
         - pmt
     about:
+      home: https://gnuradio.org/
+      doc_url: https://gnuradio.org/doc/doxygen/
+      dev_url: https://github.com/gnuradio/gnuradio
+      license: GPL-3.0-or-later
+      license_family: GPL
+      license_file: COPYING
       summary: GNU Radio core functionality and modules
   - name: gnuradio-grc
     script: install_grc.sh  # [not win]
@@ -222,6 +228,12 @@ outputs:
         - if not exist %PREFIX%\\Scripts\\gnuradio-companion.exe exit 1  # [win]
         - if not exist %PREFIX%\\Scripts\\grcc.exe exit 1  # [win]
     about:
+      home: https://gnuradio.org/
+      doc_url: https://gnuradio.org/doc/doxygen/
+      dev_url: https://github.com/gnuradio/gnuradio
+      license: GPL-3.0-or-later
+      license_family: GPL
+      license_file: COPYING
       summary: GNU Radio Companion graphical flowgraph interface
   - name: gnuradio-qtgui
     script: install_qtgui.sh  # [not win]
@@ -252,6 +264,12 @@ outputs:
       imports:
         - gnuradio.qtgui
     about:
+      home: https://gnuradio.org/
+      doc_url: https://gnuradio.org/doc/doxygen/
+      dev_url: https://github.com/gnuradio/gnuradio
+      license: GPL-3.0-or-later
+      license_family: GPL
+      license_file: COPYING
       summary: GNU Radio QT module providing graphical components
   - name: gnuradio-uhd
     script: install_uhd.sh  # [not win]
@@ -282,6 +300,12 @@ outputs:
       imports:
         - gnuradio.uhd
     about:
+      home: https://gnuradio.org/
+      doc_url: https://gnuradio.org/doc/doxygen/
+      dev_url: https://github.com/gnuradio/gnuradio
+      license: GPL-3.0-or-later
+      license_family: GPL
+      license_file: COPYING
       summary: GNU Radio UHD module for Ettus USRP radios
   - name: gnuradio-video-sdl
     build:
@@ -309,6 +333,12 @@ outputs:
       imports:
         - gnuradio.video_sdl
     about:
+      home: https://gnuradio.org/
+      doc_url: https://gnuradio.org/doc/doxygen/
+      dev_url: https://github.com/gnuradio/gnuradio
+      license: GPL-3.0-or-later
+      license_family: GPL
+      license_file: COPYING
       summary: GNU Radio SDL module providing video components
   - name: gnuradio-zeromq
     script: install_zeromq.sh  # [not win]
@@ -336,11 +366,22 @@ outputs:
       imports:
         - gnuradio.zeromq
     about:
+      home: https://gnuradio.org/
+      doc_url: https://gnuradio.org/doc/doxygen/
+      dev_url: https://github.com/gnuradio/gnuradio
+      license: GPL-3.0-or-later
+      license_family: GPL
+      license_file: COPYING
       summary: GNU Radio ZeroMQ module for message passing functionality
   - name: gnuradio-build-deps
     build:
-      string: {{ pin_subpackage('gnuradio-core', exact=True).split()[-1] }}
+      string: {{ pin_subpackage('gnuradio-core', exact=True).partition(' ')[-1].partition(' ')[-1] }}
     requirements:
+      host:
+        # need to populate host to get complete build string (why?)
+        - {{ compiler('c') }}
+        - {{ compiler('cxx') }}
+        - {{ pin_subpackage('gnuradio-core', exact=True) }}
       run:
         - {{ compiler('c') }}
         - {{ compiler('cxx') }}
@@ -351,6 +392,12 @@ outputs:
       run_constrained:
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
     about:
+      home: https://gnuradio.org/
+      doc_url: https://gnuradio.org/doc/doxygen/
+      dev_url: https://github.com/gnuradio/gnuradio
+      license: GPL-3.0-or-later
+      license_family: GPL
+      license_file: COPYING
       summary: Meta-package for GNU Radio deps used to manually build OOT modules
       description: >
         Install this meta-package into an environment with `gnuradio` or
@@ -368,7 +415,7 @@ about:
   license_family: GPL
   license_file: COPYING
   summary: The free and open software radio ecosystem
-  description: |
+  description: >
     GNU Radio is a free software development toolkit that provides the signal
     processing runtime and processing blocks to implement software radios using
     readily-available, low-cost external RF hardware and commodity processors.
