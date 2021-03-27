@@ -338,11 +338,9 @@ outputs:
     about:
       summary: GNU Radio ZeroMQ module for message passing functionality
   - name: gnuradio-build-deps
+    build:
+      string: {{ pin_subpackage('gnuradio-core', exact=True).split()[-1] }}
     requirements:
-      host:
-        - {{ compiler('c') }}
-        - {{ compiler('cxx') }}
-        - {{ pin_subpackage('gnuradio-core', exact=True) }}
       run:
         - {{ compiler('c') }}
         - {{ compiler('cxx') }}
