@@ -8,12 +8,14 @@ source:
   url: https://github.com/gnuradio/gnuradio/archive/refs/tags/v{{ version }}.tar.gz
   sha256: 62865cde70c5631b7a4405147476e21461bc4d713f90f6cfac0a24bba36f6b97
   patches:
-    - 0001-Use-an-ImageSurface-rather-than-UI-back-end.patch  # [osx]
     - 0001-cmake-Install-python-wrapper-exe-for-scripts-on-Wind.patch
     - 0002-cmake-Don-t-generate-.pyc-and-.pyo-files.patch
+    - 0003-cmake-Move-swath-of-add_definitions-to-gnuradio-runt.patch
+    - 0004-cmake-Fix-codec2-and-MPIR-find-modules-for-Windows-c.patch
+    - 0005-Use-an-ImageSurface-rather-than-UI-back-end.patch  # [osx]
 
 build:
-  number: 0
+  number: 1
 
 requirements:
   build:
