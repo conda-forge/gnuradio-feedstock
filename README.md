@@ -66,13 +66,6 @@ Current build status
                 </a>
               </td>
             </tr><tr>
-              <td>osx_64_numpy1.17python3.7.____cpython</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=8568&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/gnuradio-feedstock?branchName=master&jobName=osx&configuration=osx_64_numpy1.17python3.7.____cpython" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
               <td>osx_64_numpy1.17python3.8.____cpython</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=8568&branchName=master">
@@ -80,17 +73,17 @@ Current build status
                 </a>
               </td>
             </tr><tr>
-              <td>osx_64_numpy1.19python3.9.____cpython</td>
+              <td>osx_64_numpy1.17python3.9.____cpython</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=8568&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/gnuradio-feedstock?branchName=master&jobName=osx&configuration=osx_64_numpy1.19python3.9.____cpython" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/gnuradio-feedstock?branchName=master&jobName=osx&configuration=osx_64_numpy1.17python3.9.____cpython" alt="variant">
                 </a>
               </td>
             </tr><tr>
-              <td>win_64_numpy1.17python3.6.____cpython</td>
+              <td>osx_64_numpy1.19python3.7.____cpython</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=8568&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/gnuradio-feedstock?branchName=master&jobName=win&configuration=win_64_numpy1.17python3.6.____cpython" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/gnuradio-feedstock?branchName=master&jobName=osx&configuration=osx_64_numpy1.19python3.7.____cpython" alt="variant">
                 </a>
               </td>
             </tr><tr>
@@ -101,6 +94,13 @@ Current build status
                 </a>
               </td>
             </tr><tr>
+              <td>win_64_numpy1.17python3.8.____cpython</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=8568&branchName=master">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/gnuradio-feedstock?branchName=master&jobName=win&configuration=win_64_numpy1.17python3.8.____cpython" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
               <td>win_64_numpy1.17python3.9.____cpython</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=8568&branchName=master">
@@ -108,10 +108,10 @@ Current build status
                 </a>
               </td>
             </tr><tr>
-              <td>win_64_numpy1.19python3.8.____cpython</td>
+              <td>win_64_numpy1.19python3.6.____cpython</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=8568&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/gnuradio-feedstock?branchName=master&jobName=win&configuration=win_64_numpy1.19python3.8.____cpython" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/gnuradio-feedstock?branchName=master&jobName=win&configuration=win_64_numpy1.19python3.6.____cpython" alt="variant">
                 </a>
               </td>
             </tr>
@@ -128,6 +128,7 @@ Current release info
 | Name | Downloads | Version | Platforms |
 | --- | --- | --- | --- |
 | [![Conda Recipe](https://img.shields.io/badge/recipe-gnuradio-green.svg)](https://anaconda.org/conda-forge/gnuradio) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/gnuradio.svg)](https://anaconda.org/conda-forge/gnuradio) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/gnuradio.svg)](https://anaconda.org/conda-forge/gnuradio) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/gnuradio.svg)](https://anaconda.org/conda-forge/gnuradio) |
+| [![Conda Recipe](https://img.shields.io/badge/recipe-gnuradio--build--deps-green.svg)](https://anaconda.org/conda-forge/gnuradio-build-deps) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/gnuradio-build-deps.svg)](https://anaconda.org/conda-forge/gnuradio-build-deps) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/gnuradio-build-deps.svg)](https://anaconda.org/conda-forge/gnuradio-build-deps) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/gnuradio-build-deps.svg)](https://anaconda.org/conda-forge/gnuradio-build-deps) |
 | [![Conda Recipe](https://img.shields.io/badge/recipe-gnuradio--core-green.svg)](https://anaconda.org/conda-forge/gnuradio-core) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/gnuradio-core.svg)](https://anaconda.org/conda-forge/gnuradio-core) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/gnuradio-core.svg)](https://anaconda.org/conda-forge/gnuradio-core) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/gnuradio-core.svg)](https://anaconda.org/conda-forge/gnuradio-core) |
 | [![Conda Recipe](https://img.shields.io/badge/recipe-gnuradio--grc-green.svg)](https://anaconda.org/conda-forge/gnuradio-grc) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/gnuradio-grc.svg)](https://anaconda.org/conda-forge/gnuradio-grc) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/gnuradio-grc.svg)](https://anaconda.org/conda-forge/gnuradio-grc) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/gnuradio-grc.svg)](https://anaconda.org/conda-forge/gnuradio-grc) |
 | [![Conda Recipe](https://img.shields.io/badge/recipe-gnuradio--qtgui-green.svg)](https://anaconda.org/conda-forge/gnuradio-qtgui) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/gnuradio-qtgui.svg)](https://anaconda.org/conda-forge/gnuradio-qtgui) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/gnuradio-qtgui.svg)](https://anaconda.org/conda-forge/gnuradio-qtgui) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/gnuradio-qtgui.svg)](https://anaconda.org/conda-forge/gnuradio-qtgui) |
@@ -144,10 +145,10 @@ Installing `gnuradio` from the `conda-forge` channel can be achieved by adding `
 conda config --add channels conda-forge
 ```
 
-Once the `conda-forge` channel has been enabled, `gnuradio, gnuradio-core, gnuradio-grc, gnuradio-qtgui, gnuradio-uhd, gnuradio-video-sdl, gnuradio-zeromq` can be installed with:
+Once the `conda-forge` channel has been enabled, `gnuradio, gnuradio-build-deps, gnuradio-core, gnuradio-grc, gnuradio-qtgui, gnuradio-uhd, gnuradio-video-sdl, gnuradio-zeromq` can be installed with:
 
 ```
-conda install gnuradio gnuradio-core gnuradio-grc gnuradio-qtgui gnuradio-uhd gnuradio-video-sdl gnuradio-zeromq
+conda install gnuradio gnuradio-build-deps gnuradio-core gnuradio-grc gnuradio-qtgui gnuradio-uhd gnuradio-video-sdl gnuradio-zeromq
 ```
 
 It is possible to list all of the versions of `gnuradio` available on your platform with:
