@@ -8,12 +8,14 @@ source:
   url: https://github.com/gnuradio/gnuradio/archive/refs/tags/v{{ version }}.tar.gz
   sha256: 62865cde70c5631b7a4405147476e21461bc4d713f90f6cfac0a24bba36f6b97
   patches:
-    - 0001-Use-an-ImageSurface-rather-than-UI-back-end.patch  # [osx]
     - 0001-cmake-Install-python-wrapper-exe-for-scripts-on-Wind.patch
     - 0002-cmake-Don-t-generate-.pyc-and-.pyo-files.patch
+    - 0003-cmake-Move-swath-of-add_definitions-to-gnuradio-runt.patch
+    - 0004-cmake-Fix-codec2-and-MPIR-find-modules-for-Windows-c.patch
+    - 0005-Use-an-ImageSurface-rather-than-UI-back-end.patch  # [osx]
 
 build:
-  number: 0
+  number: 1
 
 requirements:
   build:
@@ -22,9 +24,9 @@ requirements:
     - cmake >=3.8
     - ninja
     - pkg-config  # [not win]
-   # libudev needed to link against libusb on linux
+    # libudev needed to link against libusb through uhd on linux
     - {{ cdt('libudev') }}  # [linux]
-   # below are needed to link with Qt for qtgui
+    # below are needed to link with Qt for qtgui
     - {{ cdt('libice') }}  # [linux]
     - {{ cdt('libselinux') }}  # [linux]
     - {{ cdt('libsm') }}  # [linux]
@@ -46,15 +48,14 @@ requirements:
     - click-plugins
     - codec2
     - fftw
+    - gmp  # [not win]
     - gsl
     # blas needed to link with gsl
-    - libblas
-    - libcblas
+    - libcblas  # [linux]
     - libsndfile
-    - libusb
     - log4cpp
     - mako
-    - mpir
+    - mpir  # [win]
     # we don't build against numpy C lib
     # (only needed at runtime, except gnuradio CMake checks for it at build)
     # specify version so pin is ignored
@@ -120,6 +121,9 @@ outputs:
         - gr_modtool = gnuradio.modtool.cli.base:cli  # [win]
       run_exports:
         - {{ pin_subpackage('gnuradio-core', max_pin='x.x.x') }}
+        # log4cpp is used in block headers, so everything compiling against
+        # gnuradio-core will almost-definitely need log4cpp at runtime
+        - {{ pin_compatible('log4cpp', max_pin='x.x') }}
     requirements:
       build:
         - {{ compiler('c') }}
@@ -132,13 +136,12 @@ outputs:
         - boost-cpp
         - codec2
         - fftw
+        - gmp  # [not win]
         - gsl
-        - libblas
-        - libcblas
+        - libcblas  # [linux]
         - libsndfile
-        - libusb
         - log4cpp
-        - mpir
+        - mpir  # [win]
         - portaudio  # [linux]
         - pybind11
         - python
@@ -148,7 +151,6 @@ outputs:
         - click
         - click-plugins
         - fftw
-        - {{ pin_compatible('log4cpp') }}
         - mako
         - menuinst  # [win]
         - numpy
@@ -180,6 +182,12 @@ outputs:
         - gnuradio.wavelet
         - pmt
     about:
+      home: https://gnuradio.org/
+      doc_url: https://gnuradio.org/doc/doxygen/
+      dev_url: https://github.com/gnuradio/gnuradio
+      license: GPL-3.0-or-later
+      license_family: GPL
+      license_file: COPYING
       summary: GNU Radio core functionality and modules
   - name: gnuradio-grc
     script: install_grc.sh  # [not win]
@@ -204,7 +212,6 @@ outputs:
       run:
         - boost-cpp
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
-        - {{ pin_compatible('log4cpp') }}
         - lxml
         - menuinst  # [win]
         - pygobject
@@ -218,6 +225,12 @@ outputs:
         - if not exist %PREFIX%\\Scripts\\gnuradio-companion.exe exit 1  # [win]
         - if not exist %PREFIX%\\Scripts\\grcc.exe exit 1  # [win]
     about:
+      home: https://gnuradio.org/
+      doc_url: https://gnuradio.org/doc/doxygen/
+      dev_url: https://github.com/gnuradio/gnuradio
+      license: GPL-3.0-or-later
+      license_family: GPL
+      license_file: COPYING
       summary: GNU Radio Companion graphical flowgraph interface
   - name: gnuradio-qtgui
     script: install_qtgui.sh  # [not win]
@@ -241,7 +254,6 @@ outputs:
       run:
         - boost-cpp
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
-        - {{ pin_compatible('log4cpp') }}
         - pyqt
         - python
         - {{ pin_compatible('qwt', max_pin='x.x') }}
@@ -249,6 +261,12 @@ outputs:
       imports:
         - gnuradio.qtgui
     about:
+      home: https://gnuradio.org/
+      doc_url: https://gnuradio.org/doc/doxygen/
+      dev_url: https://github.com/gnuradio/gnuradio
+      license: GPL-3.0-or-later
+      license_family: GPL
+      license_file: COPYING
       summary: GNU Radio QT module providing graphical components
   - name: gnuradio-uhd
     script: install_uhd.sh  # [not win]
@@ -272,7 +290,6 @@ outputs:
       run:
         - boost-cpp
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
-        - {{ pin_compatible('log4cpp') }}
         - python
     test:
       commands:
@@ -280,6 +297,12 @@ outputs:
       imports:
         - gnuradio.uhd
     about:
+      home: https://gnuradio.org/
+      doc_url: https://gnuradio.org/doc/doxygen/
+      dev_url: https://github.com/gnuradio/gnuradio
+      license: GPL-3.0-or-later
+      license_family: GPL
+      license_file: COPYING
       summary: GNU Radio UHD module for Ettus USRP radios
   - name: gnuradio-video-sdl
     build:
@@ -302,12 +325,17 @@ outputs:
       run:
         - boost-cpp
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
-        - {{ pin_compatible('log4cpp') }}
         - python
     test:
       imports:
         - gnuradio.video_sdl
     about:
+      home: https://gnuradio.org/
+      doc_url: https://gnuradio.org/doc/doxygen/
+      dev_url: https://github.com/gnuradio/gnuradio
+      license: GPL-3.0-or-later
+      license_family: GPL
+      license_file: COPYING
       summary: GNU Radio SDL module providing video components
   - name: gnuradio-zeromq
     script: install_zeromq.sh  # [not win]
@@ -329,14 +357,50 @@ outputs:
       run:
         - boost-cpp
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
-        - {{ pin_compatible('log4cpp') }}
         - python
         - pyzmq
     test:
       imports:
         - gnuradio.zeromq
     about:
+      home: https://gnuradio.org/
+      doc_url: https://gnuradio.org/doc/doxygen/
+      dev_url: https://github.com/gnuradio/gnuradio
+      license: GPL-3.0-or-later
+      license_family: GPL
+      license_file: COPYING
       summary: GNU Radio ZeroMQ module for message passing functionality
+  - name: gnuradio-build-deps
+    build:
+      string: {{ pin_subpackage('gnuradio-core', exact=True).partition(' ')[-1].partition(' ')[-1] }}
+    requirements:
+      host:
+        # need to populate host to get complete build string (why?)
+        - {{ compiler('c') }}
+        - {{ compiler('cxx') }}
+        - {{ pin_subpackage('gnuradio-core', exact=True) }}
+      run:
+        - {{ compiler('c') }}
+        - {{ compiler('cxx') }}
+        - cmake
+        - ninja
+        - pip  # [win]
+        - pkg-config
+        - pybind11
+      run_constrained:
+        - {{ pin_subpackage('gnuradio-core', exact=True) }}
+    about:
+      home: https://gnuradio.org/
+      doc_url: https://gnuradio.org/doc/doxygen/
+      dev_url: https://github.com/gnuradio/gnuradio
+      license: GPL-3.0-or-later
+      license_family: GPL
+      license_file: COPYING
+      summary: Meta-package for GNU Radio deps used to manually build OOT modules
+      description: >
+        Install this meta-package into an environment with `gnuradio` or
+        `gnuradio-core` in order to be able to build out-of-tree modules
+        manually. DO NOT USE THIS IN CONDA RECIPES.
   # need an output with a script defined to work-around "empty" output detection
   # with python in both build (due to ninja) and host environments
   - name: gnuradio
@@ -349,7 +413,7 @@ about:
   license_family: GPL
   license_file: COPYING
   summary: The free and open software radio ecosystem
-  description: |
+  description: >
     GNU Radio is a free software development toolkit that provides the signal
     processing runtime and processing blocks to implement software radios using
     readily-available, low-cost external RF hardware and commodity processors.

@@ -1,7 +1,7 @@
-From f4f418a45cb9c701c96a026dd401af18cc9877f0 Mon Sep 17 00:00:00 2001
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Ryan Volz <rvolz@mit.edu>
 Date: Wed, 22 Apr 2020 18:02:24 -0400
-Subject: [PATCH 2/4] cmake: Don't generate .pyc and .pyo files.
+Subject: [PATCH] cmake: Don't generate .pyc and .pyo files.
 
 ---
  cmake/Modules/GrPython.cmake | 11 ++---------
@@ -45,5 +45,5 @@ index c20360bd0..ad0e41dd3 100644
  endfunction(GR_PYTHON_INSTALL)
  
 -- 
-2.25.1
+2.30.2
 
