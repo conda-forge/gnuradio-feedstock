@@ -18,9 +18,12 @@ source:
     - 0008-Fix-drag-n-drop-issue-with-Quartz-macOS-backend.patch
     - 0009-cmake-Move-swath-of-add_definitions-to-gnuradio-runt.patch
     - 0010-cmake-Fix-codec2-and-MPIR-find-modules-for-Windows-c.patch
+    - 0011-grc-Be-more-informative-when-missing-options-block-a.patch
+    - 0012-cmake-Pass-extra-arguments-to-GR_PYTHON_INSTALL-to-i.patch
+    - 0013-grc-Remove-global_blocks_path-preference-and-use-pre.patch
 
 build:
-  number: 1
+  number: 2
   skip: true  # [win and py2k]
 
 requirements:
