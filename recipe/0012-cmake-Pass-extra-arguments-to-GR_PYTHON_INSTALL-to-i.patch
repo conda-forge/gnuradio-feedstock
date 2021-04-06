@@ -1,0 +1,45 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Ryan Volz <ryan.volz@gmail.com>
+Date: Mon, 5 Apr 2021 17:43:26 -0400
+Subject: [PATCH] cmake: Pass extra arguments to GR_PYTHON_INSTALL to install
+ command.
+
+GRC already does a few GR_PYTHON_INSTALLs with extra FILES_MATCHING
+REGEX arguments, so this will actually pass these through.
+
+Signed-off-by: Ryan Volz <ryan.volz@gmail.com>
+---
+ cmake/Modules/GrPython.cmake | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/cmake/Modules/GrPython.cmake b/cmake/Modules/GrPython.cmake
+index 874d754a2..a19abd261 100644
+--- a/cmake/Modules/GrPython.cmake
++++ b/cmake/Modules/GrPython.cmake
+@@ -184,6 +184,7 @@ function(GR_PYTHON_INSTALL)
+     install(
+       FILES ${GR_PYTHON_INSTALL_FILES}
+       DESTINATION ${GR_PYTHON_INSTALL_DESTINATION}
++      ${GR_PYTHON_INSTALL_UNPARSED_ARGUMENTS}
+     )
+ 
+         #create a list of all generated files
+@@ -241,6 +242,7 @@ function(GR_PYTHON_INSTALL)
+     install(
+       DIRECTORY ${GR_PYTHON_INSTALL_DIRECTORY}
+       DESTINATION ${GR_PYTHON_INSTALL_DESTINATION}
++      ${GR_PYTHON_INSTALL_UNPARSED_ARGUMENTS}
+     )
+ 
+ 
+@@ -375,6 +377,7 @@ function(GR_PYTHON_INSTALL)
+ 
+             install(PROGRAMS ${pyexefile} RENAME ${pyfile_name}
+                 DESTINATION ${GR_PYTHON_INSTALL_DESTINATION}
++                ${GR_PYTHON_INSTALL_UNPARSED_ARGUMENTS}
+             )
+         endforeach(pyfile)
+ 
+-- 
+2.30.2
+
