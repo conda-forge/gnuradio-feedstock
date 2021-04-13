@@ -23,7 +23,7 @@ gsl:
 macos_machine:
 - x86_64-apple-darwin13.4.0
 numpy:
-- '1.17'
+- '1.19'
 pin_run_as_build:
   boost-cpp:
     max_pin: x.x.x
@@ -49,7 +49,7 @@ sqlite:
 target_platform:
 - osx-64
 uhd:
-- 3.15.0
+- 4.0.0
 volk:
 - '2.4'
 zeromq:
