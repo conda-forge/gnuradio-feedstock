@@ -40,7 +40,6 @@ cmake_config_args=(
     -DENABLE_GR_FILTER=ON
     -DENABLE_GR_MODTOOL=ON
     -DENABLE_GR_NETWORK=ON
-    -DENABLE_GR_QTGUI=ON
     -DENABLE_GR_TRELLIS=ON
     -DENABLE_GR_UHD=ON
     -DENABLE_GR_UTILS=ON
@@ -63,5 +62,15 @@ else
     )
 fi
 
-cmake -G "Ninja" .. "${cmake_config_args[@]}"
+if [[ $target_platform == linux-ppc64le ]] || [[ $target_platform == osx-arm64 ]] ; then
+    cmake_config_args+=(
+        -DENABLE_GR_QTGUI=OFF
+    )
+else
+    cmake_config_args+=(
+        -DENABLE_GR_QTGUI=ON
+    )
+fi
+
+cmake ${CMAKE_ARGS} -G "Ninja" .. "${cmake_config_args[@]}"
 cmake --build . --config Release -- -j${CPU_COUNT}
