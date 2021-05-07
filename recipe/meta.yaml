@@ -29,7 +29,9 @@ requirements:
     - patch  # [osx]
     - pkg-config  # [not win]
     # libudev needed to link against libusb through uhd on linux
-    - {{ cdt('libudev') }}  # [linux]
+    # libudev is on its own in CentOS 6, packaged with systemd in CentOS 7
+    - {{ cdt('libudev-devel') }}  # [linux and cdt_name=='cos6']
+    - {{ cdt('systemd-devel') }}  # [linux and cdt_name=='cos7']
     # below are needed to link with Qt for qtgui
     - {{ cdt('libice') }}  # [linux]
     - {{ cdt('libselinux') }}  # [linux]
