@@ -148,7 +148,7 @@ outputs:
         - libsndfile
         - log4cpp
         - mpir  # [win]
-        - portaudio  # [linux]
+        - portaudio  # [linux and x86_64]
         - pybind11
         - python
         - volk
@@ -160,7 +160,7 @@ outputs:
         - mako
         - menuinst  # [win]
         - numpy
-        - {{ pin_compatible('portaudio') }}  # [linux]
+        - {{ pin_compatible('portaudio') }}  # [linux and x86_64]
         - python
         - six
     test:
