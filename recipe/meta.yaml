@@ -18,7 +18,7 @@ source:
     - 0008-grc-Remove-global_blocks_path-preference-and-use-pre.patch
 
 build:
-  number: 3
+  number: 4
 
 requirements:
   build:
@@ -71,16 +71,16 @@ requirements:
     - volk
   # gnuradio.audio
     - alsa-lib  # [linux]
-    - portaudio  # [linux]
+    - portaudio  # [linux and x86_64]
   # gnuradio companion
     - gtk3
     - lxml
     - pygobject
     - pyyaml
   # gnuradio.qtgui
-    - pyqt
-    - qt
-    - qwt
+    - pyqt  # [not (ppc64le or arm64)]
+    - qt  # [not (ppc64le or arm64)]
+    - qwt  # [not (ppc64le or arm64)]
   # gnuradio.uhd
     - uhd
   # gnuradio.video_sdl
@@ -93,7 +93,7 @@ requirements:
   # this is the metapackage that depends on all the subpackages
     - {{ pin_subpackage('gnuradio-core', exact=True) }}
     - {{ pin_subpackage('gnuradio-grc', exact=True) }}
-    - {{ pin_subpackage('gnuradio-qtgui', exact=True) }}
+    - {{ pin_subpackage('gnuradio-qtgui', exact=True) }}  # [not (ppc64le or arm64)]
     - {{ pin_subpackage('gnuradio-uhd', exact=True) }}
     - {{ pin_subpackage('gnuradio-video-sdl', exact=True) }}  # [not osx]
     - {{ pin_subpackage('gnuradio-zeromq', exact=True) }}
@@ -106,7 +106,7 @@ test:
   imports:
     - gnuradio.gr
     - gnuradio.qtgui
-    - gnuradio.uhd
+    - gnuradio.uhd  # [not (ppc64le or arm64)]
     - gnuradio.video_sdl  # [not osx]
     - gnuradio.zeromq
 
@@ -237,6 +237,8 @@ outputs:
       license_file: COPYING
       summary: GNU Radio Companion graphical flowgraph interface
   - name: gnuradio-qtgui
+    build:
+      skip: true  # [ppc64le or arm64]
     script: install_qtgui.sh  # [not win]
     script: install_qtgui.bat  # [win]
     requirements:
