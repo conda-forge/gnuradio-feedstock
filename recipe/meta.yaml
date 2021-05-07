@@ -23,8 +23,7 @@ source:
     - 0013-grc-Remove-global_blocks_path-preference-and-use-pre.patch
 
 build:
-  number: 2
-  skip: true  # [win and py2k]
+  number: 3
 
 requirements:
   build:
@@ -34,23 +33,30 @@ requirements:
     - ninja
     - patch  # [osx]
     - pkg-config  # [not win]
+    # cross-compilation requirements
+    - python                              # [build_platform != target_platform]
+    - cross-python_{{ target_platform }}  # [build_platform != target_platform]
+    - pybind11                            # [build_platform != target_platform]
+    - numpy >=1.1                         # [build_platform != target_platform]
     # libudev needed to link against libusb through uhd on linux
-    - {{ cdt('libudev') }}  # [linux]
+    # libudev is on its own in CentOS 6, packaged with systemd in CentOS 7
+    - {{ cdt('libudev-devel') }}  # [linux and cdt_name=='cos6']
+    - {{ cdt('systemd-devel') }}  # [linux and cdt_name=='cos7']
     # below are needed to link with Qt for qtgui
-    - {{ cdt('libice') }}  # [linux]
-    - {{ cdt('libselinux') }}  # [linux]
-    - {{ cdt('libsm') }}  # [linux]
-    - {{ cdt('libx11') }}  # [linux]
-    - {{ cdt('libxau') }}  # [linux]
-    - {{ cdt('libxcb') }}  # [linux]
-    - {{ cdt('libxdamage') }}  # [linux]
-    - {{ cdt('libxext') }}  # [linux]
-    - {{ cdt('libxfixes') }}  # [linux]
-    - {{ cdt('libxrender') }}  # [linux]
-    - {{ cdt('libxxf86vm') }}  # [linux]
-    - {{ cdt('libuuid') }}  # [linux]
-    - {{ cdt('mesa-dri-drivers') }}  # [linux]
-    - {{ cdt('mesa-libgl-devel') }}  # [linux]
+    - {{ cdt('libice') }}  # [linux and not ppc64le]
+    - {{ cdt('libselinux') }}  # [linux and not ppc64le]
+    - {{ cdt('libsm') }}  # [linux and not ppc64le]
+    - {{ cdt('libx11') }}  # [linux and not ppc64le]
+    - {{ cdt('libxau') }}  # [linux and not ppc64le]
+    - {{ cdt('libxcb') }}  # [linux and not ppc64le]
+    - {{ cdt('libxdamage') }}  # [linux and not ppc64le]
+    - {{ cdt('libxext') }}  # [linux and not ppc64le]
+    - {{ cdt('libxfixes') }}  # [linux and not ppc64le]
+    - {{ cdt('libxrender') }}  # [linux and not ppc64le]
+    - {{ cdt('libxxf86vm') }}  # [linux and not ppc64le]
+    - {{ cdt('libuuid') }}  # [linux and not ppc64le]
+    - {{ cdt('mesa-dri-drivers') }}  # [linux and not ppc64le]
+    - {{ cdt('mesa-libgl-devel') }}  # [linux and not ppc64le]
 
   host:
     - boost-cpp
@@ -83,9 +89,9 @@ requirements:
     - pygobject
     - pyyaml
   # gnuradio.qtgui
-    - pyqt
-    - qt
-    - qwt
+    - pyqt  # [not (ppc64le or arm64)]
+    - qt  # [not (ppc64le or arm64)]
+    - qwt  # [not (ppc64le or arm64)]
   # gnuradio.uhd
     - uhd
   # gnuradio.video_sdl
@@ -98,7 +104,7 @@ requirements:
   # this is the metapackage that depends on all the subpackages
     - {{ pin_subpackage('gnuradio-core', exact=True) }}
     - {{ pin_subpackage('gnuradio-grc', exact=True) }}
-    - {{ pin_subpackage('gnuradio-qtgui', exact=True) }}
+    - {{ pin_subpackage('gnuradio-qtgui', exact=True) }}  # [not (ppc64le or arm64)]
     - {{ pin_subpackage('gnuradio-uhd', exact=True) }}
     - {{ pin_subpackage('gnuradio-video-sdl', exact=True) }}  # [not osx]
     - {{ pin_subpackage('gnuradio-zeromq', exact=True) }}
@@ -110,7 +116,7 @@ test:
     - sqlite
   imports:
     - gnuradio.gr
-    - gnuradio.qtgui
+    - gnuradio.qtgui  # [not (ppc64le or arm64)]
     - gnuradio.uhd
     - gnuradio.video_sdl  # [not osx]
     - gnuradio.zeromq
@@ -140,6 +146,8 @@ outputs:
         - cmake
         - ninja
         - pkg-config  # [not win]
+        # conda-build needs native python to make .pyc files
+        - python  # [build_platform != target_platform]
       host:
         - alsa-lib  # [linux]
         - boost-cpp
@@ -210,6 +218,8 @@ outputs:
         - cmake
         - ninja
         - pkg-config  # [not win]
+        # conda-build needs native python to make .pyc files
+        - python  # [build_platform != target_platform]
       host:
         - boost-cpp
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
@@ -240,6 +250,8 @@ outputs:
       license_file: COPYING
       summary: GNU Radio Companion graphical flowgraph interface
   - name: gnuradio-qtgui
+    build:
+      skip: true  # [ppc64le or arm64]
     script: install_qtgui.sh  # [not win]
     script: install_qtgui.bat  # [win]
     requirements:
@@ -249,6 +261,8 @@ outputs:
         - cmake
         - ninja
         - pkg-config  # [not win]
+        # conda-build needs native python to make .pyc files
+        - python  # [build_platform != target_platform]
       host:
         - boost-cpp
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
@@ -288,6 +302,8 @@ outputs:
         - cmake
         - ninja
         - pkg-config  # [not win]
+        # conda-build needs native python to make .pyc files
+        - python  # [build_platform != target_platform]
       host:
         - boost-cpp
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
@@ -323,6 +339,8 @@ outputs:
         - cmake
         - ninja
         - pkg-config  # [not win]
+        # conda-build needs native python to make .pyc files
+        - python  # [build_platform != target_platform]
       host:
         - boost-cpp
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
@@ -354,6 +372,8 @@ outputs:
         - cmake
         - ninja
         - pkg-config  # [not win]
+        # conda-build needs native python to make .pyc files
+        - python  # [build_platform != target_platform]
       host:
         - boost-cpp
         - cppzmq
