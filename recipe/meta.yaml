@@ -33,20 +33,20 @@ requirements:
     - {{ cdt('libudev-devel') }}  # [linux and cdt_name=='cos6']
     - {{ cdt('systemd-devel') }}  # [linux and cdt_name=='cos7']
     # below are needed to link with Qt for qtgui
-    - {{ cdt('libice') }}  # [linux]
-    - {{ cdt('libselinux') }}  # [linux]
-    - {{ cdt('libsm') }}  # [linux]
-    - {{ cdt('libx11') }}  # [linux]
-    - {{ cdt('libxau') }}  # [linux]
-    - {{ cdt('libxcb') }}  # [linux]
-    - {{ cdt('libxdamage') }}  # [linux]
-    - {{ cdt('libxext') }}  # [linux]
-    - {{ cdt('libxfixes') }}  # [linux]
-    - {{ cdt('libxrender') }}  # [linux]
-    - {{ cdt('libxxf86vm') }}  # [linux]
-    - {{ cdt('libuuid') }}  # [linux]
-    - {{ cdt('mesa-dri-drivers') }}  # [linux]
-    - {{ cdt('mesa-libgl-devel') }}  # [linux]
+    - {{ cdt('libice') }}  # [linux and not ppc64le]
+    - {{ cdt('libselinux') }}  # [linux and not ppc64le]
+    - {{ cdt('libsm') }}  # [linux and not ppc64le]
+    - {{ cdt('libx11') }}  # [linux and not ppc64le]
+    - {{ cdt('libxau') }}  # [linux and not ppc64le]
+    - {{ cdt('libxcb') }}  # [linux and not ppc64le]
+    - {{ cdt('libxdamage') }}  # [linux and not ppc64le]
+    - {{ cdt('libxext') }}  # [linux and not ppc64le]
+    - {{ cdt('libxfixes') }}  # [linux and not ppc64le]
+    - {{ cdt('libxrender') }}  # [linux and not ppc64le]
+    - {{ cdt('libxxf86vm') }}  # [linux and not ppc64le]
+    - {{ cdt('libuuid') }}  # [linux and not ppc64le]
+    - {{ cdt('mesa-dri-drivers') }}  # [linux and not ppc64le]
+    - {{ cdt('mesa-libgl-devel') }}  # [linux and not ppc64le]
 
   host:
     - boost-cpp
@@ -107,8 +107,8 @@ test:
     - sqlite
   imports:
     - gnuradio.gr
-    - gnuradio.qtgui
-    - gnuradio.uhd  # [not (ppc64le or arm64)]
+    - gnuradio.qtgui  # [not (ppc64le or arm64)]
+    - gnuradio.uhd
     - gnuradio.video_sdl  # [not osx]
     - gnuradio.zeromq
 
