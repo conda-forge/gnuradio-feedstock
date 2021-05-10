@@ -13,7 +13,7 @@ fftw:
 gsl:
 - '2.6'
 numpy:
-- '1.19'
+- '1.17'
 pin_run_as_build:
   boost-cpp:
     max_pin: x.x.x
