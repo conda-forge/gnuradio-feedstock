@@ -28,6 +28,10 @@ requirements:
     - ninja
     - patch  # [osx]
     - pkg-config  # [not win]
+    # cross-compilation requirements
+    - python                              # [build_platform != target_platform]
+    - cross-python_{{ target_platform }}  # [build_platform != target_platform]
+    - pybind11                            # [build_platform != target_platform]
     # libudev needed to link against libusb through uhd on linux
     # libudev is on its own in CentOS 6, packaged with systemd in CentOS 7
     - {{ cdt('libudev-devel') }}  # [linux and cdt_name=='cos6']
