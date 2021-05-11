@@ -7,7 +7,7 @@ c_compiler:
 c_compiler_version:
 - '9'
 cdt_name:
-- cos6
+- cos7
 channel_sources:
 - conda-forge,defaults
 channel_targets:
@@ -17,7 +17,7 @@ cxx_compiler:
 cxx_compiler_version:
 - '9'
 docker_image:
-- quay.io/condaforge/linux-anvil-comp7
+- quay.io/condaforge/linux-anvil-ppc64le
 fftw:
 - '3'
 gmp:
@@ -38,20 +38,16 @@ pin_run_as_build:
   python:
     min_pin: x.x
     max_pin: x.x
-  qt:
-    max_pin: x.x
   sqlite:
     max_pin: x
   zeromq:
     max_pin: x.x
 python:
-- 3.7.* *_cpython
-qt:
-- '5.12'
+- 3.6.* *_cpython
 sqlite:
 - '3'
 target_platform:
-- linux-64
+- linux-ppc64le
 uhd:
 - 4.0.0
 volk:
@@ -61,7 +57,5 @@ zeromq:
 zip_keys:
 - - c_compiler_version
   - cxx_compiler_version
-- - cdt_name
-  - docker_image
 - - python
   - numpy
