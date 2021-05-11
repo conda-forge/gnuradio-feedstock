@@ -142,9 +142,8 @@ outputs:
         - cmake
         - ninja
         - pkg-config  # [not win]
-        # cross-compilation requirements
-        - python                              # [build_platform != target_platform]
-        - cross-python_{{ target_platform }}  # [build_platform != target_platform]
+        # conda-build needs native python to make .pyc files
+        - python  # [build_platform != target_platform]
       host:
         - alsa-lib  # [linux]
         - boost-cpp
@@ -217,9 +216,8 @@ outputs:
         - cmake
         - ninja
         - pkg-config  # [not win]
-        # cross-compilation requirements
-        - python                              # [build_platform != target_platform]
-        - cross-python_{{ target_platform }}  # [build_platform != target_platform]
+        # conda-build needs native python to make .pyc files
+        - python  # [build_platform != target_platform]
       host:
         - boost-cpp
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
@@ -261,9 +259,8 @@ outputs:
         - cmake
         - ninja
         - pkg-config  # [not win]
-        # cross-compilation requirements
-        - python                              # [build_platform != target_platform]
-        - cross-python_{{ target_platform }}  # [build_platform != target_platform]
+        # conda-build needs native python to make .pyc files
+        - python  # [build_platform != target_platform]
       host:
         - boost-cpp
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
@@ -303,9 +300,8 @@ outputs:
         - cmake
         - ninja
         - pkg-config  # [not win]
-        # cross-compilation requirements
-        - python                              # [build_platform != target_platform]
-        - cross-python_{{ target_platform }}  # [build_platform != target_platform]
+        # conda-build needs native python to make .pyc files
+        - python  # [build_platform != target_platform]
       host:
         - boost-cpp
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
@@ -341,9 +337,8 @@ outputs:
         - cmake
         - ninja
         - pkg-config  # [not win]
-        # cross-compilation requirements
-        - python                              # [build_platform != target_platform]
-        - cross-python_{{ target_platform }}  # [build_platform != target_platform]
+        # conda-build needs native python to make .pyc files
+        - python  # [build_platform != target_platform]
       host:
         - boost-cpp
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
@@ -375,9 +370,8 @@ outputs:
         - cmake
         - ninja
         - pkg-config  # [not win]
-        # cross-compilation requirements
-        - python                              # [build_platform != target_platform]
-        - cross-python_{{ target_platform }}  # [build_platform != target_platform]
+        # conda-build needs native python to make .pyc files
+        - python  # [build_platform != target_platform]
       host:
         - boost-cpp
         - cppzmq
