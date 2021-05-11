@@ -1,7 +1,9 @@
-conda_forge_output_validation: true
+azure: {store_build_artifacts: true}
 bot:
   automerge: true
   abi_migration_branches:
    - 3.8
-azure:
-  store_build_artifacts: true
+build_platform: {linux_ppc64le: linux_64, osx_arm64: osx_64}
+conda_forge_output_validation: true
+provider: {linux_aarch64: default}
+test_on_native_only: true
