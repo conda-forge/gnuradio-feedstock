@@ -168,6 +168,7 @@ outputs:
         - mako
         - menuinst  # [win]
         - numpy
+        - {{ pin_compatible('portaudio') }}  # [linux]
         - python
         - six
     test:
