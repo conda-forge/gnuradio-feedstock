@@ -32,7 +32,7 @@ requirements:
     - python                              # [build_platform != target_platform]
     - cross-python_{{ target_platform }}  # [build_platform != target_platform]
     - pybind11                            # [build_platform != target_platform]
-    - numpy >=1.1                         # [build_platform != target_platform]
+    - numpy                               # [build_platform != target_platform]
     # libudev needed to link against libusb through uhd on linux
     # libudev is on its own in CentOS 6, packaged with systemd in CentOS 7
     - {{ cdt('libudev-devel') }}  # [linux and cdt_name=='cos6']
@@ -67,10 +67,7 @@ requirements:
     - log4cpp
     - mako
     - mpir  # [win]
-    # we don't build against numpy C lib
-    # (only needed at runtime, except gnuradio CMake checks for it at build)
-    # specify version so pin is ignored
-    - numpy >=1.1
+    - numpy
     - pip  # [win]
     - pybind11
     - python
@@ -158,6 +155,7 @@ outputs:
         - portaudio  # [linux]
         - pybind11
         - python
+        - numpy
         - volk
       run:
         - boost-cpp
@@ -166,7 +164,7 @@ outputs:
         - fftw
         - mako
         - menuinst  # [win]
-        - numpy
+        - {{ pin_compatible('numpy') }}
         - {{ pin_compatible('portaudio') }}  # [linux]
         - python
         - six
