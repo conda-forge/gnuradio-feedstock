@@ -48,6 +48,8 @@ pin_run_as_build:
     max_pin: x
   zeromq:
     max_pin: x.x
+pybind11_abi:
+- '4'
 python:
 - 3.6.* *_cpython
 qt:
