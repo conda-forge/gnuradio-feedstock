@@ -16,9 +16,10 @@ source:
     - 0006-grc-Be-more-informative-when-missing-options-block.patch
     - 0007-cmake-Pass-extra-arguments-to-GR_PYTHON_INSTALL-to-i.patch
     - 0008-grc-Remove-global_blocks_path-preference-and-use-pre.patch
+    - 0009-cmake-Remove-absolute-paths-and-private-links-from-e.patch
 
 build:
-  number: 4
+  number: 5
 
 requirements:
   build:
