@@ -21,13 +21,13 @@ consumption by other C++ libraries, so the switch from PUBLIC to PRIVATE
 has no practical effect but could still help avoid future confusion.
 ---
  CMakeLists.txt                                 |  8 --------
- cmake/Modules/Findlibunwind.cmake              |  9 +++++++++
+ cmake/Modules/Findlibunwind.cmake              | 12 ++++++++++++
  cmake/Modules/GnuradioConfig.cmake.in          |  1 +
  cmake/Modules/GrPybind.cmake                   | 18 ++++++------------
  cmake/Modules/GrPython.cmake                   | 14 ++++++++++++++
- gnuradio-runtime/lib/CMakeLists.txt            |  5 ++---
+ gnuradio-runtime/lib/CMakeLists.txt            |  8 ++------
  .../modtool/templates/gr-newmod/CMakeLists.txt | 13 -------------
- 7 files changed, 32 insertions(+), 36 deletions(-)
+ 7 files changed, 35 insertions(+), 39 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
 index f8aad3ff4..b5fe19e75 100644
@@ -49,7 +49,7 @@ index f8aad3ff4..b5fe19e75 100644
  GR_REGISTER_COMPONENT("python-support" ENABLE_PYTHON
      PYTHONLIBS_FOUND
 diff --git a/cmake/Modules/Findlibunwind.cmake b/cmake/Modules/Findlibunwind.cmake
-index 1985a9fd4..f722612e9 100644
+index 1985a9fd4..58b23765a 100644
 --- a/cmake/Modules/Findlibunwind.cmake
 +++ b/cmake/Modules/Findlibunwind.cmake
 @@ -4,6 +4,7 @@
@@ -60,14 +60,17 @@ index 1985a9fd4..f722612e9 100644
  
  include(LibFindMacros)
  
-@@ -27,3 +28,11 @@ find_library(libunwind_LIBRARY
+@@ -27,3 +28,14 @@ find_library(libunwind_LIBRARY
  set(libunwind_PROCESS_INCLUDES ${libunwind_INCLUDE_DIR})
  set(libunwind_PROCESS_LIBS libunwind_LIBRARY)
  libfind_process(libunwind)
 +
-+if(libunwind_FOUND AND NOT TARGET libunwind::libunwind)
-+  add_library(libunwind::libunwind INTERFACE IMPORTED)
++add_library(libunwind::libunwind INTERFACE IMPORTED)
++# Only add properties if libunwind was found, so target can be used even
++# when libunwind was not found
++if(libunwind_FOUND)
 +  set_target_properties(libunwind::libunwind PROPERTIES
++    INTERFACE_COMPILE_DEFINITIONS HAVE_LIBUNWIND
 +    INTERFACE_INCLUDE_DIRECTORIES "${libunwind_INCLUDE_DIRS}"
 +    INTERFACE_LINK_LIBRARIES "${libunwind_LIBRARIES}"
 +  )
@@ -179,10 +182,20 @@ index 1397aac7e..1573a9061 100644
  ########################################################################
  # Check for the existence of a python module:
 diff --git a/gnuradio-runtime/lib/CMakeLists.txt b/gnuradio-runtime/lib/CMakeLists.txt
-index 1c41917f9..7c3666024 100644
+index 1c41917f9..11136c93b 100644
 --- a/gnuradio-runtime/lib/CMakeLists.txt
 +++ b/gnuradio-runtime/lib/CMakeLists.txt
-@@ -132,7 +132,7 @@ target_link_libraries(gnuradio-runtime PUBLIC
+@@ -12,9 +12,6 @@ gr_check_hdr_n_def(sys/resource.h HAVE_SYS_RESOURCE_H)
+ # Look for libunwind
+ ########################################################################
+ find_package(libunwind)
+-if(libunwind_FOUND)
+-    add_definitions(-DHAVE_LIBUNWIND)
+-endif(libunwind_FOUND)
+ 
+ ########################################################################
+ # Handle the generated constants
+@@ -132,7 +129,7 @@ target_link_libraries(gnuradio-runtime PUBLIC
    Boost::thread
    Log4Cpp::log4cpp
    MPLib::mplib
@@ -191,7 +204,7 @@ index 1c41917f9..7c3666024 100644
    # INTERFACE/PRIVATE split so users of the library can choose how to link to Python
    # (importantly, extension modules can avoid linking against Python and resolve
    #  their own Python symbols at runtime through the Python interpreter's linking)
-@@ -140,12 +140,11 @@ target_link_libraries(gnuradio-runtime PUBLIC
+@@ -140,12 +137,11 @@ target_link_libraries(gnuradio-runtime PUBLIC
      Python::Module
    PRIVATE
      Python::Python
