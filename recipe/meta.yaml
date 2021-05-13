@@ -71,6 +71,7 @@ requirements:
     - numpy
     - pip  # [win]
     - pybind11
+    - pybind11-abi
     - python
     - six
     - volk
@@ -155,6 +156,7 @@ outputs:
         - mpir  # [win]
         - portaudio  # [linux]
         - pybind11
+        - pybind11-abi
         - python
         - numpy
         - volk
