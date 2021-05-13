@@ -167,7 +167,7 @@ outputs:
         - fftw
         - mako
         - menuinst  # [win]
-        - {{ pin_compatible('numpy') }}
+        - numpy
         - {{ pin_compatible('portaudio') }}  # [linux]
         - python
         - six
