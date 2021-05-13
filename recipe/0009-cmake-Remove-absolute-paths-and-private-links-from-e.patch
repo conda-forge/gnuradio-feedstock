@@ -88,7 +88,7 @@ index 74815b9ee..6ed82a59a 100644
  if(${ENABLE_PYTHON})
    set(PYTHON_EXECUTABLE @PYTHON_EXECUTABLE@)
 diff --git a/cmake/Modules/GrPybind.cmake b/cmake/Modules/GrPybind.cmake
-index bc92a5af3..1c494f191 100644
+index bc92a5af3..66155cac6 100644
 --- a/cmake/Modules/GrPybind.cmake
 +++ b/cmake/Modules/GrPybind.cmake
 @@ -32,14 +32,12 @@ else(ENABLE_DOXYGEN)
@@ -104,7 +104,7 @@ index bc92a5af3..1c494f191 100644
 -    ${PYBIND11_INCLUDE_DIR}
  )
 -target_link_libraries(${name}_python PUBLIC ${Boost_LIBRARIES} Python::Module gnuradio-${MODULE_NAME})
-+target_link_libraries(${name}_python PRIVATE ${Boost_LIBRARIES} pybind11::pybind11 Python::NumPy gnuradio-${MODULE_NAME})
++target_link_libraries(${name}_python PRIVATE ${Boost_LIBRARIES} pybind11::pybind11 Python::Module Python::NumPy gnuradio-${MODULE_NAME})
  if(CMAKE_CXX_COMPILER_ID MATCHES "Clang" OR
     CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
      target_compile_options(${name}_python PRIVATE -Wno-unused-variable) # disable warnings for docstring templates
@@ -121,7 +121,7 @@ index bc92a5af3..1c494f191 100644
 -    ${PYBIND11_INCLUDE_DIR}
  )
 -target_link_libraries(${name}_python PUBLIC ${Boost_LIBRARIES} Python::Module gnuradio-${MODULE_NAME})
-+target_link_libraries(${name}_python PRIVATE ${Boost_LIBRARIES} pybind11::pybind11 Python::NumPy gnuradio-${MODULE_NAME})
++target_link_libraries(${name}_python PRIVATE ${Boost_LIBRARIES} pybind11::pybind11 Python::Module Python::NumPy gnuradio-${MODULE_NAME})
  if(CMAKE_CXX_COMPILER_ID MATCHES "Clang" OR
     CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
      target_compile_options(${name}_python PRIVATE -Wno-unused-variable) # disable warnings for docstring templates
@@ -138,7 +138,7 @@ index bc92a5af3..1c494f191 100644
 -    ${PYBIND11_INCLUDE_DIR}
  )
 -target_link_libraries(${name}_python PUBLIC ${Boost_LIBRARIES} Python::Module gnuradio-${MODULE_NAME})
-+target_link_libraries(${name}_python PRIVATE ${Boost_LIBRARIES} pybind11::pybind11 Python::NumPy gnuradio-${MODULE_NAME})
++target_link_libraries(${name}_python PRIVATE ${Boost_LIBRARIES} pybind11::pybind11 Python::Module Python::NumPy gnuradio-${MODULE_NAME})
  if(CMAKE_CXX_COMPILER_ID MATCHES "Clang" OR
     CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
      target_compile_options(${name}_python PRIVATE -Wno-unused-variable) # disable warnings for docstring templates
