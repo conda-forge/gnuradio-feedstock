@@ -17,6 +17,7 @@ source:
     - 0007-cmake-Pass-extra-arguments-to-GR_PYTHON_INSTALL-to-i.patch
     - 0008-grc-Remove-global_blocks_path-preference-and-use-pre.patch
     - 0009-cmake-Remove-absolute-paths-and-private-links-from-e.patch
+    - 0010-runtime-ctrlport-cmake-Add-target-for-thrift-python-.patch
 
 build:
   number: 6
