@@ -18,6 +18,7 @@ source:
     - 0008-grc-Remove-global_blocks_path-preference-and-use-pre.patch
     - 0009-cmake-Remove-absolute-paths-and-private-links-from-e.patch
     - 0010-runtime-ctrlport-cmake-Add-target-for-thrift-python-.patch
+    - 0011-cmake-Fix-finding-Thrift-when-it-is-built-with-MSVC.patch
 
 build:
   number: 6

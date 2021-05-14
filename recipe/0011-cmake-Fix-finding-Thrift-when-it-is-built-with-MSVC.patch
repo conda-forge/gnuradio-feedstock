@@ -1,0 +1,43 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Ryan Volz <ryan.volz@gmail.com>
+Date: Fri, 14 May 2021 15:52:43 -0400
+Subject: [PATCH] cmake: Fix finding Thrift when it is built with MSVC.
+
+Default CMake build for thrift with MSVC calls the library "thriftmd"
+or "thriftmt" depending on if the build is done with /MD or /MT flags.
+
+This also uses the PATH_SUFFIXES option for find_path instead of
+pre-pending the name with "thrift", which should be more robust.
+
+Signed-off-by: Ryan Volz <ryan.volz@gmail.com>
+---
+ cmake/Modules/FindTHRIFT.cmake | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/cmake/Modules/FindTHRIFT.cmake b/cmake/Modules/FindTHRIFT.cmake
+index 8cdf8b404..7436535ef 100644
+--- a/cmake/Modules/FindTHRIFT.cmake
++++ b/cmake/Modules/FindTHRIFT.cmake
+@@ -16,16 +16,17 @@ endif(PC_THRIFT_FOUND AND PC_THRIFT_VERSION VERSION_LESS ${THRIFT_REQ_VERSION})
+ 
+ # Else, look for it ourselves
+ FIND_PATH(THRIFT_INCLUDE_DIRS
+-  NAMES thrift/Thrift.h
++  NAMES Thrift.h
+   HINTS ${PC_THRIFT_INCLUDE_DIRS}
+   ${CMAKE_INSTALL_PREFIX}/include
+   PATHS
+   /usr/local/include
+   /usr/include
++  PATH_SUFFIXES thrift
+   )
+ 
+ FIND_LIBRARY(THRIFT_LIBRARIES
+-  NAMES thrift
++  NAMES thrift thriftmd thriftmt
+   HINTS ${PC_THRIFT_LIBDIR}
+   ${CMAKE_INSTALL_PREFIX}/lib
+   ${CMAKE_INSTALL_PREFIX}/lib64
+-- 
+2.30.2
+
