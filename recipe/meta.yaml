@@ -93,7 +93,7 @@ requirements:
   # gnuradio.uhd
     - uhd
   # gnuradio.video_sdl
-    - sdl  # [not osx]
+    - sdl
   # gnuradio.zeromq
     - cppzmq
     - zeromq
@@ -104,7 +104,7 @@ requirements:
     - {{ pin_subpackage('gnuradio-grc', exact=True) }}
     - {{ pin_subpackage('gnuradio-qtgui', exact=True) }}  # [not (ppc64le or arm64)]
     - {{ pin_subpackage('gnuradio-uhd', exact=True) }}
-    - {{ pin_subpackage('gnuradio-video-sdl', exact=True) }}  # [not osx]
+    - {{ pin_subpackage('gnuradio-video-sdl', exact=True) }}
     - {{ pin_subpackage('gnuradio-zeromq', exact=True) }}
   # explicitly add python so that build string is generated correctly
     - python
@@ -116,7 +116,7 @@ test:
     - gnuradio.gr
     - gnuradio.qtgui  # [not (ppc64le or arm64)]
     - gnuradio.uhd
-    - gnuradio.video_sdl  # [not osx]
+    - gnuradio.video_sdl
     - gnuradio.zeromq
 
 app:
@@ -333,8 +333,6 @@ outputs:
       license_file: COPYING
       summary: GNU Radio UHD module for Ettus USRP radios
   - name: gnuradio-video-sdl
-    build:
-      skip: true  # [osx]
     script: install_video_sdl.sh  # [not win]
     script: install_video_sdl.bat  # [win]
     requirements:
