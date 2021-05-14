@@ -19,7 +19,7 @@ source:
     - 0009-cmake-Remove-absolute-paths-and-private-links-from-e.patch
 
 build:
-  number: 5
+  number: 6
 
 requirements:
   build:
@@ -410,6 +410,7 @@ outputs:
         - {{ compiler('cxx') }}
         - cmake
         - ninja
+        - numpy {{ numpy }}
         - pip  # [win]
         - pkg-config
         - pybind11
