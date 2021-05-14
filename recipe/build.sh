@@ -44,6 +44,7 @@ cmake_config_args=(
     -DENABLE_GR_TRELLIS=ON
     -DENABLE_GR_UHD=ON
     -DENABLE_GR_UTILS=ON
+    -DENABLE_GR_VIDEO_SDL=ON
     -DENABLE_GR_VOCODER=ON
     -DENABLE_GR_WAVELET=ON
     -DENABLE_GR_ZEROMQ=ON
@@ -52,16 +53,6 @@ cmake_config_args=(
     -DENABLE_PYTHON=ON
     -DENABLE_TESTING=OFF
 )
-
-if [[ $target_platform == linux* ]] ; then
-    cmake_config_args+=(
-        -DENABLE_GR_VIDEO_SDL=ON
-    )
-else
-    cmake_config_args+=(
-        -DENABLE_GR_VIDEO_SDL=OFF
-    )
-fi
 
 if [[ $target_platform == linux-ppc64le ]] || [[ $target_platform == osx-arm64 ]] ; then
     cmake_config_args+=(
