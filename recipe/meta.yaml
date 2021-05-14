@@ -145,8 +145,6 @@ outputs:
         - {{ compiler('c') }}
         - {{ compiler('cxx') }}
         - cmake
-        - ninja
-        - pkg-config  # [not win]
         # conda-build needs native python to make .pyc files
         - python  # [build_platform != target_platform]
       host:
@@ -216,8 +214,6 @@ outputs:
         - {{ compiler('c') }}
         - {{ compiler('cxx') }}
         - cmake
-        - ninja
-        - pkg-config  # [not win]
         # conda-build needs native python to make .pyc files
         - python  # [build_platform != target_platform]
       host:
@@ -259,8 +255,6 @@ outputs:
         - {{ compiler('c') }}
         - {{ compiler('cxx') }}
         - cmake
-        - ninja
-        - pkg-config  # [not win]
         # conda-build needs native python to make .pyc files
         - python  # [build_platform != target_platform]
       host:
@@ -300,8 +294,6 @@ outputs:
         - {{ compiler('c') }}
         - {{ compiler('cxx') }}
         - cmake
-        - ninja
-        - pkg-config  # [not win]
         # conda-build needs native python to make .pyc files
         - python  # [build_platform != target_platform]
       host:
@@ -337,8 +329,6 @@ outputs:
         - {{ compiler('c') }}
         - {{ compiler('cxx') }}
         - cmake
-        - ninja
-        - pkg-config  # [not win]
         # conda-build needs native python to make .pyc files
         - python  # [build_platform != target_platform]
       host:
@@ -370,8 +360,6 @@ outputs:
         - {{ compiler('c') }}
         - {{ compiler('cxx') }}
         - cmake
-        - ninja
-        - pkg-config  # [not win]
         # conda-build needs native python to make .pyc files
         - python  # [build_platform != target_platform]
       host:
