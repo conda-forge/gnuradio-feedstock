@@ -19,15 +19,17 @@ they are not actually part of the public interface. In the case of the
 python bindings, these are not exported and have no public interface for
 consumption by other C++ libraries, so the switch from PUBLIC to PRIVATE
 has no practical effect but could still help avoid future confusion.
+
+Signed-off-by: Ryan Volz <ryan.volz@gmail.com>
 ---
- CMakeLists.txt                                 |  8 --------
- cmake/Modules/Findlibunwind.cmake              | 12 ++++++++++++
- cmake/Modules/GnuradioConfig.cmake.in          |  1 +
- cmake/Modules/GrPybind.cmake                   | 18 ++++++------------
- cmake/Modules/GrPython.cmake                   | 14 ++++++++++++++
- gnuradio-runtime/lib/CMakeLists.txt            |  8 ++------
- .../modtool/templates/gr-newmod/CMakeLists.txt | 13 -------------
- 7 files changed, 35 insertions(+), 39 deletions(-)
+ CMakeLists.txt                                |  8 --------
+ cmake/Modules/Findlibunwind.cmake             | 12 +++++++++++
+ cmake/Modules/GnuradioConfig.cmake.in         |  2 ++
+ cmake/Modules/GrPybind.cmake                  | 18 ++++++-----------
+ cmake/Modules/GrPython.cmake                  | 20 +++++++++++++++++++
+ gnuradio-runtime/lib/CMakeLists.txt           |  8 ++------
+ .../templates/gr-newmod/CMakeLists.txt        | 13 ------------
+ 7 files changed, 42 insertions(+), 39 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
 index f8aad3ff4..b5fe19e75 100644
@@ -76,17 +78,18 @@ index 1985a9fd4..58b23765a 100644
 +  )
 +endif()
 diff --git a/cmake/Modules/GnuradioConfig.cmake.in b/cmake/Modules/GnuradioConfig.cmake.in
-index 74815b9ee..6ed82a59a 100644
+index 74815b9ee..a5b3192f8 100644
 --- a/cmake/Modules/GnuradioConfig.cmake.in
 +++ b/cmake/Modules/GnuradioConfig.cmake.in
-@@ -32,6 +32,7 @@ endif(ENABLE_TESTING)
- 
- find_dependency(Boost "@Boost_MAJOR_VERSION@.@Boost_MINOR_VERSION@.@Boost_SUBMINOR_VERSION@" COMPONENTS ${BOOST_REQUIRED_COMPONENTS})
- find_dependency(Volk)
-+find_dependency(pybind11)
- set(ENABLE_PYTHON @ENABLE_PYTHON@ CACHE BOOL "Enable Python & pybind11 Bindings")
- if(${ENABLE_PYTHON})
+@@ -37,6 +37,8 @@ if(${ENABLE_PYTHON})
    set(PYTHON_EXECUTABLE @PYTHON_EXECUTABLE@)
+   include(GrPython)
+ endif()
++# pybind11 needed even without Python enabled for building against gnuradio-runtime
++find_dependency(pybind11)
+ 
+ include("${CMAKE_CURRENT_LIST_DIR}/gnuradio-pmtConfig.cmake")
+ include("${CMAKE_CURRENT_LIST_DIR}/gnuradio-runtimeConfig.cmake")
 diff --git a/cmake/Modules/GrPybind.cmake b/cmake/Modules/GrPybind.cmake
 index bc92a5af3..66155cac6 100644
 --- a/cmake/Modules/GrPybind.cmake
@@ -143,35 +146,27 @@ index bc92a5af3..66155cac6 100644
     CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
      target_compile_options(${name}_python PRIVATE -Wno-unused-variable) # disable warnings for docstring templates
 diff --git a/cmake/Modules/GrPython.cmake b/cmake/Modules/GrPython.cmake
-index 1397aac7e..1573a9061 100644
+index 1397aac7e..82977f2f4 100644
 --- a/cmake/Modules/GrPython.cmake
 +++ b/cmake/Modules/GrPython.cmake
-@@ -26,6 +26,12 @@ endif (PYTHON_EXECUTABLE)
- 
- find_package(PythonLibs ${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR} EXACT)
- 
-+execute_process(
-+    COMMAND "${PYTHON_EXECUTABLE}" -c
-+    "try:\n import numpy\n import os\n inc_path = numpy.get_include()\n if os.path.exists(os.path.join(inc_path, 'numpy', 'arrayobject.h')):\n  print(inc_path, end='')\nexcept:\n pass"
-+    OUTPUT_VARIABLE Python_NumPy_INCLUDE_DIR
-+)
-+
- if (CMAKE_CROSSCOMPILING)
-     set(QA_PYTHON_EXECUTABLE "/usr/bin/python3")
- else (CMAKE_CROSSCOMPILING)
-@@ -35,6 +41,7 @@ endif(CMAKE_CROSSCOMPILING)
- #make the path to the executable appear in the cmake gui
- set(PYTHON_EXECUTABLE ${PYTHON_EXECUTABLE} CACHE FILEPATH "python interpreter")
- set(QA_PYTHON_EXECUTABLE ${QA_PYTHON_EXECUTABLE} CACHE FILEPATH "python interpreter for QA tests")
-+set(Python_NumPy_INCLUDE_DIRS ${Python_NumPy_INCLUDE_DIR} CACHE FILEPATH "numpy include directory")
- 
- add_library(Python::Python INTERFACE IMPORTED)
- # Need to handle special cases where both debug and release
-@@ -80,6 +87,13 @@ else()
+@@ -80,6 +80,26 @@ else()
      endif(APPLE)
  endif(WIN32)
  
-+# target for building with NumPy (match what is provided by FindPython in CMake 3.14+)
++# Find NumPy but duplicate behavior/variable names of FindPython in CMake 3.14+
++# (to facilitate a future transition)
++execute_process(
++    COMMAND "${PYTHON_EXECUTABLE}" -c
++    "try:\n import numpy\n import os\n inc_path = numpy.get_include()\n if os.path.exists(os.path.join(inc_path, 'numpy', 'arrayobject.h')):\n  print(inc_path, end='')\nexcept:\n pass"
++    OUTPUT_VARIABLE NUMPY_INCLUDE_DIR
++)
++# advanced cache variable that the user should set to override the numpy include dir
++set(Python_NumPy_INCLUDE_DIR ${NUMPY_INCLUDE_DIR} CACHE FILEPATH "NumPy include directory")
++mark_as_advanced(Python_NumPy_INCLUDE_DIR)
++# output used by modern FindPython, duplicate the behavior
++set(Python_NumPy_INCLUDE_DIRS ${Python_NumPy_INCLUDE_DIR})
++
++# target for building with NumPy
 +add_library(Python::NumPy INTERFACE IMPORTED)
 +set_target_properties(Python::NumPy PROPERTIES
 +    INTERFACE_INCLUDE_DIRECTORIES "${Python_NumPy_INCLUDE_DIRS}"

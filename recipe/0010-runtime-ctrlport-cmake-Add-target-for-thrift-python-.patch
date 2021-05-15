@@ -1,0 +1,33 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Ryan Volz <ryan.volz@gmail.com>
+Date: Fri, 14 May 2021 15:10:06 -0400
+Subject: [PATCH] runtime: ctrlport: cmake: Add target for thrift python
+ bindings.
+
+Without a target, the Python bindings are not built (i.e. the custom
+command is not run) until they are needed, during install. By adding a
+target, they will be generated during the build step.
+
+Signed-off-by: Ryan Volz <ryan.volz@gmail.com>
+---
+ gnuradio-runtime/python/gnuradio/ctrlport/CMakeLists.txt | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/gnuradio-runtime/python/gnuradio/ctrlport/CMakeLists.txt b/gnuradio-runtime/python/gnuradio/ctrlport/CMakeLists.txt
+index 25c715cce..0f4a86dc9 100644
+--- a/gnuradio-runtime/python/gnuradio/ctrlport/CMakeLists.txt
++++ b/gnuradio-runtime/python/gnuradio/ctrlport/CMakeLists.txt
+@@ -51,6 +51,10 @@ if(THRIFT_FOUND)
+     COMMAND ${THRIFT_BIN} --gen py -out ${CMAKE_CURRENT_BINARY_DIR}/ ${CMAKE_SOURCE_DIR}/gnuradio-runtime/lib/controlport/thrift/gnuradio.thrift
+   )
+ 
++  add_custom_target(ctrlport_thrift_python ALL
++    DEPENDS ${thrift_targets}
++  )
++
+   GR_PYTHON_INSTALL(
+     FILES
+     ${CMAKE_CURRENT_SOURCE_DIR}/RPCConnectionThrift.py
+-- 
+2.30.2
+
