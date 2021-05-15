@@ -19,9 +19,10 @@ source:
     - 0009-cmake-Remove-absolute-paths-and-private-links-from-e.patch
     - 0010-runtime-ctrlport-cmake-Add-target-for-thrift-python-.patch
     - 0011-cmake-Fix-finding-Thrift-when-it-is-built-with-MSVC.patch
+    - 0012-runtime-ctrlport-cmake-Fix-thrift-dependency-for-OOT.patch
 
 build:
-  number: 6
+  number: 7
 
 requirements:
   build:

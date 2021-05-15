@@ -1,0 +1,194 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Ryan Volz <ryan.volz@gmail.com>
+Date: Sat, 15 May 2021 16:46:07 -0400
+Subject: [PATCH] runtime: ctrlport: cmake: Fix thrift dependency for OOTs.
+
+First, this moves find_package(THRIFT) up to the gnuradio-runtime
+CMakeLists.txt so that cache variables no longer have to be used to mark
+the found components. This fixes an issue where the thrift-specific
+headers were not installed even when thrift was enabled, because on
+first run the detection was occurring AFTER the runtime include
+CMakeLists.txt was evaluated. See further discussion in #2734, which
+solved one issue related to this setup.
+
+Further, even with thrift enabled, the thrift headers are not required
+for OOTs to build against gnuradio-runtime. OOTs would need to take
+special action to use those headers, in which case they should
+detect/enable thrift on their own. Thus, this makes the change to not
+add thrift as an extra dependency for OOTs and switches linking of
+Thrift::thrift from PUBLIC to PRIVATE.
+
+Signed-off-by: Ryan Volz <ryan.volz@gmail.com>
+---
+ CMakeLists.txt                                |  4 ++--
+ cmake/Modules/FindTHRIFT.cmake                |  6 +++---
+ gnuradio-runtime/CMakeLists.txt               |  9 +++++++++
+ .../include/gnuradio/CMakeLists.txt           | 16 +++++++--------
+ gnuradio-runtime/lib/CMakeLists.txt           | 20 +++----------------
+ .../python/gnuradio/ctrlport/CMakeLists.txt   |  4 ++--
+ 6 files changed, 27 insertions(+), 32 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index b5fe19e75..e1a55aded 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -467,9 +467,9 @@ if(ENABLE_GR_CTRLPORT)
+   if(CTRLPORT_BACKENDS GREATER 0)
+     SET(GR_RPCSERVER_ENABLED True)
+ 
+-    if(THRIFT_FOUND)
++    if(ENABLE_CTRLPORT_THRIFT)
+       SET(GR_RPCSERVER_THRIFT True)
+-    endif(THRIFT_FOUND)
++    endif(ENABLE_CTRLPORT_THRIFT)
+   endif(CTRLPORT_BACKENDS GREATER 0)
+ endif(ENABLE_GR_CTRLPORT)
+ 
+diff --git a/cmake/Modules/FindTHRIFT.cmake b/cmake/Modules/FindTHRIFT.cmake
+index 1d28b8fb5..dc4c000ef 100644
+--- a/cmake/Modules/FindTHRIFT.cmake
++++ b/cmake/Modules/FindTHRIFT.cmake
+@@ -72,18 +72,18 @@ ENDIF  (CMAKE_CROSSCOMPILING)
+ 
+ # Set to found if we've made it this far
+ if(THRIFT_INCLUDE_DIRS AND THRIFT_LIBRARIES AND PYTHON_THRIFT_FOUND)
+-  set(THRIFT_FOUND TRUE CACHE BOOL "If Thrift has been found")
++  set(THRIFT_FOUND TRUE)
+ 
+   find_file(THRIFT_HAS_VERSION_H thrift/version.h
+     PATH ${THRIFT_INCLUDE_DIRS} NO_DEFAULT_PATH)
+   if(THRIFT_HAS_VERSION_H-FOUND)
+-    set(THRIFT_HAS_VERSION_H TRUE CACHE BOOL "If Thrift has thrift/version.h")
++    set(THRIFT_HAS_VERSION_H TRUE)
+   endif()
+ 
+   find_file(THRIFT_HAS_THREADFACTORY_H thrift/concurrency/ThreadFactory.h
+     PATH ${THRIFT_INCLUDE_DIRS} NO_DEFAULT_PATH)
+   if(THRIFT_HAS_THREADFACTORY_H-FOUND)
+-    set(THRIFT_HAS_THREADFACTORY_H TRUE CACHE BOOL "If Thrift has thrift/concurrency/ThreadFactory.h")
++    set(THRIFT_HAS_THREADFACTORY_H TRUE)
+   endif()
+ endif(THRIFT_INCLUDE_DIRS AND THRIFT_LIBRARIES AND PYTHON_THRIFT_FOUND)
+ 
+diff --git a/gnuradio-runtime/CMakeLists.txt b/gnuradio-runtime/CMakeLists.txt
+index bf27d50c2..1332b9b34 100644
+--- a/gnuradio-runtime/CMakeLists.txt
++++ b/gnuradio-runtime/CMakeLists.txt
+@@ -44,6 +44,15 @@ GR_REGISTER_COMPONENT("gr-ctrlport" ENABLE_GR_CTRLPORT
+   ENABLE_GNURADIO_RUNTIME
+ )
+ 
++# find thrift quietly to determine whether it should be enabled by default
++find_package(THRIFT ${GR_THRIFT_MIN_VERSION} QUIET)
++option(ENABLE_CTRLPORT_THRIFT "Enable ControlPort Thrift support" ${THRIFT_FOUND})
++
++if(ENABLE_CTRLPORT_THRIFT)
++  # ensure we have thrift, loudly, since it is enabled
++  find_package(THRIFT ${GR_THRIFT_MIN_VERSION} REQUIRED)
++endif()
++
+ ########################################################################
+ # Begin conditional configuration
+ ########################################################################
+diff --git a/gnuradio-runtime/include/gnuradio/CMakeLists.txt b/gnuradio-runtime/include/gnuradio/CMakeLists.txt
+index 4789a71bb..a5a3a5e8f 100644
+--- a/gnuradio-runtime/include/gnuradio/CMakeLists.txt
++++ b/gnuradio-runtime/include/gnuradio/CMakeLists.txt
+@@ -70,11 +70,11 @@ install(FILES
+   DESTINATION ${GR_INCLUDE_DIR}/gnuradio
+ )
+ 
+-if(THRIFT_FOUND)
+-install(FILES
+-  rpcserver_booter_thrift.h
+-  thrift_application_base.h
+-  thrift_server_template.h
+-  DESTINATION ${GR_INCLUDE_DIR}/gnuradio
+-)
+-endif(THRIFT_FOUND)
++if(ENABLE_CTRLPORT_THRIFT)
++  install(FILES
++    rpcserver_booter_thrift.h
++    thrift_application_base.h
++    thrift_server_template.h
++    DESTINATION ${GR_INCLUDE_DIR}/gnuradio
++  )
++endif(ENABLE_CTRLPORT_THRIFT)
+diff --git a/gnuradio-runtime/lib/CMakeLists.txt b/gnuradio-runtime/lib/CMakeLists.txt
+index 11136c93b..d6fb5b4fc 100644
+--- a/gnuradio-runtime/lib/CMakeLists.txt
++++ b/gnuradio-runtime/lib/CMakeLists.txt
+@@ -167,18 +167,11 @@ target_sources(gnuradio-runtime PRIVATE
+   ${CMAKE_CURRENT_SOURCE_DIR}/controlport/rpcserver_selector.cc
+ )
+ 
+-OPTION(ENABLE_CTRLPORT_THRIFT "Enable ControlPort Thrift support" ON)
+-
+ if(ENABLE_CTRLPORT_THRIFT)
+-# Look if Thrift is installed and use it as a ControlPort backend.
+-FIND_PACKAGE(THRIFT)
+-
+-if(THRIFT_FOUND)
+-list(APPEND EXTRA_DEPS "THRIFT")
+ MATH(EXPR CTRLPORT_BACKENDS "${CTRLPORT_BACKENDS} + 1")
+ 
+ # Indicate thrift as an installed backend in the cmake summary.
+-message(STATUS "Found and enabling Thrift backend to ControlPort")
++message(STATUS "Enabling Thrift backend to ControlPort")
+ GR_APPEND_SUBCOMPONENT("thrift")
+ 
+ # Run Thrift To compile C++ and Python files
+@@ -206,7 +199,7 @@ target_sources(gnuradio-runtime PRIVATE
+   # add files built by compiling gnuradio.thrift
+   ${gnuradio_thrift_generated_sources}
+   )
+-target_link_libraries(gnuradio-runtime PUBLIC
++target_link_libraries(gnuradio-runtime PRIVATE
+   Thrift::thrift
+   )
+ 
+@@ -219,7 +212,6 @@ install(
+   DESTINATION ${GR_PKG_DOC_DIR}/config
+ )
+ 
+-endif(THRIFT_FOUND)
+ endif(ENABLE_CTRLPORT_THRIFT)
+ 
+ # Save the number of backends for testing against later
+@@ -316,13 +308,7 @@ if(TRY_SHM_VMCIRCBUF)
+     target_compile_definitions(gnuradio-runtime PRIVATE -DTRY_SHM_VMCIRCBUF )
+ endif(TRY_SHM_VMCIRCBUF)
+ 
+-set(EXTRA_DEPS "")
+-if(ENABLE_CTRLPORT_THRIFT)
+-  if(THRIFT_FOUND)
+-    list(APPEND EXTRA_DEPS THRIFT)
+-  endif()
+-endif()
+-gr_library_foo(gnuradio-runtime ${EXTRA_DEPS})
++gr_library_foo(gnuradio-runtime)
+ 
+ 
+ ########################################################################
+diff --git a/gnuradio-runtime/python/gnuradio/ctrlport/CMakeLists.txt b/gnuradio-runtime/python/gnuradio/ctrlport/CMakeLists.txt
+index 0f4a86dc9..5c2773ced 100644
+--- a/gnuradio-runtime/python/gnuradio/ctrlport/CMakeLists.txt
++++ b/gnuradio-runtime/python/gnuradio/ctrlport/CMakeLists.txt
+@@ -33,7 +33,7 @@ GR_PYTHON_INSTALL(
+     PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE
+ )
+ 
+-if(THRIFT_FOUND)
++if(ENABLE_CTRLPORT_THRIFT)
+ 
+   list(APPEND thrift_targets
+     ${CMAKE_CURRENT_BINARY_DIR}/GNURadio/__init__.py
+@@ -67,4 +67,4 @@ if(THRIFT_FOUND)
+     DESTINATION ${GR_PYTHON_DIR}/gnuradio/ctrlport/GNURadio
+   )
+ 
+-endif(THRIFT_FOUND)
++endif(ENABLE_CTRLPORT_THRIFT)
+-- 
+2.30.2
+
