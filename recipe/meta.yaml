@@ -159,9 +159,15 @@ outputs:
         - alsa-lib  # [linux]
         - boost-cpp
         - codec2
+        # *HACK* libudev from systemd-devel links to libdw [elfutils], but we need
+        # it from host so that its dependent libraries match the conda-forge versions
+        - elfutils  # [linux and cdt_name=='cos7']
         - fftw
         - gmp  # [not win]
         - gsl
+        # *HACK* libudev from systemd-devel links to libcap, but we need it from
+        # host so that its dependent libraries match the conda-forge versions
+        - libcap  # [linux and cdt_name=='cos7']
         - libcblas  # [linux]
         - libsndfile
         - libthrift  # [not win]
