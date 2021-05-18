@@ -130,7 +130,7 @@ outputs:
     script: install_core.sh  # [not win]
     script: install_core.bat  # [win]
     build:
-      entry_points:   # [win]
+      entry_points:
         - gr_filter_design = gnuradio.filter.filter_design:main  # [win]
         - gr_modtool = gnuradio.modtool.cli.base:cli  # [win]
       run_exports:
@@ -205,8 +205,8 @@ outputs:
   - name: gnuradio-grc
     script: install_grc.sh  # [not win]
     script: install_grc.bat  # [win]
-    build:   # [win]
-      entry_points:   # [win]
+    build:
+      entry_points:
         - gnuradio-companion = gnuradio.grc.main:main  # [win]
         - grcc = gnuradio.grc.compiler:main  # [win]
     requirements:
@@ -286,8 +286,8 @@ outputs:
   - name: gnuradio-uhd
     script: install_uhd.sh  # [not win]
     script: install_uhd.bat  # [win]
-    build:   # [win]
-      entry_points:   # [win]
+    build:
+      entry_points:
         - uhd_siggen = gnuradio.uhd.uhd_siggen_base:main  # [win]
     requirements:
       build:
