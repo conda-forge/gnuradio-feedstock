@@ -138,6 +138,8 @@ outputs:
         # log4cpp is used in block headers, so everything compiling against
         # gnuradio-core will almost-definitely need log4cpp at runtime
         - {{ pin_compatible('log4cpp', max_pin='x.x') }}
+      skip_compile_pyc:
+        - "*/templates/*.py"
     requirements:
       build:
         - {{ compiler('c') }}
