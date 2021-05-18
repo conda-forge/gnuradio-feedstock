@@ -23,7 +23,7 @@ source:
     - 0013-grc-Remove-global_blocks_path-preference-and-use-pre.patch
 
 build:
-  number: 3
+  number: 4
 
 requirements:
   build:
@@ -130,7 +130,7 @@ outputs:
     script: install_core.sh  # [not win]
     script: install_core.bat  # [win]
     build:
-      entry_points:   # [win]
+      entry_points:
         - gr_filter_design = gnuradio.filter.filter_design:main  # [win]
         - gr_modtool = gnuradio.modtool.cli.base:cli  # [win]
       run_exports:
@@ -138,13 +138,13 @@ outputs:
         # log4cpp is used in block headers, so everything compiling against
         # gnuradio-core will almost-definitely need log4cpp at runtime
         - {{ pin_compatible('log4cpp', max_pin='x.x') }}
+      skip_compile_pyc:
+        - "*/templates/*.py"
     requirements:
       build:
         - {{ compiler('c') }}
         - {{ compiler('cxx') }}
         - cmake
-        - ninja
-        - pkg-config  # [not win]
         # conda-build needs native python to make .pyc files
         - python  # [build_platform != target_platform]
       host:
@@ -205,8 +205,8 @@ outputs:
   - name: gnuradio-grc
     script: install_grc.sh  # [not win]
     script: install_grc.bat  # [win]
-    build:   # [win]
-      entry_points:   # [win]
+    build:
+      entry_points:
         - gnuradio-companion = gnuradio.grc.main:main  # [win]
         - grcc = gnuradio.grc.compiler:main  # [win]
     requirements:
@@ -214,8 +214,6 @@ outputs:
         - {{ compiler('c') }}
         - {{ compiler('cxx') }}
         - cmake
-        - ninja
-        - pkg-config  # [not win]
         # conda-build needs native python to make .pyc files
         - python  # [build_platform != target_platform]
       host:
@@ -257,8 +255,6 @@ outputs:
         - {{ compiler('c') }}
         - {{ compiler('cxx') }}
         - cmake
-        - ninja
-        - pkg-config  # [not win]
         # conda-build needs native python to make .pyc files
         - python  # [build_platform != target_platform]
       host:
@@ -290,16 +286,14 @@ outputs:
   - name: gnuradio-uhd
     script: install_uhd.sh  # [not win]
     script: install_uhd.bat  # [win]
-    build:   # [win]
-      entry_points:   # [win]
+    build:
+      entry_points:
         - uhd_siggen = gnuradio.uhd.uhd_siggen_base:main  # [win]
     requirements:
       build:
         - {{ compiler('c') }}
         - {{ compiler('cxx') }}
         - cmake
-        - ninja
-        - pkg-config  # [not win]
         # conda-build needs native python to make .pyc files
         - python  # [build_platform != target_platform]
       host:
@@ -335,8 +329,6 @@ outputs:
         - {{ compiler('c') }}
         - {{ compiler('cxx') }}
         - cmake
-        - ninja
-        - pkg-config  # [not win]
         # conda-build needs native python to make .pyc files
         - python  # [build_platform != target_platform]
       host:
@@ -368,8 +360,6 @@ outputs:
         - {{ compiler('c') }}
         - {{ compiler('cxx') }}
         - cmake
-        - ninja
-        - pkg-config  # [not win]
         # conda-build needs native python to make .pyc files
         - python  # [build_platform != target_platform]
       host:
