@@ -22,7 +22,7 @@ source:
     - 0012-runtime-ctrlport-cmake-Fix-thrift-dependency-for-OOT.patch
 
 build:
-  number: 7
+  number: 8
 
 requirements:
   build:
