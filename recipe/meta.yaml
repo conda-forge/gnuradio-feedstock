@@ -231,6 +231,9 @@ outputs:
       entry_points:
         - gnuradio-companion = gnuradio.grc.main:main  # [win]
         - grcc = gnuradio.grc.compiler:main  # [win]
+      ignore_run_exports_from:
+        # *HACK* (see above)
+        - elfutils  # [linux and cdt_name=='cos7']
     requirements:
       build:
         - {{ compiler('c') }}
@@ -244,6 +247,8 @@ outputs:
         - gtk3
         - log4cpp
         - python
+        # *HACK* (see above)
+        - elfutils  # [linux and cdt_name=='cos7']
       run:
         - boost-cpp
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
@@ -270,6 +275,9 @@ outputs:
   - name: gnuradio-qtgui
     build:
       skip: true  # [ppc64le or arm64]
+      ignore_run_exports_from:
+        # *HACK* (see above)
+        - elfutils  # [linux and cdt_name=='cos7']
     script: install_qtgui.sh  # [not win]
     script: install_qtgui.bat  # [win]
     requirements:
@@ -288,6 +296,8 @@ outputs:
         - qt
         - qwt
         - volk
+        # *HACK* (see above)
+        - elfutils  # [linux and cdt_name=='cos7']
       run:
         - boost-cpp
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
@@ -311,6 +321,9 @@ outputs:
     build:
       entry_points:
         - uhd_siggen = gnuradio.uhd.uhd_siggen_base:main  # [win]
+      ignore_run_exports_from:
+        # *HACK* (see above)
+        - elfutils  # [linux and cdt_name=='cos7']
     requirements:
       build:
         - {{ compiler('c') }}
@@ -324,6 +337,8 @@ outputs:
         - log4cpp
         - python
         - uhd
+        # *HACK* (see above)
+        - elfutils  # [linux and cdt_name=='cos7']
       run:
         - boost-cpp
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
@@ -344,6 +359,10 @@ outputs:
   - name: gnuradio-video-sdl
     script: install_video_sdl.sh  # [not win]
     script: install_video_sdl.bat  # [win]
+    build:
+      ignore_run_exports_from:
+        # *HACK* (see above)
+        - elfutils  # [linux and cdt_name=='cos7']
     requirements:
       build:
         - {{ compiler('c') }}
@@ -357,6 +376,8 @@ outputs:
         - log4cpp
         - python
         - sdl
+        # *HACK* (see above)
+        - elfutils  # [linux and cdt_name=='cos7']
       run:
         - boost-cpp
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
@@ -375,6 +396,10 @@ outputs:
   - name: gnuradio-zeromq
     script: install_zeromq.sh  # [not win]
     script: install_zeromq.bat  # [win]
+    build:
+      ignore_run_exports_from:
+        # *HACK* (see above)
+        - elfutils  # [linux and cdt_name=='cos7']
     requirements:
       build:
         - {{ compiler('c') }}
@@ -389,6 +414,8 @@ outputs:
         - log4cpp
         - python
         - zeromq
+        # *HACK* (see above)
+        - elfutils  # [linux and cdt_name=='cos7']
       run:
         - boost-cpp
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
