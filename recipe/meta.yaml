@@ -1,4 +1,4 @@
-{% set tag_version = "3.9.0.0-rc2" %}
+{% set tag_version = "3.9.2.0-rc1" %}
 {% set version = tag_version.replace("-", "") %}
 
 package:
@@ -8,18 +8,20 @@ package:
 source:
   #url: https://github.com/gnuradio/gnuradio/releases/download/v{{ tag_version }}/gnuradio-{{ tag_version }}.tar.gz
   url: https://github.com/gnuradio/gnuradio/archive/v{{ tag_version }}.tar.gz
-  sha256: c3afaddcbafa671018d03cc4965301b0aa60c9949e30d475d61cf48b7f50016c
+  sha256: 62865cde70c5631b7a4405147476e21461bc4d713f90f6cfac0a24bba36f6b97
   patches:
-    - 0001-Fix-drag-n-drop-issue-with-quartz-macos-backend.patch
-    - 0001-Use-an-ImageSurface-rather-than-UI-back-end.patch  # [osx]
     - 0001-cmake-Install-python-wrapper-exe-for-scripts-on-Wind.patch
     - 0002-cmake-Don-t-generate-.pyc-and-.pyo-files.patch
-    - 0003-Don-t-use-hard-coded-path-constants.patch
-    - 0004-cmake-python-Fix-linking-when-runtime-py-interpreter.patch
-    - 0005-runtime-lib-Fix-GR_RUNTIME_API-declaration-in-termin.patch
-    - 0006-runtime-lib-Put-include-cxxabi.h-behind-HAVE_LIBINUW.patch
-    - 0007-cmake-Make-VERSION_PATCH-numeric-to-fix-RC_MAINT_VER.patch
-    - 0008-filter-Fix-polyphase_filterbank-for-MSVC-w-default-m.patch
+    - 0003-cmake-Move-swath-of-add_definitions-to-gnuradio-runt.patch
+    - 0004-cmake-Fix-codec2-and-MPIR-find-modules-for-Windows-c.patch
+    - 0005-Use-an-ImageSurface-rather-than-UI-back-end.patch  # [osx]
+    - 0006-grc-Be-more-informative-when-missing-options-block.patch
+    - 0007-cmake-Pass-extra-arguments-to-GR_PYTHON_INSTALL-to-i.patch
+    - 0008-grc-Remove-global_blocks_path-preference-and-use-pre.patch
+    - 0009-cmake-Remove-absolute-paths-and-private-links-from-e.patch
+    - 0010-runtime-ctrlport-cmake-Add-target-for-thrift-python-.patch
+    - 0011-cmake-Fix-finding-Thrift-when-it-is-built-with-MSVC.patch
+    - 0012-runtime-ctrlport-cmake-Fix-thrift-dependency-for-OOT.patch
 
 build:
   number: 0
@@ -30,48 +32,62 @@ requirements:
     - {{ compiler('cxx') }}
     - cmake >=3.8
     - ninja
+    - patch  # [osx]
     - pkg-config  # [not win]
-   # libudev needed to link against libusb on linux
-    - {{ cdt('libudev') }}  # [linux]
-   # below are needed to link with Qt for qtgui
-    - {{ cdt('libice') }}  # [linux]
-    - {{ cdt('libselinux') }}  # [linux]
-    - {{ cdt('libsm') }}  # [linux]
-    - {{ cdt('libx11') }}  # [linux]
-    - {{ cdt('libxau') }}  # [linux]
-    - {{ cdt('libxcb') }}  # [linux]
-    - {{ cdt('libxdamage') }}  # [linux]
-    - {{ cdt('libxext') }}  # [linux]
-    - {{ cdt('libxfixes') }}  # [linux]
-    - {{ cdt('libxrender') }}  # [linux]
-    - {{ cdt('libxxf86vm') }}  # [linux]
-    - {{ cdt('libuuid') }}  # [linux]
-    - {{ cdt('mesa-dri-drivers') }}  # [linux]
-    - {{ cdt('mesa-libgl-devel') }}  # [linux]
+    - thrift-compiler  # [not win]
+    # cross-compilation requirements
+    - python                              # [build_platform != target_platform]
+    - cross-python_{{ target_platform }}  # [build_platform != target_platform]
+    - pybind11                            # [build_platform != target_platform]
+    - numpy                               # [build_platform != target_platform]
+    # libudev needed to link against libusb through uhd on linux
+    # libudev is on its own in CentOS 6, packaged with systemd in CentOS 7
+    - {{ cdt('libudev-devel') }}  # [linux and cdt_name=='cos6']
+    - {{ cdt('systemd-devel') }}  # [linux and cdt_name=='cos7']
+    # below are needed to link with Qt for qtgui
+    - {{ cdt('libice') }}  # [linux and not ppc64le]
+    - {{ cdt('libselinux') }}  # [linux and not ppc64le]
+    - {{ cdt('libsm') }}  # [linux and not ppc64le]
+    - {{ cdt('libx11') }}  # [linux and not ppc64le]
+    - {{ cdt('libxau') }}  # [linux and not ppc64le]
+    - {{ cdt('libxcb') }}  # [linux and not ppc64le]
+    - {{ cdt('libxdamage') }}  # [linux and not ppc64le]
+    - {{ cdt('libxext') }}  # [linux and not ppc64le]
+    - {{ cdt('libxfixes') }}  # [linux and not ppc64le]
+    - {{ cdt('libxrender') }}  # [linux and not ppc64le]
+    - {{ cdt('libxxf86vm') }}  # [linux and not ppc64le]
+    - {{ cdt('libuuid') }}  # [linux and not ppc64le]
+    - {{ cdt('mesa-dri-drivers') }}  # [linux and not ppc64le]
+    - {{ cdt('mesa-libgl-devel') }}  # [linux and not ppc64le]
 
   host:
     - boost-cpp
     - click
     - click-plugins
     - codec2
+    # *HACK* libudev from systemd-devel links to libdw [elfutils], but we need
+    # it from host so that its dependent libraries match the conda-forge versions
+    - elfutils  # [linux and cdt_name=='cos7']
     - fftw
+    - gmp  # [not win]
     - gsl
+    # *HACK* libudev from systemd-devel links to libcap, but we need it from
+    # host so that its dependent libraries match the conda-forge versions
+    - libcap  # [linux and cdt_name=='cos7']
     # blas needed to link with gsl
-    - libblas
-    - libcblas
+    - libcblas  # [linux]
     - libsndfile
-    - libusb
+    - libthrift  # [not win]
     - log4cpp
     - mako
-    - mpir
-    # we don't build against numpy C lib
-    # (only needed at runtime, except gnuradio CMake checks for it at build)
-    # specify version so pin is ignored
-    - numpy >=1.1
+    - mpir  # [win]
+    - numpy
     - pip  # [win]
     - pybind11
+    - pybind11-abi
     - python
     - six
+    - thrift  # [not win]
     - volk
   # gnuradio.audio
     - alsa-lib  # [linux]
@@ -82,13 +98,13 @@ requirements:
     - pygobject
     - pyyaml
   # gnuradio.qtgui
-    - pyqt
-    - qt
-    - qwt
+    - pyqt  # [not (ppc64le or arm64)]
+    - qt  # [not (ppc64le or arm64)]
+    - qwt  # [not (ppc64le or arm64)]
   # gnuradio.uhd
     - uhd
   # gnuradio.video_sdl
-    - sdl  # [not osx]
+    - sdl
   # gnuradio.zeromq
     - cppzmq
     - zeromq
@@ -97,9 +113,9 @@ requirements:
   # this is the metapackage that depends on all the subpackages
     - {{ pin_subpackage('gnuradio-core', exact=True) }}
     - {{ pin_subpackage('gnuradio-grc', exact=True) }}
-    - {{ pin_subpackage('gnuradio-qtgui', exact=True) }}
+    - {{ pin_subpackage('gnuradio-qtgui', exact=True) }}  # [not (ppc64le or arm64)]
     - {{ pin_subpackage('gnuradio-uhd', exact=True) }}
-    - {{ pin_subpackage('gnuradio-video-sdl', exact=True) }}  # [not osx]
+    - {{ pin_subpackage('gnuradio-video-sdl', exact=True) }}
     - {{ pin_subpackage('gnuradio-zeromq', exact=True) }}
   # explicitly add python so that build string is generated correctly
     - python
@@ -109,9 +125,9 @@ test:
     - sqlite
   imports:
     - gnuradio.gr
-    - gnuradio.qtgui
+    - gnuradio.qtgui  # [not (ppc64le or arm64)]
     - gnuradio.uhd
-    - gnuradio.video_sdl  # [not osx]
+    - gnuradio.video_sdl
     - gnuradio.zeromq
 
 app:
@@ -124,46 +140,60 @@ outputs:
     script: install_core.sh  # [not win]
     script: install_core.bat  # [win]
     build:
-      entry_points:   # [win]
+      entry_points:
         - gr_filter_design = gnuradio.filter.filter_design:main  # [win]
         - gr_modtool = gnuradio.modtool.cli.base:cli  # [win]
       run_exports:
         - {{ pin_subpackage('gnuradio-core', max_pin='x.x.x') }}
+        # log4cpp is used in block headers, so everything compiling against
+        # gnuradio-core will almost-definitely need log4cpp at runtime
+        - {{ pin_compatible('log4cpp', max_pin='x.x') }}
+      skip_compile_pyc:
+        - "*/templates/*.py"
     requirements:
       build:
         - {{ compiler('c') }}
         - {{ compiler('cxx') }}
         - cmake
-        - ninja
-        - pkg-config  # [not win]
+        # conda-build needs native python to make .pyc files
+        - python  # [build_platform != target_platform]
       host:
         - alsa-lib  # [linux]
         - boost-cpp
         - codec2
+        # *HACK* libudev from systemd-devel links to libdw [elfutils], but we need
+        # it from host so that its dependent libraries match the conda-forge versions
+        - elfutils  # [linux and cdt_name=='cos7']
         - fftw
+        - gmp  # [not win]
         - gsl
-        - libblas
-        - libcblas
+        # *HACK* libudev from systemd-devel links to libcap, but we need it from
+        # host so that its dependent libraries match the conda-forge versions
+        - libcap  # [linux and cdt_name=='cos7']
+        - libcblas  # [linux]
         - libsndfile
-        - libusb
+        - libthrift  # [not win]
         - log4cpp
-        - mpir
+        - mpir  # [win]
         - portaudio  # [linux]
         - pybind11
+        - pybind11-abi
         - python
+        - numpy
+        - thrift  # [not win]
         - volk
       run:
         - boost-cpp
         - click
         - click-plugins
         - fftw
-        - {{ pin_compatible('log4cpp') }}
         - mako
         - menuinst  # [win]
         - numpy
         - {{ pin_compatible('portaudio') }}  # [linux]
         - python
         - six
+        - thrift  # [not win]
     test:
       commands:
         - gnuradio-config-info -v --prefix --sysconfdir --prefsdir --userprefsdir --prefs --builddate --enabled-components --cc --cxx --cflags
@@ -183,36 +213,47 @@ outputs:
         - gnuradio.fft
         - gnuradio.filter
         - gnuradio.gr
+        - gnuradio.network
         - gnuradio.trellis
         - gnuradio.vocoder
         - gnuradio.wavelet
         - pmt
     about:
+      home: https://gnuradio.org/
+      doc_url: https://gnuradio.org/doc/doxygen/
+      dev_url: https://github.com/gnuradio/gnuradio
+      license: GPL-3.0-or-later
+      license_family: GPL
+      license_file: COPYING
       summary: GNU Radio core functionality and modules
   - name: gnuradio-grc
     script: install_grc.sh  # [not win]
     script: install_grc.bat  # [win]
-    build:   # [win]
-      entry_points:   # [win]
+    build:
+      entry_points:
         - gnuradio-companion = gnuradio.grc.main:main  # [win]
         - grcc = gnuradio.grc.compiler:main  # [win]
+      ignore_run_exports_from:
+        # *HACK* (see above)
+        - elfutils  # [linux and cdt_name=='cos7']
     requirements:
       build:
         - {{ compiler('c') }}
         - {{ compiler('cxx') }}
         - cmake
-        - ninja
-        - pkg-config  # [not win]
+        # conda-build needs native python to make .pyc files
+        - python  # [build_platform != target_platform]
       host:
         - boost-cpp
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
         - gtk3
         - log4cpp
         - python
+        # *HACK* (see above)
+        - elfutils  # [linux and cdt_name=='cos7']
       run:
         - boost-cpp
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
-        - {{ pin_compatible('log4cpp') }}
         - lxml
         - menuinst  # [win]
         - pygobject
@@ -226,8 +267,19 @@ outputs:
         - if not exist %PREFIX%\\Scripts\\gnuradio-companion.exe exit 1  # [win]
         - if not exist %PREFIX%\\Scripts\\grcc.exe exit 1  # [win]
     about:
+      home: https://gnuradio.org/
+      doc_url: https://gnuradio.org/doc/doxygen/
+      dev_url: https://github.com/gnuradio/gnuradio
+      license: GPL-3.0-or-later
+      license_family: GPL
+      license_file: COPYING
       summary: GNU Radio Companion graphical flowgraph interface
   - name: gnuradio-qtgui
+    build:
+      skip: true  # [ppc64le or arm64]
+      ignore_run_exports_from:
+        # *HACK* (see above)
+        - elfutils  # [linux and cdt_name=='cos7']
     script: install_qtgui.sh  # [not win]
     script: install_qtgui.bat  # [win]
     requirements:
@@ -235,8 +287,8 @@ outputs:
         - {{ compiler('c') }}
         - {{ compiler('cxx') }}
         - cmake
-        - ninja
-        - pkg-config  # [not win]
+        # conda-build needs native python to make .pyc files
+        - python  # [build_platform != target_platform]
       host:
         - boost-cpp
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
@@ -246,10 +298,11 @@ outputs:
         - qt
         - qwt
         - volk
+        # *HACK* (see above)
+        - elfutils  # [linux and cdt_name=='cos7']
       run:
         - boost-cpp
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
-        - {{ pin_compatible('log4cpp') }}
         - pyqt
         - python
         - {{ pin_compatible('qwt', max_pin='x.x') }}
@@ -257,30 +310,40 @@ outputs:
       imports:
         - gnuradio.qtgui
     about:
+      home: https://gnuradio.org/
+      doc_url: https://gnuradio.org/doc/doxygen/
+      dev_url: https://github.com/gnuradio/gnuradio
+      license: GPL-3.0-or-later
+      license_family: GPL
+      license_file: COPYING
       summary: GNU Radio QT module providing graphical components
   - name: gnuradio-uhd
     script: install_uhd.sh  # [not win]
     script: install_uhd.bat  # [win]
-    build:   # [win]
-      entry_points:   # [win]
+    build:
+      entry_points:
         - uhd_siggen = gnuradio.uhd.uhd_siggen_base:main  # [win]
+      ignore_run_exports_from:
+        # *HACK* (see above)
+        - elfutils  # [linux and cdt_name=='cos7']
     requirements:
       build:
         - {{ compiler('c') }}
         - {{ compiler('cxx') }}
         - cmake
-        - ninja
-        - pkg-config  # [not win]
+        # conda-build needs native python to make .pyc files
+        - python  # [build_platform != target_platform]
       host:
         - boost-cpp
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
         - log4cpp
         - python
         - uhd
+        # *HACK* (see above)
+        - elfutils  # [linux and cdt_name=='cos7']
       run:
         - boost-cpp
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
-        - {{ pin_compatible('log4cpp') }}
         - python
     test:
       commands:
@@ -288,45 +351,64 @@ outputs:
       imports:
         - gnuradio.uhd
     about:
+      home: https://gnuradio.org/
+      doc_url: https://gnuradio.org/doc/doxygen/
+      dev_url: https://github.com/gnuradio/gnuradio
+      license: GPL-3.0-or-later
+      license_family: GPL
+      license_file: COPYING
       summary: GNU Radio UHD module for Ettus USRP radios
   - name: gnuradio-video-sdl
-    build:
-      skip: true  # [osx]
     script: install_video_sdl.sh  # [not win]
     script: install_video_sdl.bat  # [win]
+    build:
+      ignore_run_exports_from:
+        # *HACK* (see above)
+        - elfutils  # [linux and cdt_name=='cos7']
     requirements:
       build:
         - {{ compiler('c') }}
         - {{ compiler('cxx') }}
         - cmake
-        - ninja
-        - pkg-config  # [not win]
+        # conda-build needs native python to make .pyc files
+        - python  # [build_platform != target_platform]
       host:
         - boost-cpp
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
         - log4cpp
         - python
         - sdl
+        # *HACK* (see above)
+        - elfutils  # [linux and cdt_name=='cos7']
       run:
         - boost-cpp
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
-        - {{ pin_compatible('log4cpp') }}
         - python
     test:
       imports:
         - gnuradio.video_sdl
     about:
+      home: https://gnuradio.org/
+      doc_url: https://gnuradio.org/doc/doxygen/
+      dev_url: https://github.com/gnuradio/gnuradio
+      license: GPL-3.0-or-later
+      license_family: GPL
+      license_file: COPYING
       summary: GNU Radio SDL module providing video components
   - name: gnuradio-zeromq
     script: install_zeromq.sh  # [not win]
     script: install_zeromq.bat  # [win]
+    build:
+      ignore_run_exports_from:
+        # *HACK* (see above)
+        - elfutils  # [linux and cdt_name=='cos7']
     requirements:
       build:
         - {{ compiler('c') }}
         - {{ compiler('cxx') }}
         - cmake
-        - ninja
-        - pkg-config  # [not win]
+        # conda-build needs native python to make .pyc files
+        - python  # [build_platform != target_platform]
       host:
         - boost-cpp
         - cppzmq
@@ -334,17 +416,56 @@ outputs:
         - log4cpp
         - python
         - zeromq
+        # *HACK* (see above)
+        - elfutils  # [linux and cdt_name=='cos7']
       run:
         - boost-cpp
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
-        - {{ pin_compatible('log4cpp') }}
         - python
         - pyzmq
     test:
       imports:
         - gnuradio.zeromq
     about:
+      home: https://gnuradio.org/
+      doc_url: https://gnuradio.org/doc/doxygen/
+      dev_url: https://github.com/gnuradio/gnuradio
+      license: GPL-3.0-or-later
+      license_family: GPL
+      license_file: COPYING
       summary: GNU Radio ZeroMQ module for message passing functionality
+  - name: gnuradio-build-deps
+    build:
+      string: {{ pin_subpackage('gnuradio-core', exact=True).partition(' ')[-1].partition(' ')[-1] }}
+    requirements:
+      host:
+        # need to populate host to get complete build string (why?)
+        - {{ compiler('c') }}
+        - {{ compiler('cxx') }}
+        - {{ pin_subpackage('gnuradio-core', exact=True) }}
+      run:
+        - {{ compiler('c') }}
+        - {{ compiler('cxx') }}
+        - cmake
+        - ninja
+        - numpy {{ numpy }}
+        - pip  # [win]
+        - pkg-config
+        - pybind11
+      run_constrained:
+        - {{ pin_subpackage('gnuradio-core', exact=True) }}
+    about:
+      home: https://gnuradio.org/
+      doc_url: https://gnuradio.org/doc/doxygen/
+      dev_url: https://github.com/gnuradio/gnuradio
+      license: GPL-3.0-or-later
+      license_family: GPL
+      license_file: COPYING
+      summary: Meta-package for GNU Radio deps used to manually build OOT modules
+      description: >
+        Install this meta-package into an environment with `gnuradio` or
+        `gnuradio-core` in order to be able to build out-of-tree modules
+        manually. DO NOT USE THIS IN CONDA RECIPES.
   # need an output with a script defined to work-around "empty" output detection
   # with python in both build (due to ninja) and host environments
   - name: gnuradio
@@ -357,7 +478,7 @@ about:
   license_family: GPL
   license_file: COPYING
   summary: The free and open software radio ecosystem
-  description: |
+  description: >
     GNU Radio is a free software development toolkit that provides the signal
     processing runtime and processing blocks to implement software radios using
     readily-available, low-cost external RF hardware and commodity processors.

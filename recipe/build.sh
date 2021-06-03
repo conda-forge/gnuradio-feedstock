@@ -24,7 +24,7 @@ cmake_config_args=(
     -DPYTHON_EXECUTABLE=$PYTHON
     -DBoost_NO_BOOST_CMAKE=ON
     -DGR_PYTHON_DIR=$SP_DIR
-    -DQWT_LIBRARIES="$PREFIX/lib/libqwt$SHLIB_EXT"
+    -DENABLE_CTRLPORT_THRIFT=ON
     -DENABLE_DOXYGEN=OFF
     -DENABLE_EXAMPLES=ON
     -DENABLE_GNURADIO_RUNTIME=ON
@@ -41,10 +41,10 @@ cmake_config_args=(
     -DENABLE_GR_FILTER=ON
     -DENABLE_GR_MODTOOL=ON
     -DENABLE_GR_NETWORK=ON
-    -DENABLE_GR_QTGUI=ON
     -DENABLE_GR_TRELLIS=ON
     -DENABLE_GR_UHD=ON
     -DENABLE_GR_UTILS=ON
+    -DENABLE_GR_VIDEO_SDL=ON
     -DENABLE_GR_VOCODER=ON
     -DENABLE_GR_WAVELET=ON
     -DENABLE_GR_ZEROMQ=ON
@@ -54,15 +54,15 @@ cmake_config_args=(
     -DENABLE_TESTING=OFF
 )
 
-if [[ $target_platform == linux* ]] ; then
+if [[ $target_platform == linux-ppc64le ]] || [[ $target_platform == osx-arm64 ]] ; then
     cmake_config_args+=(
-        -DENABLE_GR_VIDEO_SDL=ON
+        -DENABLE_GR_QTGUI=OFF
     )
 else
     cmake_config_args+=(
-        -DENABLE_GR_VIDEO_SDL=OFF
+        -DENABLE_GR_QTGUI=ON
     )
 fi
 
-cmake -G "Ninja" .. "${cmake_config_args[@]}"
+cmake ${CMAKE_ARGS} -G "Ninja" .. "${cmake_config_args[@]}"
 cmake --build . --config Release -- -j${CPU_COUNT}
