@@ -34,6 +34,8 @@ python:
 - 3.7.* *_cpython
 qt:
 - '5.12'
+soapysdr:
+- '0.8'
 sqlite:
 - '3'
 target_platform:

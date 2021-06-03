@@ -48,6 +48,8 @@ pybind11_abi:
 - '4'
 python:
 - 3.6.* *_cpython
+soapysdr:
+- '0.8'
 sqlite:
 - '3'
 target_platform:
