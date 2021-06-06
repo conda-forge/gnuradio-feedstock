@@ -2,7 +2,7 @@
 {% set version = tag_version.replace("-", "") %}
 
 package:
-  name: gnuradio
+  name: gnuradio-split
   version: {{ version }}
 
 source:
@@ -487,11 +487,7 @@ outputs:
         Install this meta-package into an environment with `gnuradio` or
         `gnuradio-core` in order to be able to build out-of-tree modules
         manually. DO NOT USE THIS IN CONDA RECIPES.
-  # need an output with a script defined to work-around "empty" output detection
-  # with python in both build (due to ninja) and host environments
   - name: gnuradio
-    script: install_gnuradio.sh  # [not win]
-    script: install_gnuradio.bat  # [win]
     requirements:
       run:
       # this is the metapackage that depends on all the subpackages
@@ -538,5 +534,6 @@ about:
   dev_url: https://github.com/gnuradio/gnuradio
 
 extra:
+  feedstock-name: gnuradio
   recipe-maintainers:
     - ryanvolz
