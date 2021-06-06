@@ -177,6 +177,7 @@ outputs:
     test:
       commands:
         - gnuradio-config-info -v --prefix --sysconfdir --prefsdir --userprefsdir --prefs --builddate --enabled-components --cc --cxx --cflags
+        - gr_modtool --help
         # run a few example scripts to show that at least some things work
         - python "$PREFIX/share/gnuradio/examples/volk_benchmark/volk_math.py" -L test -N 1e6 -I 3 --all  # [not win]
         - python "%PREFIX%\\Library\\share\\gnuradio\\examples\\volk_benchmark\\volk_math.py" -L test -N 1e6 -I 3 --all  # [win]
@@ -475,6 +476,9 @@ outputs:
         - pybind11
       run_constrained:
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
+    test:
+      commands:
+        - cmake --help
     about:
       home: https://gnuradio.org/
       doc_url: https://gnuradio.org/doc/doxygen/
