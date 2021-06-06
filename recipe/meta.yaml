@@ -106,28 +106,9 @@ requirements:
     - cppzmq
     - zeromq
 
-  run:
-  # this is the metapackage that depends on all the subpackages
-    - {{ pin_subpackage('gnuradio-core', exact=True) }}
-    - {{ pin_subpackage('gnuradio-grc', exact=True) }}
-    - {{ pin_subpackage('gnuradio-qtgui', exact=True) }}  # [not (ppc64le or arm64)]
-    - {{ pin_subpackage('gnuradio-soapy', exact=True) }}
-    - {{ pin_subpackage('gnuradio-uhd', exact=True) }}
-    - {{ pin_subpackage('gnuradio-video-sdl', exact=True) }}
-    - {{ pin_subpackage('gnuradio-zeromq', exact=True) }}
-  # explicitly add python so that build string is generated correctly
-    - python
-
 test:
   requires:
     - sqlite
-  imports:
-    - gnuradio.gr
-    - gnuradio.qtgui  # [not (ppc64le or arm64)]
-    - gnuradio.soapy
-    - gnuradio.uhd
-    - gnuradio.video_sdl
-    - gnuradio.zeromq
 
 app:
   entry: gnuradio-companion
@@ -511,6 +492,26 @@ outputs:
   - name: gnuradio
     script: install_gnuradio.sh  # [not win]
     script: install_gnuradio.bat  # [win]
+    requirements:
+      run:
+      # this is the metapackage that depends on all the subpackages
+        - {{ pin_subpackage('gnuradio-core', exact=True) }}
+        - {{ pin_subpackage('gnuradio-grc', exact=True) }}
+        - {{ pin_subpackage('gnuradio-qtgui', exact=True) }}  # [not (ppc64le or arm64)]
+        - {{ pin_subpackage('gnuradio-soapy', exact=True) }}
+        - {{ pin_subpackage('gnuradio-uhd', exact=True) }}
+        - {{ pin_subpackage('gnuradio-video-sdl', exact=True) }}
+        - {{ pin_subpackage('gnuradio-zeromq', exact=True) }}
+      # explicitly add python so that build string is generated correctly
+        - python
+    test:
+      imports:
+        - gnuradio.gr
+        - gnuradio.qtgui  # [not (ppc64le or arm64)]
+        - gnuradio.soapy
+        - gnuradio.uhd
+        - gnuradio.video_sdl
+        - gnuradio.zeromq
 
 about:
   home: https://gnuradio.org/
