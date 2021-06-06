@@ -16,6 +16,7 @@ source:
     - 0004-cmake-Pass-extra-arguments-to-GR_PYTHON_INSTALL-to-i.patch
     - 0005-grc-Remove-global_blocks_path-preference-and-use-pre.patch
     - 0006-cmake-Remove-absolute-paths-and-private-links-from-e.patch
+    - 0007-cmake-Ensure-that-RC_-_VERSION-are-numeric.patch
 
 build:
   number: 0
