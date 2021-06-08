@@ -1,6 +1,5 @@
 {% set tag_version = "3.9.2.0-rc1" %}
 {% set version = tag_version.replace("-", "") %}
-{% set build_number = "0" %}
 
 package:
   name: gnuradio-split
@@ -21,7 +20,7 @@ source:
     - 0008-blocks-Windows-defines-required.patch
 
 build:
-  number: {{ build_number }}
+  number: 0
 
 requirements:
   build:
@@ -509,13 +508,15 @@ outputs:
     requirements:
       run:
       # this is the metapackage that depends on all the subpackages
-        - gnuradio-core {{ version }} *_{{ build_number }}
-        - gnuradio-grc {{ version }} *_{{ build_number }}
-        - gnuradio-qtgui {{ version }} *_{{ build_number }}  # [not (ppc64le or arm64)]
-        - gnuradio-soapy {{ version }} *_{{ build_number }}
-        - gnuradio-uhd {{ version }} *_{{ build_number }}
-        - gnuradio-video-sdl {{ version }} *_{{ build_number }}
-        - gnuradio-zeromq {{ version }} *_{{ build_number }}
+        - {{ pin_subpackage('gnuradio-core', exact=True) }}
+        - {{ pin_subpackage('gnuradio-grc', exact=True) }}
+        - {{ pin_subpackage('gnuradio-qtgui', exact=True) }}  # [not (ppc64le or arm64)]
+        - {{ pin_subpackage('gnuradio-soapy', exact=True) }}
+        - {{ pin_subpackage('gnuradio-uhd', exact=True) }}
+        - {{ pin_subpackage('gnuradio-video-sdl', exact=True) }}
+        - {{ pin_subpackage('gnuradio-zeromq', exact=True) }}
+      # explicitly add python so that build string is generated correctly
+        - python
     test:
       imports:
         - gnuradio.gr
