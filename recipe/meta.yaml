@@ -128,6 +128,10 @@ outputs:
         # log4cpp is used in block headers, so everything compiling against
         # gnuradio-core will almost-definitely need log4cpp at runtime
         - {{ pin_compatible('log4cpp', max_pin='x.x') }}
+      ignore_run_exports_from:
+        # *HACK* (see below)
+        - elfutils  # [linux and cdt_name=='cos7']
+        - libcap  # [linux and cdt_name=='cos7']
       skip_compile_pyc:
         - "*/templates/*.py"
     requirements:
@@ -166,7 +170,13 @@ outputs:
         - boost-cpp
         - click
         - click-plugins
+        # *HACK* libudev from systemd-devel links to libdw [elfutils], and we
+        # want it installed from conda-forge at runtime to ensure compatibility
+        - {{ pin_compatible('elfutils') }}  # [linux and cdt_name=='cos7']
         - fftw
+        # *HACK* libudev from systemd-devel links to libdw [elfutils], and we
+        # want it installed from conda-forge at runtime to ensure compatibility
+        - {{ pin_compatible('libcap') }}  # [linux and cdt_name=='cos7']
         - mako
         - menuinst  # [win]
         - numpy
