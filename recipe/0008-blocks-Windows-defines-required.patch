@@ -1,0 +1,37 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Jeff Long <willcode4@gmail.com>
+Date: Tue, 4 May 2021 11:58:46 -0400
+Subject: [PATCH] blocks: Windows defines required.
+
+Signed-off-by: Jeff Long <willcode4@gmail.com>
+---
+ gr-blocks/lib/CMakeLists.txt | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/gr-blocks/lib/CMakeLists.txt b/gr-blocks/lib/CMakeLists.txt
+index bc157f63d..4590e39cf 100644
+--- a/gr-blocks/lib/CMakeLists.txt
++++ b/gr-blocks/lib/CMakeLists.txt
+@@ -10,6 +10,7 @@
+ ########################################################################
+ include(GrMiscUtils)
+ GR_CHECK_HDR_N_DEF(io.h HAVE_IO_H)
++CHECK_INCLUDE_FILE_CXX(windows.h HAVE_WINDOWS_H)
+ 
+ ########################################################################
+ # Setup library
+@@ -213,6 +214,11 @@ target_sources(gnuradio-blocks PRIVATE
+ )
+ endif()
+ 
++if(HAVE_WINDOWS_H)
++    target_compile_definitions(gnuradio-blocks PRIVATE -DHAVE_WINDOWS_H)
++    target_link_libraries(gnuradio-blocks PRIVATE ws2_32 wsock32)
++endif()
++
+ #Add Windows DLL resource file if using MSVC
+ IF(MSVC)
+     include(${CMAKE_SOURCE_DIR}/cmake/Modules/GrVersion.cmake)
+-- 
+2.30.2
+
