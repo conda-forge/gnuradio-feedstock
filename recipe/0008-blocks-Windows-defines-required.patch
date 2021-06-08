@@ -5,11 +5,11 @@ Subject: [PATCH] blocks: Windows defines required.
 
 Signed-off-by: Jeff Long <willcode4@gmail.com>
 ---
- gr-blocks/lib/CMakeLists.txt | 6 ++++++
- 1 file changed, 6 insertions(+)
+ gr-blocks/lib/CMakeLists.txt | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
 diff --git a/gr-blocks/lib/CMakeLists.txt b/gr-blocks/lib/CMakeLists.txt
-index bc157f63d..4590e39cf 100644
+index bc157f63d..2d951090a 100644
 --- a/gr-blocks/lib/CMakeLists.txt
 +++ b/gr-blocks/lib/CMakeLists.txt
 @@ -10,6 +10,7 @@
@@ -20,18 +20,27 @@ index bc157f63d..4590e39cf 100644
  
  ########################################################################
  # Setup library
-@@ -213,6 +214,11 @@ target_sources(gnuradio-blocks PRIVATE
- )
+@@ -192,7 +193,7 @@ if (SNDFILE_FOUND)
+     )
  endif()
+ 
+-target_link_libraries(gnuradio-blocks ${BLOCKS_LIBS})
++target_link_libraries(gnuradio-blocks PUBLIC ${BLOCKS_LIBS})
+ 
+ target_include_directories(gnuradio-blocks
+   PUBLIC
+@@ -200,6 +201,11 @@ target_include_directories(gnuradio-blocks
+   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../include>
+   )
  
 +if(HAVE_WINDOWS_H)
 +    target_compile_definitions(gnuradio-blocks PRIVATE -DHAVE_WINDOWS_H)
 +    target_link_libraries(gnuradio-blocks PRIVATE ws2_32 wsock32)
 +endif()
 +
- #Add Windows DLL resource file if using MSVC
- IF(MSVC)
-     include(${CMAKE_SOURCE_DIR}/cmake/Modules/GrVersion.cmake)
+ set_source_files_properties(file_source_impl.cc PROPERTIES COMPILE_FLAGS -D_FILE_OFFSET_BITS=64)
+ 
+ if(ENABLE_GR_CTRLPORT)
 -- 
 2.30.2
 
