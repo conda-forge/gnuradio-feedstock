@@ -182,6 +182,8 @@ outputs:
         - numpy
         - {{ pin_compatible('portaudio') }}  # [linux]
         - python
+        # need setuptools because modtool uses pkg_resources
+        - setuptools
         - six
         - thrift  # [not win]
     test:
