@@ -192,11 +192,11 @@ outputs:
         - click-plugins
         # *HACK* libudev from systemd-devel links to libdw [elfutils], and we
         # want it installed from conda-forge at runtime to ensure compatibility
-        - {{ pin_compatible('elfutils') }}  # [linux and cdt_name=='cos7']
+        - {{ pin_compatible('elfutils', min_pin='x') }}  # [linux and cdt_name=='cos7']
         - fftw
         # *HACK* libudev from systemd-devel links to libdw [elfutils], and we
         # want it installed from conda-forge at runtime to ensure compatibility
-        - {{ pin_compatible('libcap') }}  # [linux and cdt_name=='cos7']
+        - {{ pin_compatible('libcap', min_pin='x') }}  # [linux and cdt_name=='cos7']
         - mako
         - menuinst  # [win]
         - numpy
