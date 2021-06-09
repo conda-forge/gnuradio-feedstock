@@ -20,7 +20,7 @@ source:
     - 0008-blocks-Windows-defines-required.patch
 
 build:
-  number: 0
+  number: 1
 
 requirements:
   build:
@@ -112,7 +112,7 @@ requirements:
     - {{ pin_subpackage('gnuradio-core', exact=True) }}
     - {{ pin_subpackage('gnuradio-grc', exact=True) }}
     - {{ pin_subpackage('gnuradio-qtgui', exact=True) }}  # [not (ppc64le or arm64)]
-    - {{ pin_subpackage('gnuradio-soapy', exact=True) }}
+    - {{ pin_subpackage('gnuradio-soapy-intree', exact=True) }}
     - {{ pin_subpackage('gnuradio-uhd', exact=True) }}
     - {{ pin_subpackage('gnuradio-video-sdl', exact=True) }}
     - {{ pin_subpackage('gnuradio-zeromq', exact=True) }}
@@ -329,7 +329,7 @@ outputs:
       license_family: GPL
       license_file: COPYING
       summary: GNU Radio QT module providing graphical components
-  - name: gnuradio-soapy
+  - name: gnuradio-soapy-intree
     script: install_soapy.sh  # [not win]
     script: install_soapy.bat  # [win]
     build:
