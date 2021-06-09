@@ -314,7 +314,6 @@ outputs:
         # *HACK* (see above)
         - elfutils  # [linux and cdt_name=='cos7']
       run:
-        - boost-cpp
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
         - pyqt
         - python
@@ -353,7 +352,6 @@ outputs:
         # *HACK* (see above)
         - elfutils  # [linux and cdt_name=='cos7']
       run:
-        - boost-cpp
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
         - python
     test:
@@ -435,7 +433,6 @@ outputs:
         # *HACK* (see above)
         - elfutils  # [linux and cdt_name=='cos7']
       run:
-        - boost-cpp
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
         - python
     test:
