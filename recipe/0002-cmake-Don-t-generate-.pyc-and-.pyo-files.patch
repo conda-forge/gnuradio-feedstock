@@ -1,17 +1,17 @@
-From 31d3f8ef9b5012ff7cae4e451e5d1881be07fb92 Mon Sep 17 00:00:00 2001
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Ryan Volz <rvolz@mit.edu>
 Date: Wed, 22 Apr 2020 18:02:24 -0400
-Subject: [PATCH 2/4] cmake: Don't generate .pyc and .pyo files.
+Subject: [PATCH] cmake: Don't generate .pyc and .pyo files.
 
 ---
  cmake/Modules/GrPython.cmake | 11 ++---------
  1 file changed, 2 insertions(+), 9 deletions(-)
 
 diff --git a/cmake/Modules/GrPython.cmake b/cmake/Modules/GrPython.cmake
-index dc9cd94b5..fbbbcad93 100644
+index c20360bd0..ad0e41dd3 100644
 --- a/cmake/Modules/GrPython.cmake
 +++ b/cmake/Modules/GrPython.cmake
-@@ -194,9 +194,6 @@ function(GR_PYTHON_INSTALL)
+@@ -218,9 +218,6 @@ function(GR_PYTHON_INSTALL)
  
          #create install rule and add generated files to target list
          set(python_install_gen_targets ${pycfiles} ${pyofiles})
@@ -21,7 +21,7 @@ index dc9cd94b5..fbbbcad93 100644
  
      ####################################################################
      elseif(GR_PYTHON_INSTALL_DIRECTORY)
-@@ -270,10 +267,6 @@ function(GR_PYTHON_INSTALL)
+@@ -294,10 +291,6 @@ function(GR_PYTHON_INSTALL)
              # install relative to current binary dir
              file(RELATIVE_PATH pygen_path_rel "${CMAKE_CURRENT_BINARY_DIR}" "${pygen_path}")
              list(SORT pygen_path_targets)
@@ -32,7 +32,7 @@ index dc9cd94b5..fbbbcad93 100644
          endforeach(pygen_path)
  
      ####################################################################
-@@ -345,9 +338,9 @@ function(GR_PYTHON_INSTALL)
+@@ -369,9 +362,9 @@ function(GR_PYTHON_INSTALL)
              )
          endforeach(pyfile)
  
@@ -45,5 +45,5 @@ index dc9cd94b5..fbbbcad93 100644
  endfunction(GR_PYTHON_INSTALL)
  
 -- 
-2.25.1
+2.30.2
 
