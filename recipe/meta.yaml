@@ -1,4 +1,4 @@
-{% set version = "3.9.1.0" %}
+{% set version = "3.9.2.0" %}
 
 package:
   name: gnuradio
@@ -6,23 +6,17 @@ package:
 
 source:
   url: https://github.com/gnuradio/gnuradio/archive/refs/tags/v{{ version }}.tar.gz
-  sha256: 62865cde70c5631b7a4405147476e21461bc4d713f90f6cfac0a24bba36f6b97
+  sha256: d7271022559bfb486a9462ed5e7d1ffb52a010a197f5dfdef27f70a931907dce
   patches:
     - 0001-cmake-Install-python-wrapper-exe-for-scripts-on-Wind.patch
     - 0002-cmake-Don-t-generate-.pyc-and-.pyo-files.patch
-    - 0003-cmake-Move-swath-of-add_definitions-to-gnuradio-runt.patch
-    - 0004-cmake-Fix-codec2-and-MPIR-find-modules-for-Windows-c.patch
-    - 0005-Use-an-ImageSurface-rather-than-UI-back-end.patch  # [osx]
-    - 0006-grc-Be-more-informative-when-missing-options-block.patch
-    - 0007-cmake-Pass-extra-arguments-to-GR_PYTHON_INSTALL-to-i.patch
-    - 0008-grc-Remove-global_blocks_path-preference-and-use-pre.patch
-    - 0009-cmake-Remove-absolute-paths-and-private-links-from-e.patch
-    - 0010-runtime-ctrlport-cmake-Add-target-for-thrift-python-.patch
-    - 0011-cmake-Fix-finding-Thrift-when-it-is-built-with-MSVC.patch
-    - 0012-runtime-ctrlport-cmake-Fix-thrift-dependency-for-OOT.patch
+    - 0003-Use-an-ImageSurface-rather-than-UI-back-end.patch  # [osx]
+    - 0004-cmake-Pass-extra-arguments-to-GR_PYTHON_INSTALL-to-i.patch
+    - 0005-grc-Remove-global_blocks_path-preference-and-use-pre.patch
+    - 0006-cmake-Remove-absolute-paths-and-private-links-from-e.patch
 
 build:
-  number: 8
+  number: 0
 
 requirements:
   build:
@@ -99,6 +93,8 @@ requirements:
     - pyqt  # [not (ppc64le or arm64)]
     - qt  # [not (ppc64le or arm64)]
     - qwt  # [not (ppc64le or arm64)]
+  # gnuradio soapy
+    - soapysdr
   # gnuradio.uhd
     - uhd
   # gnuradio.video_sdl
@@ -112,6 +108,7 @@ requirements:
     - {{ pin_subpackage('gnuradio-core', exact=True) }}
     - {{ pin_subpackage('gnuradio-grc', exact=True) }}
     - {{ pin_subpackage('gnuradio-qtgui', exact=True) }}  # [not (ppc64le or arm64)]
+    - {{ pin_subpackage('gnuradio-soapy-intree', exact=True) }}
     - {{ pin_subpackage('gnuradio-uhd', exact=True) }}
     - {{ pin_subpackage('gnuradio-video-sdl', exact=True) }}
     - {{ pin_subpackage('gnuradio-zeromq', exact=True) }}
@@ -124,6 +121,7 @@ test:
   imports:
     - gnuradio.gr
     - gnuradio.qtgui  # [not (ppc64le or arm64)]
+    - gnuradio.soapy
     - gnuradio.uhd
     - gnuradio.video_sdl
     - gnuradio.zeromq
@@ -146,6 +144,10 @@ outputs:
         # log4cpp is used in block headers, so everything compiling against
         # gnuradio-core will almost-definitely need log4cpp at runtime
         - {{ pin_compatible('log4cpp', max_pin='x.x') }}
+      ignore_run_exports_from:
+        # *HACK* (see below)
+        - elfutils  # [linux and cdt_name=='cos7']
+        - libcap  # [linux and cdt_name=='cos7']
       skip_compile_pyc:
         - "*/templates/*.py"
     requirements:
@@ -184,17 +186,26 @@ outputs:
         - boost-cpp
         - click
         - click-plugins
+        # *HACK* libudev from systemd-devel links to libdw [elfutils], and we
+        # want it installed from conda-forge at runtime to ensure compatibility
+        - {{ pin_compatible('elfutils', min_pin='x') }}  # [linux and cdt_name=='cos7']
         - fftw
+        # *HACK* libudev from systemd-devel links to libdw [elfutils], and we
+        # want it installed from conda-forge at runtime to ensure compatibility
+        - {{ pin_compatible('libcap', min_pin='x') }}  # [linux and cdt_name=='cos7']
         - mako
         - menuinst  # [win]
         - numpy
         - {{ pin_compatible('portaudio') }}  # [linux]
         - python
+        # need setuptools because modtool uses pkg_resources
+        - setuptools
         - six
         - thrift  # [not win]
     test:
       commands:
         - gnuradio-config-info -v --prefix --sysconfdir --prefsdir --userprefsdir --prefs --builddate --enabled-components --cc --cxx --cflags
+        - gr_modtool --help
         # run a few example scripts to show that at least some things work
         - python "$PREFIX/share/gnuradio/examples/volk_benchmark/volk_math.py" -L test -N 1e6 -I 3 --all  # [not win]
         - python "%PREFIX%\\Library\\share\\gnuradio\\examples\\volk_benchmark\\volk_math.py" -L test -N 1e6 -I 3 --all  # [win]
@@ -299,7 +310,6 @@ outputs:
         # *HACK* (see above)
         - elfutils  # [linux and cdt_name=='cos7']
       run:
-        - boost-cpp
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
         - pyqt
         - python
@@ -315,6 +325,46 @@ outputs:
       license_family: GPL
       license_file: COPYING
       summary: GNU Radio QT module providing graphical components
+  - name: gnuradio-soapy-intree
+    script: install_soapy.sh  # [not win]
+    script: install_soapy.bat  # [win]
+    build:
+      ignore_run_exports_from:
+        # *HACK* (see above)
+        - elfutils  # [linux and cdt_name=='cos7']
+    requirements:
+      build:
+        - {{ compiler('c') }}
+        - {{ compiler('cxx') }}
+        - cmake
+        # conda-build needs native python to make .pyc files
+        - python  # [build_platform != target_platform]
+      host:
+        - boost-cpp
+        - {{ pin_subpackage('gnuradio-core', exact=True) }}
+        - log4cpp
+        - python
+        - soapysdr
+        # *HACK* (see above)
+        - elfutils  # [linux and cdt_name=='cos7']
+      run:
+        - {{ pin_subpackage('gnuradio-core', exact=True) }}
+        - python
+    test:
+      imports:
+        - gnuradio.soapy
+    about:
+      home: https://gnuradio.org/
+      doc_url: https://gnuradio.org/doc/doxygen/
+      dev_url: https://github.com/gnuradio/gnuradio
+      license: GPL-3.0-or-later
+      license_family: GPL
+      license_file: COPYING
+      summary: GNU Radio SoapySDR module for using a variety of SDR devices
+      description: >
+        This module provides GNU Radio source and sink blocks for a variety of
+        SDR devices using SoapySDR, a generalized C/C++ library which provides
+        abstraction in interfacing with different SDR devices and vendors.
   - name: gnuradio-uhd
     script: install_uhd.sh  # [not win]
     script: install_uhd.bat  # [win]
@@ -379,7 +429,6 @@ outputs:
         # *HACK* (see above)
         - elfutils  # [linux and cdt_name=='cos7']
       run:
-        - boost-cpp
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
         - python
     test:
@@ -452,6 +501,9 @@ outputs:
         - pybind11
       run_constrained:
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
+    test:
+      commands:
+        - cmake --help
     about:
       home: https://gnuradio.org/
       doc_url: https://gnuradio.org/doc/doxygen/
