@@ -8,7 +8,7 @@ Instead of storing the default (built-in) blocks path in the
 preferences, store the path relative to the prefix (GRC_BLOCKS_DIR) in
 the Constants.py file and build it at runtime using the installation
 prefix. This should make it easier to switch between different versions
-with by making it so the user preference for global_blocks_path doesn't
+by making it so the user preference for global_blocks_path doesn't
 interfere. Users still have local_blocks_path preference and the
 GRC_BLOCKS_PATH environment variable for pointing to additional blocks.
 
@@ -71,10 +71,10 @@ index a5f6c3edc..d40cb4032 100755
      platform.build_library()
  
 diff --git a/grc/core/Config.py b/grc/core/Config.py
-index c0ce42737..3272b9bea 100644
+index 9879290f3..0b55ddb13 100644
 --- a/grc/core/Config.py
 +++ b/grc/core/Config.py
-@@ -19,7 +19,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
+@@ -7,7 +7,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
  from __future__ import absolute_import
  
  import os
@@ -83,7 +83,7 @@ index c0ce42737..3272b9bea 100644
  from collections import OrderedDict
  
  from . import Constants
-@@ -32,9 +32,10 @@ class Config(object):
+@@ -20,9 +20,10 @@ class Config(object):
  
      hier_block_lib_dir = os.environ.get('GRC_HIER_PATH', Constants.DEFAULT_HIER_BLOCK_LIB_DIR)
  
@@ -95,7 +95,7 @@ index c0ce42737..3272b9bea 100644
          self.version_parts = version_parts or version[1:].split('-', 1)[0].split('.')[:3]
          if name:
              self.name = name
-@@ -43,12 +44,14 @@ class Config(object):
+@@ -31,12 +32,14 @@ class Config(object):
      def block_paths(self):
          path_list_sep = {'/': ':', '\\': ';'}[os.path.sep]
  
@@ -117,16 +117,16 @@ diff --git a/grc/core/Constants.py b/grc/core/Constants.py.in
 similarity index 98%
 rename from grc/core/Constants.py
 rename to grc/core/Constants.py.in
-index 99e676744..4a5c04c4f 100644
+index e7d8f3f99..d7e23e7e9 100644
 --- a/grc/core/Constants.py
 +++ b/grc/core/Constants.py.in
-@@ -31,6 +31,7 @@ DATA_DIR = os.path.dirname(__file__)
+@@ -32,6 +32,7 @@ DATA_DIR = os.path.dirname(__file__)
  BLOCK_DTD = os.path.join(DATA_DIR, 'block.dtd')
  DEFAULT_FLOW_GRAPH = os.path.join(DATA_DIR, 'default_flow_graph.grc')
  DEFAULT_HIER_BLOCK_LIB_DIR = os.path.expanduser('~/.grc_gnuradio')
 +GRC_BLOCKS_DIR = os.path.normpath("@GRC_BLOCKS_DIR@")
  
- CACHE_FILE = os.path.expanduser('~/.cache/grc_gnuradio/cache.json')
+ CACHE_FILE = os.path.expanduser('~/.cache/grc_gnuradio/cache_v2.json')
  
 diff --git a/grc/grc.conf.in b/grc/grc.conf.in
 index 1dbb13bfa..ccae5c9e7 100644

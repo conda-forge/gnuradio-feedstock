@@ -16,7 +16,7 @@ Signed-off-by: Ryan Volz <ryan.volz@gmail.com>
  1 file changed, 14 insertions(+), 1 deletion(-)
 
 diff --git a/grc/core/platform.py b/grc/core/platform.py
-index 46a795bd0..4c0ffc943 100644
+index f7a4fac35..7caf81713 100644
 --- a/grc/core/platform.py
 +++ b/grc/core/platform.py
 @@ -194,7 +194,20 @@ class Platform(Element):
