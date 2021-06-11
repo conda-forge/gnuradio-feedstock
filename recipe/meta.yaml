@@ -1,4 +1,4 @@
-{% set version = "3.8.3.0" %}
+{% set version = "3.8.3.1" %}
 
 package:
   name: gnuradio
@@ -6,7 +6,7 @@ package:
 
 source:
   url: https://github.com/gnuradio/gnuradio/archive/refs/tags/v{{ version }}.tar.gz
-  sha256: 7135067362625a6e56fa3f57f6cd100effa2d4615f5993aad67eeef208cfb05f
+  sha256: 7500589c3c9679d1b5487cd45c5e93aa95d1c5b5aeb2082d035c6b44932d4540
   patches:
     - 0001-Don-t-use-hard-coded-path-constants.patch
     - 0002-python-Do-not-link-against-python-lib-for-building-a.patch
@@ -23,7 +23,7 @@ source:
     - 0013-grc-Remove-global_blocks_path-preference-and-use-pre.patch
 
 build:
-  number: 4
+  number: 0
 
 requirements:
   build:
