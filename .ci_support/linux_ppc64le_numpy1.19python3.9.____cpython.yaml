@@ -27,7 +27,7 @@ gsl:
 libcblas:
 - 3.8 *netlib
 libthrift:
-- 0.14.1
+- 0.14.2
 numpy:
 - '1.19'
 pin_run_as_build:

@@ -21,7 +21,7 @@ gmp:
 gsl:
 - '2.6'
 libthrift:
-- 0.14.1
+- 0.14.2
 macos_machine:
 - arm64-apple-darwin20.0.0
 numpy:
