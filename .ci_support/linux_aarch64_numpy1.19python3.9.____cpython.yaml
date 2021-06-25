@@ -21,7 +21,7 @@ cxx_compiler:
 cxx_compiler_version:
 - '9'
 docker_image:
-- quay.io/condaforge/linux-anvil-aarch64
+- quay.io/condaforge/linux-anvil-comp7
 fftw:
 - '3'
 gmp:
@@ -49,7 +49,7 @@ pin_run_as_build:
   zeromq:
     max_pin: x.x
 python:
-- 3.8.* *_cpython
+- 3.9.* *_cpython
 qt:
 - '5.12'
 sqlite:
