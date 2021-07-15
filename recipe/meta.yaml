@@ -16,7 +16,7 @@ source:
     - 0006-cmake-Remove-absolute-paths-and-private-links-from-e.patch
 
 build:
-  number: 2
+  number: 3
 
 requirements:
   build:
