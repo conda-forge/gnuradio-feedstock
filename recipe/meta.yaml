@@ -111,6 +111,8 @@ requirements:
     - python
 
 test:
+  downstreams:
+    - gnuradio-osmosdr
   requires:
     - sqlite
   imports:
