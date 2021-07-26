@@ -113,6 +113,7 @@ requirements:
 test:
   downstreams:
     - gnuradio-osmosdr
+    - gnuradio-satellites
   requires:
     - sqlite
   imports:
