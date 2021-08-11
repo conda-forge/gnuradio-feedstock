@@ -11,9 +11,9 @@ cxx_compiler:
 fftw:
 - '3'
 gsl:
-- '2.6'
+- '2.7'
 numpy:
-- '1.17'
+- '1.18'
 pin_run_as_build:
   boost-cpp:
     max_pin: x.x.x
