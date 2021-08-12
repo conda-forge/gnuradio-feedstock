@@ -16,7 +16,7 @@ source:
     - 0006-cmake-Remove-absolute-paths-and-private-links-from-e.patch
 
 build:
-  number: 3
+  number: 4
 
 requirements:
   build:
@@ -92,7 +92,7 @@ requirements:
   # gnuradio.qtgui
     - pyqt  # [not (ppc64le or arm64)]
     - qt  # [not (ppc64le or arm64)]
-    - qwt  # [not (ppc64le or arm64)]
+    - qwt <6.2  # [not (ppc64le or arm64)]
   # gnuradio soapy
     - soapysdr
   # gnuradio.uhd
@@ -305,7 +305,7 @@ outputs:
         - pyqt
         - python
         - qt
-        - qwt
+        - qwt <6.2
         - volk
         # *HACK* (see above)
         - elfutils  # [linux and cdt_name=='cos7']
