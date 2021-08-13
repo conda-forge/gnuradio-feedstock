@@ -23,7 +23,7 @@ source:
     - 0013-grc-Remove-global_blocks_path-preference-and-use-pre.patch
 
 build:
-  number: 2
+  number: 3
 
 requirements:
   build:
@@ -90,7 +90,7 @@ requirements:
   # gnuradio.qtgui
     - pyqt  # [not (ppc64le or arm64)]
     - qt  # [not (ppc64le or arm64)]
-    - qwt  # [not (ppc64le or arm64)]
+    - qwt <6.2  # [not (ppc64le or arm64)]
   # gnuradio.uhd
     - uhd
   # gnuradio.video_sdl
@@ -264,7 +264,7 @@ outputs:
         - pyqt
         - python
         - qt
-        - qwt
+        - qwt <6.2
         - volk
       run:
         - boost-cpp

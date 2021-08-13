@@ -1,3 +1,5 @@
+BUILD:
+- aarch64-conda_cos7-linux-gnu
 alsa_lib:
 - 1.2.3
 boost_cpp:
@@ -6,10 +8,12 @@ c_compiler:
 - gcc
 c_compiler_version:
 - '9'
+cdt_arch:
+- aarch64
 cdt_name:
-- cos6
+- cos7
 channel_sources:
-- conda-forge,defaults
+- conda-forge
 channel_targets:
 - conda-forge main
 cxx_compiler:
@@ -23,11 +27,11 @@ fftw:
 gmp:
 - '6'
 gsl:
-- '2.6'
+- '2.7'
 libcblas:
 - 3.8 *netlib
 numpy:
-- '1.19'
+- '1.18'
 pin_run_as_build:
   boost-cpp:
     max_pin: x.x.x
@@ -51,7 +55,7 @@ qt:
 sqlite:
 - '3'
 target_platform:
-- linux-64
+- linux-aarch64
 uhd:
 - 3.15.0
 volk:
@@ -61,7 +65,5 @@ zeromq:
 zip_keys:
 - - c_compiler_version
   - cxx_compiler_version
-- - cdt_name
-  - docker_image
 - - python
   - numpy
