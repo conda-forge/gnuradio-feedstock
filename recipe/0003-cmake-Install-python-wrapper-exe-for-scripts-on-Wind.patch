@@ -58,5 +58,5 @@ index 32fd39663..b0409ac2f 100644
                  OUTPUT ${pyexefile} DEPENDS ${pyfile}
                  COMMAND ${PYTHON_EXECUTABLE} -c
 -- 
-2.30.2
+2.32.0
 
