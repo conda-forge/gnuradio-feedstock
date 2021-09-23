@@ -33,10 +33,9 @@ requirements:
     - cross-python_{{ target_platform }}  # [build_platform != target_platform]
     - pybind11                            # [build_platform != target_platform]
     - numpy                               # [build_platform != target_platform]
-    # libudev needed to link against libusb through uhd on linux
-    # libudev is on its own in CentOS 6, packaged with systemd in CentOS 7
+    # libudev CDT needed to link against libusb through uhd on linux CentOS 6
+    # libusb uses the conda-forge libudev package for CentOS 7
     - {{ cdt('libudev-devel') }}  # [linux and cdt_name=='cos6']
-    - {{ cdt('systemd-devel') }}  # [linux and cdt_name=='cos7']
     # below are needed to link with Qt for qtgui
     - {{ cdt('libice') }}  # [linux and not ppc64le]
     - {{ cdt('libselinux') }}  # [linux and not ppc64le]
