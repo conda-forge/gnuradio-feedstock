@@ -21,9 +21,10 @@ source:
     - 0011-grc-Be-more-informative-when-missing-options-block.patch
     - 0012-cmake-Pass-extra-arguments-to-GR_PYTHON_INSTALL-to-i.patch
     - 0013-grc-Remove-global_blocks_path-preference-and-use-pre.patch
+    - 0014-grc-Add-DPI-scale-factor-for-GRC-drawing-area-widget.patch
 
 build:
-  number: 4
+  number: 5
 
 requirements:
   build:
