@@ -17,7 +17,7 @@ source:
     - 0007-grc-Add-DPI-scale-factor-for-GRC-drawing-area-widget.patch
 
 build:
-  number: 6
+  number: 7
 
 requirements:
   build:
@@ -33,10 +33,9 @@ requirements:
     - cross-python_{{ target_platform }}  # [build_platform != target_platform]
     - pybind11                            # [build_platform != target_platform]
     - numpy                               # [build_platform != target_platform]
-    # libudev needed to link against libusb through uhd on linux
-    # libudev is on its own in CentOS 6, packaged with systemd in CentOS 7
+    # libudev CDT needed to link against libusb through uhd on linux CentOS 6
+    # libusb uses the conda-forge libudev package for CentOS 7
     - {{ cdt('libudev-devel') }}  # [linux and cdt_name=='cos6']
-    - {{ cdt('systemd-devel') }}  # [linux and cdt_name=='cos7']
     # below are needed to link with Qt for qtgui
     - {{ cdt('libice') }}  # [linux and not ppc64le]
     - {{ cdt('libselinux') }}  # [linux and not ppc64le]
@@ -58,15 +57,9 @@ requirements:
     - click
     - click-plugins
     - codec2
-    # *HACK* libudev from systemd-devel links to libdw [elfutils], but we need
-    # it from host so that its dependent libraries match the conda-forge versions
-    - elfutils  # [linux and cdt_name=='cos7']
     - fftw
     - gmp  # [not win]
     - gsl
-    # *HACK* libudev from systemd-devel links to libcap, but we need it from
-    # host so that its dependent libraries match the conda-forge versions
-    - libcap  # [linux and cdt_name=='cos7']
     # blas needed to link with gsl
     - libcblas  # [linux]
     - libsndfile
@@ -117,6 +110,9 @@ requirements:
     - python
 
 test:
+  downstreams:
+    - gnuradio-osmosdr
+    - gnuradio-satellites
   requires:
     - sqlite
   imports:
@@ -145,10 +141,6 @@ outputs:
         # log4cpp is used in block headers, so everything compiling against
         # gnuradio-core will almost-definitely need log4cpp at runtime
         - {{ pin_compatible('log4cpp', max_pin='x.x') }}
-      ignore_run_exports_from:
-        # *HACK* (see below)
-        - elfutils  # [linux and cdt_name=='cos7']
-        - libcap  # [linux and cdt_name=='cos7']
       skip_compile_pyc:
         - "*/templates/*.py"
     requirements:
@@ -162,15 +154,9 @@ outputs:
         - alsa-lib  # [linux]
         - boost-cpp
         - codec2
-        # *HACK* libudev from systemd-devel links to libdw [elfutils], but we need
-        # it from host so that its dependent libraries match the conda-forge versions
-        - elfutils  # [linux and cdt_name=='cos7']
         - fftw
         - gmp  # [not win]
         - gsl
-        # *HACK* libudev from systemd-devel links to libcap, but we need it from
-        # host so that its dependent libraries match the conda-forge versions
-        - libcap  # [linux and cdt_name=='cos7']
         - libcblas  # [linux]
         - libsndfile
         - libthrift  # [not win]
@@ -187,13 +173,7 @@ outputs:
         - boost-cpp
         - click
         - click-plugins
-        # *HACK* libudev from systemd-devel links to libdw [elfutils], and we
-        # want it installed from conda-forge at runtime to ensure compatibility
-        - {{ pin_compatible('elfutils', min_pin='x') }}  # [linux and cdt_name=='cos7']
         - fftw
-        # *HACK* libudev from systemd-devel links to libdw [elfutils], and we
-        # want it installed from conda-forge at runtime to ensure compatibility
-        - {{ pin_compatible('libcap', min_pin='x') }}  # [linux and cdt_name=='cos7']
         - mako
         - menuinst  # [win]
         - numpy
@@ -243,9 +223,6 @@ outputs:
       entry_points:
         - gnuradio-companion = gnuradio.grc.main:main  # [win]
         - grcc = gnuradio.grc.compiler:main  # [win]
-      ignore_run_exports_from:
-        # *HACK* (see above)
-        - elfutils  # [linux and cdt_name=='cos7']
     requirements:
       build:
         - {{ compiler('c') }}
@@ -259,8 +236,6 @@ outputs:
         - gtk3
         - log4cpp
         - python
-        # *HACK* (see above)
-        - elfutils  # [linux and cdt_name=='cos7']
       run:
         - boost-cpp
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
@@ -287,9 +262,6 @@ outputs:
   - name: gnuradio-qtgui
     build:
       skip: true  # [ppc64le or arm64]
-      ignore_run_exports_from:
-        # *HACK* (see above)
-        - elfutils  # [linux and cdt_name=='cos7']
     script: install_qtgui.sh  # [not win]
     script: install_qtgui.bat  # [win]
     requirements:
@@ -308,8 +280,6 @@ outputs:
         - qt
         - qwt <6.2
         - volk
-        # *HACK* (see above)
-        - elfutils  # [linux and cdt_name=='cos7']
       run:
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
         - pyqt
@@ -329,10 +299,6 @@ outputs:
   - name: gnuradio-soapy-intree
     script: install_soapy.sh  # [not win]
     script: install_soapy.bat  # [win]
-    build:
-      ignore_run_exports_from:
-        # *HACK* (see above)
-        - elfutils  # [linux and cdt_name=='cos7']
     requirements:
       build:
         - {{ compiler('c') }}
@@ -346,8 +312,6 @@ outputs:
         - log4cpp
         - python
         - soapysdr
-        # *HACK* (see above)
-        - elfutils  # [linux and cdt_name=='cos7']
       run:
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
         - python
@@ -372,9 +336,6 @@ outputs:
     build:
       entry_points:
         - uhd_siggen = gnuradio.uhd.uhd_siggen_base:main  # [win]
-      ignore_run_exports_from:
-        # *HACK* (see above)
-        - elfutils  # [linux and cdt_name=='cos7']
     requirements:
       build:
         - {{ compiler('c') }}
@@ -388,8 +349,6 @@ outputs:
         - log4cpp
         - python
         - uhd
-        # *HACK* (see above)
-        - elfutils  # [linux and cdt_name=='cos7']
       run:
         - boost-cpp
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
@@ -410,10 +369,6 @@ outputs:
   - name: gnuradio-video-sdl
     script: install_video_sdl.sh  # [not win]
     script: install_video_sdl.bat  # [win]
-    build:
-      ignore_run_exports_from:
-        # *HACK* (see above)
-        - elfutils  # [linux and cdt_name=='cos7']
     requirements:
       build:
         - {{ compiler('c') }}
@@ -427,8 +382,6 @@ outputs:
         - log4cpp
         - python
         - sdl
-        # *HACK* (see above)
-        - elfutils  # [linux and cdt_name=='cos7']
       run:
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
         - python
@@ -446,10 +399,6 @@ outputs:
   - name: gnuradio-zeromq
     script: install_zeromq.sh  # [not win]
     script: install_zeromq.bat  # [win]
-    build:
-      ignore_run_exports_from:
-        # *HACK* (see above)
-        - elfutils  # [linux and cdt_name=='cos7']
     requirements:
       build:
         - {{ compiler('c') }}
@@ -464,8 +413,6 @@ outputs:
         - log4cpp
         - python
         - zeromq
-        # *HACK* (see above)
-        - elfutils  # [linux and cdt_name=='cos7']
       run:
         - boost-cpp
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
