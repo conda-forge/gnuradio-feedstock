@@ -1,2 +1,5 @@
+# bad header from codec2 1.0.1
+codec2:
+  - 1.0.0
 uhd:
   - 3.15.0
