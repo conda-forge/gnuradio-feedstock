@@ -1,0 +1,32 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Ryan Volz <ryan.volz@gmail.com>
+Date: Wed, 29 Sep 2021 16:02:55 -0400
+Subject: [PATCH] grc: Include scale factor when computing drawing area size.
+
+Fixes #4174.
+
+Signed-off-by: Ryan Volz <ryan.volz@gmail.com>
+---
+ grc/gui/DrawingArea.py | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/grc/gui/DrawingArea.py b/grc/gui/DrawingArea.py
+index 637a3e3e6..a5cc32b3d 100644
+--- a/grc/gui/DrawingArea.py
++++ b/grc/gui/DrawingArea.py
+@@ -154,7 +154,11 @@ class DrawingArea(Gtk.DrawingArea):
+ 
+     def _update_size(self):
+         w, h = self._flow_graph.get_extents()[2:]
+-        self.set_size_request(w * self.zoom_factor + 100, h * self.zoom_factor + 100)
++        scale_factor = self.get_scale_factor()
++        self.set_size_request(
++            w * scale_factor * self.zoom_factor + 100,
++            h * scale_factor * self.zoom_factor + 100,
++        )
+ 
+     def _auto_scroll(self, event):
+         x, y = event.x, event.y
+-- 
+2.32.0
+
