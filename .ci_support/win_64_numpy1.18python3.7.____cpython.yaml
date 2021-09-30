@@ -3,9 +3,11 @@ boost_cpp:
 c_compiler:
 - vs2017
 channel_sources:
-- conda-forge,defaults
+- conda-forge
 channel_targets:
 - conda-forge main
+codec2:
+- 1.0.0
 cxx_compiler:
 - vs2017
 fftw:
