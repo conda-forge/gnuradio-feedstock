@@ -1,4 +1,4 @@
-{% set version = "3.8.3.1" %}
+{% set version = "3.8.4.0" %}
 
 package:
   name: gnuradio
@@ -6,7 +6,7 @@ package:
 
 source:
   url: https://github.com/gnuradio/gnuradio/archive/refs/tags/v{{ version }}.tar.gz
-  sha256: 7500589c3c9679d1b5487cd45c5e93aa95d1c5b5aeb2082d035c6b44932d4540
+  sha256: 6fbf605b4859fbf0862e9b8dc4c345d7e5bb39469d604a49b5e55b715ad45fb7
   patches:
     - 0001-Don-t-use-hard-coded-path-constants.patch
     - 0002-python-Do-not-link-against-python-lib-for-building-a.patch
@@ -15,15 +15,14 @@ source:
     - 0005-cmake-Shorten-swig-command-line-by-removing-duplicat.patch
     - 0006-Use-raw-strings-for-paths-substituted-directly-into-.patch
     - 0007-Use-an-ImageSurface-rather-than-UI-back-end.patch  # [osx]
-    - 0008-Fix-drag-n-drop-issue-with-Quartz-macOS-backend.patch
-    - 0009-cmake-Move-swath-of-add_definitions-to-gnuradio-runt.patch
-    - 0010-cmake-Fix-codec2-and-MPIR-find-modules-for-Windows-c.patch
-    - 0011-grc-Be-more-informative-when-missing-options-block.patch
-    - 0012-cmake-Pass-extra-arguments-to-GR_PYTHON_INSTALL-to-i.patch
-    - 0013-grc-Remove-global_blocks_path-preference-and-use-pre.patch
+    - 0008-cmake-Move-swath-of-add_definitions-to-gnuradio-runt.patch
+    - 0009-cmake-Fix-codec2-and-MPIR-find-modules-for-Windows-c.patch
+    - 0010-grc-Be-more-informative-when-missing-options-block.patch
+    - 0011-cmake-Pass-extra-arguments-to-GR_PYTHON_INSTALL-to-i.patch
+    - 0012-grc-Remove-global_blocks_path-preference-and-use-pre.patch
 
 build:
-  number: 6
+  number: 0
 
 requirements:
   build:
@@ -38,10 +37,8 @@ requirements:
     - python                              # [build_platform != target_platform]
     - cross-python_{{ target_platform }}  # [build_platform != target_platform]
     - numpy >=1.1                         # [build_platform != target_platform]
-    # libudev needed to link against libusb through uhd on linux
-    # libudev is on its own in CentOS 6, packaged with systemd in CentOS 7
+    # libudev needed to link against libusb through uhd on linux cos6
     - {{ cdt('libudev-devel') }}  # [linux and cdt_name=='cos6']
-    - {{ cdt('systemd-devel') }}  # [linux and cdt_name=='cos7']
     # below are needed to link with Qt for qtgui
     - {{ cdt('libice') }}  # [linux and not ppc64le]
     - {{ cdt('libselinux') }}  # [linux and not ppc64le]
