@@ -1,0 +1,42 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Ryan Volz <ryan.volz@gmail.com>
+Date: Fri, 1 Oct 2021 13:55:05 -0400
+Subject: [PATCH] grc: Add aliases for "sc16==short" and "sc8==byte".
+
+When type checking was added for GRC connections, the valid connections
+between a block with the "sc16" type (e.g. UHD blocks) and a block
+with the "short" type and a vector length of 2 (e.g. ishort->complex)
+now fail. Adding these aliases fixes that as a stop-gap until a better
+solution can be found.
+
+Signed-off-by: Ryan Volz <ryan.volz@gmail.com>
+---
+ grc/core/Constants.py | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/grc/core/Constants.py b/grc/core/Constants.py
+index 5d7565e64..7d27db104 100644
+--- a/grc/core/Constants.py
++++ b/grc/core/Constants.py
+@@ -121,14 +121,18 @@ ALIAS_OF = {
+     'float': 'f32',
+     'int': 's32',
+     'short': 's16',
++    'short': 'sc16',
+     'byte': 's8',
++    'byte': 'sc8',
+     'bits': 'bit',
+ 
+     'fc32': 'complex',
+     'f32': 'float',
+     's32': 'int',
+     's16': 'short',
++    'sc16': 'short',
+     's8': 'byte',
++    'sc8': 'byte',
+     'bit': 'bits',
+ }
+ 
+-- 
+2.32.0
+

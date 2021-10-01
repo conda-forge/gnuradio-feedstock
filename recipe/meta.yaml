@@ -11,9 +11,10 @@ source:
     - 0001-cmake-Install-python-wrapper-exe-for-scripts-on-Wind.patch
     - 0002-cmake-Don-t-generate-.pyc-and-.pyo-files.patch
     - 0003-Use-an-ImageSurface-rather-than-UI-back-end.patch  # [osx]
-    - 0004-grc-Remove-global_blocks_path-preference-and-use-pre.patch
-    - 0005-grc-Include-scale-factor-when-computing-drawing-area.patch
-    - 0006-runtime-fix-pybind-of-get_tags_in_window.patch
+    - 0004-grc-Add-aliases-for-sc16-short-and-sc8-byte.patch
+    - 0005-grc-Remove-global_blocks_path-preference-and-use-pre.patch
+    - 0006-grc-Include-scale-factor-when-computing-drawing-area.patch
+    - 0007-runtime-fix-pybind-of-get_tags_in_window.patch
 
 build:
   number: 0
