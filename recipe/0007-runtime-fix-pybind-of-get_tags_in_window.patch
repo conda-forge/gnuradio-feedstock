@@ -1,0 +1,62 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: mormj <34754695+mormj@users.noreply.github.com>
+Date: Wed, 29 Sep 2021 11:03:09 -0400
+Subject: [PATCH] runtime: fix pybind of get_tags_in_window
+
+* runtime: fix pybind of get_tags_in_window
+
+Fix issue where get_tags_in_window was bound to and consequently had the
+same behavior as get_tags_in_range
+
+Fixes #5005
+
+Test recommended by ryanvolz fails to validate tag offset not just when
+nitems_read is 0
+
+Signed-off-by: Josh Morman <jmorman@peratonlabs.com>
+---
+ .../python/gnuradio/gr/bindings/block_gateway_python.cc      | 4 ++--
+ gr-blocks/python/blocks/qa_block_gateway.py                  | 5 ++++-
+ 2 files changed, 6 insertions(+), 3 deletions(-)
+
+diff --git a/gnuradio-runtime/python/gnuradio/gr/bindings/block_gateway_python.cc b/gnuradio-runtime/python/gnuradio/gr/bindings/block_gateway_python.cc
+index 5766677bb..476ffce6b 100644
+--- a/gnuradio-runtime/python/gnuradio/gr/bindings/block_gateway_python.cc
++++ b/gnuradio-runtime/python/gnuradio/gr/bindings/block_gateway_python.cc
+@@ -67,7 +67,7 @@ void bind_block_gateway(py::module& m)
+         .def(
+             "get_tags_in_window",
+             (std::vector<gr::tag_t>(block_gateway::*)(unsigned int, uint64_t, uint64_t)) &
+-                block_gateway::_get_tags_in_range,
++                block_gateway::_get_tags_in_window,
+             py::arg("which_input"),
+             py::arg("rel_start"),
+             py::arg("rel_end"))
+@@ -75,7 +75,7 @@ void bind_block_gateway(py::module& m)
+         .def("get_tags_in_window",
+              (std::vector<gr::tag_t>(block_gateway::*)(
+                  unsigned int, uint64_t, uint64_t, const pmt::pmt_t&)) &
+-                 block_gateway::_get_tags_in_range,
++                 block_gateway::_get_tags_in_window,
+              py::arg("which_input"),
+              py::arg("rel_start"),
+              py::arg("rel_end"),
+diff --git a/gr-blocks/python/blocks/qa_block_gateway.py b/gr-blocks/python/blocks/qa_block_gateway.py
+index 2f8071dfd..8088b59a8 100644
+--- a/gr-blocks/python/blocks/qa_block_gateway.py
++++ b/gr-blocks/python/blocks/qa_block_gateway.py
+@@ -122,7 +122,10 @@ class tag_source(gr.sync_block):
+         num_output_items = len(output_items[0])
+ 
+         # put code here to fill the output items...
+-
++        if self.nitems_written(0) == 0:
++            # skip tagging in the first work block
++            return num_output_items
++            
+         # make a new tag on the middle element every time work is called
+         count = self.nitems_written(0) + num_output_items // 2
+         key = pmt.string_to_symbol("example_key")
+-- 
+2.32.0
+
