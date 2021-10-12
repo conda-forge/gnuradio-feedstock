@@ -80,7 +80,7 @@ requirements:
     - volk
   # gnuradio.audio
     - alsa-lib  # [linux]
-    - portaudio  # [linux]
+    - portaudio
   # gnuradio companion
     - gtk3
     - lxml
@@ -165,7 +165,7 @@ outputs:
         - libthrift  # [not win]
         - log4cpp
         - mpir  # [win]
-        - portaudio  # [linux]
+        - portaudio
         - pybind11
         - pybind11-abi
         - python
@@ -180,7 +180,6 @@ outputs:
         - mako
         - menuinst  # [win]
         - numpy
-        - {{ pin_compatible('portaudio') }}  # [linux]
         - python
         # need setuptools because modtool uses pkg_resources
         - setuptools
