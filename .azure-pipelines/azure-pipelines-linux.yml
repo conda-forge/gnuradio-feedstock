@@ -8,11 +8,6 @@ jobs:
     vmImage: ubuntu-latest
   strategy:
     matrix:
-      linux_64_numpy1.18python3.6.____cpython:
-        CONFIG: linux_64_numpy1.18python3.6.____cpython
-        UPLOAD_PACKAGES: 'True'
-        DOCKER_IMAGE: quay.io/condaforge/linux-anvil-comp7
-        SHORT_CONFIG_NAME: linux_64_numpy1.18python3.6.____cpython
       linux_64_numpy1.18python3.7.____cpython:
         CONFIG: linux_64_numpy1.18python3.7.____cpython
         UPLOAD_PACKAGES: 'True'
@@ -28,11 +23,6 @@ jobs:
         UPLOAD_PACKAGES: 'True'
         DOCKER_IMAGE: quay.io/condaforge/linux-anvil-comp7
         SHORT_CONFIG_NAME: linux_64_numpy1.19python3.9.____cpython
-      linux_aarch64_numpy1.18python3.6.____cpython:
-        CONFIG: linux_aarch64_numpy1.18python3.6.____cpython
-        UPLOAD_PACKAGES: 'True'
-        DOCKER_IMAGE: quay.io/condaforge/linux-anvil-comp7
-        SHORT_CONFIG_NAME: linux_aarch64_numpy1.18python3.6.____cpython
       linux_aarch64_numpy1.18python3.7.____cpython:
         CONFIG: linux_aarch64_numpy1.18python3.7.____cpython
         UPLOAD_PACKAGES: 'True'
@@ -48,11 +38,6 @@ jobs:
         UPLOAD_PACKAGES: 'True'
         DOCKER_IMAGE: quay.io/condaforge/linux-anvil-comp7
         SHORT_CONFIG_NAME: linux_aarch64_numpy1.19python3.9.____cpython
-      linux_ppc64le_numpy1.18python3.6.____cpython:
-        CONFIG: linux_ppc64le_numpy1.18python3.6.____cpython
-        UPLOAD_PACKAGES: 'True'
-        DOCKER_IMAGE: quay.io/condaforge/linux-anvil-comp7
-        SHORT_CONFIG_NAME: linux_ppc64le_numpy1.18python3.6.____cpython
       linux_ppc64le_numpy1.18python3.7.____cpython:
         CONFIG: linux_ppc64le_numpy1.18python3.7.____cpython
         UPLOAD_PACKAGES: 'True'
