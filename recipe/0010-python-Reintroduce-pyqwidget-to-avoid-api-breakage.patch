@@ -1,0 +1,356 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: David Winter <david.winter@analog.com>
+Date: Mon, 11 Oct 2021 11:48:04 +0200
+Subject: [PATCH] python: Reintroduce pyqwidget() to avoid api breakage
+
+In a previous commit pyqwidget() was completely removed from the
+codebase and replaced by qwidget(). This broke some external users
+relying on pyqwidget() to interact with GUI elements through means
+other than GRC.
+
+Signed-off-by: David Winter <david.winter@analog.com>
+---
+ gr-qtgui/python/qtgui/bindings/ber_sink_b_python.cc       | 6 ++++++
+ gr-qtgui/python/qtgui/bindings/const_sink_c_python.cc     | 8 ++++++++
+ gr-qtgui/python/qtgui/bindings/edit_box_msg_python.cc     | 8 ++++++++
+ gr-qtgui/python/qtgui/bindings/eye_sink_c_python.cc       | 6 ++++++
+ gr-qtgui/python/qtgui/bindings/eye_sink_f_python.cc       | 6 ++++++
+ gr-qtgui/python/qtgui/bindings/freq_sink_c_python.cc      | 6 ++++++
+ gr-qtgui/python/qtgui/bindings/freq_sink_f_python.cc      | 6 ++++++
+ gr-qtgui/python/qtgui/bindings/histogram_sink_f_python.cc | 8 ++++++++
+ gr-qtgui/python/qtgui/bindings/number_sink_python.cc      | 6 ++++++
+ gr-qtgui/python/qtgui/bindings/sink_c_python.cc           | 6 ++++++
+ gr-qtgui/python/qtgui/bindings/sink_f_python.cc           | 6 ++++++
+ .../python/qtgui/bindings/time_raster_sink_b_python.cc    | 8 ++++++++
+ .../python/qtgui/bindings/time_raster_sink_f_python.cc    | 8 ++++++++
+ gr-qtgui/python/qtgui/bindings/time_sink_c_python.cc      | 6 ++++++
+ gr-qtgui/python/qtgui/bindings/time_sink_f_python.cc      | 6 ++++++
+ gr-qtgui/python/qtgui/bindings/vector_sink_f_python.cc    | 8 ++++++++
+ gr-qtgui/python/qtgui/bindings/waterfall_sink_c_python.cc | 8 ++++++++
+ gr-qtgui/python/qtgui/bindings/waterfall_sink_f_python.cc | 8 ++++++++
+ 18 files changed, 124 insertions(+)
+
+diff --git a/gr-qtgui/python/qtgui/bindings/ber_sink_b_python.cc b/gr-qtgui/python/qtgui/bindings/ber_sink_b_python.cc
+index ff5ece7cd..b03d9a2aa 100644
+--- a/gr-qtgui/python/qtgui/bindings/ber_sink_b_python.cc
++++ b/gr-qtgui/python/qtgui/bindings/ber_sink_b_python.cc
+@@ -61,6 +61,12 @@ void bind_ber_sink_b(py::module& m)
+             D(ber_sink_b, qwidget))
+ 
+ 
++        .def(
++            "pyqwidget",
++            [](ber_sink_b& self) { return reinterpret_cast<uintptr_t>(self.qwidget()); },
++            D(ber_sink_b, qwidget))
++
++
+         .def("set_y_axis",
+              &ber_sink_b::set_y_axis,
+              py::arg("min"),
+diff --git a/gr-qtgui/python/qtgui/bindings/const_sink_c_python.cc b/gr-qtgui/python/qtgui/bindings/const_sink_c_python.cc
+index db2558d1c..9234b97ab 100644
+--- a/gr-qtgui/python/qtgui/bindings/const_sink_c_python.cc
++++ b/gr-qtgui/python/qtgui/bindings/const_sink_c_python.cc
+@@ -64,6 +64,14 @@ void bind_const_sink_c(py::module& m)
+             D(const_sink_c, qwidget))
+ 
+ 
++        .def(
++            "pyqwidget",
++            [](const_sink_c& self) {
++                return reinterpret_cast<uintptr_t>(self.qwidget());
++            },
++            D(const_sink_c, qwidget))
++
++
+         .def("set_y_axis",
+              &const_sink_c::set_y_axis,
+              py::arg("min"),
+diff --git a/gr-qtgui/python/qtgui/bindings/edit_box_msg_python.cc b/gr-qtgui/python/qtgui/bindings/edit_box_msg_python.cc
+index b4bc1ee4c..3ea4dba0c 100644
+--- a/gr-qtgui/python/qtgui/bindings/edit_box_msg_python.cc
++++ b/gr-qtgui/python/qtgui/bindings/edit_box_msg_python.cc
+@@ -61,5 +61,13 @@ void bind_edit_box_msg(py::module& m)
+             [](edit_box_msg& self) {
+                 return reinterpret_cast<uintptr_t>(self.qwidget());
+             },
++            D(edit_box_msg, qwidget))
++
++
++        .def(
++            "pyqwidget",
++            [](edit_box_msg& self) {
++                return reinterpret_cast<uintptr_t>(self.qwidget());
++            },
+             D(edit_box_msg, qwidget));
+ }
+diff --git a/gr-qtgui/python/qtgui/bindings/eye_sink_c_python.cc b/gr-qtgui/python/qtgui/bindings/eye_sink_c_python.cc
+index c737c74c3..dbf90dc79 100644
+--- a/gr-qtgui/python/qtgui/bindings/eye_sink_c_python.cc
++++ b/gr-qtgui/python/qtgui/bindings/eye_sink_c_python.cc
+@@ -65,6 +65,12 @@ void bind_eye_sink_c(py::module& m)
+             D(eye_sink_c, qwidget))
+ 
+ 
++        .def(
++            "pyqwidget",
++            [](eye_sink_c& self) { return reinterpret_cast<uintptr_t>(self.qwidget()); },
++            D(eye_sink_c, qwidget))
++
++
+         .def("set_y_axis",
+              &eye_sink_c::set_y_axis,
+              py::arg("min"),
+diff --git a/gr-qtgui/python/qtgui/bindings/eye_sink_f_python.cc b/gr-qtgui/python/qtgui/bindings/eye_sink_f_python.cc
+index ac8d759da..727a98c87 100644
+--- a/gr-qtgui/python/qtgui/bindings/eye_sink_f_python.cc
++++ b/gr-qtgui/python/qtgui/bindings/eye_sink_f_python.cc
+@@ -62,6 +62,12 @@ void bind_eye_sink_f(py::module& m)
+             D(eye_sink_f, qwidget))
+ 
+ 
++        .def(
++            "pyqwidget",
++            [](eye_sink_f& self) { return reinterpret_cast<uintptr_t>(self.qwidget()); },
++            D(eye_sink_f, qwidget))
++
++
+         .def("set_y_axis",
+              &eye_sink_f::set_y_axis,
+              py::arg("min"),
+diff --git a/gr-qtgui/python/qtgui/bindings/freq_sink_c_python.cc b/gr-qtgui/python/qtgui/bindings/freq_sink_c_python.cc
+index 6ca230c7d..702e56169 100644
+--- a/gr-qtgui/python/qtgui/bindings/freq_sink_c_python.cc
++++ b/gr-qtgui/python/qtgui/bindings/freq_sink_c_python.cc
+@@ -65,6 +65,12 @@ void bind_freq_sink_c(py::module& m)
+             D(freq_sink_c, qwidget))
+ 
+ 
++        .def(
++            "pyqwidget",
++            [](freq_sink_c& self) { return reinterpret_cast<uintptr_t>(self.qwidget()); },
++            D(freq_sink_c, qwidget))
++
++
+         .def("set_fft_size",
+              &freq_sink_c::set_fft_size,
+              py::arg("fftsize"),
+diff --git a/gr-qtgui/python/qtgui/bindings/freq_sink_f_python.cc b/gr-qtgui/python/qtgui/bindings/freq_sink_f_python.cc
+index 975fadf18..21a76ec92 100644
+--- a/gr-qtgui/python/qtgui/bindings/freq_sink_f_python.cc
++++ b/gr-qtgui/python/qtgui/bindings/freq_sink_f_python.cc
+@@ -65,6 +65,12 @@ void bind_freq_sink_f(py::module& m)
+             D(freq_sink_f, qwidget))
+ 
+ 
++        .def(
++            "pyqwidget",
++            [](freq_sink_f& self) { return reinterpret_cast<uintptr_t>(self.qwidget()); },
++            D(freq_sink_f, qwidget))
++
++
+         .def("set_fft_size",
+              &freq_sink_f::set_fft_size,
+              py::arg("fftsize"),
+diff --git a/gr-qtgui/python/qtgui/bindings/histogram_sink_f_python.cc b/gr-qtgui/python/qtgui/bindings/histogram_sink_f_python.cc
+index ca25ab789..735de55ca 100644
+--- a/gr-qtgui/python/qtgui/bindings/histogram_sink_f_python.cc
++++ b/gr-qtgui/python/qtgui/bindings/histogram_sink_f_python.cc
+@@ -68,6 +68,14 @@ void bind_histogram_sink_f(py::module& m)
+             D(histogram_sink_f, qwidget))
+ 
+ 
++        .def(
++            "pyqwidget",
++            [](histogram_sink_f& self) {
++                return reinterpret_cast<uintptr_t>(self.qwidget());
++            },
++            D(histogram_sink_f, qwidget))
++
++
+         .def("title", &histogram_sink_f::title, D(histogram_sink_f, title))
+ 
+ 
+diff --git a/gr-qtgui/python/qtgui/bindings/number_sink_python.cc b/gr-qtgui/python/qtgui/bindings/number_sink_python.cc
+index c172806b3..e027d0135 100644
+--- a/gr-qtgui/python/qtgui/bindings/number_sink_python.cc
++++ b/gr-qtgui/python/qtgui/bindings/number_sink_python.cc
+@@ -63,6 +63,12 @@ void bind_number_sink(py::module& m)
+             D(number_sink, qwidget))
+ 
+ 
++        .def(
++            "pyqwidget",
++            [](number_sink& self) { return reinterpret_cast<uintptr_t>(self.qwidget()); },
++            D(number_sink, qwidget))
++
++
+         .def("set_update_time",
+              &number_sink::set_update_time,
+              py::arg("t"),
+diff --git a/gr-qtgui/python/qtgui/bindings/sink_c_python.cc b/gr-qtgui/python/qtgui/bindings/sink_c_python.cc
+index c76540817..0170c0d09 100644
+--- a/gr-qtgui/python/qtgui/bindings/sink_c_python.cc
++++ b/gr-qtgui/python/qtgui/bindings/sink_c_python.cc
+@@ -65,6 +65,12 @@ void bind_sink_c(py::module& m)
+             D(sink_c, qwidget))
+ 
+ 
++        .def(
++            "pyqwidget",
++            [](sink_c& self) { return reinterpret_cast<uintptr_t>(self.qwidget()); },
++            D(sink_c, qwidget))
++
++
+         .def("set_fft_size",
+              &sink_c::set_fft_size,
+              py::arg("fftsize"),
+diff --git a/gr-qtgui/python/qtgui/bindings/sink_f_python.cc b/gr-qtgui/python/qtgui/bindings/sink_f_python.cc
+index 3d4473ca5..b432acb38 100644
+--- a/gr-qtgui/python/qtgui/bindings/sink_f_python.cc
++++ b/gr-qtgui/python/qtgui/bindings/sink_f_python.cc
+@@ -65,6 +65,12 @@ void bind_sink_f(py::module& m)
+             D(sink_f, qwidget))
+ 
+ 
++        .def(
++            "pyqwidget",
++            [](sink_f& self) { return reinterpret_cast<uintptr_t>(self.qwidget()); },
++            D(sink_f, qwidget))
++
++
+         .def("set_fft_size",
+              &sink_f::set_fft_size,
+              py::arg("fftsize"),
+diff --git a/gr-qtgui/python/qtgui/bindings/time_raster_sink_b_python.cc b/gr-qtgui/python/qtgui/bindings/time_raster_sink_b_python.cc
+index 2fb84e3e4..3249e2508 100644
+--- a/gr-qtgui/python/qtgui/bindings/time_raster_sink_b_python.cc
++++ b/gr-qtgui/python/qtgui/bindings/time_raster_sink_b_python.cc
+@@ -69,6 +69,14 @@ void bind_time_raster_sink_b(py::module& m)
+             D(time_raster_sink_b, qwidget))
+ 
+ 
++        .def(
++            "pyqwidget",
++            [](time_raster_sink_b& self) {
++                return reinterpret_cast<uintptr_t>(self.qwidget());
++            },
++            D(time_raster_sink_b, qwidget))
++
++
+         .def("set_x_range",
+              &time_raster_sink_b::set_x_range,
+              py::arg("min"),
+diff --git a/gr-qtgui/python/qtgui/bindings/time_raster_sink_f_python.cc b/gr-qtgui/python/qtgui/bindings/time_raster_sink_f_python.cc
+index 539b97bce..013a41a0b 100644
+--- a/gr-qtgui/python/qtgui/bindings/time_raster_sink_f_python.cc
++++ b/gr-qtgui/python/qtgui/bindings/time_raster_sink_f_python.cc
+@@ -69,6 +69,14 @@ void bind_time_raster_sink_f(py::module& m)
+             D(time_raster_sink_f, qwidget))
+ 
+ 
++        .def(
++            "pyqwidget",
++            [](time_raster_sink_f& self) {
++                return reinterpret_cast<uintptr_t>(self.qwidget());
++            },
++            D(time_raster_sink_f, qwidget))
++
++
+         .def("set_x_range",
+              &time_raster_sink_f::set_x_range,
+              py::arg("min"),
+diff --git a/gr-qtgui/python/qtgui/bindings/time_sink_c_python.cc b/gr-qtgui/python/qtgui/bindings/time_sink_c_python.cc
+index 41bec6211..87766d0c0 100644
+--- a/gr-qtgui/python/qtgui/bindings/time_sink_c_python.cc
++++ b/gr-qtgui/python/qtgui/bindings/time_sink_c_python.cc
+@@ -66,6 +66,12 @@ void bind_time_sink_c(py::module& m)
+             D(time_sink_c, qwidget))
+ 
+ 
++        .def(
++            "pyqwidget",
++            [](time_sink_c& self) { return reinterpret_cast<uintptr_t>(self.qwidget()); },
++            D(time_sink_c, qwidget))
++
++
+         .def("set_y_axis",
+              &time_sink_c::set_y_axis,
+              py::arg("min"),
+diff --git a/gr-qtgui/python/qtgui/bindings/time_sink_f_python.cc b/gr-qtgui/python/qtgui/bindings/time_sink_f_python.cc
+index e7cd5673e..5caccd722 100644
+--- a/gr-qtgui/python/qtgui/bindings/time_sink_f_python.cc
++++ b/gr-qtgui/python/qtgui/bindings/time_sink_f_python.cc
+@@ -63,6 +63,12 @@ void bind_time_sink_f(py::module& m)
+             D(time_sink_f, qwidget))
+ 
+ 
++        .def(
++            "pyqwidget",
++            [](time_sink_f& self) { return reinterpret_cast<uintptr_t>(self.qwidget()); },
++            D(time_sink_f, qwidget))
++
++
+         .def("set_y_axis",
+              &time_sink_f::set_y_axis,
+              py::arg("min"),
+diff --git a/gr-qtgui/python/qtgui/bindings/vector_sink_f_python.cc b/gr-qtgui/python/qtgui/bindings/vector_sink_f_python.cc
+index f5b85e425..5cc83adcc 100644
+--- a/gr-qtgui/python/qtgui/bindings/vector_sink_f_python.cc
++++ b/gr-qtgui/python/qtgui/bindings/vector_sink_f_python.cc
+@@ -68,6 +68,14 @@ void bind_vector_sink_f(py::module& m)
+             D(vector_sink_f, qwidget))
+ 
+ 
++        .def(
++            "pyqwidget",
++            [](vector_sink_f& self) {
++                return reinterpret_cast<uintptr_t>(self.qwidget());
++            },
++            D(vector_sink_f, qwidget))
++
++
+         .def("vlen", &vector_sink_f::vlen, D(vector_sink_f, vlen))
+ 
+ 
+diff --git a/gr-qtgui/python/qtgui/bindings/waterfall_sink_c_python.cc b/gr-qtgui/python/qtgui/bindings/waterfall_sink_c_python.cc
+index 73c04ab2f..204618419 100644
+--- a/gr-qtgui/python/qtgui/bindings/waterfall_sink_c_python.cc
++++ b/gr-qtgui/python/qtgui/bindings/waterfall_sink_c_python.cc
+@@ -68,6 +68,14 @@ void bind_waterfall_sink_c(py::module& m)
+             D(waterfall_sink_c, qwidget))
+ 
+ 
++        .def(
++            "pyqwidget",
++            [](waterfall_sink_c& self) {
++                return reinterpret_cast<uintptr_t>(self.qwidget());
++            },
++            D(waterfall_sink_c, qwidget))
++
++
+         .def("clear_data", &waterfall_sink_c::clear_data, D(waterfall_sink_c, clear_data))
+ 
+ 
+diff --git a/gr-qtgui/python/qtgui/bindings/waterfall_sink_f_python.cc b/gr-qtgui/python/qtgui/bindings/waterfall_sink_f_python.cc
+index 434f8ea87..efd2bbbaf 100644
+--- a/gr-qtgui/python/qtgui/bindings/waterfall_sink_f_python.cc
++++ b/gr-qtgui/python/qtgui/bindings/waterfall_sink_f_python.cc
+@@ -68,6 +68,14 @@ void bind_waterfall_sink_f(py::module& m)
+             D(waterfall_sink_f, qwidget))
+ 
+ 
++        .def(
++            "pyqwidget",
++            [](waterfall_sink_f& self) {
++                return reinterpret_cast<uintptr_t>(self.qwidget());
++            },
++            D(waterfall_sink_f, qwidget))
++
++
+         .def("clear_data", &waterfall_sink_f::clear_data, D(waterfall_sink_f, clear_data))
+ 
+ 
+-- 
+2.32.0
+

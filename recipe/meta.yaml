@@ -15,9 +15,12 @@ source:
     - 0005-grc-Remove-global_blocks_path-preference-and-use-pre.patch
     - 0006-grc-Include-scale-factor-when-computing-drawing-area.patch
     - 0007-runtime-fix-pybind-of-get_tags_in_window.patch
+    - 0008-grc-Look-up-type-aliases-as-a-set-instead-of-a-singl.patch
+    - 0009-ber_sink_b-Make-qwidget-part-of-the-API.patch
+    - 0010-python-Reintroduce-pyqwidget-to-avoid-api-breakage.patch
 
 build:
-  number: 0
+  number: 1
 
 requirements:
   build:
