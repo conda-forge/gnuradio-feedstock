@@ -81,7 +81,7 @@ requirements:
     - volk >=2
   # gnuradio.audio
     - alsa-lib  # [linux]
-    - portaudio  # [linux]
+    - portaudio
   # gnuradio companion
     - gtk3
     - lxml
@@ -157,7 +157,7 @@ outputs:
         - libcblas  # [linux]
         - log4cpp
         - mpir  # [win]
-        - portaudio  # [linux]
+        - portaudio
         - python
         - volk
       run:
@@ -168,7 +168,6 @@ outputs:
         - mako
         - menuinst  # [win]
         - numpy
-        - {{ pin_compatible('portaudio') }}  # [linux]
         - python
         - six
     test:
