@@ -22,9 +22,10 @@ source:
     - 0012-grc-Add-aliases-for-sc16-short-and-sc8-byte.patch
     - 0013-grc-Remove-global_blocks_path-preference-and-use-pre.patch
     - 0014-grc-Include-scale-factor-when-computing-drawing-area.patch
+    - 0015-grc-Look-up-type-aliases-as-a-set-instead-of-a-singl.patch
 
 build:
-  number: 1
+  number: 2
 
 requirements:
   build:
@@ -80,7 +81,7 @@ requirements:
     - volk >=2
   # gnuradio.audio
     - alsa-lib  # [linux]
-    - portaudio  # [linux]
+    - portaudio
   # gnuradio companion
     - gtk3
     - lxml
@@ -156,7 +157,7 @@ outputs:
         - libcblas  # [linux]
         - log4cpp
         - mpir  # [win]
-        - portaudio  # [linux]
+        - portaudio
         - python
         - volk
       run:
@@ -167,7 +168,7 @@ outputs:
         - mako
         - menuinst  # [win]
         - numpy
-        - {{ pin_compatible('portaudio') }}  # [linux]
+        - {{ pin_compatible('portaudio') }}
         - python
         - six
     test:
