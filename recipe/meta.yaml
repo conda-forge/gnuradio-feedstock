@@ -18,9 +18,10 @@ source:
     - 0008-grc-Look-up-type-aliases-as-a-set-instead-of-a-singl.patch
     - 0009-ber_sink_b-Make-qwidget-part-of-the-API.patch
     - 0010-python-Reintroduce-pyqwidget-to-avoid-api-breakage.patch
+    - 0011-grc-Don-t-fail-when-type-lookup-fails-by-defaulting-.patch
 
 build:
-  number: 1
+  number: 2
 
 requirements:
   build:
