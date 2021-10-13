@@ -23,9 +23,10 @@ source:
     - 0013-grc-Remove-global_blocks_path-preference-and-use-pre.patch
     - 0014-grc-Include-scale-factor-when-computing-drawing-area.patch
     - 0015-grc-Look-up-type-aliases-as-a-set-instead-of-a-singl.patch
+    - 0016-grc-Don-t-fail-when-type-lookup-fails-by-defaulting-.patch
 
 build:
-  number: 2
+  number: 3
 
 requirements:
   build:
