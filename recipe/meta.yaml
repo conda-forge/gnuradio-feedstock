@@ -24,9 +24,10 @@ source:
     - 0014-grc-Include-scale-factor-when-computing-drawing-area.patch
     - 0015-grc-Look-up-type-aliases-as-a-set-instead-of-a-singl.patch
     - 0016-grc-Don-t-fail-when-type-lookup-fails-by-defaulting-.patch
+    - 0017-grc-typo-in-Connection.py.patch
 
 build:
-  number: 3
+  number: 4
 
 requirements:
   build:
