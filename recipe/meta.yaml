@@ -19,9 +19,10 @@ source:
     - 0009-ber_sink_b-Make-qwidget-part-of-the-API.patch
     - 0010-python-Reintroduce-pyqwidget-to-avoid-api-breakage.patch
     - 0011-grc-Don-t-fail-when-type-lookup-fails-by-defaulting-.patch
+    - 0012-Default-for-dict-is-just-and-extra-arg-no-default-ke.patch
 
 build:
-  number: 2
+  number: 3
 
 requirements:
   build:
