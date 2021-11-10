@@ -1,4 +1,4 @@
-{% set version = "3.9.3.0" %}
+{% set version = "3.9.4.0" %}
 
 package:
   name: gnuradio
@@ -6,23 +6,15 @@ package:
 
 source:
   url: https://github.com/gnuradio/gnuradio/archive/refs/tags/v{{ version }}.tar.gz
-  sha256: 4073ac72524f95fed4bda7dd553cb946f66d2e00bd07c4ae7758f1b787d507e0
+  sha256: 3337441d597959bbf657f1257fb37a2aa5b251ee75e3573fcf6b0215d5c53e41
   patches:
     - 0001-cmake-Install-python-wrapper-exe-for-scripts-on-Wind.patch
     - 0002-cmake-Don-t-generate-.pyc-and-.pyo-files.patch
     - 0003-Use-an-ImageSurface-rather-than-UI-back-end.patch  # [osx]
-    - 0004-grc-Add-aliases-for-sc16-short-and-sc8-byte.patch
-    - 0005-grc-Remove-global_blocks_path-preference-and-use-pre.patch
-    - 0006-grc-Include-scale-factor-when-computing-drawing-area.patch
-    - 0007-runtime-fix-pybind-of-get_tags_in_window.patch
-    - 0008-grc-Look-up-type-aliases-as-a-set-instead-of-a-singl.patch
-    - 0009-ber_sink_b-Make-qwidget-part-of-the-API.patch
-    - 0010-python-Reintroduce-pyqwidget-to-avoid-api-breakage.patch
-    - 0011-grc-Don-t-fail-when-type-lookup-fails-by-defaulting-.patch
-    - 0012-Default-for-dict-is-just-and-extra-arg-no-default-ke.patch
+    - 0004-grc-Remove-global_blocks_path-preference-and-use-pre.patch
 
 build:
-  number: 3
+  number: 0
 
 requirements:
   build:
