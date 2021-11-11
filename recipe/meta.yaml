@@ -185,9 +185,6 @@ outputs:
       commands:
         - gnuradio-config-info -v --prefix --sysconfdir --prefsdir --userprefsdir --prefs --builddate --enabled-components --cc --cxx --cflags
         - gr_modtool --help
-        # run a few example scripts to show that at least some things work
-        - python "$PREFIX/share/gnuradio/examples/volk_benchmark/volk_math.py" -L test -N 1e6 -I 3 --all  # [not win]
-        - python "%PREFIX%\\Library\\share\\gnuradio\\examples\\volk_benchmark\\volk_math.py" -L test -N 1e6 -I 3 --all  # [win]
         - if not exist %PREFIX%\\Scripts\\gr_filter_design.exe exit 1  # [win]
         - if not exist %PREFIX%\\Scripts\\gr_modtool.exe exit 1  # [win]
       imports:
