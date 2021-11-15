@@ -27,7 +27,7 @@ source:
     - 0017-grc-typo-in-Connection.py.patch
 
 build:
-  number: 4
+  number: 5
 
 requirements:
   build:
