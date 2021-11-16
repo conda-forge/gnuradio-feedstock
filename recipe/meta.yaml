@@ -14,7 +14,7 @@ source:
     - 0004-grc-Remove-global_blocks_path-preference-and-use-pre.patch
 
 build:
-  number: 0
+  number: 1
 
 requirements:
   build:
