@@ -15,6 +15,7 @@ cmake -P gr-fec/cmake_install.cmake
 cmake -P gr-fft/cmake_install.cmake
 cmake -P gr-filter/cmake_install.cmake
 cmake -P gr-network/cmake_install.cmake
+cmake -P gr-pdu/cmake_install.cmake
 cmake -P gr-trellis/cmake_install.cmake
 cmake -P gr-utils/cmake_install.cmake
 cmake -P gr-vocoder/cmake_install.cmake
