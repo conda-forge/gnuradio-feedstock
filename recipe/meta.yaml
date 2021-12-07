@@ -55,6 +55,7 @@ requirements:
     - click-plugins
     - codec2
     - fftw
+    - fmt
     - gmp  # [not win]
     - gsl
     # blas needed to link with gsl
@@ -63,7 +64,6 @@ requirements:
     - libthrift  # [not win]
     # restrict to cos6-compatible libusb (and libudev)
     - libusb-cos6  # [linux and cdt_name=='cos6']
-    - log4cpp
     - mako
     - mpir  # [win]
     - numpy
@@ -71,7 +71,7 @@ requirements:
     - pybind11
     - pybind11-abi
     - python
-    - six
+    - spdlog
     - thrift  # [not win]
     - volk
   # gnuradio.audio
@@ -82,6 +82,9 @@ requirements:
     - lxml
     - pygobject
     - pyyaml
+  # gnuradio.iio
+    - libiio
+    - libad9361-iio
   # gnuradio.qtgui
     - pyqt  # [not (ppc64le or arm64)]
     - qt  # [not (ppc64le or arm64)]
@@ -100,6 +103,7 @@ requirements:
   # this is the metapackage that depends on all the subpackages
     - {{ pin_subpackage('gnuradio-core', exact=True) }}
     - {{ pin_subpackage('gnuradio-grc', exact=True) }}
+    - {{ pin_subpackage('gnuradio-iio', exact=True) }}
     - {{ pin_subpackage('gnuradio-qtgui', exact=True) }}  # [not (ppc64le or arm64)]
     - {{ pin_subpackage('gnuradio-soapy', exact=True) }}
     - {{ pin_subpackage('gnuradio-uhd', exact=True) }}
@@ -116,6 +120,7 @@ test:
     - sqlite
   imports:
     - gnuradio.gr
+    - gnuradio.iio
     - gnuradio.qtgui  # [not (ppc64le or arm64)]
     - gnuradio.soapy
     - gnuradio.uhd
@@ -137,9 +142,6 @@ outputs:
         - gr_modtool = gnuradio.modtool.cli.base:cli  # [win]
       run_exports:
         - {{ pin_subpackage('gnuradio-core', max_pin='x.x.x') }}
-        # log4cpp is used in block headers, so everything compiling against
-        # gnuradio-core will almost-definitely need log4cpp at runtime
-        - {{ pin_compatible('log4cpp', max_pin='x.x') }}
       skip_compile_pyc:
         - "*/templates/*.py"
     requirements:
@@ -154,18 +156,19 @@ outputs:
         - boost-cpp
         - codec2
         - fftw
+        - fmt
         - gmp  # [not win]
         - gsl
         - libcblas  # [linux]
         - libsndfile
         - libthrift  # [not win]
-        - log4cpp
         - mpir  # [win]
         - portaudio
         - pybind11
         - pybind11-abi
         - python
         - numpy
+        - spdlog
         - thrift  # [not win]
         - volk
       run:
@@ -181,7 +184,6 @@ outputs:
         - pyyaml
         # need setuptools because modtool uses pkg_resources
         - setuptools
-        - six
         - thrift  # [not win]
     test:
       commands:
@@ -201,6 +203,7 @@ outputs:
         - gnuradio.filter
         - gnuradio.gr
         - gnuradio.network
+        - gnuradio.pdu
         - gnuradio.trellis
         - gnuradio.vocoder
         - gnuradio.wavelet
@@ -232,12 +235,13 @@ outputs:
         - python  # [build_platform != target_platform]
       host:
         - boost-cpp
+        - fmt
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
         - gtk3
-        - log4cpp
         # workaround to get host environment solved
         - openssl
         - python
+        - spdlog
       run:
         - boost-cpp
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
@@ -261,6 +265,49 @@ outputs:
       license_family: GPL
       license_file: COPYING
       summary: GNU Radio Companion graphical flowgraph interface
+  - name: gnuradio-iio
+    script: install_iio.sh  # [not win]
+    script: install_iio.bat  # [win]
+    build:
+      ignore_run_exports_from:
+        # workaround to get host environment solved
+        - openssl
+    requirements:
+      build:
+        - {{ compiler('c') }}
+        - {{ compiler('cxx') }}
+        - cmake
+        # conda-build needs native python to make .pyc files
+        - python  # [build_platform != target_platform]
+      host:
+        - boost-cpp
+        - fmt
+        - {{ pin_subpackage('gnuradio-core', exact=True) }}
+        - libiio
+        - libad9361-iio
+        # workaround to get host environment solved
+        - openssl
+        - python
+        - spdlog
+        - volk
+      run:
+        - boost-cpp
+        - {{ pin_subpackage('gnuradio-core', exact=True) }}
+        - python
+    test:
+      imports:
+        - gnuradio.iio
+    about:
+      home: https://gnuradio.org/
+      doc_url: https://gnuradio.org/doc/doxygen/
+      dev_url: https://github.com/gnuradio/gnuradio
+      license: GPL-3.0-or-later
+      license_family: GPL
+      license_file: COPYING
+      summary: GNU Radio module for using IIO devices
+      description: >
+        This module provides GNU Radio blocks for using IIO devices, including
+        the PlutoSDR.
   - name: gnuradio-qtgui
     build:
       skip: true  # [ppc64le or arm64]
@@ -278,14 +325,15 @@ outputs:
         - python  # [build_platform != target_platform]
       host:
         - boost-cpp
+        - fmt
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
-        - log4cpp
         # workaround to get host environment solved
         - openssl
         - pyqt
         - python
         - qt
         - qwt
+        - spdlog
         - volk
       run:
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
@@ -319,12 +367,13 @@ outputs:
         - python  # [build_platform != target_platform]
       host:
         - boost-cpp
+        - fmt
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
-        - log4cpp
         # workaround to get host environment solved
         - openssl
         - python
         - soapysdr
+        - spdlog
       run:
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
         - python
@@ -361,11 +410,12 @@ outputs:
         - python  # [build_platform != target_platform]
       host:
         - boost-cpp
+        - fmt
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
-        - log4cpp
         # workaround to get host environment solved
         - openssl
         - python
+        - spdlog
         - uhd
       run:
         - boost-cpp
@@ -400,12 +450,13 @@ outputs:
         - python  # [build_platform != target_platform]
       host:
         - boost-cpp
+        - fmt
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
-        - log4cpp
         # workaround to get host environment solved
         - openssl
         - python
         - sdl
+        - spdlog
       run:
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
         - python
@@ -437,11 +488,12 @@ outputs:
       host:
         - boost-cpp
         - cppzmq
+        - fmt
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
-        - log4cpp
         # workaround to get host environment solved
         - openssl
         - python
+        - spdlog
         - zeromq
       run:
         - boost-cpp
@@ -472,11 +524,13 @@ outputs:
         - {{ compiler('c') }}
         - {{ compiler('cxx') }}
         - cmake
+        - fmt
         - ninja
         - numpy {{ numpy }}
         - pip  # [win]
         - pkg-config
         - pybind11
+        - spdlog
       run_constrained:
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
     test:
