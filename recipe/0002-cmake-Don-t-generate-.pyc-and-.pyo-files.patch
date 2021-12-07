@@ -8,10 +8,10 @@ Subject: [PATCH] cmake: Don't generate .pyc and .pyo files.
  1 file changed, 2 insertions(+), 9 deletions(-)
 
 diff --git a/cmake/Modules/GrPython.cmake b/cmake/Modules/GrPython.cmake
-index c20360bd0..ad0e41dd3 100644
+index 791ea7d30..7677b9df7 100644
 --- a/cmake/Modules/GrPython.cmake
 +++ b/cmake/Modules/GrPython.cmake
-@@ -218,9 +218,6 @@ function(GR_PYTHON_INSTALL)
+@@ -245,9 +245,6 @@ function(GR_PYTHON_INSTALL)
  
          #create install rule and add generated files to target list
          set(python_install_gen_targets ${pycfiles} ${pyofiles})
@@ -21,7 +21,7 @@ index c20360bd0..ad0e41dd3 100644
  
      ####################################################################
      elseif(GR_PYTHON_INSTALL_DIRECTORY)
-@@ -294,10 +291,6 @@ function(GR_PYTHON_INSTALL)
+@@ -322,10 +319,6 @@ function(GR_PYTHON_INSTALL)
              # install relative to current binary dir
              file(RELATIVE_PATH pygen_path_rel "${CMAKE_CURRENT_BINARY_DIR}" "${pygen_path}")
              list(SORT pygen_path_targets)
@@ -32,7 +32,7 @@ index c20360bd0..ad0e41dd3 100644
          endforeach(pygen_path)
  
      ####################################################################
-@@ -369,9 +362,9 @@ function(GR_PYTHON_INSTALL)
+@@ -398,9 +391,9 @@ function(GR_PYTHON_INSTALL)
              )
          endforeach(pyfile)
  
@@ -45,5 +45,5 @@ index c20360bd0..ad0e41dd3 100644
  endfunction(GR_PYTHON_INSTALL)
  
 -- 
-2.30.2
+2.32.0
 

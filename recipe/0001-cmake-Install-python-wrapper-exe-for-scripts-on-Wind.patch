@@ -8,10 +8,10 @@ Subject: [PATCH] cmake: Install python wrapper exe for scripts on Windows.
  1 file changed, 33 insertions(+), 1 deletion(-)
 
 diff --git a/cmake/Modules/GrPython.cmake b/cmake/Modules/GrPython.cmake
-index 8149cb5cb..c20360bd0 100644
+index 8be69a5c8..791ea7d30 100644
 --- a/cmake/Modules/GrPython.cmake
 +++ b/cmake/Modules/GrPython.cmake
-@@ -312,12 +312,44 @@ function(GR_PYTHON_INSTALL)
+@@ -340,12 +340,44 @@ function(GR_PYTHON_INSTALL)
          foreach(pyfile ${GR_PYTHON_INSTALL_PROGRAMS})
              get_filename_component(pyfile_name ${pyfile} NAME)
              get_filename_component(pyfile ${pyfile} ABSOLUTE)
@@ -58,5 +58,5 @@ index 8149cb5cb..c20360bd0 100644
                  OUTPUT ${pyexefile} DEPENDS ${pyfile}
                  COMMAND ${PYTHON_EXECUTABLE} -c
 -- 
-2.30.2
+2.32.0
 
