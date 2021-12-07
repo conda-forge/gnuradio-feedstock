@@ -7,25 +7,33 @@ c_compiler:
 c_compiler_version:
 - '11'
 channel_sources:
-- conda-forge,defaults
+- conda-forge
 channel_targets:
 - conda-forge gnuradio_rc
+codec2:
+- 1.0.0
 cxx_compiler:
 - clangxx
 cxx_compiler_version:
 - '11'
 fftw:
 - '3'
+fmt:
+- '8'
 gmp:
 - '6'
 gsl:
-- '2.6'
+- '2.7'
+libiio:
+- '0'
 libthrift:
-- 0.14.1
+- 0.15.0
 macos_machine:
 - x86_64-apple-darwin13.4.0
 numpy:
-- '1.17'
+- '1.18'
+openssl:
+- 1.1.1
 pin_run_as_build:
   boost-cpp:
     max_pin: x.x.x
@@ -45,19 +53,21 @@ pin_run_as_build:
 pybind11_abi:
 - '4'
 python:
-- 3.8.* *_cpython
+- 3.7.* *_cpython
 qt:
 - '5.12'
 soapysdr:
 - '0.8'
+spdlog:
+- '1.9'
 sqlite:
 - '3'
 target_platform:
 - osx-64
 uhd:
-- 4.0.0
+- 4.1.0
 volk:
-- '2.4'
+- '2.5'
 zeromq:
 - 4.3.4
 zip_keys:
