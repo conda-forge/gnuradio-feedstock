@@ -1,4 +1,4 @@
-{% set tag_version = "3.9.2.0-rc1" %}
+{% set tag_version = "3.10.0.0-rc1" %}
 {% set version = tag_version.replace("-", "") %}
 
 package:
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://github.com/gnuradio/gnuradio/archive/refs/tags/v{{ tag_version }}.tar.gz
-  sha256: 31d2bcc7ec22b22534a9b3b4d2fb4e69d6eaee609b79f056470224b8ebd1e72b
+  sha256: af045f18c212553bac68709536424584781f8f075b068b09a941a464e5456733
   patches:
     - 0001-cmake-Install-python-wrapper-exe-for-scripts-on-Wind.patch
     - 0002-cmake-Don-t-generate-.pyc-and-.pyo-files.patch
@@ -15,7 +15,7 @@ source:
     - 0004-grc-Remove-global_blocks_path-preference-and-use-pre.patch
 
 build:
-  number: 1
+  number: 0
 
 requirements:
   build:
