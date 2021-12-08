@@ -1,0 +1,53 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Ryan Volz <ryan.volz@gmail.com>
+Date: Tue, 7 Dec 2021 17:52:48 -0500
+Subject: [PATCH] runtime: Use <spdlog/fmt/fmt.h> header handling
+ SPDLOG_FMT_EXTERNAL
+
+Regardless of how spdlog was built (with/without SPDLOG_FMT_EXTERNAL),
+this ensures that the proper fmt headers are included. This makes it so
+that fmt is not a required dependency when spdlog is built with
+SPDLOG_FMT_EXTERNAL=OFF.
+
+Signed-off-by: Ryan Volz <ryan.volz@gmail.com>
+---
+ gnuradio-runtime/include/gnuradio/logger.h                  | 6 +-----
+ .../python/gnuradio/gr/bindings/logger_python.cc            | 2 +-
+ 2 files changed, 2 insertions(+), 6 deletions(-)
+
+diff --git a/gnuradio-runtime/include/gnuradio/logger.h b/gnuradio-runtime/include/gnuradio/logger.h
+index 68dbf0ad3..9ed0cf74a 100644
+--- a/gnuradio-runtime/include/gnuradio/logger.h
++++ b/gnuradio-runtime/include/gnuradio/logger.h
+@@ -22,14 +22,10 @@
+ // keeps as short as possible; if anything is needed only by the implementation in
+ // buffer.cc, then only include it there
+ #include <gnuradio/api.h>
+-#include <fmt/core.h>
+-#include <fmt/format.h>
+ #include <spdlog/common.h>
++#include <spdlog/fmt/fmt.h>
+ #include <memory>
+ 
+-#ifndef SPDLOG_FMT_EXTERNAL
+-#define SPDLOG_FMT_EXTERNAL
+-#endif
+ #include <spdlog/spdlog.h>
+ 
+ #include <spdlog/sinks/dist_sink.h>
+diff --git a/gnuradio-runtime/python/gnuradio/gr/bindings/logger_python.cc b/gnuradio-runtime/python/gnuradio/gr/bindings/logger_python.cc
+index cf9206104..c0792a4db 100644
+--- a/gnuradio-runtime/python/gnuradio/gr/bindings/logger_python.cc
++++ b/gnuradio-runtime/python/gnuradio/gr/bindings/logger_python.cc
+@@ -15,7 +15,7 @@
+ /* BINDTOOL_GEN_AUTOMATIC(0)                                                       */
+ /* BINDTOOL_USE_PYGCCXML(0)                                                        */
+ /* BINDTOOL_HEADER_FILE(logger.h)                                        */
+-/* BINDTOOL_HEADER_FILE_HASH(7f3cbb9463e52829b27c58d9dd41b422)                     */
++/* BINDTOOL_HEADER_FILE_HASH(8c31f211c1f0920ca0059a0f94db9b57)                     */
+ /***********************************************************************************/
+ 
+ #include <pybind11/complex.h>
+-- 
+2.34.1
+

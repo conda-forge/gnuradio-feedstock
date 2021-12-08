@@ -13,6 +13,7 @@ source:
     - 0002-cmake-Don-t-generate-.pyc-and-.pyo-files.patch
     - 0003-Use-an-ImageSurface-rather-than-UI-back-end.patch  # [osx]
     - 0004-grc-Remove-global_blocks_path-preference-and-use-pre.patch
+    - 0005-runtime-Use-spdlog-fmt-fmt.h-header-handling-SPDLOG_.patch
 
 build:
   number: 0
@@ -56,7 +57,6 @@ requirements:
     - click-plugins
     - codec2
     - fftw
-    - fmt
     - gmp  # [not win]
     - gsl
     # blas needed to link with gsl
@@ -157,7 +157,6 @@ outputs:
         - boost-cpp
         - codec2
         - fftw
-        - fmt
         - gmp  # [not win]
         - gsl
         - libcblas  # [linux]
@@ -237,7 +236,6 @@ outputs:
         - python  # [build_platform != target_platform]
       host:
         - boost-cpp
-        - fmt
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
         - gtk3
         # workaround to get host environment solved
@@ -283,7 +281,6 @@ outputs:
         - python  # [build_platform != target_platform]
       host:
         - boost-cpp
-        - fmt
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
         - libiio
         - libad9361-iio
@@ -327,7 +324,6 @@ outputs:
         - python  # [build_platform != target_platform]
       host:
         - boost-cpp
-        - fmt
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
         # workaround to get host environment solved
         - openssl
@@ -369,7 +365,6 @@ outputs:
         - python  # [build_platform != target_platform]
       host:
         - boost-cpp
-        - fmt
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
         # workaround to get host environment solved
         - openssl
@@ -412,7 +407,6 @@ outputs:
         - python  # [build_platform != target_platform]
       host:
         - boost-cpp
-        - fmt
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
         # workaround to get host environment solved
         - openssl
@@ -452,7 +446,6 @@ outputs:
         - python  # [build_platform != target_platform]
       host:
         - boost-cpp
-        - fmt
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
         # workaround to get host environment solved
         - openssl
@@ -490,7 +483,6 @@ outputs:
       host:
         - boost-cpp
         - cppzmq
-        - fmt
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
         # workaround to get host environment solved
         - openssl
@@ -526,7 +518,6 @@ outputs:
         - {{ compiler('c') }}
         - {{ compiler('cxx') }}
         - cmake
-        - fmt
         - ninja
         - numpy {{ numpy }}
         - pip  # [win]
