@@ -12,8 +12,6 @@ cxx_compiler:
 - vs2017
 fftw:
 - '3'
-fmt:
-- '8'
 gsl:
 - '2.7'
 libiio:

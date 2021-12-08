@@ -1,5 +1,7 @@
 MACOSX_DEPLOYMENT_TARGET:
-- '10.9'
+- '10.15'
+MACOSX_SDK_VERSION:
+- '10.15'
 boost_cpp:
 - 1.74.0
 c_compiler:
@@ -18,8 +20,6 @@ cxx_compiler_version:
 - '11'
 fftw:
 - '3'
-fmt:
-- '8'
 gmp:
 - '6'
 gsl:
