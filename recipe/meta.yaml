@@ -61,6 +61,8 @@ requirements:
     - libcblas  # [linux]
     - libsndfile
     - libthrift  # [not win]
+    # restrict to cos6-compatible libusb (and libudev)
+    - libusb-cos6  # [linux and cdt_name=='cos6']
     - log4cpp
     - mako
     - mpir  # [win]
