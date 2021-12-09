@@ -1,0 +1,46 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Ryan Volz <ryan.volz@gmail.com>
+Date: Thu, 9 Dec 2021 13:51:39 -0500
+Subject: [PATCH] audio: osx: Replace boost::scoped_array with std::unique_ptr.
+
+This removes a use of boost and fixes the failing build (due to missing
+the boost::scoped_array header, how did this work before?).
+
+Signed-off-by: Ryan Volz <ryan.volz@gmail.com>
+---
+ gr-audio/lib/osx/osx_impl.cc | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/gr-audio/lib/osx/osx_impl.cc b/gr-audio/lib/osx/osx_impl.cc
+index cd316e4d7..aff93434c 100644
+--- a/gr-audio/lib/osx/osx_impl.cc
++++ b/gr-audio/lib/osx/osx_impl.cc
+@@ -19,6 +19,7 @@
+ 
+ #include <algorithm>
+ #include <locale>
++#include <memory>
+ #include <stdexcept>
+ 
+ std::ostream& operator<<(std::ostream& s, const AudioStreamBasicDescription& asbd)
+@@ -68,7 +69,7 @@ static UInt32 _get_num_channels(AudioDeviceID ad_id, AudioObjectPropertyScope sc
+     OSStatus err = noErr;
+     if ((err = AudioObjectGetPropertyDataSize(ad_id, &ao_address, 0, NULL, &prop_size)) ==
+         noErr) {
+-        boost::scoped_array<AudioBufferList> buf_list(
++        std::unique_ptr<AudioBufferList[]> buf_list(
+             reinterpret_cast<AudioBufferList*>(new char[prop_size]));
+         if ((err = AudioObjectGetPropertyData(
+                  ad_id, &ao_address, 0, NULL, &prop_size, buf_list.get())) == noErr) {
+@@ -167,7 +168,7 @@ void find_audio_devices(const std::string& device_name,
+ 
+     // retrieve all audio device ids
+ 
+-    boost::scoped_array<AudioDeviceID> all_dev_ids(new AudioDeviceID[num_devices]);
++    std::unique_ptr<AudioDeviceID[]> all_dev_ids(new AudioDeviceID[num_devices]);
+ 
+     if ((err = AudioObjectGetPropertyData(kAudioObjectSystemObject,
+                                           &ao_address,
+-- 
+2.34.1
+
