@@ -13,6 +13,7 @@ source:
     - 0003-Use-an-ImageSurface-rather-than-UI-back-end.patch  # [osx]
     - 0004-grc-Remove-global_blocks_path-preference-and-use-pre.patch
     - 0005-runtime-Use-spdlog-fmt-fmt.h-header-handling-SPDLOG_.patch
+    - 0006-audio-osx-Replace-boost-scoped_array-with-std-unique.patch
 
 build:
   number: 0
