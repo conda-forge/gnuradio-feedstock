@@ -87,7 +87,7 @@ requirements:
   # gnuradio.qtgui
     - pyqt  # [not (ppc64le or arm64)]
     - qt  # [not (ppc64le or arm64)]
-    - qwt <6.2  # [not (ppc64le or arm64)]
+    - qwt  # [not (ppc64le or arm64)]
   # gnuradio.uhd
     - uhd
   # gnuradio.video_sdl
@@ -258,7 +258,7 @@ outputs:
         - pyqt
         - python
         - qt
-        - qwt <6.2
+        - qwt
         - volk
       run:
         - boost-cpp
