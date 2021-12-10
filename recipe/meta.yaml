@@ -83,7 +83,7 @@ requirements:
   # gnuradio.qtgui
     - pyqt  # [not (ppc64le or arm64)]
     - qt  # [not (ppc64le or arm64)]
-    - qwt <6.2  # [not (ppc64le or arm64)]
+    - qwt  # [not (ppc64le or arm64)]
   # gnuradio soapy
     - soapysdr
   # gnuradio.uhd
@@ -283,7 +283,7 @@ outputs:
         - pyqt
         - python
         - qt
-        - qwt <6.2
+        - qwt
         - volk
       run:
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
