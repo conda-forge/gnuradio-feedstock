@@ -11,7 +11,7 @@ may run out of sync with the Cairo Quartz back end.
  1 file changed, 24 insertions(+), 11 deletions(-)
 
 diff --git a/grc/gui/canvas/connection.py b/grc/gui/canvas/connection.py
-index 316ecbdd0..63d79f69b 100644
+index be5db73b6..1b73c72a2 100644
 --- a/grc/gui/canvas/connection.py
 +++ b/grc/gui/canvas/connection.py
 @@ -8,7 +8,9 @@ SPDX-License-Identifier: GPL-2.0-or-later
@@ -35,7 +35,7 @@ index 316ecbdd0..63d79f69b 100644
  
      @nop_write
      @property
-@@ -122,12 +124,12 @@ class Connection(CoreConnection, Drawable):
+@@ -125,12 +127,12 @@ class Connection(CoreConnection, Drawable):
              cr.curve_to(*(p2 + p3 + p4))
              cr.line_to(*p5)
              self._line_path = cr.copy_path()
@@ -49,7 +49,7 @@ index 316ecbdd0..63d79f69b 100644
          sink = self.sink_port
          source = self.source_port
  
-@@ -188,21 +190,32 @@ class Connection(CoreConnection, Drawable):
+@@ -192,21 +194,32 @@ class Connection(CoreConnection, Drawable):
          if coor_m:
              return Drawable.what_is_selected(self, coor, coor_m)
  
@@ -91,5 +91,5 @@ index 316ecbdd0..63d79f69b 100644
  
  class DummyCoreConnection(object):
 -- 
-2.30.2
+2.34.1
 

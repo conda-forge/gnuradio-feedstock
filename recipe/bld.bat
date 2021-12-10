@@ -66,3 +66,7 @@ if errorlevel 1 exit 1
 :: build
 cmake --build . --config Release -- -j%CPU_COUNT%
 if errorlevel 1 exit 1
+
+:: remove intermediate build outputs to save disk space
+del /s /q "*.obj"
+if errorlevel 1 exit 1
