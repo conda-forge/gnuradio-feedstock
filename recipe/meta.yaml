@@ -1,4 +1,4 @@
-{% set tag_version = "3.10.0.0-rc1" %}
+{% set tag_version = "3.10.0.0-rc2" %}
 {% set version = tag_version.replace("-", "") %}
 
 package:
@@ -7,14 +7,12 @@ package:
 
 source:
   url: https://github.com/gnuradio/gnuradio/archive/refs/tags/v{{ tag_version }}.tar.gz
-  sha256: af045f18c212553bac68709536424584781f8f075b068b09a941a464e5456733
+  sha256: d005f82a181df5189fea7a7e8856e74674128119b1f06184faedf54d2d11a2c8
   patches:
     - 0001-cmake-Install-python-wrapper-exe-for-scripts-on-Wind.patch
     - 0002-cmake-Don-t-generate-.pyc-and-.pyo-files.patch
     - 0003-Use-an-ImageSurface-rather-than-UI-back-end.patch  # [osx]
     - 0004-grc-Remove-global_blocks_path-preference-and-use-pre.patch
-    - 0005-runtime-Use-spdlog-fmt-fmt.h-header-handling-SPDLOG_.patch
-    - 0006-audio-osx-Replace-boost-scoped_array-with-std-unique.patch
 
 build:
   number: 0
