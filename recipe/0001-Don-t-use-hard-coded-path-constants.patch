@@ -18,7 +18,7 @@ it's just easier to use them from the start.
  3 files changed, 32 insertions(+), 26 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 6698fa247..818995afa 100644
+index f16ec0a24..66f26a6b5 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -296,7 +296,7 @@ SET(GR_THEMES_DIR      ${GR_PKG_DATA_DIR}/themes CACHE PATH "Path to install QTG
@@ -136,5 +136,5 @@ index b368e9dc3..7588c1d2d 100644
  
    const std::string
 -- 
-2.32.0
+2.34.1
 
