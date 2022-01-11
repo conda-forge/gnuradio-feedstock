@@ -66,6 +66,7 @@ requirements:
     - mako
     - mpir  # [win]
     - numpy
+    - packaging
     - pip  # [win]
     - pybind11
     - pybind11-abi
@@ -161,6 +162,7 @@ outputs:
         - libsndfile
         - libthrift  # [not win]
         - mpir  # [win]
+        - packaging
         - portaudio
         - pybind11
         - pybind11-abi
@@ -178,6 +180,7 @@ outputs:
         - mako
         - menuinst  # [win]
         - numpy
+        - packaging
         - {{ pin_compatible('portaudio') }}
         - python
         - pyyaml
