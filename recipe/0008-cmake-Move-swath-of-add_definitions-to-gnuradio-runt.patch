@@ -15,7 +15,7 @@ now that happens transitively.
  2 files changed, 57 insertions(+), 48 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 818995afa..031933307 100644
+index 66f26a6b5..20f79d9d5 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -200,9 +200,6 @@ include(GrMiscUtils) #compiler flag check
@@ -199,5 +199,5 @@ index b5086042c..54b7b4934 100644
  #Add libraries for winsock2.h on Windows
  check_include_file_cxx(windows.h HAVE_WINDOWS_H)
 -- 
-2.32.0
+2.34.1
 
