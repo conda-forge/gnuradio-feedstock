@@ -1,4 +1,4 @@
-{% set version = "3.9.4.0" %}
+{% set version = "3.9.5.0" %}
 
 package:
   name: gnuradio
@@ -6,7 +6,7 @@ package:
 
 source:
   url: https://github.com/gnuradio/gnuradio/archive/refs/tags/v{{ version }}.tar.gz
-  sha256: 3337441d597959bbf657f1257fb37a2aa5b251ee75e3573fcf6b0215d5c53e41
+  sha256: 066c88fcf05046593e534416a3526ee433c3b90a7faa40fca914add23989ef3e
   patches:
     - 0001-cmake-Install-python-wrapper-exe-for-scripts-on-Wind.patch
     - 0002-cmake-Don-t-generate-.pyc-and-.pyo-files.patch
@@ -14,7 +14,7 @@ source:
     - 0004-grc-Remove-global_blocks_path-preference-and-use-pre.patch
 
 build:
-  number: 1
+  number: 0
 
 requirements:
   build:
@@ -61,6 +61,8 @@ requirements:
     - libcblas  # [linux]
     - libsndfile
     - libthrift  # [not win]
+    # restrict to cos6-compatible libusb (and libudev)
+    - libusb-cos6  # [linux and cdt_name=='cos6']
     - log4cpp
     - mako
     - mpir  # [win]
@@ -83,7 +85,7 @@ requirements:
   # gnuradio.qtgui
     - pyqt  # [not (ppc64le or arm64)]
     - qt  # [not (ppc64le or arm64)]
-    - qwt <6.2  # [not (ppc64le or arm64)]
+    - qwt  # [not (ppc64le or arm64)]
   # gnuradio soapy
     - soapysdr
   # gnuradio.uhd
@@ -99,7 +101,7 @@ requirements:
     - {{ pin_subpackage('gnuradio-core', exact=True) }}
     - {{ pin_subpackage('gnuradio-grc', exact=True) }}
     - {{ pin_subpackage('gnuradio-qtgui', exact=True) }}  # [not (ppc64le or arm64)]
-    - {{ pin_subpackage('gnuradio-soapy-intree', exact=True) }}
+    - {{ pin_subpackage('gnuradio-soapy', exact=True) }}
     - {{ pin_subpackage('gnuradio-uhd', exact=True) }}
     - {{ pin_subpackage('gnuradio-video-sdl', exact=True) }}
     - {{ pin_subpackage('gnuradio-zeromq', exact=True) }}
@@ -283,7 +285,7 @@ outputs:
         - pyqt
         - python
         - qt
-        - qwt <6.2
+        - qwt
         - volk
       run:
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
@@ -301,7 +303,7 @@ outputs:
       license_family: GPL
       license_file: COPYING
       summary: GNU Radio QT module providing graphical components
-  - name: gnuradio-soapy-intree
+  - name: gnuradio-soapy
     script: install_soapy.sh  # [not win]
     script: install_soapy.bat  # [win]
     build:
