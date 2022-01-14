@@ -57,21 +57,21 @@ index a65c047a4..795828b4a 100644
  # Install (+ compile) python sources and data files
  ########################################################################
 diff --git a/grc/compiler.py b/grc/compiler.py
-index 3f2bd98b0..5a55d0d2b 100755
+index e0f51e51d..9710c3862 100755
 --- a/grc/compiler.py
 +++ b/grc/compiler.py
-@@ -38,7 +38,8 @@ def main(args=None):
-         name='GNU Radio Companion Compiler',
+@@ -39,7 +39,8 @@ def main(args=None):
          prefs=gr.prefs(),
          version=gr.version(),
--        version_parts=(gr.major_version(), gr.api_version(), gr.minor_version())
-+        version_parts=(gr.major_version(), gr.api_version(), gr.minor_version()),
+         version_parts=(gr.major_version(),
+-                       gr.api_version(), gr.minor_version())
++                       gr.api_version(), gr.minor_version()),
 +        install_prefix=gr.prefix(),
      )
      platform.build_library()
  
 diff --git a/grc/core/Config.py b/grc/core/Config.py
-index 73cc13586..3be31d0b0 100644
+index 374a3f231..a2bf72573 100644
 --- a/grc/core/Config.py
 +++ b/grc/core/Config.py
 @@ -6,7 +6,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
@@ -83,19 +83,19 @@ index 73cc13586..3be31d0b0 100644
  from collections import OrderedDict
  
  from . import Constants
-@@ -19,9 +19,10 @@ class Config(object):
- 
-     hier_block_lib_dir = os.environ.get('GRC_HIER_PATH', Constants.DEFAULT_HIER_BLOCK_LIB_DIR)
+@@ -20,9 +20,10 @@ class Config(object):
+     hier_block_lib_dir = os.environ.get(
+         'GRC_HIER_PATH', Constants.DEFAULT_HIER_BLOCK_LIB_DIR)
  
 -    def __init__(self, version, version_parts=None, name=None, prefs=None):
 +    def __init__(self, version, install_prefix, version_parts=None, name=None, prefs=None):
          self._gr_prefs = prefs if prefs else DummyPrefs()
          self.version = version
 +        self.install_prefix = install_prefix
-         self.version_parts = version_parts or version[1:].split('-', 1)[0].split('.')[:3]
-         self.enabled_components = self._gr_prefs.get_string('grc', 'enabled_components', '')
-         if name:
-@@ -29,12 +30,14 @@ class Config(object):
+         self.version_parts = version_parts or version[1:].split(
+             '-', 1)[0].split('.')[:3]
+         self.enabled_components = self._gr_prefs.get_string(
+@@ -32,12 +33,14 @@ class Config(object):
  
      @property
      def block_paths(self):
@@ -117,13 +117,13 @@ diff --git a/grc/core/Constants.py b/grc/core/Constants.py.in
 similarity index 98%
 rename from grc/core/Constants.py
 rename to grc/core/Constants.py.in
-index 953676ffd..a8ccca67c 100644
+index 3421d0533..b005d3ac1 100644
 --- a/grc/core/Constants.py
 +++ b/grc/core/Constants.py.in
-@@ -20,6 +20,7 @@ DATA_DIR = os.path.dirname(__file__)
- BLOCK_DTD = os.path.join(DATA_DIR, 'block.dtd')
+@@ -21,6 +21,7 @@ BLOCK_DTD = os.path.join(DATA_DIR, 'block.dtd')
  DEFAULT_FLOW_GRAPH = os.path.join(DATA_DIR, 'default_flow_graph.grc')
  DEFAULT_HIER_BLOCK_LIB_DIR = os.path.expanduser('~/.grc_gnuradio')
+ DEFAULT_FLOW_GRAPH_ID = 'default'
 +GRC_BLOCKS_DIR = os.path.normpath("@GRC_BLOCKS_DIR@")
  
  CACHE_FILE = os.path.expanduser('~/.cache/grc_gnuradio/cache_v2.json')
@@ -141,7 +141,7 @@ index 1dbb13bfa..ccae5c9e7 100644
  default_flow_graph =
  xterm_executable = @GRC_XTERM_EXE@
 diff --git a/grc/gui/Config.py b/grc/gui/Config.py
-index ee354ba54..adc325cb9 100644
+index 35d2eefcc..a9dfab50f 100644
 --- a/grc/gui/Config.py
 +++ b/grc/gui/Config.py
 @@ -30,9 +30,8 @@ class Config(CoreConfig):
@@ -156,5 +156,5 @@ index ee354ba54..adc325cb9 100644
  
          self.parser = configparser.ConfigParser()
 -- 
-2.32.0
+2.34.1
 

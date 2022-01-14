@@ -3,6 +3,7 @@ azure:
 bot:
   abi_migration_branches:
   - 3.8
+  - 3.9
   automerge: true
 build_platform:
   linux_aarch64: linux_64
