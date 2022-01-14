@@ -1,4 +1,4 @@
-{% set version = "3.9.5.0" %}
+{% set version = "3.10.0.0" %}
 
 package:
   name: gnuradio
@@ -6,7 +6,7 @@ package:
 
 source:
   url: https://github.com/gnuradio/gnuradio/archive/refs/tags/v{{ version }}.tar.gz
-  sha256: 066c88fcf05046593e534416a3526ee433c3b90a7faa40fca914add23989ef3e
+  sha256: 25535fb64d2541ec95325c3f901e2eb71ab794c5b53b9e97894d2d48bbd966da
   patches:
     - 0001-cmake-Install-python-wrapper-exe-for-scripts-on-Wind.patch
     - 0002-cmake-Don-t-generate-.pyc-and-.pyo-files.patch
@@ -141,7 +141,7 @@ outputs:
         # gnuradio-core will almost-definitely need log4cpp at runtime
         - {{ pin_compatible('log4cpp', max_pin='x.x') }}
       skip_compile_pyc:
-        - "*/templates/*.py"
+        - '*/templates/*.py'
     requirements:
       build:
         - {{ compiler('c') }}
@@ -340,9 +340,7 @@ outputs:
       license_file: COPYING
       summary: GNU Radio SoapySDR module for using a variety of SDR devices
       description: >
-        This module provides GNU Radio source and sink blocks for a variety of
-        SDR devices using SoapySDR, a generalized C/C++ library which provides
-        abstraction in interfacing with different SDR devices and vendors.
+        This module provides GNU Radio source and sink blocks for a variety of SDR devices using SoapySDR, a generalized C/C++ library which provides abstraction in interfacing with different SDR devices and vendors.
   - name: gnuradio-uhd
     script: install_uhd.sh  # [not win]
     script: install_uhd.bat  # [win]
@@ -491,9 +489,7 @@ outputs:
       license_file: COPYING
       summary: Meta-package for GNU Radio deps used to manually build OOT modules
       description: >
-        Install this meta-package into an environment with `gnuradio` or
-        `gnuradio-core` in order to be able to build out-of-tree modules
-        manually. DO NOT USE THIS IN CONDA RECIPES.
+        Install this meta-package into an environment with `gnuradio` or `gnuradio-core` in order to be able to build out-of-tree modules manually. DO NOT USE THIS IN CONDA RECIPES.
   # need an output with a script defined to work-around "empty" output detection
   # with python in both build (due to ninja) and host environments
   - name: gnuradio
@@ -507,19 +503,11 @@ about:
   license_file: COPYING
   summary: The free and open software radio ecosystem
   description: >
-    GNU Radio is a free software development toolkit that provides the signal
-    processing runtime and processing blocks to implement software radios using
-    readily-available, low-cost external RF hardware and commodity processors.
-    It is widely used in hobbyist, academic and commercial environments to
-    support wireless communications research as well as to implement real-world
-    radio systems.
+    GNU Radio is a free software development toolkit that provides the signal processing runtime and processing blocks to implement software radios using readily-available, low-cost external RF hardware and commodity processors. It is widely used in hobbyist, academic and commercial environments to support wireless communications
+    research as well as to implement real-world radio systems.
 
-    GNU Radio applications are primarily written using the Python programming
-    language, while the supplied, performance-critical signal processing path
-    is implemented in C++ using processor floating point extensions where
-    available. Thus, the developer is able to implement real-time, high-
-    throughput radio systems in a simple-to-use, rapid-application-development
-    environment.
+    GNU Radio applications are primarily written using the Python programming language, while the supplied, performance-critical signal processing path is implemented in C++ using processor floating point extensions where available. Thus, the developer is able to implement real-time, high- throughput radio systems in a simple-to-use,
+    rapid-application-development environment.
 
   doc_url: https://gnuradio.org/doc/doxygen/
   dev_url: https://github.com/gnuradio/gnuradio
