@@ -383,7 +383,7 @@ outputs:
       summary: GNU Radio ZeroMQ module for message passing functionality
   - name: gnuradio-build-deps
     build:
-      string: {{ pin_subpackage('gnuradio-core', exact=True).partition(' ')[-1].partition(' ')[-1] }}
+      string: {{ (pin_subpackage('gnuradio-core', exact=True) if (pin_subpackage('gnuradio-core', exact=True) is string) else '').partition(' ')[-1].partition(' ')[-1] }}
     requirements:
       host:
         # need to populate host to get complete build string (why?)
