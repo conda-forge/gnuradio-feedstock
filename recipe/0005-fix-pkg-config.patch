@@ -1,0 +1,84 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: "A. Maitland Bottoms" <bottoms@debian.org>
+Date: Sat, 23 Oct 2021 23:34:57 -0400
+Subject: [PATCH] fix pkg config
+
+No need to propagate PC_ADD_LIBS into gnuradio-runtime.pc.
+---
+ cmake/Modules/FindGMP.cmake             | 1 -
+ cmake/Modules/FindMPIR.cmake            | 1 -
+ cmake/Modules/FindMPLIB.cmake           | 2 --
+ gnuradio-runtime/CMakeLists.txt         | 1 -
+ gnuradio-runtime/gnuradio-runtime.pc.in | 2 +-
+ 5 files changed, 1 insertion(+), 6 deletions(-)
+
+diff --git a/cmake/Modules/FindGMP.cmake b/cmake/Modules/FindGMP.cmake
+index 62f9a4392..d1c89a7f0 100644
+--- a/cmake/Modules/FindGMP.cmake
++++ b/cmake/Modules/FindGMP.cmake
+@@ -38,7 +38,6 @@ find_library(
+           /usr/lib64
+ )
+ set(GMP_LIBRARIES ${GMPXX_LIBRARY} ${GMP_LIBRARY})
+-set(GMP_PC_ADD_LIBS "-lgmpxx -lgmp")
+ 
+ include(FindPackageHandleStandardArgs)
+ find_package_handle_standard_args(GMP DEFAULT_MSG GMPXX_LIBRARY GMP_LIBRARY GMP_INCLUDE_DIR)
+diff --git a/cmake/Modules/FindMPIR.cmake b/cmake/Modules/FindMPIR.cmake
+index f31714cca..bb88f6741 100644
+--- a/cmake/Modules/FindMPIR.cmake
++++ b/cmake/Modules/FindMPIR.cmake
+@@ -39,7 +39,6 @@ find_library(
+           /usr/lib64
+ )
+ set(MPIR_LIBRARIES ${MPIRXX_LIBRARY} ${MPIR_LIBRARY})
+-set(MPIR_PC_ADD_LIBS "-lmpirxx -lmpir")
+ 
+ include(FindPackageHandleStandardArgs)
+ find_package_handle_standard_args(MPIR DEFAULT_MSG MPIRXX_LIBRARY MPIR_LIBRARY MPIR_INCLUDE_DIR)
+diff --git a/cmake/Modules/FindMPLIB.cmake b/cmake/Modules/FindMPLIB.cmake
+index daa381b64..11c9eeda6 100644
+--- a/cmake/Modules/FindMPLIB.cmake
++++ b/cmake/Modules/FindMPLIB.cmake
+@@ -8,7 +8,6 @@ if(GMP_FOUND)
+     set(MPLIB_LIBRARY ${GMP_LIBRARY})
+     set(MPLIBXX_LIBRARY ${GMPXX_LIBRARY})
+     set(MPLIB_PC_ADD_CFLAGS ${GMP_PC_ADD_CFLAGS})
+-    set(MPLIB_PC_ADD_LIBS ${GMP_PC_ADD_LIBS})
+ else(GMP_FOUND)
+     message(STATUS "GMP not found; this is not a problem if MPIR can be found.")
+     find_package(MPIR REQUIRED)
+@@ -19,7 +18,6 @@ else(GMP_FOUND)
+     set(MPLIB_LIBRARY ${MPIR_LIBRARY})
+     set(MPLIBXX_LIBRARY ${MPIRXX_LIBRARY})
+     set(MPLIB_PC_ADD_CFLAGS ${MPIR_PC_ADD_CFLAGS})
+-    set(MPLIB_PC_ADD_LIBS ${MPIR_PC_ADD_LIBS})
+ endif(GMP_FOUND)
+ 
+ set(MPLIB_INCLUDE_DIRS ${MPLIB_INCLUDE_DIR})
+diff --git a/gnuradio-runtime/CMakeLists.txt b/gnuradio-runtime/CMakeLists.txt
+index 5160e76d8..6c9e746fc 100644
+--- a/gnuradio-runtime/CMakeLists.txt
++++ b/gnuradio-runtime/CMakeLists.txt
+@@ -129,7 +129,6 @@ install(FILES
+     DESTINATION ${GR_PREFSDIR}
+ )
+ 
+-set(PC_ADD_LIBS "${MPLIB_PC_ADD_LIBS} ${PC_ADD_LIBS}")
+ set(PC_ADD_CFLAGS ${MPLIB_PC_ADD_CFLAGS})
+ 
+ ########################################################################
+diff --git a/gnuradio-runtime/gnuradio-runtime.pc.in b/gnuradio-runtime/gnuradio-runtime.pc.in
+index 280adaddd..e10deceb9 100644
+--- a/gnuradio-runtime/gnuradio-runtime.pc.in
++++ b/gnuradio-runtime/gnuradio-runtime.pc.in
+@@ -7,5 +7,5 @@ Name: gnuradio-runtime
+ Description: GNU Radio core runtime infrastructure
+ Requires:
+ Version: @LIBVER@
+-Libs: -L${libdir} -lgnuradio-runtime -lgnuradio-pmt @PC_ADD_LIBS@
++Libs: -L${libdir} -lgnuradio-runtime -lgnuradio-pmt
+ Cflags: -I${includedir} @PC_ADD_CFLAGS@
+-- 
+2.34.1
+
