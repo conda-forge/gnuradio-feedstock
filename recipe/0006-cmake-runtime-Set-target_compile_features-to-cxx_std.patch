@@ -1,0 +1,31 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Ryan Volz <ryan.volz@gmail.com>
+Date: Thu, 27 Jan 2022 22:26:01 -0500
+Subject: [PATCH] cmake: runtime: Set target_compile_features to cxx_std_17.
+
+Since gnuradio-runtime uses C++17 features, this tells CMake to require
+a compiler with those features enabled and also communicates that
+information to other libraries that compile against gnuradio-runtime and
+inherit the use of C++17 features from the public headers.
+
+Signed-off-by: Ryan Volz <ryan.volz@gmail.com>
+---
+ gnuradio-runtime/lib/CMakeLists.txt | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/gnuradio-runtime/lib/CMakeLists.txt b/gnuradio-runtime/lib/CMakeLists.txt
+index 6cd9c0c54..4e7670b73 100644
+--- a/gnuradio-runtime/lib/CMakeLists.txt
++++ b/gnuradio-runtime/lib/CMakeLists.txt
+@@ -166,6 +166,8 @@ target_include_directories(gnuradio-runtime
+     ${CMAKE_CURRENT_SOURCE_DIR}
+     )
+ 
++target_compile_features(gnuradio-runtime PUBLIC cxx_std_17)
++
+ target_compile_definitions(gnuradio-runtime PUBLIC ${MPLIB_DEFINITIONS})
+ 
+ # constants.cc includes boost::dll headers, force them to use std::filesystem
+-- 
+2.34.1
+
