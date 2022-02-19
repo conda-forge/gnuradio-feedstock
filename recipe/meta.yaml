@@ -16,7 +16,7 @@ source:
     - 0006-cmake-runtime-Set-target_compile_features-to-cxx_std.patch
 
 build:
-  number: 1
+  number: 2
 
 requirements:
   build:
