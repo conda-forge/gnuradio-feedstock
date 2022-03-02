@@ -2,7 +2,7 @@
 
 package:
   name: gnuradio
-  version: {{ version }}
+  version: {{ version }}.dev0
 
 source:
   url: https://github.com/gnuradio/gnuradio/archive/refs/tags/v{{ version }}.tar.gz
