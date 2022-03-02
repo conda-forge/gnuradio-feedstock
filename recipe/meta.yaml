@@ -80,7 +80,7 @@ requirements:
     - alsa-lib  # [linux]
     - portaudio
   # gnuradio companion
-    - gtk3
+    - gtk3 3.24.14
     - lxml
     - pygobject
     - pyyaml
@@ -240,7 +240,7 @@ outputs:
       host:
         - boost-cpp
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
-        - gtk3
+        - gtk3 3.24.14
         # workaround to get host environment solved
         - openssl
         - python
