@@ -230,6 +230,8 @@ outputs:
       ignore_run_exports_from:
         # workaround to get host environment solved
         - openssl
+        # workaround to ensure compatible versions of gtk3 and qt are used
+        - qt  # [not (ppc64le or arm64)]
     requirements:
       build:
         - {{ compiler('c') }}
@@ -244,6 +246,8 @@ outputs:
         # workaround to get host environment solved
         - openssl
         - python
+        # workaround to ensure compatible versions of gtk3 and qt are used
+        - qt  # [not (ppc64le or arm64)]
         - spdlog
       run:
         - boost-cpp
