@@ -251,6 +251,8 @@ outputs:
     test:
       requires:
         - coreutils  # [not win]
+        - xvfbwrapper  # [linux]
+      script: run_grc_test.py
       commands:
         - grcc "$PREFIX/share/gnuradio/examples/metadata/file_metadata_vector_sink.grc"  # [not win]
         - python "%PREFIX%\\Library\\bin\\grcc.py" "%PREFIX%\\Library\\share\\gnuradio\\examples\\metadata\\file_metadata_vector_sink.grc"  # [win]
