@@ -31,7 +31,7 @@ pin_run_as_build:
   zeromq:
     max_pin: x.x.x
 python:
-- 3.9.* *_cpython
+- 3.10.* *_cpython
 qt:
 - '5.12'
 sqlite:
