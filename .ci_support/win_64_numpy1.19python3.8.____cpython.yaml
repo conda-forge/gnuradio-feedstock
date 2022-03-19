@@ -15,7 +15,7 @@ fftw:
 gsl:
 - '2.7'
 numpy:
-- '1.18'
+- '1.19'
 openssl:
 - 1.1.1
 pin_run_as_build:

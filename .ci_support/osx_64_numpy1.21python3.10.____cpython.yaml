@@ -5,7 +5,7 @@ boost_cpp:
 c_compiler:
 - clang
 c_compiler_version:
-- '11'
+- '12'
 channel_sources:
 - conda-forge
 channel_targets:
@@ -15,7 +15,7 @@ codec2:
 cxx_compiler:
 - clangxx
 cxx_compiler_version:
-- '11'
+- '12'
 fftw:
 - '3'
 gmp:
@@ -23,7 +23,7 @@ gmp:
 gsl:
 - '2.7'
 libthrift:
-- 0.15.0
+- 0.16.0
 macos_machine:
 - x86_64-apple-darwin13.4.0
 numpy:
