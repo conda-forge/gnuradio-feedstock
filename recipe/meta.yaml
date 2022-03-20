@@ -228,8 +228,6 @@ outputs:
         - gnuradio-companion = gnuradio.grc.main:main  # [win]
         - grcc = gnuradio.grc.compiler:main  # [win]
       ignore_run_exports_from:
-        # workaround to get host environment solved
-        - openssl
         # workaround to ensure compatible versions of gtk3 and qt are used
         - qt  # [not (ppc64le or arm64)]
     requirements:
@@ -243,8 +241,6 @@ outputs:
         - boost-cpp
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
         - gtk3
-        # workaround to get host environment solved
-        - openssl
         - python
         # workaround to ensure compatible versions of gtk3 and qt are used
         - qt  # [not (ppc64le or arm64)]
@@ -275,10 +271,6 @@ outputs:
   - name: gnuradio-iio
     script: install_iio.sh  # [not win]
     script: install_iio.bat  # [win]
-    build:
-      ignore_run_exports_from:
-        # workaround to get host environment solved
-        - openssl
     requirements:
       build:
         - {{ compiler('c') }}
@@ -291,8 +283,6 @@ outputs:
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
         - libiio
         - libad9361-iio
-        # workaround to get host environment solved
-        - openssl
         - python
         - spdlog
         - volk
@@ -316,9 +306,6 @@ outputs:
   - name: gnuradio-qtgui
     build:
       skip: true  # [ppc64le or arm64]
-      ignore_run_exports_from:
-        # workaround to get host environment solved
-        - openssl
     script: install_qtgui.sh  # [not win]
     script: install_qtgui.bat  # [win]
     requirements:
@@ -331,8 +318,6 @@ outputs:
       host:
         - boost-cpp
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
-        # workaround to get host environment solved
-        - openssl
         - pyqt
         - python
         - qt
@@ -358,10 +343,6 @@ outputs:
   - name: gnuradio-soapy
     script: install_soapy.sh  # [not win]
     script: install_soapy.bat  # [win]
-    build:
-      ignore_run_exports_from:
-        # workaround to get host environment solved
-        - openssl
     requirements:
       build:
         - {{ compiler('c') }}
@@ -372,8 +353,6 @@ outputs:
       host:
         - boost-cpp
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
-        # workaround to get host environment solved
-        - openssl
         - python
         - soapysdr
         - spdlog
@@ -399,9 +378,6 @@ outputs:
     build:
       entry_points:
         - uhd_siggen = gnuradio.uhd.uhd_siggen_base:main  # [win]
-      ignore_run_exports_from:
-        # workaround to get host environment solved
-        - openssl
     requirements:
       build:
         - {{ compiler('c') }}
@@ -412,8 +388,6 @@ outputs:
       host:
         - boost-cpp
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
-        # workaround to get host environment solved
-        - openssl
         - python
         - spdlog
         - uhd
@@ -437,10 +411,6 @@ outputs:
   - name: gnuradio-video-sdl
     script: install_video_sdl.sh  # [not win]
     script: install_video_sdl.bat  # [win]
-    build:
-      ignore_run_exports_from:
-        # workaround to get host environment solved
-        - openssl
     requirements:
       build:
         - {{ compiler('c') }}
@@ -451,8 +421,6 @@ outputs:
       host:
         - boost-cpp
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
-        # workaround to get host environment solved
-        - openssl
         - python
         - sdl
         - spdlog
@@ -473,10 +441,6 @@ outputs:
   - name: gnuradio-zeromq
     script: install_zeromq.sh  # [not win]
     script: install_zeromq.bat  # [win]
-    build:
-      ignore_run_exports_from:
-        # workaround to get host environment solved
-        - openssl
     requirements:
       build:
         - {{ compiler('c') }}
@@ -488,8 +452,6 @@ outputs:
         - boost-cpp
         - cppzmq
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
-        # workaround to get host environment solved
-        - openssl
         - python
         - spdlog
         - zeromq
