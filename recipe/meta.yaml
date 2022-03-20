@@ -22,7 +22,7 @@ source:
     - 0012-grc-Remove-global_blocks_path-preference-and-use-pre.patch
 
 build:
-  number: 0
+  number: 1
 
 requirements:
   build:
@@ -205,6 +205,9 @@ outputs:
       entry_points:
         - gnuradio-companion = gnuradio.grc.main:main  # [win]
         - grcc = gnuradio.grc.compiler:main  # [win]
+      ignore_run_exports_from:
+        # workaround to ensure compatible versions of gtk3 and qt are used
+        - qt  # [not (ppc64le or arm64)]
     requirements:
       build:
         - {{ compiler('c') }}
@@ -218,6 +221,8 @@ outputs:
         - gtk3
         - log4cpp
         - python
+        # workaround to ensure compatible versions of gtk3 and qt are used
+        - qt  # [not (ppc64le or arm64)]
       run:
         - boost-cpp
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
