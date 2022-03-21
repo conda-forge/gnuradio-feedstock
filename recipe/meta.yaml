@@ -14,7 +14,7 @@ source:
     - 0004-grc-Remove-global_blocks_path-preference-and-use-pre.patch
 
 build:
-  number: 0
+  number: 1
 
 requirements:
   build:
@@ -221,8 +221,8 @@ outputs:
         - gnuradio-companion = gnuradio.grc.main:main  # [win]
         - grcc = gnuradio.grc.compiler:main  # [win]
       ignore_run_exports_from:
-        # workaround to get host environment solved
-        - openssl
+        # workaround to ensure compatible versions of gtk3 and qt are used
+        - qt  # [not (ppc64le or arm64)]
     requirements:
       build:
         - {{ compiler('c') }}
@@ -235,9 +235,9 @@ outputs:
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
         - gtk3
         - log4cpp
-        # workaround to get host environment solved
-        - openssl
         - python
+        # workaround to ensure compatible versions of gtk3 and qt are used
+        - qt  # [not (ppc64le or arm64)]
       run:
         - boost-cpp
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
@@ -264,9 +264,6 @@ outputs:
   - name: gnuradio-qtgui
     build:
       skip: true  # [ppc64le or arm64]
-      ignore_run_exports_from:
-        # workaround to get host environment solved
-        - openssl
     script: install_qtgui.sh  # [not win]
     script: install_qtgui.bat  # [win]
     requirements:
@@ -280,8 +277,6 @@ outputs:
         - boost-cpp
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
         - log4cpp
-        # workaround to get host environment solved
-        - openssl
         - pyqt
         - python
         - qt
@@ -306,10 +301,6 @@ outputs:
   - name: gnuradio-soapy
     script: install_soapy.sh  # [not win]
     script: install_soapy.bat  # [win]
-    build:
-      ignore_run_exports_from:
-        # workaround to get host environment solved
-        - openssl
     requirements:
       build:
         - {{ compiler('c') }}
@@ -321,8 +312,6 @@ outputs:
         - boost-cpp
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
         - log4cpp
-        # workaround to get host environment solved
-        - openssl
         - python
         - soapysdr
       run:
@@ -349,9 +338,6 @@ outputs:
     build:
       entry_points:
         - uhd_siggen = gnuradio.uhd.uhd_siggen_base:main  # [win]
-      ignore_run_exports_from:
-        # workaround to get host environment solved
-        - openssl
     requirements:
       build:
         - {{ compiler('c') }}
@@ -363,8 +349,6 @@ outputs:
         - boost-cpp
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
         - log4cpp
-        # workaround to get host environment solved
-        - openssl
         - python
         - uhd
       run:
@@ -387,10 +371,6 @@ outputs:
   - name: gnuradio-video-sdl
     script: install_video_sdl.sh  # [not win]
     script: install_video_sdl.bat  # [win]
-    build:
-      ignore_run_exports_from:
-        # workaround to get host environment solved
-        - openssl
     requirements:
       build:
         - {{ compiler('c') }}
@@ -402,8 +382,6 @@ outputs:
         - boost-cpp
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
         - log4cpp
-        # workaround to get host environment solved
-        - openssl
         - python
         - sdl
       run:
@@ -423,10 +401,6 @@ outputs:
   - name: gnuradio-zeromq
     script: install_zeromq.sh  # [not win]
     script: install_zeromq.bat  # [win]
-    build:
-      ignore_run_exports_from:
-        # workaround to get host environment solved
-        - openssl
     requirements:
       build:
         - {{ compiler('c') }}
@@ -439,8 +413,6 @@ outputs:
         - cppzmq
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
         - log4cpp
-        # workaround to get host environment solved
-        - openssl
         - python
         - zeromq
       run:

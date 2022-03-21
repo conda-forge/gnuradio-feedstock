@@ -1,3 +1,5 @@
+BUILD:
+- aarch64-conda_cos7-linux-gnu
 alsa_lib:
 - 1.2.3
 boost_cpp:
@@ -6,14 +8,14 @@ c_compiler:
 - gcc
 c_compiler_version:
 - '9'
+cdt_arch:
+- aarch64
 cdt_name:
-- cos6
+- cos7
 channel_sources:
 - conda-forge
 channel_targets:
 - conda-forge main
-codec2:
-- 1.0.0
 cxx_compiler:
 - gxx
 cxx_compiler_version:
@@ -29,11 +31,9 @@ gsl:
 libcblas:
 - 3.8 *netlib
 libthrift:
-- 0.15.0
+- 0.16.0
 numpy:
-- '1.18'
-openssl:
-- 1.1.1
+- '1.19'
 pin_run_as_build:
   boost-cpp:
     max_pin: x.x.x
@@ -53,7 +53,7 @@ pin_run_as_build:
 pybind11_abi:
 - '4'
 python:
-- 3.8.* *_cpython
+- 3.7.* *_cpython
 qt:
 - '5.12'
 soapysdr:
@@ -61,7 +61,7 @@ soapysdr:
 sqlite:
 - '3'
 target_platform:
-- linux-64
+- linux-aarch64
 uhd:
 - 4.1.0
 volk:

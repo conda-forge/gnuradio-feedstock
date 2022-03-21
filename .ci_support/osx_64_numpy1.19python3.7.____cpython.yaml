@@ -1,43 +1,31 @@
-BUILD:
-- aarch64-conda_cos7-linux-gnu
-alsa_lib:
-- 1.2.3
+MACOSX_DEPLOYMENT_TARGET:
+- '10.9'
 boost_cpp:
 - 1.74.0
 c_compiler:
-- gcc
+- clang
 c_compiler_version:
-- '9'
-cdt_arch:
-- aarch64
-cdt_name:
-- cos7
+- '11'
 channel_sources:
 - conda-forge
 channel_targets:
 - conda-forge main
-codec2:
-- 1.0.0
 cxx_compiler:
-- gxx
+- clangxx
 cxx_compiler_version:
-- '9'
-docker_image:
-- quay.io/condaforge/linux-anvil-cos7-x86_64
+- '11'
 fftw:
 - '3'
 gmp:
 - '6'
 gsl:
 - '2.7'
-libcblas:
-- 3.8 *netlib
 libthrift:
-- 0.15.0
+- 0.16.0
+macos_machine:
+- x86_64-apple-darwin13.4.0
 numpy:
-- '1.18'
-openssl:
-- 1.1.1
+- '1.19'
 pin_run_as_build:
   boost-cpp:
     max_pin: x.x.x
@@ -57,7 +45,7 @@ pin_run_as_build:
 pybind11_abi:
 - '4'
 python:
-- 3.8.* *_cpython
+- 3.7.* *_cpython
 qt:
 - '5.12'
 soapysdr:
@@ -65,7 +53,7 @@ soapysdr:
 sqlite:
 - '3'
 target_platform:
-- linux-aarch64
+- osx-64
 uhd:
 - 4.1.0
 volk:
