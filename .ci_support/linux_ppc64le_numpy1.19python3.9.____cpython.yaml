@@ -5,7 +5,7 @@ boost_cpp:
 c_compiler:
 - gcc
 c_compiler_version:
-- '9'
+- '10'
 cdt_name:
 - cos7
 channel_sources:
@@ -17,7 +17,7 @@ codec2:
 cxx_compiler:
 - gxx
 cxx_compiler_version:
-- '9'
+- '10'
 docker_image:
 - quay.io/condaforge/linux-anvil-cos7-x86_64
 fftw:
@@ -31,7 +31,7 @@ libcblas:
 libiio:
 - '0'
 libthrift:
-- 0.15.0
+- 0.16.0
 numpy:
 - '1.19'
 openssl:
