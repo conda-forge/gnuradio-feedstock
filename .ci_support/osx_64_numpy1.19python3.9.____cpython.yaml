@@ -12,8 +12,6 @@ channel_sources:
 - conda-forge
 channel_targets:
 - conda-forge main
-codec2:
-- 1.0.0
 cxx_compiler:
 - clangxx
 cxx_compiler_version:
@@ -27,13 +25,11 @@ gsl:
 libiio:
 - '0'
 libthrift:
-- 0.15.0
+- 0.16.0
 macos_machine:
 - x86_64-apple-darwin13.4.0
 numpy:
 - '1.19'
-openssl:
-- 1.1.1
 pin_run_as_build:
   boost-cpp:
     max_pin: x.x.x
