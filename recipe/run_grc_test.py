@@ -1,3 +1,5 @@
+import time
+
 # start an Xvfb virtual display if we can (if xvfbwrapper is installed)
 try:
     from xvfbwrapper import Xvfb
@@ -8,12 +10,13 @@ else:
     print("Using Xvfb virtual display")
     vdisplay = Xvfb(width=1024, height=768, colordepth=24)
     vdisplay.start()
+    # wait a bit to make sure the virtual display is ready
+    time.sleep(1)
 
 try:
     import pathlib
     import tempfile
     import threading
-    import time
 
     import gi
 
