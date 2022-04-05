@@ -1,3 +1,5 @@
+BUILD:
+- aarch64-conda_cos7-linux-gnu
 alsa_lib:
 - 1.2.3
 boost_cpp:
@@ -6,8 +8,10 @@ c_compiler:
 - gcc
 c_compiler_version:
 - '10'
+cdt_arch:
+- aarch64
 cdt_name:
-- cos6
+- cos7
 channel_sources:
 - conda-forge
 channel_targets:
@@ -29,7 +33,7 @@ gsl:
 libcblas:
 - 3.8 *netlib
 numpy:
-- '1.21'
+- '1.19'
 pin_run_as_build:
   boost-cpp:
     max_pin: x.x.x
@@ -53,7 +57,7 @@ qt:
 sqlite:
 - '3'
 target_platform:
-- linux-64
+- linux-aarch64
 uhd:
 - 3.15.0
 volk:
