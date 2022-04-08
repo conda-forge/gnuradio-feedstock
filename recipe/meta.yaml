@@ -14,6 +14,7 @@ source:
     - 0004-grc-Remove-global_blocks_path-preference-and-use-pre.patch
     - 0005-fix-pkg-config.patch
     - 0006-cmake-runtime-Set-target_compile_features-to-cxx_std.patch
+    - 0007-filter-python-Drop-unused-args-argument-overriden-by.patch
 
 build:
   number: 3
