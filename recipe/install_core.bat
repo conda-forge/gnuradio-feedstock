@@ -45,5 +45,5 @@ cmake -P gr-wavelet/cmake_install.cmake
 if errorlevel 1 exit 1
 
 :: remove gr_filter_design script and put in qtgui because of dependencies
-cmake -E rm %LIBRARY_BIN%/gr_filter_design
+cmake -E rm -f %LIBRARY_BIN%/gr_filter_design.py %LIBRARY_BIN%/gr_filter_design.exe
 if errorlevel 1 exit 1
