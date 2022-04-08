@@ -12,6 +12,7 @@ source:
     - 0002-cmake-Don-t-generate-.pyc-and-.pyo-files.patch
     - 0003-Use-an-ImageSurface-rather-than-UI-back-end.patch  # [osx]
     - 0004-grc-Remove-global_blocks_path-preference-and-use-pre.patch
+    - 0005-filter-python-Drop-unused-args-argument-overriden-by.patch
 
 build:
   number: 2
