@@ -14,9 +14,10 @@ source:
     - 0004-grc-Remove-global_blocks_path-preference-and-use-pre.patch
     - 0005-fix-pkg-config.patch
     - 0006-cmake-runtime-Set-target_compile_features-to-cxx_std.patch
+    - 0007-filter-python-Drop-unused-args-argument-overriden-by.patch
 
 build:
-  number: 2
+  number: 3
 
 requirements:
   build:
@@ -140,7 +141,6 @@ outputs:
     script: install_core.bat  # [win]
     build:
       entry_points:
-        - gr_filter_design = gnuradio.filter.filter_design:main  # [win]
         - gr_modtool = gnuradio.modtool.cli.base:cli  # [win]
       run_exports:
         - {{ pin_subpackage('gnuradio-core', max_pin='x.x.x') }}
@@ -180,7 +180,6 @@ outputs:
         - click-plugins
         - fftw
         - mako
-        - menuinst  # [win]
         - numpy
         - packaging
         - {{ pin_compatible('portaudio') }}
@@ -193,8 +192,7 @@ outputs:
       commands:
         - gnuradio-config-info -v --prefix --sysconfdir --prefsdir --userprefsdir --prefs --builddate --enabled-components --cc --cxx --cflags
         - gr_modtool --help
-        - if not exist %PREFIX%\\Scripts\\gr_filter_design.exe exit 1  # [win]
-        - if not exist %PREFIX%\\Scripts\\gr_modtool.exe exit 1  # [win]
+        - gr_read_file_metadata --help
       imports:
         - gnuradio.analog
         - gnuradio.audio
@@ -308,6 +306,8 @@ outputs:
   - name: gnuradio-qtgui
     build:
       skip: true  # [ppc64le or arm64]
+      entry_points:
+        - gr_filter_design = gnuradio.filter.filter_design:main
     script: install_qtgui.sh  # [not win]
     script: install_qtgui.bat  # [win]
     requirements:
@@ -328,12 +328,25 @@ outputs:
         - volk
       run:
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
+        - matplotlib-base
+        - menuinst  # [win]
         - pyqt
+        - pyqtgraph
         - python
         - {{ pin_compatible('qwt', max_pin='x.x') }}
+        - scipy
     test:
       imports:
         - gnuradio.qtgui
+      commands:
+        - gr_filter_design --help
+        - gr_plot --help
+        - gr_plot_const --help
+        - gr_plot_fft --help
+        - gr_plot_iq --help
+        - gr_plot_psd --help
+        # needs pyqt-qwt which is not on conda-forge
+        #- gr_plot_qt --help
     about:
       home: https://gnuradio.org/
       doc_url: https://gnuradio.org/doc/doxygen/
@@ -399,7 +412,7 @@ outputs:
         - python
     test:
       commands:
-        - if not exist %PREFIX%\\Scripts\\uhd_siggen.exe exit 1  # [win]
+        - uhd_siggen -h
       imports:
         - gnuradio.uhd
     about:

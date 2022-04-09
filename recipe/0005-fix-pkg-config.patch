@@ -80,5 +80,5 @@ index 280adaddd..e10deceb9 100644
 +Libs: -L${libdir} -lgnuradio-runtime -lgnuradio-pmt
  Cflags: -I${includedir} @PC_ADD_CFLAGS@
 -- 
-2.34.1
+2.35.0
 
