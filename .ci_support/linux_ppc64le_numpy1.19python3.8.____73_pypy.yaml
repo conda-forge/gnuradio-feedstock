@@ -7,7 +7,7 @@ c_compiler:
 c_compiler_version:
 - '10'
 cdt_name:
-- cos6
+- cos7
 channel_sources:
 - conda-forge
 channel_targets:
@@ -31,7 +31,7 @@ libiio:
 libthrift:
 - 0.16.0
 numpy:
-- '1.21'
+- '1.19'
 pin_run_as_build:
   boost-cpp:
     max_pin: x.x.x
@@ -42,8 +42,6 @@ pin_run_as_build:
   python:
     min_pin: x.x
     max_pin: x.x
-  qt:
-    max_pin: x.x
   sqlite:
     max_pin: x
   zeromq:
@@ -51,9 +49,7 @@ pin_run_as_build:
 pybind11_abi:
 - '4'
 python:
-- 3.10.* *_cpython
-qt:
-- '5.12'
+- 3.8.* *_73_pypy
 soapysdr:
 - '0.8'
 spdlog:
@@ -61,7 +57,7 @@ spdlog:
 sqlite:
 - '3'
 target_platform:
-- linux-64
+- linux-ppc64le
 uhd:
 - 4.1.0
 volk:
