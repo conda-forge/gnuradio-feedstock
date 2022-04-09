@@ -25,7 +25,7 @@ libthrift:
 macos_machine:
 - x86_64-apple-darwin13.4.0
 numpy:
-- '1.21'
+- '1.19'
 pin_run_as_build:
   boost-cpp:
     max_pin: x.x.x
@@ -45,7 +45,7 @@ pin_run_as_build:
 pybind11_abi:
 - '4'
 python:
-- 3.10.* *_cpython
+- 3.9.* *_73_pypy
 qt:
 - '5.12'
 soapysdr:
