@@ -15,7 +15,7 @@ source:
     - 0005-filter-python-Drop-unused-args-argument-overriden-by.patch
 
 build:
-  number: 2
+  number: 3
 
 requirements:
   build:
