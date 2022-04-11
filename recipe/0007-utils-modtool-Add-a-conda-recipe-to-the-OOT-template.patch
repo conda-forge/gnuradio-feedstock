@@ -1,0 +1,358 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Ryan Volz <ryan.volz@gmail.com>
+Date: Tue, 22 Mar 2022 01:16:15 -0400
+Subject: [PATCH] utils: modtool: Add a conda recipe to the OOT template.
+
+This recipe will allow building a conda package for OOT modules with
+little or no modification after the template is rendered. Developers can
+also use the recipe with conda-smithy to create CI scripts for building
+and testing their OOT module.
+
+Signed-off-by: Ryan Volz <ryan.volz@gmail.com>
+---
+ .../templates/gr-newmod/.conda/README.md      | 110 ++++++++++++++++++
+ .../gr-newmod/.conda/conda-forge.yml          |  30 +++++
+ .../templates/gr-newmod/.conda/recipe/bld.bat |  29 +++++
+ .../gr-newmod/.conda/recipe/build.sh          |  22 ++++
+ .../.conda/recipe/conda_build_config.yaml     |  14 +++
+ .../gr-newmod/.conda/recipe/meta.yaml         |  88 ++++++++++++++
+ 6 files changed, 293 insertions(+)
+ create mode 100644 gr-utils/modtool/templates/gr-newmod/.conda/README.md
+ create mode 100644 gr-utils/modtool/templates/gr-newmod/.conda/conda-forge.yml
+ create mode 100644 gr-utils/modtool/templates/gr-newmod/.conda/recipe/bld.bat
+ create mode 100644 gr-utils/modtool/templates/gr-newmod/.conda/recipe/build.sh
+ create mode 100644 gr-utils/modtool/templates/gr-newmod/.conda/recipe/conda_build_config.yaml
+ create mode 100644 gr-utils/modtool/templates/gr-newmod/.conda/recipe/meta.yaml
+
+diff --git a/gr-utils/modtool/templates/gr-newmod/.conda/README.md b/gr-utils/modtool/templates/gr-newmod/.conda/README.md
+new file mode 100644
+index 000000000..beef4c665
+--- /dev/null
++++ b/gr-utils/modtool/templates/gr-newmod/.conda/README.md
+@@ -0,0 +1,110 @@
++# gr-howto conda recipe
++
++This recipe is for creating a package that can be installed into a [conda](https://docs.conda.io/en/latest/) environment. See the [Conda GNU Radio Guide](https://wiki.gnuradio.org/index.php/CondaInstall) for more information on using GNU Radio with conda.
++
++Packages for GNU Radio and some out-of-tree (OOT) modules are available through the [`conda-forge` channel](https://conda-forge.org/). If this OOT module is already available (search "gnuradio" on [anaconda.org](https://anaconda.org)), it is preferable to use that existing package rather than this recipe.
++
++#### Users
++
++- [Building the package](#building-the-package)
++
++#### Developers
++
++- [Modifying the recipe](#modifying-the-recipe)
++- [Continuous integration](#continuous-integration)
++
++
++## Building the package
++
++(See the [Conda GNU Radio Guide](https://wiki.gnuradio.org/index.php/CondaInstall) if you are unfamiliar with how to use conda.)
++
++1. Make sure that have `conda-build` and `conda-forge-pinning` installed and updated in your base environment:
++
++        conda activate base
++        conda install -n base conda-build conda-forge-pinning
++        conda upgrade -n base conda-build conda-forge-pinning
++
++    **Windows users only**: you will also need to have Microsoft's Visual C++ build tools installed. Usually you can do this by installing the [Community edition of Visual Studio](https://visualstudio.microsoft.com/free-developer-offers/) and then selecting a MSVC C++ x64/x86 build tools component under the list of "Individual Components". As of this writing, you will specifically need MSVC v141, i.e. the "MSVC v141 - VS2017 C++ x64/x86 build tools (v14.16)" component. If the build fails to find the version of MSVC it is looking for, try installing other (newer) versions.
++
++2. Download the source code for this OOT module (which includes this recipe). Typically, this is done by using `git` and cloning the module's repository:
++
++        git clone <repository_url>
++        cd <repository_name>
++
++3. Run `conda-build` on the recipe to create the package:
++
++    (Linux and macOS)
++
++        conda build .conda/recipe/ -m ${CONDA_PREFIX}/conda_build_config.yaml
++
++    (Windows)
++
++        conda build .conda\recipe\ -m %CONDA_PREFIX%\conda_build_config.yaml
++
++    If you plan on using this package within an existing environment which uses a specific version of Python, specify the version of Python using the `--python` flag. You must use a version string that matches one of the strings listed under `python` in the `${CONDA_PREFIX}/conda_build_config.yaml` file, e.g:
++
++    (Linux and macOS)
++
++        conda build .conda/recipe/ -m ${CONDA_PREFIX}/conda_build_config.yaml --python="3.9.* *_cpython"
++
++    (Windows)
++
++        conda build .conda\recipe\ -m %CONDA_PREFIX%\conda_build_config.yaml --python="3.9.* *_cpython"
++
++    If you encounter errors, consult with the OOT module maintainer or the maintainers of the [gnuradio feedstock](https://github.com/conda-forge/gnuradio-feedstock). It is possible that the recipe will need to be updated.
++
++4. Install the package into an existing environment
++
++        conda install --use-local -n <environment_name> gnuradio-EXAMPLE
++
++    or create a new environment that includes the package:
++
++        conda create -n test_env gnuradio-EXAMPLE
++
++
++## Modifying the recipe
++
++This recipe is derived from a template, and so it is best to check it and make any necessary modifications. Likely changes include:
++
++- Populating metadata near the bottom of the `recipe/meta.yaml` file
++- Adding "host" (build-time) and "run" (run-time) dependencies specific to your module in `recipe/meta.yaml`
++- Adding special configuration flags or steps are necessary to carry out the build to the build scripts (`recipe/build.sh` for Linux/macOS and `recipe/bld.bat` for Windows)
++
++Specifying the versions of GNU Radio that your OOT is compatible with is one of the most important modifications. Following the instructions below, the module will be built against the conda-forge "pinned" version of GNU Radio, which is usually the latest version.
++
++- To override the pinned version of GNU Radio (e.g. for a branch that builds against an older version), specify the `gnuradio_core` key as instructed in `recipe/conda_build_config.yaml`.
++- If the module is compatible with multiple major versions of GNU Radio, and you want to build against multiple of them, you can also add extra versions to `recipe/conda_build_config.yaml` to expand the default build matrix.
++
++See the [conda-build documentation](https://docs.conda.io/projects/conda-build/en/latest/index.html) for details on how to write a conda recipe.
++
++
++## Continuous integration
++
++Only a few steps are needed to use this recipe to build and test this OOT module using CI services. It can also be used to upload packages to [anaconda.org](https://anaconda.org) for others to download and use.
++
++1. Make sure that have `conda-smithy` installed in your base conda environment:
++
++        conda activate base
++        conda install -n base conda-smithy
++        conda upgrade -n base conda-smithy
++
++2. Make any changes to the recipe and `conda-forge.yml` that are necessary. For example, if you plan on uploading packages to your own [anaconda.org](https://anaconda.org) channel, specify the channel name and label as the `channel_targets` key in `recipe/conda_build_config.yaml`. Commit the changes to your repository:
++
++        git commit -a
++
++3. "Re-render" the CI scripts by running conda-smithy from the root of your repository:
++
++        conda-smithy rerender --feedstock_config .conda/conda-forge.yml -c auto
++
++    This will create a commit that adds or updates the CI scripts that have been configured with `conda-forge.yml`. If you want to minimize extraneous files, you can remove some of the newly-created files that are not necessary outside of a typical conda-forge feedstock:
++
++        git rm -f .github/workflows/automerge.yml .github/workflows/webservices.yml .circleci/config.yml
++        git commit --amend -s
++
++    When the CI is executed (on a pull request or commit), it will run one job per configuration file in `.ci_support` to build packages for various platforms, Python versions, and optionally `gnuradio` versions (by adding to `gnuradio_extra_pin` in `recipe/conda_build_config.yaml`).
++
++    **You should repeat this step whenever the recipe is updated or when changes to the conda-forge infrastructure require all CI scripts to be updated.**
++
++    Since the newly created files will be rewritten whenever conda-smithy is run, you should not edit any of the automatically-generated files in e.g. `.ci_support`, `.scripts`, or `.github/workflows/conda-build.yml`.
++
++4. (optional) If you want to enable uploads of the packages to [anaconda.org](https://anaconda.org) whenever the CI is run from a commit on the branch specified in `conda-forge.yml`, you need to set an Anaconda Cloud API token to the `BINSTAR_TOKEN` environment variable. To generate a token, follow the instructions [here](https://docs.anaconda.com/anacondaorg/user-guide/tasks/work-with-accounts/#creating-access-tokens). To populate the `BINSTAR_TOKEN` environment variable for CI jobs, add the token as a secret by following, for example, the [Github docs](https://docs.github.com/en/actions/reference/encrypted-secrets).
+diff --git a/gr-utils/modtool/templates/gr-newmod/.conda/conda-forge.yml b/gr-utils/modtool/templates/gr-newmod/.conda/conda-forge.yml
+new file mode 100644
+index 000000000..66c58f22a
+--- /dev/null
++++ b/gr-utils/modtool/templates/gr-newmod/.conda/conda-forge.yml
+@@ -0,0 +1,30 @@
++# See https://conda-forge.org/docs/maintainer/conda_forge_yml.html for
++# documentation on possible keys and values.
++
++# uncomment to enable cross-compiled osx-arm64 builds
++#build_platform:
++#  osx_arm64: osx_64
++clone_depth: 0
++github_actions:
++  store_build_artifacts: true
++os_version:
++  linux_64: cos7
++provider:
++  linux: github_actions
++  osx: github_actions
++  win: github_actions
++  # uncomment to enable additional linux platforms
++  #linux_aarch64: github_actions
++  #linux_ppc64le: github_actions
++recipe_dir: .conda/recipe
++# skip unnecessary files since this is not a full-fledged conda-forge feedstock
++skip_render:
++  - README.md
++  - LICENSE.txt
++  - .gitattributes
++  - .gitignore
++  - build-locally.py
++  - LICENSE
++test: native_and_emulated
++# enable uploads to Anaconda Cloud from specified branches only
++upload_on_branch: main
+diff --git a/gr-utils/modtool/templates/gr-newmod/.conda/recipe/bld.bat b/gr-utils/modtool/templates/gr-newmod/.conda/recipe/bld.bat
+new file mode 100644
+index 000000000..de4a3b7fc
+--- /dev/null
++++ b/gr-utils/modtool/templates/gr-newmod/.conda/recipe/bld.bat
+@@ -0,0 +1,29 @@
++setlocal EnableDelayedExpansion
++@echo on
++
++:: Make a build folder and change to it
++cmake -E make_directory buildconda
++cd buildconda
++
++:: configure
++cmake -G "Ninja" ^
++    -DCMAKE_BUILD_TYPE:STRING=Release ^
++    -DCMAKE_INSTALL_PREFIX:PATH="%LIBRARY_PREFIX%" ^
++    -DCMAKE_PREFIX_PATH:PATH="%LIBRARY_PREFIX%" ^
++    -DGR_PYTHON_DIR:PATH="%SP_DIR%" ^
++    -DENABLE_DOXYGEN=OFF ^
++    -DENABLE_TESTING=ON ^
++    ..
++if errorlevel 1 exit 1
++
++:: build
++cmake --build . --config Release -- -j%CPU_COUNT%
++if errorlevel 1 exit 1
++
++:: install
++cmake --build . --config Release --target install
++if errorlevel 1 exit 1
++
++:: test
++ctest --build-config Release --output-on-failure --timeout 120 -j%CPU_COUNT%
++if errorlevel 1 exit 1
+diff --git a/gr-utils/modtool/templates/gr-newmod/.conda/recipe/build.sh b/gr-utils/modtool/templates/gr-newmod/.conda/recipe/build.sh
+new file mode 100644
+index 000000000..2f3df7058
+--- /dev/null
++++ b/gr-utils/modtool/templates/gr-newmod/.conda/recipe/build.sh
+@@ -0,0 +1,22 @@
++#!/usr/bin/env bash
++
++set -ex
++
++cmake -E make_directory buildconda
++cd buildconda
++
++cmake_config_args=(
++    -DCMAKE_BUILD_TYPE=Release
++    -DCMAKE_INSTALL_PREFIX=$PREFIX
++    -DLIB_SUFFIX=""
++    -DENABLE_DOXYGEN=OFF
++    -DENABLE_TESTING=ON
++)
++
++cmake ${CMAKE_ARGS} -G "Ninja" .. "${cmake_config_args[@]}"
++cmake --build . --config Release -- -j${CPU_COUNT}
++cmake --build . --config Release --target install
++
++if [[ "${CONDA_BUILD_CROSS_COMPILATION:-}" != "1" || "${CROSSCOMPILING_EMULATOR}" != "" ]]; then
++    ctest --build-config Release --output-on-failure --timeout 120 -j${CPU_COUNT}
++fi
+diff --git a/gr-utils/modtool/templates/gr-newmod/.conda/recipe/conda_build_config.yaml b/gr-utils/modtool/templates/gr-newmod/.conda/recipe/conda_build_config.yaml
+new file mode 100644
+index 000000000..ce9c0f651
+--- /dev/null
++++ b/gr-utils/modtool/templates/gr-newmod/.conda/recipe/conda_build_config.yaml
+@@ -0,0 +1,14 @@
++# this is the channel and label where packages will be uploaded to if enabled
++# (see ../README.md)
++channel_targets:
++  - gnuradio main
++# override the conda-forge pin for gnuradio-core by uncommenting
++# and specifying a different version here
++#gnuradio_core:
++  #- "3.10.1"
++gnuradio_extra_pin:
++  # always leave one entry with the empty string
++  - ""
++  # add version strings here like to get builds for versions other than
++  # the conda-forge-wide default or version specified above for gnuradio_core
++  #- "3.9.5"
+diff --git a/gr-utils/modtool/templates/gr-newmod/.conda/recipe/meta.yaml b/gr-utils/modtool/templates/gr-newmod/.conda/recipe/meta.yaml
+new file mode 100644
+index 000000000..c5952c5fd
+--- /dev/null
++++ b/gr-utils/modtool/templates/gr-newmod/.conda/recipe/meta.yaml
+@@ -0,0 +1,88 @@
++{% set oot_name = "howto" %}
++{% set name = "gnuradio-" + oot_name %}
++{% set version = (environ.get("GIT_DESCRIBE_TAG_PEP440", "0.0.0." + datetime.datetime.now().strftime("%Y%m%d%H%M") + ".dev+" + environ.get("GIT_DESCRIBE_HASH", "local"))|string) %}
++
++package:
++  name: {{ name|lower }}
++  version: {{ version }}
++
++source:
++  # use local path or git repository depending on if the build is local or done on CI
++  path: "../.."  # [not os.environ.get("CI")]
++  git_url: {{ environ.get('FEEDSTOCK_ROOT', "../..") }}  # [os.environ.get("CI")]
++
++build:
++  number: 0
++
++requirements:
++  build:
++    - {{ compiler("c") }}
++    - {{ compiler("cxx") }}
++    - cmake
++    - git
++    - ninja
++    - pkg-config
++    # cross-compilation requirements
++    - python                              # [build_platform != target_platform]
++    - cross-python_{{ target_platform }}  # [build_platform != target_platform]
++    - numpy                               # [build_platform != target_platform]
++    - pybind11                            # [build_platform != target_platform]
++    # Add extra build tool dependencies here
++
++  host:
++    - gmp  # [linux]
++    # the following two entries are for generating builds against specific GR versions
++    - gnuradio-core  # [not gnuradio_extra_pin]
++    - gnuradio-core {{ gnuradio_extra_pin }}.*  # [gnuradio_extra_pin]
++    - pip  # [win]
++    - pybind11
++    - python
++    - numpy
++    - volk
++    # Add/remove library dependencies here
++
++  run:
++    - numpy
++    - python
++    # Add/remove runtime dependencies here
++
++test:
++  commands:
++    # Add a list of commands to run to check that the package works. Examples below.
++
++    ## verify that commands run
++    #- COMMAND --help
++
++    # verify that (some) headers get installed
++    - test -f $PREFIX/include/gnuradio/{{ oot_name }}/api.h  # [not win]
++    - if not exist %PREFIX%\\Library\\include\\gnuradio\\{{ oot_name }}\\api.h exit 1  # [win]
++
++    ## verify that libraries get installed
++    #- test -f $PREFIX/lib/lib{{ name }}${SHLIB_EXT}  # [not win]
++    #- if not exist %PREFIX%\\Library\\bin\\{{ name }}.dll exit 1  # [win]
++    #- if not exist %PREFIX%\\Library\\lib\\{{ name }}.lib exit 1  # [win]
++
++    ## verify that (some) GRC blocks get installed
++    #{% set blocks = ["LIST", "OF", "GRC", "BLOCK", "NAMES"] %}
++    #{% for block in blocks %}
++    #- test -f $PREFIX/share/gnuradio/grc/blocks/{{ block }}.block.yml  # [not win]
++    #- if not exist %PREFIX%\\Library\\share\\gnuradio\\grc\\blocks\\{{ block }}.block.yml exit 1  # [win]
++    #{% endfor %}
++
++  imports:
++    # verify that the python module imports
++    - gnuradio.{{ oot_name }}
++
++about:
++  # For licenses, use the SPDX identifier, e.g: "GPL-2.0-only" instead of
++  # "GNU General Public License version 2.0". See https://spdx.org/licenses/.
++  # Include the license text by using the license_file entry set to the path
++  # of the license text file within the source directory, e.g. "LICENSE".
++  # See https://docs.conda.io/projects/conda-build/en/latest/resources/define-metadata.html#license-file
++
++  #home: https://github.com/<username>/gr-howto
++  #license: GPL-3.0-or-later
++  #license_file: LICENSE
++  #summary: GNU Radio howto module
++  #description: >
++  #  Short description of the gr-howto module.
+-- 
+2.35.0
+
