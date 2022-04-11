@@ -13,6 +13,7 @@ source:
     - 0003-Use-an-ImageSurface-rather-than-UI-back-end.patch  # [osx]
     - 0004-grc-Remove-global_blocks_path-preference-and-use-pre.patch
     - 0005-filter-python-Drop-unused-args-argument-overriden-by.patch
+    - 0006-cmake-runtime-Manually-set-the-pybind11-internal-bui.patch
 
 build:
   number: 0
