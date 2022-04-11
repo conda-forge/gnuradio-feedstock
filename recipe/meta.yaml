@@ -14,7 +14,6 @@ source:
     - 0004-grc-Remove-global_blocks_path-preference-and-use-pre.patch
     - 0005-filter-python-Drop-unused-args-argument-overriden-by.patch
     - 0006-cmake-runtime-Manually-set-the-pybind11-internal-bui.patch
-    - 0007-utils-modtool-Add-a-conda-recipe-to-the-OOT-template.patch
 
 build:
   number: 0
