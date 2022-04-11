@@ -15,12 +15,12 @@ GRC_BLOCKS_PATH environment variable for pointing to additional blocks.
 Signed-off-by: Ryan Volz <ryan.volz@gmail.com>
 ---
  grc/CMakeLists.txt                         | 15 +++++++++------
- grc/compiler.py                            |  1 +
+ grc/compiler.py                            |  3 ++-
  grc/core/Config.py                         | 13 ++++++++-----
  grc/core/{Constants.py => Constants.py.in} |  1 +
  grc/grc.conf.in                            |  1 -
  grc/gui/Config.py                          |  3 +--
- 6 files changed, 20 insertions(+), 14 deletions(-)
+ 6 files changed, 21 insertions(+), 15 deletions(-)
  rename grc/core/{Constants.py => Constants.py.in} (98%)
 
 diff --git a/grc/CMakeLists.txt b/grc/CMakeLists.txt
@@ -57,13 +57,15 @@ index 09c37a50c..062f16e4f 100644
  # Install (+ compile) python sources and data files
  ########################################################################
 diff --git a/grc/compiler.py b/grc/compiler.py
-index d3d663d93..78e25549c 100755
+index d3d663d93..f414e9c0a 100755
 --- a/grc/compiler.py
 +++ b/grc/compiler.py
-@@ -40,6 +40,7 @@ def main(args=None):
+@@ -39,7 +39,8 @@ def main(args=None):
+         prefs=gr.prefs(),
          version=gr.version(),
          version_parts=(gr.major_version(),
-                        gr.api_version(), gr.minor_version())
+-                       gr.api_version(), gr.minor_version())
++                       gr.api_version(), gr.minor_version()),
 +        install_prefix=gr.prefix(),
      )
      platform.build_library()
