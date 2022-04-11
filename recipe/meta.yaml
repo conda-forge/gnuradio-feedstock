@@ -1,4 +1,4 @@
-{% set version = "3.9.5.0" %}
+{% set version = "3.9.6.0" %}
 
 package:
   name: gnuradio
@@ -6,7 +6,7 @@ package:
 
 source:
   url: https://github.com/gnuradio/gnuradio/archive/refs/tags/v{{ version }}.tar.gz
-  sha256: 066c88fcf05046593e534416a3526ee433c3b90a7faa40fca914add23989ef3e
+  sha256: 3f2c498b321e352cfcea42399b255bffebb1d6759b831c81a0df2b0c6d2583bf
   patches:
     - 0001-cmake-Install-python-wrapper-exe-for-scripts-on-Wind.patch
     - 0002-cmake-Don-t-generate-.pyc-and-.pyo-files.patch
@@ -15,7 +15,7 @@ source:
     - 0005-filter-python-Drop-unused-args-argument-overriden-by.patch
 
 build:
-  number: 2
+  number: 0
 
 requirements:
   build:
