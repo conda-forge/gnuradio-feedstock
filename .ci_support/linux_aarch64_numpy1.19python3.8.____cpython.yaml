@@ -59,7 +59,7 @@ sqlite:
 target_platform:
 - linux-aarch64
 uhd:
-- 3.15.0
+- 4.2.0
 volk:
 - '2.5'
 zeromq:

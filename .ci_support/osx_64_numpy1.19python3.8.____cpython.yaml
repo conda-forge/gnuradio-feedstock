@@ -5,7 +5,7 @@ boost_cpp:
 c_compiler:
 - clang
 c_compiler_version:
-- '12'
+- '13'
 channel_sources:
 - conda-forge
 channel_targets:
@@ -15,7 +15,7 @@ codec2:
 cxx_compiler:
 - clangxx
 cxx_compiler_version:
-- '12'
+- '13'
 fftw:
 - '3'
 gmp:
@@ -51,7 +51,7 @@ sqlite:
 target_platform:
 - osx-64
 uhd:
-- 3.15.0
+- 4.2.0
 volk:
 - '2.5'
 zeromq:
