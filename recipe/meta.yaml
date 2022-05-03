@@ -16,7 +16,7 @@ source:
     - 0006-cmake-runtime-Manually-set-the-pybind11-internal-bui.patch
 
 build:
-  number: 0
+  number: 1
 
 requirements:
   build:
@@ -112,7 +112,7 @@ requirements:
 
 test:
   downstreams:
-    - gnuradio-osmosdr
+    #- gnuradio-osmosdr
     - gnuradio-satellites
   requires:
     - sqlite
