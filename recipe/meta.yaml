@@ -116,7 +116,7 @@ requirements:
 
 test:
   downstreams:
-    - gnuradio-osmosdr
+    #- gnuradio-osmosdr
     - gnuradio-satellites
   requires:
     - sqlite
