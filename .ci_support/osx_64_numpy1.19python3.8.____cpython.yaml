@@ -5,7 +5,7 @@ boost_cpp:
 c_compiler:
 - clang
 c_compiler_version:
-- '12'
+- '13'
 channel_sources:
 - conda-forge
 channel_targets:
@@ -15,7 +15,7 @@ codec2:
 cxx_compiler:
 - clangxx
 cxx_compiler_version:
-- '12'
+- '13'
 fftw:
 - '3'
 gmp:
@@ -36,16 +36,14 @@ pin_run_as_build:
   python:
     min_pin: x.x
     max_pin: x.x
-  qt:
-    max_pin: x.x
   sqlite:
     max_pin: x
   zeromq:
     max_pin: x.x
 python:
 - 3.8.* *_cpython
-qt:
-- '5.12'
+qt_main:
+- '5.15'
 sqlite:
 - '3'
 target_platform:
