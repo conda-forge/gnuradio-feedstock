@@ -15,7 +15,7 @@ source:
     - 0006-cmake-runtime-Manually-set-the-pybind11-internal-bui.patch
 
 build:
-  number: 2
+  number: 3
 
 requirements:
   build:
@@ -88,7 +88,7 @@ requirements:
     - libad9361-iio
   # gnuradio.qtgui
     - pyqt  # [not (ppc64le or arm64)]
-    - qt  # [not (ppc64le or arm64)]
+    - qt-main  # [not (ppc64le or arm64)]
     - qwt  # [not (ppc64le or arm64)]
   # gnuradio soapy
     - soapysdr
@@ -320,7 +320,7 @@ outputs:
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
         - pyqt
         - python
-        - qt
+        - qt-main
         - qwt
         - spdlog
         - volk
