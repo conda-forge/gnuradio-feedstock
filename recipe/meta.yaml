@@ -16,7 +16,7 @@ source:
     - 0006-cmake-runtime-Manually-set-the-pybind11-internal-bui.patch
 
 build:
-  number: 1
+  number: 2
 
 requirements:
   build:
@@ -86,7 +86,7 @@ requirements:
     - pyyaml
   # gnuradio.qtgui
     - pyqt  # [not (ppc64le or arm64)]
-    - qt  # [not (ppc64le or arm64)]
+    - qt-main  # [not (ppc64le or arm64)]
     - qwt  # [not (ppc64le or arm64)]
   # gnuradio soapy
     - soapysdr
@@ -220,8 +220,8 @@ outputs:
         - gnuradio-companion = gnuradio.grc.main:main  # [win]
         - grcc = gnuradio.grc.compiler:main  # [win]
       ignore_run_exports_from:
-        # workaround to ensure compatible versions of gtk3 and qt are used
-        - qt  # [not (ppc64le or arm64)]
+        # workaround to ensure compatible versions of gtk3 and qt-main are used
+        - qt-main  # [not (ppc64le or arm64)]
     requirements:
       build:
         - {{ compiler('c') }}
@@ -235,8 +235,8 @@ outputs:
         - gtk3
         - log4cpp
         - python
-        # workaround to ensure compatible versions of gtk3 and qt are used
-        - qt  # [not (ppc64le or arm64)]
+        # workaround to ensure compatible versions of gtk3 and qt-main are used
+        - qt-main  # [not (ppc64le or arm64)]
       run:
         - boost-cpp
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
@@ -280,7 +280,7 @@ outputs:
         - log4cpp
         - pyqt
         - python
-        - qt
+        - qt-main
         - qwt
         - volk
       run:
