@@ -88,9 +88,9 @@ requirements:
     - pygobject
     - pyyaml
   # gnuradio.qtgui
-    - pyqt  # [not (ppc64le or arm64)]
-    - qt-main  # [not (ppc64le or arm64)]
-    - qwt  # [not (ppc64le or arm64)]
+    - pyqt  # [not ppc64le]
+    - qt-main  # [not ppc64le]
+    - qwt  # [not ppc64le]
   # gnuradio.uhd
     - uhd
   # gnuradio.video_sdl
@@ -103,7 +103,7 @@ requirements:
   # this is the metapackage that depends on all the subpackages
     - {{ pin_subpackage('gnuradio-core', exact=True) }}
     - {{ pin_subpackage('gnuradio-grc', exact=True) }}
-    - {{ pin_subpackage('gnuradio-qtgui', exact=True) }}  # [not (ppc64le or arm64)]
+    - {{ pin_subpackage('gnuradio-qtgui', exact=True) }}  # [not ppc64le]
     - {{ pin_subpackage('gnuradio-uhd', exact=True) }}
     - {{ pin_subpackage('gnuradio-video-sdl', exact=True) }}  # [not osx]
     - {{ pin_subpackage('gnuradio-zeromq', exact=True) }}
@@ -115,7 +115,7 @@ test:
     - sqlite
   imports:
     - gnuradio.gr
-    - gnuradio.qtgui  # [not (ppc64le or arm64)]
+    - gnuradio.qtgui  # [not ppc64le]
     - gnuradio.uhd
     - gnuradio.video_sdl  # [not osx]
     - gnuradio.zeromq
@@ -250,7 +250,7 @@ outputs:
       summary: GNU Radio Companion graphical flowgraph interface
   - name: gnuradio-qtgui
     build:
-      skip: true  # [ppc64le or arm64]
+      skip: true  # [ppc64le]
     script: install_qtgui.sh  # [not win]
     script: install_qtgui.bat  # [win]
     requirements:
