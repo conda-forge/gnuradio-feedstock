@@ -88,9 +88,9 @@ requirements:
     - libiio
     - libad9361-iio
   # gnuradio.qtgui
-    - pyqt  # [not (ppc64le or arm64)]
-    - qt-main  # [not (ppc64le or arm64)]
-    - qwt  # [not (ppc64le or arm64)]
+    - pyqt  # [not ppc64le]
+    - qt-main  # [not ppc64le]
+    - qwt  # [not ppc64le]
   # gnuradio soapy
     - soapysdr
   # gnuradio.uhd
@@ -106,7 +106,7 @@ requirements:
     - {{ pin_subpackage('gnuradio-core', exact=True) }}
     - {{ pin_subpackage('gnuradio-grc', exact=True) }}
     - {{ pin_subpackage('gnuradio-iio', exact=True) }}
-    - {{ pin_subpackage('gnuradio-qtgui', exact=True) }}  # [not (ppc64le or arm64)]
+    - {{ pin_subpackage('gnuradio-qtgui', exact=True) }}  # [not ppc64le]
     - {{ pin_subpackage('gnuradio-soapy', exact=True) }}
     - {{ pin_subpackage('gnuradio-uhd', exact=True) }}
     - {{ pin_subpackage('gnuradio-video-sdl', exact=True) }}
@@ -123,7 +123,7 @@ test:
   imports:
     - gnuradio.gr
     - gnuradio.iio
-    - gnuradio.qtgui  # [not (ppc64le or arm64)]
+    - gnuradio.qtgui  # [not ppc64le]
     - gnuradio.soapy
     - gnuradio.uhd
     - gnuradio.video_sdl
@@ -305,7 +305,7 @@ outputs:
         This module provides GNU Radio blocks for using IIO devices, including the PlutoSDR.
   - name: gnuradio-qtgui
     build:
-      skip: true  # [ppc64le or arm64]
+      skip: true  # [ppc64le]
       entry_points:
         - gr_filter_design = gnuradio.filter.filter_design:main
     script: install_qtgui.sh  # [not win]
