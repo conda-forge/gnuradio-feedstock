@@ -80,6 +80,7 @@ requirements:
     - volk >=2
   # gnuradio.audio
     - alsa-lib  # [linux]
+    - jack  # [linux]
     - portaudio
   # gnuradio companion
     - gtk3
@@ -153,6 +154,7 @@ outputs:
         - fftw
         - gmp  # [not win]
         - gsl
+        - jack  # [linux]
         - libcblas  # [linux]
         - log4cpp
         - mpir  # [win]
