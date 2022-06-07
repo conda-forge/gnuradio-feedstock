@@ -343,9 +343,16 @@ outputs:
         - xorg-libsm  # [linux]
         - xorg-libx11  # [linux]
         - xorg-libxext  # [linux]
-        - xcb-util  # [linux]
-        - xcb-util-keysyms  # [linux]
-        - xcb-util-wm  # [linux]
+        #- xcb-util  # [linux]
+        #- xcb-util-image  # [linux]
+        #- xcb-util-keysyms  # [linux]
+        #- xcb-util-renderutil  # [linux]
+        #- xcb-util-wm  # [linux]
+        - {{ cdt('xcb-util') }}        # [linux]
+        - {{ cdt('xcb-util-image') }}  # [linux]
+        - {{ cdt('xcb-util-keysyms') }}     # [linux]
+        - {{ cdt('xcb-util-renderutil') }}  # [linux]
+        - {{ cdt('xcb-util-wm') }}          # [linux]
       imports:
         - gnuradio.qtgui
       commands:
