@@ -343,8 +343,9 @@ outputs:
         - xorg-libsm  # [linux]
         - xorg-libx11  # [linux]
         - xorg-libxext  # [linux]
-        #- xcb-util-keysyms  # [linux]
-        #- xcb-util-wm  # [linux]
+        - xcb-util  # [linux]
+        - xcb-util-keysyms  # [linux]
+        - xcb-util-wm  # [linux]
       imports:
         - gnuradio.qtgui
       commands:
