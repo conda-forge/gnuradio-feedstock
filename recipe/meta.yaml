@@ -297,6 +297,13 @@ outputs:
     test:
       requires:
         - coreutils  # [not win]
+        # the following are so Qt can run using native libraries on Linux CI
+        - xorg-libice  # [linux]
+        - xorg-libsm  # [linux]
+        - xorg-libx11  # [linux]
+        - xorg-libxext  # [linux]
+        #- xcb-util-keysyms  # [linux]
+        #- xcb-util-wm  # [linux]
       imports:
         - gnuradio.qtgui
       commands:
