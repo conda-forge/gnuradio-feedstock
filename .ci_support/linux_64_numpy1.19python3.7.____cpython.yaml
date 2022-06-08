@@ -25,7 +25,7 @@ gmp:
 gsl:
 - '2.7'
 libcblas:
-- 3.8 *netlib
+- 3.9 *netlib
 libiio:
 - '0'
 libthrift:
@@ -42,8 +42,6 @@ pin_run_as_build:
   python:
     min_pin: x.x
     max_pin: x.x
-  qt:
-    max_pin: x.x
   sqlite:
     max_pin: x
   zeromq:
@@ -52,8 +50,8 @@ pybind11_abi:
 - '4'
 python:
 - 3.7.* *_cpython
-qt:
-- '5.12'
+qt_main:
+- '5.15'
 soapysdr:
 - '0.8'
 spdlog:
