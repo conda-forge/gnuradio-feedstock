@@ -325,7 +325,7 @@ outputs:
         #- gr_plot_qt --help
         - QT_DEBUG_PLUGINS=1 xvfb-run -a -s "-screen 0 1024x768x24" bash -c 'timeout --preserve-status 10 gr_filter_design || [[ $? -eq 143 ]]'  # [linux]
         - QT_DEBUG_PLUGINS=1 timeout --preserve-status 10 gr_filter_design || [[ $? -eq 143 ]]  # [not linux and not win]
-        - start gr_filter_design && ping -n 30 127.0.0.1 >nul && taskkill /im gnuradio-companion.exe /f  # [win]
+        - start gr_filter_design && ping -n 30 127.0.0.1 >nul && taskkill /im gr_filter_design.exe /f  # [win]
     about:
       home: https://gnuradio.org/
       doc_url: https://gnuradio.org/doc/doxygen/
