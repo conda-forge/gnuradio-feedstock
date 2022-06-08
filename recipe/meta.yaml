@@ -16,7 +16,7 @@ source:
     - 0006-cmake-runtime-Manually-set-the-pybind11-internal-bui.patch
 
 build:
-  number: 1
+  number: 2
 
 requirements:
   build:
@@ -78,6 +78,7 @@ requirements:
     - volk
   # gnuradio.audio
     - alsa-lib  # [linux]
+    - jack  # [linux]
     - portaudio
   # gnuradio companion
     - gtk3
@@ -85,9 +86,9 @@ requirements:
     - pygobject
     - pyyaml
   # gnuradio.qtgui
-    - pyqt  # [not (ppc64le or arm64)]
-    - qt  # [not (ppc64le or arm64)]
-    - qwt  # [not (ppc64le or arm64)]
+    - pyqt  # [not ppc64le]
+    - qt-main  # [not ppc64le]
+    - qwt  # [not ppc64le]
   # gnuradio soapy
     - soapysdr
   # gnuradio.uhd
@@ -102,7 +103,7 @@ requirements:
   # this is the metapackage that depends on all the subpackages
     - {{ pin_subpackage('gnuradio-core', exact=True) }}
     - {{ pin_subpackage('gnuradio-grc', exact=True) }}
-    - {{ pin_subpackage('gnuradio-qtgui', exact=True) }}  # [not (ppc64le or arm64)]
+    - {{ pin_subpackage('gnuradio-qtgui', exact=True) }}  # [not ppc64le]
     - {{ pin_subpackage('gnuradio-soapy', exact=True) }}
     - {{ pin_subpackage('gnuradio-uhd', exact=True) }}
     - {{ pin_subpackage('gnuradio-video-sdl', exact=True) }}
@@ -118,7 +119,7 @@ test:
     - sqlite
   imports:
     - gnuradio.gr
-    - gnuradio.qtgui  # [not (ppc64le or arm64)]
+    - gnuradio.qtgui  # [not ppc64le]
     - gnuradio.soapy
     - gnuradio.uhd
     - gnuradio.video_sdl
@@ -157,6 +158,7 @@ outputs:
         - fftw
         - gmp  # [not win]
         - gsl
+        - jack  # [linux]
         - libcblas  # [linux]
         - libsndfile
         - libthrift  # [not win]
@@ -220,8 +222,8 @@ outputs:
         - gnuradio-companion = gnuradio.grc.main:main  # [win]
         - grcc = gnuradio.grc.compiler:main  # [win]
       ignore_run_exports_from:
-        # workaround to ensure compatible versions of gtk3 and qt are used
-        - qt  # [not (ppc64le or arm64)]
+        # workaround to ensure compatible versions of gtk3 and qt-main are used
+        - qt-main  # [not (ppc64le or arm64)]
     requirements:
       build:
         - {{ compiler('c') }}
@@ -235,8 +237,8 @@ outputs:
         - gtk3
         - log4cpp
         - python
-        # workaround to ensure compatible versions of gtk3 and qt are used
-        - qt  # [not (ppc64le or arm64)]
+        # workaround to ensure compatible versions of gtk3 and qt-main are used
+        - qt-main  # [not (ppc64le or arm64)]
       run:
         - boost-cpp
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
@@ -262,7 +264,7 @@ outputs:
       summary: GNU Radio Companion graphical flowgraph interface
   - name: gnuradio-qtgui
     build:
-      skip: true  # [ppc64le or arm64]
+      skip: true  # [ppc64le]
       entry_points:
         - gr_filter_design = gnuradio.filter.filter_design:main
     script: install_qtgui.sh  # [not win]
@@ -280,7 +282,7 @@ outputs:
         - log4cpp
         - pyqt
         - python
-        - qt
+        - qt-main
         - qwt
         - volk
       run:
@@ -293,6 +295,8 @@ outputs:
         - {{ pin_compatible('qwt', max_pin='x.x') }}
         - scipy
     test:
+      requires:
+        - coreutils  # [not win]
       imports:
         - gnuradio.qtgui
       commands:
@@ -304,6 +308,9 @@ outputs:
         - gr_plot_psd --help
         # needs pyqt-qwt which is not on conda-forge
         #- gr_plot_qt --help
+        - QT_DEBUG_PLUGINS=1 xvfb-run -a -s "-screen 0 1024x768x24" bash -c 'timeout --preserve-status 10 gr_filter_design || [[ $? -eq 143 ]]'  # [linux]
+        - QT_DEBUG_PLUGINS=1 timeout --preserve-status 10 gr_filter_design || [[ $? -eq 143 ]]  # [not linux and not win]
+        - start gr_filter_design && ping -n 30 127.0.0.1 >nul && taskkill /im gr_filter_design.exe /f  # [win]
     about:
       home: https://gnuradio.org/
       doc_url: https://gnuradio.org/doc/doxygen/

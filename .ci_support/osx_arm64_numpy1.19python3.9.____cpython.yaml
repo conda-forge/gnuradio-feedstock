@@ -44,6 +44,8 @@ pybind11_abi:
 - '4'
 python:
 - 3.9.* *_cpython
+qt_main:
+- '5.15'
 soapysdr:
 - '0.8'
 sqlite:

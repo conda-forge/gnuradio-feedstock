@@ -36,8 +36,6 @@ pin_run_as_build:
   python:
     min_pin: x.x
     max_pin: x.x
-  qt:
-    max_pin: x.x
   sqlite:
     max_pin: x
   zeromq:
@@ -46,8 +44,8 @@ pybind11_abi:
 - '4'
 python:
 - 3.8.* *_cpython
-qt:
-- '5.12'
+qt_main:
+- '5.15'
 soapysdr:
 - '0.8'
 sqlite:
