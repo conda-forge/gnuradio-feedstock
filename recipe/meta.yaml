@@ -22,7 +22,7 @@ source:
     - 0012-grc-Remove-global_blocks_path-preference-and-use-pre.patch
 
 build:
-  number: 1
+  number: 2
 
 requirements:
   build:
@@ -80,6 +80,7 @@ requirements:
     - volk >=2
   # gnuradio.audio
     - alsa-lib  # [linux]
+    - jack  # [linux]
     - portaudio
   # gnuradio companion
     - gtk3
@@ -87,9 +88,9 @@ requirements:
     - pygobject
     - pyyaml
   # gnuradio.qtgui
-    - pyqt  # [not (ppc64le or arm64)]
-    - qt  # [not (ppc64le or arm64)]
-    - qwt  # [not (ppc64le or arm64)]
+    - pyqt  # [not ppc64le]
+    - qt-main  # [not ppc64le]
+    - qwt  # [not ppc64le]
   # gnuradio.uhd
     - uhd
   # gnuradio.video_sdl
@@ -102,7 +103,7 @@ requirements:
   # this is the metapackage that depends on all the subpackages
     - {{ pin_subpackage('gnuradio-core', exact=True) }}
     - {{ pin_subpackage('gnuradio-grc', exact=True) }}
-    - {{ pin_subpackage('gnuradio-qtgui', exact=True) }}  # [not (ppc64le or arm64)]
+    - {{ pin_subpackage('gnuradio-qtgui', exact=True) }}  # [not ppc64le]
     - {{ pin_subpackage('gnuradio-uhd', exact=True) }}
     - {{ pin_subpackage('gnuradio-video-sdl', exact=True) }}  # [not osx]
     - {{ pin_subpackage('gnuradio-zeromq', exact=True) }}
@@ -114,7 +115,7 @@ test:
     - sqlite
   imports:
     - gnuradio.gr
-    - gnuradio.qtgui  # [not (ppc64le or arm64)]
+    - gnuradio.qtgui  # [not ppc64le]
     - gnuradio.uhd
     - gnuradio.video_sdl  # [not osx]
     - gnuradio.zeromq
@@ -153,6 +154,7 @@ outputs:
         - fftw
         - gmp  # [not win]
         - gsl
+        - jack  # [linux]
         - libcblas  # [linux]
         - log4cpp
         - mpir  # [win]
@@ -206,8 +208,8 @@ outputs:
         - gnuradio-companion = gnuradio.grc.main:main  # [win]
         - grcc = gnuradio.grc.compiler:main  # [win]
       ignore_run_exports_from:
-        # workaround to ensure compatible versions of gtk3 and qt are used
-        - qt  # [not (ppc64le or arm64)]
+        # workaround to ensure compatible versions of gtk3 and qt-main are used
+        - qt-main  # [not (ppc64le or arm64)]
     requirements:
       build:
         - {{ compiler('c') }}
@@ -221,8 +223,8 @@ outputs:
         - gtk3
         - log4cpp
         - python
-        # workaround to ensure compatible versions of gtk3 and qt are used
-        - qt  # [not (ppc64le or arm64)]
+        # workaround to ensure compatible versions of gtk3 and qt-main are used
+        - qt-main  # [not (ppc64le or arm64)]
       run:
         - boost-cpp
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
@@ -248,7 +250,7 @@ outputs:
       summary: GNU Radio Companion graphical flowgraph interface
   - name: gnuradio-qtgui
     build:
-      skip: true  # [ppc64le or arm64]
+      skip: true  # [ppc64le]
     script: install_qtgui.sh  # [not win]
     script: install_qtgui.bat  # [win]
     requirements:
@@ -264,7 +266,7 @@ outputs:
         - log4cpp
         - pyqt
         - python
-        - qt
+        - qt-main
         - qwt
         - volk
       run:

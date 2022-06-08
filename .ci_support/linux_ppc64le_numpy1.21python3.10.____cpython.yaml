@@ -27,7 +27,7 @@ gmp:
 gsl:
 - '2.7'
 libcblas:
-- 3.8 *netlib
+- 3.9 *netlib
 numpy:
 - '1.21'
 pin_run_as_build:

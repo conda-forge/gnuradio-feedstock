@@ -59,7 +59,7 @@ else
     )
 fi
 
-if [[ $target_platform == linux-ppc64le ]] || [[ $target_platform == osx-arm64 ]] ; then
+if [[ $target_platform == linux-ppc64le ]] ; then
     cmake_config_args+=(
         -DENABLE_GR_QTGUI=OFF
     )
