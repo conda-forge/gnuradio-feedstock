@@ -188,7 +188,6 @@ outputs:
         - pyyaml
         # need setuptools because modtool uses pkg_resources
         - setuptools
-        - thrift  # [not win]
     test:
       commands:
         - gnuradio-config-info -v --prefix --sysconfdir --prefsdir --userprefsdir --prefs --builddate --enabled-components --cc --cxx --cflags
@@ -240,7 +239,6 @@ outputs:
         - python
         - spdlog
       run:
-        - boost-cpp
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
         - lxml
         - menuinst  # [win]
@@ -477,7 +475,6 @@ outputs:
         - spdlog
         - zeromq
       run:
-        - boost-cpp
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
         - python
         - pyzmq
