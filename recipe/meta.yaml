@@ -86,6 +86,7 @@ requirements:
     - lxml
     - pygobject
     - pyyaml
+    - jsonschema
   # gnuradio.iio
     - libiio
     - libad9361-iio
@@ -119,7 +120,7 @@ requirements:
 test:
   downstreams:
     #- gnuradio-osmosdr
-    - gnuradio-satellites
+    #- gnuradio-satellites
   requires:
     - sqlite
   imports:
@@ -241,6 +242,7 @@ outputs:
         - spdlog
       run:
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
+        - jsonschema
         - lxml
         - menuinst  # [win]
         - pygobject
