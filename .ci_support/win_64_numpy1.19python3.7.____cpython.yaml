@@ -5,7 +5,7 @@ c_compiler:
 channel_sources:
 - conda-forge
 channel_targets:
-- conda-forge main
+- conda-forge gnuradio_rc
 cxx_compiler:
 - vs2017
 fftw:

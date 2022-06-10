@@ -1,5 +1,5 @@
 alsa_lib:
-- 1.2.3
+- 1.2.6
 boost_cpp:
 - 1.74.0
 c_compiler:
@@ -11,7 +11,7 @@ cdt_name:
 channel_sources:
 - conda-forge
 channel_targets:
-- conda-forge main
+- conda-forge gnuradio_rc
 cxx_compiler:
 - gxx
 cxx_compiler_version:
