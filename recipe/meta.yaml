@@ -24,6 +24,7 @@ requirements:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
     - cmake >=3.8
+    - git
     - ninja
     - patch  # [osx]
     - pkg-config  # [not win]
