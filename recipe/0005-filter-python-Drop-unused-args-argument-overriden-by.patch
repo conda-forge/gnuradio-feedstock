@@ -1,0 +1,56 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Ryan Volz <ryan.volz@gmail.com>
+Date: Fri, 8 Apr 2022 15:43:40 -0400
+Subject: [PATCH] filter: python: Drop unused `args` argument, overriden by
+ parser.
+
+Signed-off-by: Ryan Volz <ryan.volz@gmail.com>
+---
+ gr-filter/apps/gr_filter_design                 | 3 +--
+ gr-filter/python/filter/design/filter_design.py | 6 +++---
+ 2 files changed, 4 insertions(+), 5 deletions(-)
+
+diff --git a/gr-filter/apps/gr_filter_design b/gr-filter/apps/gr_filter_design
+index 3647bc4b2..f0020535b 100755
+--- a/gr-filter/apps/gr_filter_design
++++ b/gr-filter/apps/gr_filter_design
+@@ -9,7 +9,6 @@
+ #
+ 
+ from gnuradio.filter import filter_design
+-import sys
+ 
+ # Call filter design main function
+-filter_design.main(sys.argv)
++filter_design.main()
+diff --git a/gr-filter/python/filter/design/filter_design.py b/gr-filter/python/filter/design/filter_design.py
+index f6d03b59e..dc40e39c0 100644
+--- a/gr-filter/python/filter/design/filter_design.py
++++ b/gr-filter/python/filter/design/filter_design.py
+@@ -2362,7 +2362,7 @@ def setup_options():
+     return parser
+ 
+ 
+-def launch(args, callback=None, restype=""):
++def launch(callback=None, restype=""):
+     parser = setup_options()
+     (options, args) = parser.parse_args()
+ 
+@@ -2383,7 +2383,7 @@ def launch(args, callback=None, restype=""):
+         return gplt
+ 
+ 
+-def main(args):
++def main():
+     parser = setup_options()
+     (options, args) = parser.parse_args()
+ 
+@@ -2395,4 +2395,4 @@ def main(args):
+ 
+ 
+ if __name__ == '__main__':
+-    main(sys.argv)
++    main()
+-- 
+2.35.0
+

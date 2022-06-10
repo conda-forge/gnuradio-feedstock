@@ -17,6 +17,12 @@ cmake -P gr-filter/cmake_install.cmake
 cmake -P gr-network/cmake_install.cmake
 cmake -P gr-pdu/cmake_install.cmake
 cmake -P gr-trellis/cmake_install.cmake
-cmake -P gr-utils/cmake_install.cmake
+cmake -P gr-utils/bindtool/cmake_install.cmake
+cmake -P gr-utils/blocktool/cmake_install.cmake
+cmake -P gr-utils/modtool/cmake_install.cmake
+cmake -P gr-utils/read_file_metadata/cmake_install.cmake
 cmake -P gr-vocoder/cmake_install.cmake
 cmake -P gr-wavelet/cmake_install.cmake
+
+# remove gr_filter_design script and put in qtgui because of dependencies
+cmake -E rm $PREFIX/bin/gr_filter_design

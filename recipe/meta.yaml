@@ -11,11 +11,12 @@ source:
   patches:
     - 0001-cmake-Install-python-wrapper-exe-for-scripts-on-Wind.patch
     - 0002-cmake-Don-t-generate-.pyc-and-.pyo-files.patch
-    - 0003-Use-an-ImageSurface-rather-than-UI-back-end.patch  # [osx]
     - 0004-grc-Remove-global_blocks_path-preference-and-use-pre.patch
+    - 0005-filter-python-Drop-unused-args-argument-overriden-by.patch
+    - 0006-cmake-runtime-Manually-set-the-pybind11-internal-bui.patch
 
 build:
-  number: 0
+  number: 3
 
 requirements:
   build:
@@ -77,6 +78,7 @@ requirements:
     - volk
   # gnuradio.audio
     - alsa-lib  # [linux]
+    - jack  # [linux]
     - portaudio
   # gnuradio companion
     - gtk3
@@ -87,9 +89,9 @@ requirements:
     - libiio
     - libad9361-iio
   # gnuradio.qtgui
-    - pyqt  # [not (ppc64le or arm64)]
-    - qt  # [not (ppc64le or arm64)]
-    - qwt  # [not (ppc64le or arm64)]
+    - pyqt  # [not ppc64le]
+    - qt-main  # [not ppc64le]
+    - qwt  # [not ppc64le]
   # gnuradio soapy
     - soapysdr
   # gnuradio.uhd
@@ -105,7 +107,7 @@ requirements:
     - {{ pin_subpackage('gnuradio-core', exact=True) }}
     - {{ pin_subpackage('gnuradio-grc', exact=True) }}
     - {{ pin_subpackage('gnuradio-iio', exact=True) }}
-    - {{ pin_subpackage('gnuradio-qtgui', exact=True) }}  # [not (ppc64le or arm64)]
+    - {{ pin_subpackage('gnuradio-qtgui', exact=True) }}  # [not ppc64le]
     - {{ pin_subpackage('gnuradio-soapy', exact=True) }}
     - {{ pin_subpackage('gnuradio-uhd', exact=True) }}
     - {{ pin_subpackage('gnuradio-video-sdl', exact=True) }}
@@ -122,7 +124,7 @@ test:
   imports:
     - gnuradio.gr
     - gnuradio.iio
-    - gnuradio.qtgui  # [not (ppc64le or arm64)]
+    - gnuradio.qtgui  # [not ppc64le]
     - gnuradio.soapy
     - gnuradio.uhd
     - gnuradio.video_sdl
@@ -139,12 +141,11 @@ outputs:
     script: install_core.bat  # [win]
     build:
       entry_points:
-        - gr_filter_design = gnuradio.filter.filter_design:main  # [win]
         - gr_modtool = gnuradio.modtool.cli.base:cli  # [win]
       run_exports:
         - {{ pin_subpackage('gnuradio-core', max_pin='x.x.x') }}
       skip_compile_pyc:
-        - "*/templates/*.py"
+        - '*/templates/*.py'
     requirements:
       build:
         - {{ compiler('c') }}
@@ -159,6 +160,7 @@ outputs:
         - fftw
         - gmp  # [not win]
         - gsl
+        - jack  # [linux]
         - libcblas  # [linux]
         - libsndfile
         - libthrift  # [not win]
@@ -179,7 +181,6 @@ outputs:
         - click-plugins
         - fftw
         - mako
-        - menuinst  # [win]
         - numpy
         - packaging
         - {{ pin_compatible('portaudio') }}
@@ -192,8 +193,7 @@ outputs:
       commands:
         - gnuradio-config-info -v --prefix --sysconfdir --prefsdir --userprefsdir --prefs --builddate --enabled-components --cc --cxx --cflags
         - gr_modtool --help
-        - if not exist %PREFIX%\\Scripts\\gr_filter_design.exe exit 1  # [win]
-        - if not exist %PREFIX%\\Scripts\\gr_modtool.exe exit 1  # [win]
+        - gr_read_file_metadata --help
       imports:
         - gnuradio.analog
         - gnuradio.audio
@@ -226,9 +226,6 @@ outputs:
       entry_points:
         - gnuradio-companion = gnuradio.grc.main:main  # [win]
         - grcc = gnuradio.grc.compiler:main  # [win]
-      ignore_run_exports_from:
-        # workaround to get host environment solved
-        - openssl
     requirements:
       build:
         - {{ compiler('c') }}
@@ -240,8 +237,6 @@ outputs:
         - boost-cpp
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
         - gtk3
-        # workaround to get host environment solved
-        - openssl
         - python
         - spdlog
       run:
@@ -253,12 +248,19 @@ outputs:
         - python
         - pyyaml
     test:
+      requires:
+        - coreutils  # [not win]
+        - xvfbwrapper  # [linux]
+      script: run_grc_test.py
       commands:
         - grcc "$PREFIX/share/gnuradio/examples/metadata/file_metadata_vector_sink.grc"  # [not win]
         - python "%PREFIX%\\Library\\bin\\grcc.py" "%PREFIX%\\Library\\share\\gnuradio\\examples\\metadata\\file_metadata_vector_sink.grc"  # [win]
         - python file_metadata_vector_sink.py  # [not win]
         - if not exist %PREFIX%\\Scripts\\gnuradio-companion.exe exit 1  # [win]
         - if not exist %PREFIX%\\Scripts\\grcc.exe exit 1  # [win]
+        - xvfb-run -a -s "-screen 0 1024x768x24" bash -c 'timeout --preserve-status 30 gnuradio-companion "$PREFIX/share/gnuradio/examples/metadata/file_metadata_vector_sink.grc" || [[ $? -eq 143 ]]'  # [linux]
+        - timeout --preserve-status 30 gnuradio-companion "$PREFIX/share/gnuradio/examples/metadata/file_metadata_vector_sink.grc" || [[ $? -eq 143 ]]  # [not linux and not win]
+        - start gnuradio-companion "%PREFIX%\\Library\\share\\gnuradio\\examples\\metadata\\file_metadata_vector_sink.grc" && ping -n 30 127.0.0.1 >nul && taskkill /im gnuradio-companion.exe /f  # [win]
     about:
       home: https://gnuradio.org/
       doc_url: https://gnuradio.org/doc/doxygen/
@@ -270,10 +272,6 @@ outputs:
   - name: gnuradio-iio
     script: install_iio.sh  # [not win]
     script: install_iio.bat  # [win]
-    build:
-      ignore_run_exports_from:
-        # workaround to get host environment solved
-        - openssl
     requirements:
       build:
         - {{ compiler('c') }}
@@ -286,8 +284,6 @@ outputs:
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
         - libiio
         - libad9361-iio
-        # workaround to get host environment solved
-        - openssl
         - python
         - spdlog
         - volk
@@ -307,14 +303,12 @@ outputs:
       license_file: COPYING
       summary: GNU Radio module for using IIO devices
       description: >
-        This module provides GNU Radio blocks for using IIO devices, including
-        the PlutoSDR.
+        This module provides GNU Radio blocks for using IIO devices, including the PlutoSDR.
   - name: gnuradio-qtgui
     build:
-      skip: true  # [ppc64le or arm64]
-      ignore_run_exports_from:
-        # workaround to get host environment solved
-        - openssl
+      skip: true  # [ppc64le]
+      entry_points:
+        - gr_filter_design = gnuradio.filter.filter_design:main
     script: install_qtgui.sh  # [not win]
     script: install_qtgui.bat  # [win]
     requirements:
@@ -327,22 +321,38 @@ outputs:
       host:
         - boost-cpp
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
-        # workaround to get host environment solved
-        - openssl
         - pyqt
         - python
-        - qt
+        - qt-main
         - qwt
         - spdlog
         - volk
       run:
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
+        - matplotlib-base
+        - menuinst  # [win]
         - pyqt
+        - pyqtgraph
         - python
         - {{ pin_compatible('qwt', max_pin='x.x') }}
+        - scipy
     test:
+      requires:
+        - coreutils  # [not win]
       imports:
         - gnuradio.qtgui
+      commands:
+        - gr_filter_design --help
+        - gr_plot --help
+        - gr_plot_const --help
+        - gr_plot_fft --help
+        - gr_plot_iq --help
+        - gr_plot_psd --help
+        # needs pyqt-qwt which is not on conda-forge
+        #- gr_plot_qt --help
+        - QT_DEBUG_PLUGINS=1 xvfb-run -a -s "-screen 0 1024x768x24" bash -c 'timeout --preserve-status 10 gr_filter_design || [[ $? -eq 143 ]]'  # [linux]
+        - QT_DEBUG_PLUGINS=1 timeout --preserve-status 10 gr_filter_design || [[ $? -eq 143 ]]  # [not linux and not win]
+        - start gr_filter_design && ping -n 30 127.0.0.1 >nul && taskkill /im gr_filter_design.exe /f  # [win]
     about:
       home: https://gnuradio.org/
       doc_url: https://gnuradio.org/doc/doxygen/
@@ -354,10 +364,6 @@ outputs:
   - name: gnuradio-soapy
     script: install_soapy.sh  # [not win]
     script: install_soapy.bat  # [win]
-    build:
-      ignore_run_exports_from:
-        # workaround to get host environment solved
-        - openssl
     requirements:
       build:
         - {{ compiler('c') }}
@@ -368,8 +374,6 @@ outputs:
       host:
         - boost-cpp
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
-        # workaround to get host environment solved
-        - openssl
         - python
         - soapysdr
         - spdlog
@@ -388,18 +392,13 @@ outputs:
       license_file: COPYING
       summary: GNU Radio SoapySDR module for using a variety of SDR devices
       description: >
-        This module provides GNU Radio source and sink blocks for a variety of
-        SDR devices using SoapySDR, a generalized C/C++ library which provides
-        abstraction in interfacing with different SDR devices and vendors.
+        This module provides GNU Radio source and sink blocks for a variety of SDR devices using SoapySDR, a generalized C/C++ library which provides abstraction in interfacing with different SDR devices and vendors.
   - name: gnuradio-uhd
     script: install_uhd.sh  # [not win]
     script: install_uhd.bat  # [win]
     build:
       entry_points:
         - uhd_siggen = gnuradio.uhd.uhd_siggen_base:main  # [win]
-      ignore_run_exports_from:
-        # workaround to get host environment solved
-        - openssl
     requirements:
       build:
         - {{ compiler('c') }}
@@ -410,8 +409,6 @@ outputs:
       host:
         - boost-cpp
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
-        # workaround to get host environment solved
-        - openssl
         - python
         - spdlog
         - uhd
@@ -421,7 +418,7 @@ outputs:
         - python
     test:
       commands:
-        - if not exist %PREFIX%\\Scripts\\uhd_siggen.exe exit 1  # [win]
+        - uhd_siggen -h
       imports:
         - gnuradio.uhd
     about:
@@ -435,10 +432,6 @@ outputs:
   - name: gnuradio-video-sdl
     script: install_video_sdl.sh  # [not win]
     script: install_video_sdl.bat  # [win]
-    build:
-      ignore_run_exports_from:
-        # workaround to get host environment solved
-        - openssl
     requirements:
       build:
         - {{ compiler('c') }}
@@ -449,8 +442,6 @@ outputs:
       host:
         - boost-cpp
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
-        # workaround to get host environment solved
-        - openssl
         - python
         - sdl
         - spdlog
@@ -471,10 +462,6 @@ outputs:
   - name: gnuradio-zeromq
     script: install_zeromq.sh  # [not win]
     script: install_zeromq.bat  # [win]
-    build:
-      ignore_run_exports_from:
-        # workaround to get host environment solved
-        - openssl
     requirements:
       build:
         - {{ compiler('c') }}
@@ -486,8 +473,6 @@ outputs:
         - boost-cpp
         - cppzmq
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
-        # workaround to get host environment solved
-        - openssl
         - python
         - spdlog
         - zeromq
@@ -509,7 +494,7 @@ outputs:
       summary: GNU Radio ZeroMQ module for message passing functionality
   - name: gnuradio-build-deps
     build:
-      string: {{ pin_subpackage('gnuradio-core', exact=True).partition(' ')[-1].partition(' ')[-1] }}
+      string: {{ (pin_subpackage('gnuradio-core', exact=True) if (pin_subpackage('gnuradio-core', exact=True) is string) else '').partition(' ')[-1].partition(' ')[-1] }}
     requirements:
       host:
         # need to populate host to get complete build string (why?)
@@ -521,7 +506,7 @@ outputs:
         - {{ compiler('cxx') }}
         - cmake
         - ninja
-        - numpy {{ numpy }}
+        - numpy {{ numpy }}.*
         - pip  # [win]
         - pkg-config
         - pybind11
@@ -540,9 +525,7 @@ outputs:
       license_file: COPYING
       summary: Meta-package for GNU Radio deps used to manually build OOT modules
       description: >
-        Install this meta-package into an environment with `gnuradio` or
-        `gnuradio-core` in order to be able to build out-of-tree modules
-        manually. DO NOT USE THIS IN CONDA RECIPES.
+        Install this meta-package into an environment with `gnuradio` or `gnuradio-core` in order to be able to build out-of-tree modules manually. DO NOT USE THIS IN CONDA RECIPES.
   # need an output with a script defined to work-around "empty" output detection
   # with python in both build (due to ninja) and host environments
   - name: gnuradio
@@ -556,19 +539,11 @@ about:
   license_file: COPYING
   summary: The free and open software radio ecosystem
   description: >
-    GNU Radio is a free software development toolkit that provides the signal
-    processing runtime and processing blocks to implement software radios using
-    readily-available, low-cost external RF hardware and commodity processors.
-    It is widely used in hobbyist, academic and commercial environments to
-    support wireless communications research as well as to implement real-world
-    radio systems.
+    GNU Radio is a free software development toolkit that provides the signal processing runtime and processing blocks to implement software radios using readily-available, low-cost external RF hardware and commodity processors. It is widely used in hobbyist, academic and commercial environments to support wireless communications
+    research as well as to implement real-world radio systems.
 
-    GNU Radio applications are primarily written using the Python programming
-    language, while the supplied, performance-critical signal processing path
-    is implemented in C++ using processor floating point extensions where
-    available. Thus, the developer is able to implement real-time, high-
-    throughput radio systems in a simple-to-use, rapid-application-development
-    environment.
+    GNU Radio applications are primarily written using the Python programming language, while the supplied, performance-critical signal processing path is implemented in C++ using processor floating point extensions where available. Thus, the developer is able to implement real-time, high- throughput radio systems in a simple-to-use,
+    rapid-application-development environment.
 
   doc_url: https://gnuradio.org/doc/doxygen/
   dev_url: https://github.com/gnuradio/gnuradio
