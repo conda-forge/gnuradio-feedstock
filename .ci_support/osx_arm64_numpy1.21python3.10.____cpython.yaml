@@ -1,23 +1,19 @@
 MACOSX_DEPLOYMENT_TARGET:
-- '10.15'
-MACOSX_SDK_VERSION:
-- '10.15'
+- '11.0'
 boost_cpp:
 - 1.74.0
 c_compiler:
 - clang
 c_compiler_version:
-- '11'
+- '13'
 channel_sources:
 - conda-forge
 channel_targets:
 - conda-forge gnuradio_rc
-codec2:
-- 1.0.0
 cxx_compiler:
 - clangxx
 cxx_compiler_version:
-- '11'
+- '13'
 fftw:
 - '3'
 gmp:
@@ -27,13 +23,11 @@ gsl:
 libiio:
 - '0'
 libthrift:
-- 0.15.0
+- 0.16.0
 macos_machine:
-- x86_64-apple-darwin13.4.0
+- arm64-apple-darwin20.0.0
 numpy:
-- '1.18'
-openssl:
-- 1.1.1
+- '1.21'
 pin_run_as_build:
   boost-cpp:
     max_pin: x.x.x
@@ -44,8 +38,6 @@ pin_run_as_build:
   python:
     min_pin: x.x
     max_pin: x.x
-  qt:
-    max_pin: x.x
   sqlite:
     max_pin: x
   zeromq:
@@ -53,19 +45,19 @@ pin_run_as_build:
 pybind11_abi:
 - '4'
 python:
-- 3.7.* *_cpython
-qt:
-- '5.12'
+- 3.10.* *_cpython
+qt_main:
+- '5.15'
 soapysdr:
 - '0.8'
 spdlog:
-- '1.9'
+- '1.10'
 sqlite:
 - '3'
 target_platform:
-- osx-64
+- osx-arm64
 uhd:
-- 4.1.0
+- 4.2.0
 volk:
 - '2.5'
 zeromq:

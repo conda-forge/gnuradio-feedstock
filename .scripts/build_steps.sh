@@ -29,7 +29,8 @@ conda-build:
 CONDARC
 
 
-mamba install --update-specs --yes --quiet "conda-forge-ci-setup=3" conda-build pip -c conda-forge
+mamba install --update-specs --yes --quiet --channel conda-forge \
+    conda-build pip conda-forge-ci-setup=3
 
 # set up the condarc
 setup_conda_rc "${FEEDSTOCK_ROOT}" "${RECIPE_ROOT}" "${CONFIG_FILE}"
@@ -41,7 +42,7 @@ source run_conda_forge_build_setup
 # "recipe/yum_requirements.txt" file. After updating that file,
 # run "conda smithy rerender" and this line will be updated
 # automatically.
-/usr/bin/sudo -n yum install -y mesa-libGL mesa-dri-drivers libselinux libudev libX11 libXcomposite libXcursor libXdamage libXext libXfixes libXi libXinerama libXrandr libXxf86vm xorg-x11-server-Xvfb
+/usr/bin/sudo -n yum install -y mesa-libGL mesa-dri-drivers libice libselinux libsm libudev libX11 libXcomposite libXcursor libXdamage libXext libXfixes libXi libXinerama libXrandr libXxf86vm xcb-util xcb-util-image xcb-util-keysyms xcb-util-renderutil xcb-util-wm xorg-x11-server-Xvfb
 
 
 # make the build number clobber

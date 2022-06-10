@@ -3,6 +3,7 @@ azure:
 bot:
   abi_migration_branches:
   - 3.8
+  - 3.9
   automerge: true
 build_platform:
   linux_aarch64: linux_64
@@ -10,4 +11,7 @@ build_platform:
   osx_arm64: osx_64
 build_with_mambabuild: false
 conda_forge_output_validation: true
+github:
+  branch_name: main
+  tooling_branch_name: main
 test_on_native_only: true

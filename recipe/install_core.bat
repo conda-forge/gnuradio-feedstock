@@ -1,9 +1,6 @@
 setlocal EnableDelayedExpansion
 @echo on
 
-if not exist "%PREFIX%\Menu" mkdir "%PREFIX%\Menu"
-copy "%RECIPE_DIR%\menus\menu-gr_filter_design-windows.json" "%PREFIX%\Menu"
-
 cd build
 
 cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
@@ -36,9 +33,19 @@ cmake -P gr-pdu/cmake_install.cmake
 if errorlevel 1 exit 1
 cmake -P gr-trellis/cmake_install.cmake
 if errorlevel 1 exit 1
-cmake -P gr-utils/cmake_install.cmake
+cmake -P gr-utils/bindtool/cmake_install.cmake
+if errorlevel 1 exit 1
+cmake -P gr-utils/blocktool/cmake_install.cmake
+if errorlevel 1 exit 1
+cmake -P gr-utils/modtool/cmake_install.cmake
+if errorlevel 1 exit 1
+cmake -P gr-utils/read_file_metadata/cmake_install.cmake
 if errorlevel 1 exit 1
 cmake -P gr-vocoder/cmake_install.cmake
 if errorlevel 1 exit 1
 cmake -P gr-wavelet/cmake_install.cmake
+if errorlevel 1 exit 1
+
+:: remove gr_filter_design script and put in qtgui because of dependencies
+cmake -E rm -f %LIBRARY_BIN%/gr_filter_design.py %LIBRARY_BIN%/gr_filter_design.exe
 if errorlevel 1 exit 1

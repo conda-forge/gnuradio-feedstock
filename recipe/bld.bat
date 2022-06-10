@@ -1,6 +1,11 @@
 setlocal EnableDelayedExpansion
 @echo on
 
+:: Python assumes an old Visual Studio without snprintf, but this breaks
+:: compiling QtGUI Python bindings. Need to define HAVE_SNPRINTF to fix.
+:: https://github.com/boostorg/system/issues/32#issuecomment-462912013
+set "CXXFLAGS=%CXXFLAGS% -DHAVE_SNPRINTF"
+
 :: Make a build folder and change to it
 mkdir build
 if errorlevel 1 exit 1
@@ -30,6 +35,7 @@ cmake -G "Ninja" ^
     -DPYTHON_EXECUTABLE:PATH="%PYTHON%" ^
     -DBoost_NO_BOOST_CMAKE=ON ^
     -DGR_PYTHON_DIR:PATH="%SP_DIR%" ^
+    -DENABLE_COMMON_PCH=OFF ^
     -DENABLE_CTRLPORT_THRIFT=OFF ^
     -DENABLE_DOXYGEN=OFF ^
     -DENABLE_EXAMPLES=ON ^
