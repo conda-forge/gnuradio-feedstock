@@ -60,10 +60,10 @@ index 40e437078..1cd3b811d 100644
     CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
      target_compile_options(${name}_python PRIVATE -Wno-unused-variable) # disable warnings for docstring templates
 diff --git a/gnuradio-runtime/lib/CMakeLists.txt b/gnuradio-runtime/lib/CMakeLists.txt
-index f86712fd3..64933af41 100644
+index b502c28fc..b57f4417d 100644
 --- a/gnuradio-runtime/lib/CMakeLists.txt
 +++ b/gnuradio-runtime/lib/CMakeLists.txt
-@@ -152,6 +152,11 @@ target_link_libraries(gnuradio-runtime
+@@ -150,6 +150,11 @@ target_link_libraries(gnuradio-runtime
    Python::Python
    pybind11::pybind11
  )
@@ -76,5 +76,5 @@ index f86712fd3..64933af41 100644
  
  # Address linker issues with std::filesystem on Centos 8 and Debian
 -- 
-2.35.0
+2.35.1
 
