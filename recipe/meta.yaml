@@ -86,6 +86,7 @@ requirements:
     - lxml
     - pygobject
     - pyyaml
+    - jsonschema
   # gnuradio.qtgui
     - pyqt  # [not ppc64le]
     - qt-main  # [not ppc64le]
@@ -241,6 +242,7 @@ outputs:
         - qt-main  # [not (ppc64le or arm64)]
       run:
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
+        - jsonschema
         - lxml
         - menuinst  # [win]
         - pygobject
