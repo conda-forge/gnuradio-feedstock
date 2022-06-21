@@ -1,4 +1,4 @@
-{% set version = "3.10.2.0" %}
+{% set version = "3.10.3.0" %}
 
 package:
   name: gnuradio
@@ -6,22 +6,24 @@ package:
 
 source:
   url: https://github.com/gnuradio/gnuradio/archive/refs/tags/v{{ version }}.tar.gz
-  sha256: a8f6c1cc98bc3784aa70ab29d3039ad6922ec36f908ecfb2c904a597b32c0776
+  sha256: 957108a67ec75d99adaad8f3b10be8ae08760a9cef0b659a5c815a4e33898a75
   patches:
     - 0001-cmake-Install-python-wrapper-exe-for-scripts-on-Wind.patch
     - 0002-cmake-Don-t-generate-.pyc-and-.pyo-files.patch
     - 0004-grc-Remove-global_blocks_path-preference-and-use-pre.patch
     - 0005-filter-python-Drop-unused-args-argument-overriden-by.patch
     - 0006-cmake-runtime-Manually-set-the-pybind11-internal-bui.patch
+    - 0007-qtgui-Add-missing-deque-include-to-spectrumdisplayfo.patch
 
 build:
-  number: 4
+  number: 0
 
 requirements:
   build:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
     - cmake >=3.8
+    - git
     - ninja
     - patch  # [osx]
     - pkg-config  # [not win]
@@ -84,6 +86,7 @@ requirements:
     - lxml
     - pygobject
     - pyyaml
+    - jsonschema
   # gnuradio.iio
     - libiio
     - libad9361-iio
@@ -116,8 +119,8 @@ requirements:
 
 test:
   downstreams:
-    - gnuradio-osmosdr
-    - gnuradio-satellites
+    #- gnuradio-osmosdr
+    #- gnuradio-satellites
   requires:
     - sqlite
   imports:
@@ -187,7 +190,6 @@ outputs:
         - pyyaml
         # need setuptools because modtool uses pkg_resources
         - setuptools
-        - thrift  # [not win]
     test:
       commands:
         - gnuradio-config-info -v --prefix --sysconfdir --prefsdir --userprefsdir --prefs --builddate --enabled-components --cc --cxx --cflags
@@ -239,8 +241,8 @@ outputs:
         - python
         - spdlog
       run:
-        - boost-cpp
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
+        - jsonschema
         - lxml
         - menuinst  # [win]
         - pygobject
@@ -476,7 +478,6 @@ outputs:
         - spdlog
         - zeromq
       run:
-        - boost-cpp
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
         - python
         - pyzmq
