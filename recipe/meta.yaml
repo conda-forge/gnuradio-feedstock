@@ -1,4 +1,4 @@
-{% set version = "3.9.6.0" %}
+{% set version = "3.9.7.0" %}
 
 package:
   name: gnuradio
@@ -6,17 +6,16 @@ package:
 
 source:
   url: https://github.com/gnuradio/gnuradio/archive/refs/tags/v{{ version }}.tar.gz
-  sha256: 3f2c498b321e352cfcea42399b255bffebb1d6759b831c81a0df2b0c6d2583bf
+  sha256: a0546582706299de34f8fa2f302dc4e3821d101731cb3efeafd1a613e5708cdd
   patches:
     - 0001-cmake-Install-python-wrapper-exe-for-scripts-on-Wind.patch
     - 0002-cmake-Don-t-generate-.pyc-and-.pyo-files.patch
-    - 0003-Use-an-ImageSurface-rather-than-UI-back-end.patch  # [osx]
     - 0004-grc-Remove-global_blocks_path-preference-and-use-pre.patch
     - 0005-filter-python-Drop-unused-args-argument-overriden-by.patch
     - 0006-cmake-runtime-Manually-set-the-pybind11-internal-bui.patch
 
 build:
-  number: 3
+  number: 0
 
 requirements:
   build:
