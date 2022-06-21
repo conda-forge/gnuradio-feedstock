@@ -1,4 +1,4 @@
-{% set version = "3.9.6.0" %}
+{% set version = "3.9.7.0" %}
 
 package:
   name: gnuradio
@@ -6,23 +6,24 @@ package:
 
 source:
   url: https://github.com/gnuradio/gnuradio/archive/refs/tags/v{{ version }}.tar.gz
-  sha256: 3f2c498b321e352cfcea42399b255bffebb1d6759b831c81a0df2b0c6d2583bf
+  sha256: a0546582706299de34f8fa2f302dc4e3821d101731cb3efeafd1a613e5708cdd
   patches:
     - 0001-cmake-Install-python-wrapper-exe-for-scripts-on-Wind.patch
     - 0002-cmake-Don-t-generate-.pyc-and-.pyo-files.patch
-    - 0003-Use-an-ImageSurface-rather-than-UI-back-end.patch  # [osx]
     - 0004-grc-Remove-global_blocks_path-preference-and-use-pre.patch
     - 0005-filter-python-Drop-unused-args-argument-overriden-by.patch
     - 0006-cmake-runtime-Manually-set-the-pybind11-internal-bui.patch
+    - 0007-qtgui-Add-missing-deque-include-to-spectrumdisplayfo.patch
 
 build:
-  number: 3
+  number: 0
 
 requirements:
   build:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
     - cmake >=3.8
+    - git
     - ninja
     - patch  # [osx]
     - pkg-config  # [not win]
@@ -85,6 +86,7 @@ requirements:
     - lxml
     - pygobject
     - pyyaml
+    - jsonschema
   # gnuradio.qtgui
     - pyqt  # [not ppc64le]
     - qt-main  # [not ppc64le]
@@ -113,8 +115,8 @@ requirements:
 
 test:
   downstreams:
-    - gnuradio-osmosdr
-    - gnuradio-satellites
+    #- gnuradio-osmosdr
+    #- gnuradio-satellites
   requires:
     - sqlite
   imports:
@@ -184,7 +186,6 @@ outputs:
         # need setuptools because modtool uses pkg_resources
         - setuptools
         - six
-        - thrift  # [not win]
     test:
       commands:
         - gnuradio-config-info -v --prefix --sysconfdir --prefsdir --userprefsdir --prefs --builddate --enabled-components --cc --cxx --cflags
@@ -240,8 +241,8 @@ outputs:
         # workaround to ensure compatible versions of gtk3 and qt-main are used
         - qt-main  # [not (ppc64le or arm64)]
       run:
-        - boost-cpp
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
+        - jsonschema
         - lxml
         - menuinst  # [win]
         - pygobject
@@ -437,7 +438,6 @@ outputs:
         - python
         - zeromq
       run:
-        - boost-cpp
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
         - python
         - pyzmq
