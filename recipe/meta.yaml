@@ -16,7 +16,7 @@ source:
     - 0007-qtgui-Add-missing-deque-include-to-spectrumdisplayfo.patch
 
 build:
-  number: 0
+  number: 1
 
 requirements:
   build:
@@ -79,6 +79,7 @@ requirements:
     - volk
   # gnuradio.audio
     - alsa-lib  # [linux]
+    - alsa-plugins  # [linux]
     - jack  # [linux]
     - portaudio
   # gnuradio companion
