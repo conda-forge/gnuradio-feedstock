@@ -79,7 +79,6 @@ requirements:
     - volk
   # gnuradio.audio
     - alsa-lib  # [linux]
-    - alsa-plugins  # [linux]
     - jack  # [linux]
     - portaudio
   # gnuradio companion
