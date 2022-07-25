@@ -16,7 +16,7 @@ source:
     - 0007-qtgui-Add-missing-deque-include-to-spectrumdisplayfo.patch
 
 build:
-  number: 1
+  number: 2
 
 requirements:
   build:
@@ -79,7 +79,6 @@ requirements:
     - volk
   # gnuradio.audio
     - alsa-lib  # [linux]
-    - alsa-plugins  # [linux]
     - jack  # [linux]
     - portaudio
   # gnuradio companion
@@ -179,6 +178,7 @@ outputs:
         - volk
       run:
         - __osx >={{ MACOSX_DEPLOYMENT_TARGET|default("10.9") }}  # [osx and x86_64]
+        - alsa-plugins  # [linux]
         - boost-cpp
         - click
         - click-plugins
