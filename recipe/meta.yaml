@@ -157,7 +157,6 @@ outputs:
         - python  # [build_platform != target_platform]
       host:
         - alsa-lib  # [linux]
-        - alsa-plugins  # [linux]
         - boost-cpp
         - codec2
         - fftw
@@ -179,6 +178,7 @@ outputs:
         - volk
       run:
         - __osx >={{ MACOSX_DEPLOYMENT_TARGET|default("10.9") }}  # [osx and x86_64]
+        - alsa-plugins  # [linux]
         - boost-cpp
         - click
         - click-plugins
