@@ -1,7 +1,7 @@
 BUILD:
 - aarch64-conda_cos7-linux-gnu
 alsa_lib:
-- 1.2.6
+- 1.2.7
 boost_cpp:
 - 1.78.0
 c_compiler:
@@ -16,8 +16,6 @@ channel_sources:
 - conda-forge
 channel_targets:
 - conda-forge main
-codec2:
-- 1.0.0
 cxx_compiler:
 - gxx
 cxx_compiler_version:
