@@ -3,5 +3,5 @@ __migrator:
   kind: version
   migration_number: 1
 alsa_lib:
-- 1.2.6
-migrator_ts: 1639542038.0768828
+- 1.2.7
+migrator_ts: 1654235946.1965144

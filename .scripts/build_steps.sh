@@ -24,13 +24,18 @@ export CONFIG_FILE="${CI_SUPPORT}/${CONFIG}.yaml"
 cat >~/.condarc <<CONDARC
 
 conda-build:
- root-dir: ${FEEDSTOCK_ROOT}/build_artifacts
+  root-dir: ${FEEDSTOCK_ROOT}/build_artifacts
+pkgs_dirs:
+  - ${FEEDSTOCK_ROOT}/build_artifacts/pkg_cache
+  - /opt/conda/pkgs
 
 CONDARC
 
 
 mamba install --update-specs --yes --quiet --channel conda-forge \
-    conda-build pip conda-forge-ci-setup=3
+    conda-build pip boa conda-forge-ci-setup=3
+mamba update --update-specs --yes --quiet --channel conda-forge \
+    conda-build pip boa conda-forge-ci-setup=3
 
 # set up the condarc
 setup_conda_rc "${FEEDSTOCK_ROOT}" "${RECIPE_ROOT}" "${CONFIG_FILE}"
@@ -55,6 +60,10 @@ fi
 
 ( endgroup "Configuring conda" ) 2> /dev/null
 
+if [[ -f "${FEEDSTOCK_ROOT}/LICENSE.txt" ]]; then
+  cp "${FEEDSTOCK_ROOT}/LICENSE.txt" "${RECIPE_ROOT}/recipe-scripts-license.txt"
+fi
+
 if [[ "${BUILD_WITH_CONDA_DEBUG:-0}" == 1 ]]; then
     if [[ "x${BUILD_OUTPUT_ID:-}" != "x" ]]; then
         EXTRA_CB_OPTIONS="${EXTRA_CB_OPTIONS:-} --output-id ${BUILD_OUTPUT_ID}"
@@ -66,7 +75,7 @@ if [[ "${BUILD_WITH_CONDA_DEBUG:-0}" == 1 ]]; then
     # Drop into an interactive shell
     /bin/bash
 else
-    conda build "${RECIPE_ROOT}" -m "${CI_SUPPORT}/${CONFIG}.yaml" \
+    conda mambabuild "${RECIPE_ROOT}" -m "${CI_SUPPORT}/${CONFIG}.yaml" \
         --suppress-variables ${EXTRA_CB_OPTIONS:-} \
         --clobber-file "${CI_SUPPORT}/clobber_${CONFIG}.yaml"
     ( startgroup "Validating outputs" ) 2> /dev/null
