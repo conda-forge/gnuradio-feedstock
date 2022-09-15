@@ -1,7 +1,7 @@
 alsa_lib:
-- 1.2.6
+- 1.2.7
 boost_cpp:
-- 1.74.0
+- 1.78.0
 c_compiler:
 - gcc
 c_compiler_version:
@@ -12,8 +12,6 @@ channel_sources:
 - conda-forge
 channel_targets:
 - conda-forge main
-codec2:
-- 1.0.0
 cxx_compiler:
 - gxx
 cxx_compiler_version:
@@ -45,7 +43,7 @@ pin_run_as_build:
   zeromq:
     max_pin: x.x
 python:
-- 3.10.* *_cpython
+- 3.7.* *_cpython
 qt_main:
 - '5.15'
 sqlite:

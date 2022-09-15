@@ -22,7 +22,7 @@ source:
     - 0012-grc-Remove-global_blocks_path-preference-and-use-pre.patch
 
 build:
-  number: 3
+  number: 4
 
 requirements:
   build:
@@ -65,8 +65,6 @@ requirements:
     - gsl
     # blas needed to link with gsl
     - libcblas  # [linux]
-    # restrict to cos6-compatible libusb (and libudev)
-    - libusb-cos6  # [linux and cdt_name=='cos6']
     - log4cpp
     - mako
     - mpir  # [win]
