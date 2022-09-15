@@ -1,13 +1,14 @@
 boost_cpp:
-- 1.74.0
+- 1.78.0
 c_compiler:
-- vs2017
+- vs2019
 channel_sources:
 - conda-forge
+- ryanvolz/label/bigsur-patch
 channel_targets:
 - conda-forge main
 cxx_compiler:
-- vs2017
+- vs2019
 fftw:
 - '3'
 gsl:

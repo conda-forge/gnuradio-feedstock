@@ -1,9 +1,9 @@
 BUILD:
 - aarch64-conda_cos7-linux-gnu
 alsa_lib:
-- 1.2.6
+- 1.2.7
 boost_cpp:
-- 1.74.0
+- 1.78.0
 c_compiler:
 - gcc
 c_compiler_version:
@@ -14,6 +14,7 @@ cdt_name:
 - cos7
 channel_sources:
 - conda-forge
+- ryanvolz/label/bigsur-patch
 channel_targets:
 - conda-forge main
 cxx_compiler:
@@ -35,7 +36,7 @@ libiio:
 libthrift:
 - 0.16.0
 numpy:
-- '1.19'
+- '1.20'
 pin_run_as_build:
   boost-cpp:
     max_pin: x.x.x

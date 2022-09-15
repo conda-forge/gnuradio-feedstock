@@ -3,19 +3,20 @@ MACOSX_DEPLOYMENT_TARGET:
 MACOSX_SDK_VERSION:
 - '10.15'
 boost_cpp:
-- 1.74.0
+- 1.78.0
 c_compiler:
 - clang
 c_compiler_version:
-- '13'
+- '14'
 channel_sources:
+- ryanvolz/label/bigsur-patch
 - conda-forge
 channel_targets:
 - conda-forge main
 cxx_compiler:
 - clangxx
 cxx_compiler_version:
-- '13'
+- '14'
 fftw:
 - '3'
 gmp:
@@ -29,7 +30,7 @@ libthrift:
 macos_machine:
 - x86_64-apple-darwin13.4.0
 numpy:
-- '1.19'
+- '1.20'
 pin_run_as_build:
   boost-cpp:
     max_pin: x.x.x
@@ -47,7 +48,7 @@ pin_run_as_build:
 pybind11_abi:
 - '4'
 python:
-- 3.9.* *_cpython
+- 3.8.* *_cpython
 qt_main:
 - '5.15'
 soapysdr:

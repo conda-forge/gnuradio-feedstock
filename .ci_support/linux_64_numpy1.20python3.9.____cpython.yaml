@@ -1,15 +1,16 @@
 alsa_lib:
-- 1.2.6
+- 1.2.7
 boost_cpp:
-- 1.74.0
+- 1.78.0
 c_compiler:
 - gcc
 c_compiler_version:
 - '10'
 cdt_name:
-- cos7
+- cos6
 channel_sources:
 - conda-forge
+- ryanvolz/label/bigsur-patch
 channel_targets:
 - conda-forge main
 cxx_compiler:
@@ -31,7 +32,7 @@ libiio:
 libthrift:
 - 0.16.0
 numpy:
-- '1.19'
+- '1.20'
 pin_run_as_build:
   boost-cpp:
     max_pin: x.x.x
@@ -50,6 +51,8 @@ pybind11_abi:
 - '4'
 python:
 - 3.9.* *_cpython
+qt_main:
+- '5.15'
 soapysdr:
 - '0.8'
 spdlog:
@@ -57,7 +60,7 @@ spdlog:
 sqlite:
 - '3'
 target_platform:
-- linux-ppc64le
+- linux-64
 uhd:
 - 4.2.0
 volk:
