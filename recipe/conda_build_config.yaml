@@ -1,3 +1,6 @@
+channel_sources:
+  - ryanvolz/label/bigsur-patch
+  - conda-forge
 # need a minimum macOS that is higher than conda-forge default to support std path()
 MACOSX_DEPLOYMENT_TARGET:  # [osx and x86_64]
   - "10.15"                # [osx and x86_64]
