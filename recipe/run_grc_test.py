@@ -18,14 +18,14 @@ try:
     import tempfile
     import threading
 
-    import gi
-
-    gi.require_version("Gtk", "3.0")
-    gi.require_version("PangoCairo", "1.0")
-    from gi.repository import GLib, Gtk, Gdk
     from gnuradio import gr
     from gnuradio.grc.gui.Platform import Platform
     from gnuradio.grc.gui.Application import Actions, Application
+
+    import gi
+    gi.require_version("Gtk", "3.0")
+    gi.require_version("PangoCairo", "1.0")
+    from gi.repository import GLib, Gtk, Gdk
 
     # include the necessary boilerplate from grc's main function to create the app
     platform = Platform(
