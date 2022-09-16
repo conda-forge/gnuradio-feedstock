@@ -1,4 +1,4 @@
-{% set version = "3.9.7.0" %}
+{% set version = "3.9.8.0" %}
 
 package:
   name: gnuradio
@@ -6,7 +6,7 @@ package:
 
 source:
   url: https://github.com/gnuradio/gnuradio/archive/refs/tags/v{{ version }}.tar.gz
-  sha256: a0546582706299de34f8fa2f302dc4e3821d101731cb3efeafd1a613e5708cdd
+  sha256: 27dbd59b60fd3c25bfc75a9d81eb0ac0addfff2a0ced11849141567615e8c02b
   patches:
     - 0001-cmake-Install-python-wrapper-exe-for-scripts-on-Wind.patch
     - 0002-cmake-Don-t-generate-.pyc-and-.pyo-files.patch
@@ -17,7 +17,7 @@ source:
     - 0008-qtgui-Add-missing-include-stdexcept-for-std-runtime_.patch
 
 build:
-  number: 1
+  number: 0
 
 requirements:
   build:
