@@ -15,63 +15,67 @@ import because pybind has determined that the ABI might have changed.
 
 Signed-off-by: Ryan Volz <ryan.volz@gmail.com>
 ---
- cmake/Modules/GrPybind.cmake        | 15 +++++++++++++++
- gnuradio-runtime/lib/CMakeLists.txt |  5 +++++
- 2 files changed, 20 insertions(+)
+ cmake/Modules/GrPybind.cmake        | 18 ++++++++++++++++++
+ gnuradio-runtime/lib/CMakeLists.txt |  6 ++++++
+ 2 files changed, 24 insertions(+)
 
 diff --git a/cmake/Modules/GrPybind.cmake b/cmake/Modules/GrPybind.cmake
-index 40e437078..1cd3b811d 100644
+index 6a6b49cfe..d9e93e8a6 100644
 --- a/cmake/Modules/GrPybind.cmake
 +++ b/cmake/Modules/GrPybind.cmake
-@@ -40,6 +40,11 @@ target_include_directories(${name}_python PRIVATE
-     ${CMAKE_CURRENT_SOURCE_DIR}/${updir}/include
- )
- target_link_libraries(${name}_python PRIVATE ${Boost_LIBRARIES} pybind11::pybind11 Python::Module Python::NumPy gnuradio-${MODULE_NAME})
-+# Manually set the pybind11 internal build abi string so that building an
-+# OOT's Python bindings with a different version of the same compiler works.
-+# This relies on the fact that pybind11 is being too strict and that the
-+# ABI does not actually change between compiler versions.
-+target_compile_definitions(${name}_python PUBLIC PYBIND11_COMPILER_TYPE="" PYBIND11_BUILD_ABI="")
- if(CMAKE_CXX_COMPILER_ID MATCHES "Clang" OR
-    CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
-     target_compile_options(${name}_python PRIVATE -Wno-unused-variable) # disable warnings for docstring templates
-@@ -170,6 +175,11 @@ if(${CMAKE_VERSION} VERSION_GREATER_EQUAL "3.16.0")
- endif()
- 
- target_link_libraries(${name}_python PRIVATE ${Boost_LIBRARIES} pybind11::pybind11 Python::Module Python::NumPy gnuradio-${MODULE_NAME})
-+# Manually set the pybind11 internal build abi string so that building an
-+# OOT's Python bindings with a different version of the same compiler works.
-+# This relies on the fact that pybind11 is being too strict and that the
-+# ABI does not actually change between compiler versions.
-+target_compile_definitions(${name}_python PUBLIC PYBIND11_COMPILER_TYPE="" PYBIND11_BUILD_ABI="")
- if(CMAKE_CXX_COMPILER_ID MATCHES "Clang" OR
-    CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
-     target_compile_options(${name}_python PRIVATE -Wno-unused-variable) # disable warnings for docstring templates
-@@ -304,6 +314,11 @@ target_include_directories(${name}_python PRIVATE
-     ${CMAKE_CURRENT_SOURCE_DIR}/${updir}/include
- )
- target_link_libraries(${name}_python PRIVATE ${Boost_LIBRARIES} pybind11::pybind11 Python::Module Python::NumPy gnuradio-${MODULE_NAME})
-+# Manually set the pybind11 internal build abi string so that building an
-+# OOT's Python bindings with a different version of the same compiler works.
-+# This relies on the fact that pybind11 is being too strict and that the
-+# ABI does not actually change between compiler versions.
-+target_compile_definitions(${name}_python PUBLIC PYBIND11_COMPILER_TYPE="" PYBIND11_BUILD_ABI="")
- if(CMAKE_CXX_COMPILER_ID MATCHES "Clang" OR
-    CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
-     target_compile_options(${name}_python PRIVATE -Wno-unused-variable) # disable warnings for docstring templates
+@@ -46,6 +46,12 @@ macro(GR_PYBIND_MAKE name updir filter files)
+     target_link_libraries(
+         ${name}_python PRIVATE ${Boost_LIBRARIES} pybind11::pybind11 Python::Module
+                                Python::NumPy gnuradio-${MODULE_NAME})
++    # Manually set the pybind11 internal build abi string so that building an
++    # OOT's Python bindings with a different version of the same compiler works.
++    # This relies on the fact that pybind11 is being too strict and that the
++    # ABI does not actually change between compiler versions.
++    target_compile_definitions(
++        ${name}_python PUBLIC PYBIND11_COMPILER_TYPE="" PYBIND11_BUILD_ABI="")
+     if(CMAKE_CXX_COMPILER_ID MATCHES "Clang" OR CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+         target_compile_options(${name}_python PRIVATE -Wno-unused-variable
+         )# disable warnings for docstring templates
+@@ -190,6 +196,12 @@ macro(GR_PYBIND_MAKE_CHECK_HASH name updir filter files)
+     target_link_libraries(
+         ${name}_python PRIVATE ${Boost_LIBRARIES} pybind11::pybind11 Python::Module
+                                Python::NumPy gnuradio-${MODULE_NAME})
++    # Manually set the pybind11 internal build abi string so that building an
++    # OOT's Python bindings with a different version of the same compiler works.
++    # This relies on the fact that pybind11 is being too strict and that the
++    # ABI does not actually change between compiler versions.
++    target_compile_definitions(
++        ${name}_python PUBLIC PYBIND11_COMPILER_TYPE="" PYBIND11_BUILD_ABI="")
+     if(CMAKE_CXX_COMPILER_ID MATCHES "Clang" OR CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+         target_compile_options(${name}_python PRIVATE -Wno-unused-variable
+         )# disable warnings for docstring templates
+@@ -336,6 +348,12 @@ macro(GR_PYBIND_MAKE_OOT name updir filter files)
+     target_link_libraries(
+         ${name}_python PRIVATE ${Boost_LIBRARIES} pybind11::pybind11 Python::Module
+                                Python::NumPy gnuradio-${MODULE_NAME})
++    # Manually set the pybind11 internal build abi string so that building an
++    # OOT's Python bindings with a different version of the same compiler works.
++    # This relies on the fact that pybind11 is being too strict and that the
++    # ABI does not actually change between compiler versions.
++    target_compile_definitions(
++        ${name}_python PUBLIC PYBIND11_COMPILER_TYPE="" PYBIND11_BUILD_ABI="")
+     if(CMAKE_CXX_COMPILER_ID MATCHES "Clang" OR CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+         target_compile_options(${name}_python PRIVATE -Wno-unused-variable
+         )# disable warnings for docstring templates
 diff --git a/gnuradio-runtime/lib/CMakeLists.txt b/gnuradio-runtime/lib/CMakeLists.txt
-index b502c28fc..b57f4417d 100644
+index 400d84230..da94475a3 100644
 --- a/gnuradio-runtime/lib/CMakeLists.txt
 +++ b/gnuradio-runtime/lib/CMakeLists.txt
-@@ -150,6 +150,11 @@ target_link_libraries(gnuradio-runtime
-   Python::Python
-   pybind11::pybind11
- )
-+# Manually set the pybind11 internal build abi string so that building an
-+# OOT's Python bindings with a different version of the same compiler works.
-+# This relies on the fact that pybind11 is being too strict and that the
-+# ABI does not actually change between compiler versions.
-+target_compile_definitions(gnuradio-runtime PUBLIC PYBIND11_COMPILER_TYPE="" PYBIND11_BUILD_ABI="")
+@@ -140,6 +140,12 @@ if(ENABLE_PYTHON)
+         gnuradio-runtime
+         INTERFACE Python::Module
+         PRIVATE Python::Python pybind11::pybind11)
++    # Manually set the pybind11 internal build abi string so that building an
++    # OOT's Python bindings with a different version of the same compiler works.
++    # This relies on the fact that pybind11 is being too strict and that the
++    # ABI does not actually change between compiler versions.
++    target_compile_definitions(
++        gnuradio-runtime PUBLIC PYBIND11_COMPILER_TYPE="" PYBIND11_BUILD_ABI="")
  endif()
  
  # Address linker issues with std::filesystem on Centos 8 and Debian
