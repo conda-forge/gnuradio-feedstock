@@ -33,9 +33,6 @@ requirements:
     - cross-python_{{ target_platform }}  # [build_platform != target_platform]
     - pybind11                            # [build_platform != target_platform]
     - numpy                               # [build_platform != target_platform]
-    # libudev CDT needed to link against libusb through uhd on linux CentOS 6
-    # libusb uses the conda-forge libudev package for CentOS 7
-    - {{ cdt('libudev-devel') }}  # [linux and cdt_name=='cos6']
     # below are needed to link with Qt for qtgui
     - {{ cdt('libice') }}  # [linux and not ppc64le]
     - {{ cdt('libselinux') }}  # [linux and not ppc64le]
@@ -64,8 +61,6 @@ requirements:
     - libcblas  # [linux]
     - libsndfile
     - libthrift  # [not win]
-    # restrict to cos6-compatible libusb (and libudev)
-    - libusb-cos6  # [linux and cdt_name=='cos6']
     - mako
     - mpir  # [win]
     - numpy
