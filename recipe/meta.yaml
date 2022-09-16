@@ -17,7 +17,7 @@ source:
     - 0008-qtgui-Add-missing-include-stdexcept-for-std-runtime_.patch
 
 build:
-  number: 3
+  number: 4
 
 requirements:
   build:
