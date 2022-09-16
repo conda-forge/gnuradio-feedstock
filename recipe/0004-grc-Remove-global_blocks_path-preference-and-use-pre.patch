@@ -24,7 +24,7 @@ Signed-off-by: Ryan Volz <ryan.volz@gmail.com>
  rename grc/core/{Constants.py => Constants.py.in} (98%)
 
 diff --git a/grc/CMakeLists.txt b/grc/CMakeLists.txt
-index 9e7d157a5..b95d4b132 100644
+index a634d8c8f..22899f9d2 100644
 --- a/grc/CMakeLists.txt
 +++ b/grc/CMakeLists.txt
 @@ -94,12 +94,6 @@ if(ENABLE_GRC)
@@ -39,7 +39,7 @@ index 9e7d157a5..b95d4b132 100644
 -
  if(UNIX)
      find_program(GRC_XTERM_EXE
-         NAMES x-terminal-emulator gnome-terminal konsole xterm foot
+         NAMES x-terminal-emulator gnome-terminal konsole xfce4-terminal urxvt xterm foot
 @@ -133,6 +127,15 @@ install(
      DESTINATION ${GR_PREFSDIR}
  )
