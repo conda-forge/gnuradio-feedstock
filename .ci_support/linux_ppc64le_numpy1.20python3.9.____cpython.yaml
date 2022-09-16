@@ -10,7 +10,6 @@ cdt_name:
 - cos7
 channel_sources:
 - conda-forge
-- ryanvolz/label/bigsur-patch
 channel_targets:
 - conda-forge main
 cxx_compiler:
