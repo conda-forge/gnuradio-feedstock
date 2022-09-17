@@ -14,6 +14,7 @@ source:
     - 0005-filter-python-Drop-unused-args-argument-overriden-by.patch
     - 0006-cmake-runtime-Manually-set-the-pybind11-internal-bui.patch
     - 0007-qtgui-Add-missing-include-stdexcept-for-std-runtime_.patch
+    - 0008-blocks-Including-missing-vector-in-blockinterleaver.patch
 
 build:
   number: 0
