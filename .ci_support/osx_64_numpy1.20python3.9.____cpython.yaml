@@ -9,7 +9,6 @@ c_compiler:
 c_compiler_version:
 - '14'
 channel_sources:
-- ryanvolz/label/bigsur-patch
 - conda-forge
 channel_targets:
 - conda-forge main

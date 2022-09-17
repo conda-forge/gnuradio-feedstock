@@ -47,7 +47,7 @@ pin_run_as_build:
 pybind11_abi:
 - '4'
 python:
-- 3.7.* *_cpython
+- 3.9.* *_73_pypy
 qt_main:
 - '5.15'
 soapysdr:
