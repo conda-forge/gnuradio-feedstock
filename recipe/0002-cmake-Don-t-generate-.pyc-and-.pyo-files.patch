@@ -4,42 +4,39 @@ Date: Wed, 22 Apr 2020 18:02:24 -0400
 Subject: [PATCH] cmake: Don't generate .pyc and .pyo files.
 
 ---
- cmake/Modules/GrPython.cmake | 11 ++---------
- 1 file changed, 2 insertions(+), 9 deletions(-)
+ cmake/Modules/GrPython.cmake | 8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
 
 diff --git a/cmake/Modules/GrPython.cmake b/cmake/Modules/GrPython.cmake
-index 9c4626eed..69f112304 100644
+index f561df422..60fcd13e8 100644
 --- a/cmake/Modules/GrPython.cmake
 +++ b/cmake/Modules/GrPython.cmake
-@@ -253,9 +253,6 @@ function(GR_PYTHON_INSTALL)
+@@ -263,8 +263,6 @@ function(GR_PYTHON_INSTALL)
  
          #create install rule and add generated files to target list
          set(python_install_gen_targets ${pycfiles} ${pyofiles})
 -        install(FILES ${python_install_gen_targets}
--            DESTINATION ${GR_PYTHON_INSTALL_DESTINATION}
--        )
+-                DESTINATION ${GR_PYTHON_INSTALL_DESTINATION})
  
-     ####################################################################
+         ####################################################################
      elseif(GR_PYTHON_INSTALL_DIRECTORY)
-@@ -330,10 +327,6 @@ function(GR_PYTHON_INSTALL)
-             # install relative to current binary dir
-             file(RELATIVE_PATH pygen_path_rel "${CMAKE_CURRENT_BINARY_DIR}" "${pygen_path}")
+@@ -341,8 +339,6 @@ function(GR_PYTHON_INSTALL)
+             file(RELATIVE_PATH pygen_path_rel "${CMAKE_CURRENT_BINARY_DIR}"
+                  "${pygen_path}")
              list(SORT pygen_path_targets)
--            install(
--                FILES ${pygen_path_targets}
--                DESTINATION "${GR_PYTHON_INSTALL_DESTINATION}/${pygen_path_rel}"
--            )
+-            install(FILES ${pygen_path_targets}
+-                    DESTINATION "${GR_PYTHON_INSTALL_DESTINATION}/${pygen_path_rel}")
          endforeach(pygen_path)
  
-     ####################################################################
-@@ -406,9 +399,9 @@ function(GR_PYTHON_INSTALL)
-             )
+         ####################################################################
+@@ -418,9 +414,9 @@ function(GR_PYTHON_INSTALL)
+                 ${GR_PYTHON_INSTALL_UNPARSED_ARGUMENTS})
          endforeach(pyfile)
  
 -    endif()
-+        GR_UNIQUE_TARGET("pygen" ${python_install_gen_targets})
++        gr_unique_target("pygen" ${python_install_gen_targets})
  
--    GR_UNIQUE_TARGET("pygen" ${python_install_gen_targets})
+-    gr_unique_target("pygen" ${python_install_gen_targets})
 +    endif()
  
  endfunction(GR_PYTHON_INSTALL)

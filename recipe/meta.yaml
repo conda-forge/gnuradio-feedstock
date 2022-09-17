@@ -1,4 +1,4 @@
-{% set version = "3.10.3.0" %}
+{% set version = "3.10.4.0" %}
 
 package:
   name: gnuradio
@@ -6,18 +6,18 @@ package:
 
 source:
   url: https://github.com/gnuradio/gnuradio/archive/refs/tags/v{{ version }}.tar.gz
-  sha256: 957108a67ec75d99adaad8f3b10be8ae08760a9cef0b659a5c815a4e33898a75
+  sha256: c6b9f59447a842559b00b3a67b4ca1186e9adb8db742b25400507fedc747f2bd
   patches:
     - 0001-cmake-Install-python-wrapper-exe-for-scripts-on-Wind.patch
     - 0002-cmake-Don-t-generate-.pyc-and-.pyo-files.patch
     - 0004-grc-Remove-global_blocks_path-preference-and-use-pre.patch
     - 0005-filter-python-Drop-unused-args-argument-overriden-by.patch
     - 0006-cmake-runtime-Manually-set-the-pybind11-internal-bui.patch
-    - 0007-qtgui-Add-missing-deque-include-to-spectrumdisplayfo.patch
-    - 0008-qtgui-Add-missing-include-stdexcept-for-std-runtime_.patch
+    - 0007-qtgui-Add-missing-include-stdexcept-for-std-runtime_.patch
+    - 0008-blocks-Including-missing-vector-in-blockinterleaver.patch
 
 build:
-  number: 3
+  number: 0
 
 requirements:
   build:
@@ -34,9 +34,6 @@ requirements:
     - cross-python_{{ target_platform }}  # [build_platform != target_platform]
     - pybind11                            # [build_platform != target_platform]
     - numpy                               # [build_platform != target_platform]
-    # libudev CDT needed to link against libusb through uhd on linux CentOS 6
-    # libusb uses the conda-forge libudev package for CentOS 7
-    - {{ cdt('libudev-devel') }}  # [linux and cdt_name=='cos6']
     # below are needed to link with Qt for qtgui
     - {{ cdt('libice') }}  # [linux and not ppc64le]
     - {{ cdt('libselinux') }}  # [linux and not ppc64le]
@@ -65,8 +62,6 @@ requirements:
     - libcblas  # [linux]
     - libsndfile
     - libthrift  # [not win]
-    # restrict to cos6-compatible libusb (and libudev)
-    - libusb-cos6  # [linux and cdt_name=='cos6']
     - mako
     - mpir  # [win]
     - numpy

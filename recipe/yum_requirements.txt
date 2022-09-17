@@ -3,7 +3,6 @@ mesa-dri-drivers
 libice
 libselinux
 libsm
-libudev
 libX11
 libXcomposite
 libXcursor
