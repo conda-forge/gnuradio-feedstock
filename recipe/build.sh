@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+if [[ $target_platform == osx* ]] ; then
+    CXXFLAGS="${CXXFLAGS} -D_LIBCPP_DISABLE_AVAILABILITY"
+fi
+
 mkdir build
 cd build
 # enable gnuradio components explicitly so we get build error when unsatisfied
