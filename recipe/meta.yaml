@@ -17,7 +17,7 @@ source:
     - 0008-blocks-Including-missing-vector-in-blockinterleaver.patch
 
 build:
-  number: 0
+  number: 1
 
 requirements:
   build:
@@ -173,7 +173,6 @@ outputs:
         - thrift  # [not win]
         - volk
       run:
-        - __osx >={{ MACOSX_DEPLOYMENT_TARGET|default("10.9") }}  # [osx and x86_64]
         - alsa-plugins  # [linux]
         - boost-cpp
         - click
