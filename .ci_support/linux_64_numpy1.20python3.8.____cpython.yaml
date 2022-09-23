@@ -7,7 +7,7 @@ c_compiler:
 c_compiler_version:
 - '10'
 cdt_name:
-- cos7
+- cos6
 channel_sources:
 - conda-forge
 channel_targets:
@@ -27,7 +27,7 @@ gsl:
 libcblas:
 - 3.9 *netlib
 numpy:
-- '1.19'
+- '1.20'
 pin_run_as_build:
   boost-cpp:
     max_pin: x.x.x
@@ -44,10 +44,12 @@ pin_run_as_build:
     max_pin: x.x
 python:
 - 3.8.* *_cpython
+qt_main:
+- '5.15'
 sqlite:
 - '3'
 target_platform:
-- linux-ppc64le
+- linux-64
 uhd:
 - 3.15.0
 volk:
