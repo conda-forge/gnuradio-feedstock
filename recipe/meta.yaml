@@ -28,7 +28,7 @@ requirements:
     - ninja
     - patch  # [osx]
     - pkg-config  # [not win]
-    - thrift-compiler  # [not win]
+    - thrift-compiler
     # cross-compilation requirements
     - python                              # [build_platform != target_platform]
     - cross-python_{{ target_platform }}  # [build_platform != target_platform]
@@ -61,7 +61,7 @@ requirements:
     # blas needed to link with gsl
     - libcblas  # [linux]
     - libsndfile
-    - libthrift  # [not win]
+    - libthrift
     - mako
     - mpir  # [win]
     - numpy
@@ -71,7 +71,7 @@ requirements:
     - pybind11-abi
     - python
     - spdlog
-    - thrift  # [not win]
+    - thrift
     - volk
   # gnuradio.audio
     - alsa-lib  # [linux]
@@ -161,7 +161,7 @@ outputs:
         - jack  # [linux]
         - libcblas  # [linux]
         - libsndfile
-        - libthrift  # [not win]
+        - libthrift
         - mpir  # [win]
         - packaging
         - portaudio
@@ -170,7 +170,7 @@ outputs:
         - python
         - numpy
         - spdlog
-        - thrift  # [not win]
+        - thrift
         - volk
       run:
         - alsa-plugins  # [linux]
