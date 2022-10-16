@@ -13,21 +13,15 @@ fftw:
 gsl:
 - '2.7'
 numpy:
-- '1.19'
+- '1.20'
 pin_run_as_build:
   boost-cpp:
     max_pin: x.x.x
-  fftw:
-    max_pin: x
   python:
     min_pin: x.x
     max_pin: x.x
-  sqlite:
-    max_pin: x
-  zeromq:
-    max_pin: x.x.x
 python:
-- 3.9.* *_cpython
+- 3.7.* *_cpython
 qt_main:
 - '5.15'
 sqlite:
@@ -35,7 +29,7 @@ sqlite:
 target_platform:
 - win-64
 uhd:
-- 3.15.0
+- 4.3.0
 volk:
 - '2.5'
 zeromq:

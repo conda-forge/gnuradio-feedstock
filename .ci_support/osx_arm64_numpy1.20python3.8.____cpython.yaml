@@ -23,23 +23,15 @@ gsl:
 macos_machine:
 - arm64-apple-darwin20.0.0
 numpy:
-- '1.19'
+- '1.20'
 pin_run_as_build:
   boost-cpp:
     max_pin: x.x.x
-  fftw:
-    max_pin: x
-  gmp:
-    max_pin: x
   python:
     min_pin: x.x
     max_pin: x.x
-  sqlite:
-    max_pin: x
-  zeromq:
-    max_pin: x.x
 python:
-- 3.10.* *_cpython
+- 3.8.* *_cpython
 qt_main:
 - '5.15'
 sqlite:
@@ -47,7 +39,7 @@ sqlite:
 target_platform:
 - osx-arm64
 uhd:
-- 3.15.0
+- 4.3.0
 volk:
 - '2.5'
 zeromq:
