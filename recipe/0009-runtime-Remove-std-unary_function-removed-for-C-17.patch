@@ -1,0 +1,67 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Ryan Volz <ryan.volz@gmail.com>
+Date: Tue, 18 Oct 2022 14:00:03 -0400
+Subject: [PATCH] runtime: Remove std::unary_function, removed for C++17.
+
+This still works on Linux/macOS because those standard libraries haven't
+actually removed std::unary_function despite its removal from the
+standard, but MSVC has and so its existence causes a build failure on
+Windows (only came up when building with thrift).
+
+Signed-off-by: Ryan Volz <ryan.volz@gmail.com>
+---
+ gnuradio-runtime/include/gnuradio/rpcserver_thrift.h | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/gnuradio-runtime/include/gnuradio/rpcserver_thrift.h b/gnuradio-runtime/include/gnuradio/rpcserver_thrift.h
+index e1c05397c..48c6e44bc 100644
+--- a/gnuradio-runtime/include/gnuradio/rpcserver_thrift.h
++++ b/gnuradio-runtime/include/gnuradio/rpcserver_thrift.h
+@@ -111,7 +111,7 @@ private:
+ 
+ 
+     template <typename T, typename TMap>
+-    struct set_f : public std::unary_function<T, void> {
++    struct set_f {
+         set_f(TMap& _setcallbackmap, const priv_lvl_t& _cur_priv)
+             : d_setcallbackmap(_setcallbackmap), cur_priv(_cur_priv)
+         {
+@@ -142,7 +142,7 @@ private:
+     };
+ 
+     template <typename T, typename TMap>
+-    struct get_f : public std::unary_function<T, void> {
++    struct get_f {
+         get_f(TMap& _getcallbackmap,
+               const priv_lvl_t& _cur_priv,
+               GNURadio::KnobMap& _outknobs)
+@@ -178,7 +178,7 @@ private:
+     };
+ 
+     template <typename T, typename TMap, typename TKnobMap>
+-    struct get_all_f : public std::unary_function<T, void> {
++    struct get_all_f {
+         get_all_f(TMap& _getcallbackmap, const priv_lvl_t& _cur_priv, TKnobMap& _outknobs)
+             : d_getcallbackmap(_getcallbackmap), cur_priv(_cur_priv), outknobs(_outknobs)
+         {
+@@ -204,7 +204,7 @@ private:
+     };
+ 
+     template <typename T, typename TMap, typename TKnobMap>
+-    struct properties_all_f : public std::unary_function<T, void> {
++    struct properties_all_f {
+         properties_all_f(QueryCallbackMap_t& _getcallbackmap,
+                          const priv_lvl_t& _cur_priv,
+                          GNURadio::KnobPropMap& _outknobs)
+@@ -238,7 +238,7 @@ private:
+     };
+ 
+     template <class T, typename TMap, typename TKnobMap>
+-    struct properties_f : public std::unary_function<T, void> {
++    struct properties_f {
+         properties_f(TMap& _getcallbackmap,
+                      const priv_lvl_t& _cur_priv,
+                      TKnobMap& _outknobs)
+-- 
+2.37.3
+
