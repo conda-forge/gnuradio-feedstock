@@ -28,6 +28,8 @@ libcblas:
 - 3.9 *netlib
 libiio:
 - '0'
+libsndfile:
+- '1.1'
 libthrift:
 - 0.16.0
 numpy:
@@ -35,16 +37,8 @@ numpy:
 pin_run_as_build:
   boost-cpp:
     max_pin: x.x.x
-  fftw:
-    max_pin: x
-  gmp:
-    max_pin: x
   python:
     min_pin: x.x
-    max_pin: x.x
-  sqlite:
-    max_pin: x
-  zeromq:
     max_pin: x.x
 pybind11_abi:
 - '4'
