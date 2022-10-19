@@ -19,7 +19,7 @@ source:
     - 0010-runtime-thrift-Modernize-c-and-use-override-rec-d-by.patch
 
 build:
-  number: 3
+  number: 4
 
 requirements:
   build:
