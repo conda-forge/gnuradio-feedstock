@@ -1,0 +1,53 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Ryan Volz <ryan.volz@gmail.com>
+Date: Wed, 19 Oct 2022 00:58:43 -0400
+Subject: [PATCH] runtime: controlport: Use headers with rpcserver class
+ definitions.
+
+Instead of just declaring the rpcserver_base and rpcserver_thrift
+classes, just include the headers that actually define them. With only
+declarations, MSVC fails to build rpcserver_selector.cc because it
+cannot verify that rpcserver_thrift inherits from rpcserver_base.
+
+Signed-off-by: Ryan Volz <ryan.volz@gmail.com>
+---
+ gnuradio-runtime/include/gnuradio/rpcserver_booter_base.h   | 3 +--
+ gnuradio-runtime/include/gnuradio/rpcserver_booter_thrift.h | 3 +--
+ 2 files changed, 2 insertions(+), 4 deletions(-)
+
+diff --git a/gnuradio-runtime/include/gnuradio/rpcserver_booter_base.h b/gnuradio-runtime/include/gnuradio/rpcserver_booter_base.h
+index b297bf6e5..acba0da43 100644
+--- a/gnuradio-runtime/include/gnuradio/rpcserver_booter_base.h
++++ b/gnuradio-runtime/include/gnuradio/rpcserver_booter_base.h
+@@ -11,11 +11,10 @@
+ #ifndef RPCSERVER_BOOTER_BASE
+ #define RPCSERVER_BOOTER_BASE
+ 
++#include <gnuradio/rpcserver_base.h>
+ #include <string>
+ #include <vector>
+ 
+-class rpcserver_base;
+-
+ class rpcserver_booter_base
+ {
+ public:
+diff --git a/gnuradio-runtime/include/gnuradio/rpcserver_booter_thrift.h b/gnuradio-runtime/include/gnuradio/rpcserver_booter_thrift.h
+index 62a45f798..0e2f3139f 100644
+--- a/gnuradio-runtime/include/gnuradio/rpcserver_booter_thrift.h
++++ b/gnuradio-runtime/include/gnuradio/rpcserver_booter_thrift.h
+@@ -13,10 +13,9 @@
+ 
+ #include "thrift/ControlPort.h"
+ #include <gnuradio/rpcserver_booter_base.h>
++#include <gnuradio/rpcserver_thrift.h>
+ #include <gnuradio/thrift_server_template.h>
+ 
+-class rpcserver_base;
+-class rpcserver_thrift;
+ 
+ class rpcserver_booter_thrift
+     : public virtual rpcserver_booter_base,
+-- 
+2.37.3
+
