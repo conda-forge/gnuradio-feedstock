@@ -16,6 +16,8 @@ libiio:
 - '0'
 libsndfile:
 - '1.1'
+libthrift:
+- 0.16.0
 numpy:
 - '1.21'
 pin_run_as_build:
