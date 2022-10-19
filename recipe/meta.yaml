@@ -16,7 +16,7 @@ source:
     - 0007-qtgui-Add-missing-include-stdexcept-for-std-runtime_.patch
     - 0008-blocks-Including-missing-vector-in-blockinterleaver.patch
     - 0009-runtime-Remove-std-unary_function-removed-for-C-17.patch
-    - 0010-runtime-thrift-Modernize-c-and-use-override-rec-d-by.patch
+    - 0010-runtime-controlport-Use-headers-with-rpcserver-class.patch
 
 build:
   number: 4
