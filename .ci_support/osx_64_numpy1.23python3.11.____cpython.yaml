@@ -23,7 +23,7 @@ gsl:
 macos_machine:
 - x86_64-apple-darwin13.4.0
 numpy:
-- '1.20'
+- '1.23'
 pin_run_as_build:
   boost-cpp:
     max_pin: x.x.x
@@ -31,7 +31,7 @@ pin_run_as_build:
     min_pin: x.x
     max_pin: x.x
 python:
-- 3.10.* *_cpython
+- 3.11.* *_cpython
 qt_main:
 - '5.15'
 sqlite:
