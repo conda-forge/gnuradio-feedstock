@@ -22,7 +22,7 @@ source:
     - 0012-grc-Remove-global_blocks_path-preference-and-use-pre.patch
 
 build:
-  number: 5
+  number: 6
 
 requirements:
   build:
@@ -32,7 +32,7 @@ requirements:
     - ninja
     - patch  # [osx]
     - pkg-config  # [not win]
-    - swig
+    - swig <4.1
     # cross-compilation requirements
     - python                              # [build_platform != target_platform]
     - cross-python_{{ target_platform }}  # [build_platform != target_platform]
@@ -401,7 +401,7 @@ outputs:
         - cmake
         - ninja
         - pkg-config
-        - swig
+        - swig <4.1
       run_constrained:
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
     about:
