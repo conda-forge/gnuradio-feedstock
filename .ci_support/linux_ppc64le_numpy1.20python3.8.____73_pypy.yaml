@@ -31,7 +31,7 @@ libiio:
 libthrift:
 - 0.16.0
 numpy:
-- '1.21'
+- '1.20'
 pin_run_as_build:
   boost-cpp:
     max_pin: x.x.x
@@ -41,7 +41,7 @@ pin_run_as_build:
 pybind11_abi:
 - '4'
 python:
-- 3.10.* *_cpython
+- 3.8.* *_73_pypy
 soapysdr:
 - '0.8'
 spdlog:
