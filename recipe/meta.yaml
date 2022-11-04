@@ -57,6 +57,7 @@ requirements:
     - click-plugins
     - codec2
     - fftw
+    - fmt
     - gmp  # [not win]
     - gsl
     # blas needed to link with gsl
@@ -157,6 +158,7 @@ outputs:
         - boost-cpp
         - codec2
         - fftw
+        - fmt
         - gmp  # [not win]
         - gsl
         - jack  # [linux]
@@ -233,6 +235,7 @@ outputs:
         - python  # [build_platform != target_platform]
       host:
         - boost-cpp
+        - fmt
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
         - gtk3
         - python
@@ -279,6 +282,7 @@ outputs:
         - python  # [build_platform != target_platform]
       host:
         - boost-cpp
+        - fmt
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
         - libiio
         - libad9361-iio
@@ -318,6 +322,7 @@ outputs:
         - python  # [build_platform != target_platform]
       host:
         - boost-cpp
+        - fmt
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
         - pyqt
         - python
@@ -371,6 +376,7 @@ outputs:
         - python  # [build_platform != target_platform]
       host:
         - boost-cpp
+        - fmt
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
         - python
         - soapysdr
@@ -406,6 +412,7 @@ outputs:
         - python  # [build_platform != target_platform]
       host:
         - boost-cpp
+        - fmt
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
         - python
         - spdlog
@@ -439,6 +446,7 @@ outputs:
         - python  # [build_platform != target_platform]
       host:
         - boost-cpp
+        - fmt
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
         - python
         - sdl
@@ -470,6 +478,7 @@ outputs:
       host:
         - boost-cpp
         - cppzmq
+        - fmt
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
         - python
         - spdlog
@@ -497,7 +506,9 @@ outputs:
         # need to populate host to get complete build string (why?)
         - {{ compiler('c') }}
         - {{ compiler('cxx') }}
+        - fmt
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
+        - spdlog
       run:
         - {{ compiler('c') }}
         - {{ compiler('cxx') }}
@@ -507,7 +518,6 @@ outputs:
         - pip  # [win]
         - pkg-config
         - pybind11
-        - spdlog
       run_constrained:
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
     test:
