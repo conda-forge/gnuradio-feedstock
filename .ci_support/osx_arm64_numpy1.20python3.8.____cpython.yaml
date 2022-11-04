@@ -16,6 +16,8 @@ cxx_compiler_version:
 - '14'
 fftw:
 - '3'
+fmt:
+- '9'
 gmp:
 - '6'
 gsl:

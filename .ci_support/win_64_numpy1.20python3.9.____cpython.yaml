@@ -10,6 +10,8 @@ cxx_compiler:
 - vs2019
 fftw:
 - '3'
+fmt:
+- '9'
 gsl:
 - '2.7'
 libiio:
