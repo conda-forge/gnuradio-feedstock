@@ -16,9 +16,12 @@ source:
     - 0007-qtgui-Add-missing-include-stdexcept-for-std-runtime_.patch
     - 0008-blocks-Including-missing-vector-in-blockinterleaver.patch
     - 0009-runtime-make-logging-in-rpcpmtconverters_thift-work-.patch
+    - 0010-runtime-Move-block_gateway-from-gnuradio-runtime-int.patch
+    - 0011-qtgui-Remove-extraneous-includes-of-pybind11-embed.h.patch
+    - 0012-qtgui-Remove-all-traces-of-Python-from-include-lib.patch
 
 build:
-  number: 6
+  number: 7
 
 requirements:
   build:
