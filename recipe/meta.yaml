@@ -17,7 +17,7 @@ source:
     - 0008-blocks-Including-missing-vector-in-blockinterleaver.patch
 
 build:
-  number: 5
+  number: 6
 
 requirements:
   build:
