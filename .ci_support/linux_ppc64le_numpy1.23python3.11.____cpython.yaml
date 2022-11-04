@@ -45,7 +45,7 @@ python:
 soapysdr:
 - '0.8'
 spdlog:
-- '1.10'
+- '1.11'
 sqlite:
 - '3'
 target_platform:
