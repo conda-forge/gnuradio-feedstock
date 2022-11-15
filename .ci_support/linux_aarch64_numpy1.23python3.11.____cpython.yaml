@@ -34,6 +34,8 @@ libcblas:
 - 3.9 *netlib
 libiio:
 - '0'
+libsndfile:
+- '1.1'
 libthrift:
 - 0.16.0
 numpy:
