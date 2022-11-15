@@ -1,0 +1,41 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Ryan Volz <ryan.volz@gmail.com>
+Date: Thu, 10 Nov 2022 00:29:27 -0500
+Subject: [PATCH] grc: Don't query and use display scale factor in DrawingArea
+ size.
+
+All this did was request a larger size for the cairo surface of the
+DrawingArea on which this is set, which very roughly worked around the
+cairo context reference bug for users with high DPI displays. Now that
+this bug is fixed by the previous commit, this is not necessary.
+
+It's important to note that GTK takes care of the DPI scaling for high
+DPI displays behind the scenes, so this doesn't even help to scale the
+flowgraph properly. If there are further bugs with scaling, don't look
+here.
+
+Signed-off-by: Ryan Volz <ryan.volz@gmail.com>
+---
+ grc/gui/DrawingArea.py | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
+
+diff --git a/grc/gui/DrawingArea.py b/grc/gui/DrawingArea.py
+index d94a89027..bc2bfdf0b 100644
+--- a/grc/gui/DrawingArea.py
++++ b/grc/gui/DrawingArea.py
+@@ -169,10 +169,9 @@ class DrawingArea(Gtk.DrawingArea):
+ 
+     def _update_size(self):
+         w, h = self._flow_graph.get_extents()[2:]
+-        scale_factor = self.get_scale_factor()
+         self.set_size_request(
+-            w * scale_factor * self.zoom_factor + 100,
+-            h * scale_factor * self.zoom_factor + 100,
++            w * self.zoom_factor + 100,
++            h * self.zoom_factor + 100,
+         )
+ 
+     def _auto_scroll(self, event):
+-- 
+2.37.3
+

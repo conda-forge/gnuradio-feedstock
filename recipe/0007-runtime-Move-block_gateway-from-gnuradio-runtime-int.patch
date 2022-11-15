@@ -1,0 +1,722 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Ryan Volz <ryan.volz@gmail.com>
+Date: Mon, 24 Oct 2022 13:44:45 -0400
+Subject: [PATCH] runtime: Move block_gateway from gnuradio-runtime into
+ gr_python
+
+This eliminates the need to link gnuradio-runtime with Python and fixes
+segfaults on conda+macOS when trying to use any Python block. Those
+segfaults would happen because the Python library was loaded twice: once
+dynamically from linking with gnuradio-runtime, and once from the
+running Python interpreter which conda-forge links statically with
+libpython. The block_gateway was only used from its Python binding, so
+the implementation now just lives there.
+
+This is an API change!
+
+Signed-off-by: Ryan Volz <ryan.volz@gmail.com>
+---
+ gnuradio-runtime/CMakeLists.txt               |  10 --
+ .../include/gnuradio/CMakeLists.txt           |   1 -
+ .../include/gnuradio/block_gateway.h          | 121 --------------
+ gnuradio-runtime/lib/CMakeLists.txt           |  26 +--
+ gnuradio-runtime/lib/block_gateway_impl.cc    |  73 ---------
+ gnuradio-runtime/lib/block_gateway_impl.h     |  85 ----------
+ .../gnuradio/gr/bindings/block_gateway.h      | 118 ++++++++++++++
+ .../gr/bindings/block_gateway_python.cc       | 154 +++++++++++++++++-
+ 8 files changed, 266 insertions(+), 322 deletions(-)
+ delete mode 100644 gnuradio-runtime/include/gnuradio/block_gateway.h
+ delete mode 100644 gnuradio-runtime/lib/block_gateway_impl.cc
+ delete mode 100644 gnuradio-runtime/lib/block_gateway_impl.h
+ create mode 100644 gnuradio-runtime/python/gnuradio/gr/bindings/block_gateway.h
+
+diff --git a/gnuradio-runtime/CMakeLists.txt b/gnuradio-runtime/CMakeLists.txt
+index c1aed8679..7839161eb 100644
+--- a/gnuradio-runtime/CMakeLists.txt
++++ b/gnuradio-runtime/CMakeLists.txt
+@@ -23,22 +23,12 @@ GR_CHECK_LINUX_SCHED_AVAIL()
+ # Register component
+ ########################################################################
+ include(GrComponent)
+-if (ENABLE_PYTHON)
+ GR_REGISTER_COMPONENT("gnuradio-runtime" ENABLE_GNURADIO_RUNTIME
+     Boost_FOUND
+     PYTHONINTERP_FOUND
+     MPLIB_FOUND
+     LOG4CPP_FOUND
+-    pybind11_FOUND
+ )
+-else()
+-GR_REGISTER_COMPONENT("gnuradio-runtime" ENABLE_GNURADIO_RUNTIME
+-    Boost_FOUND
+-    PYTHONINTERP_FOUND
+-    MPLIB_FOUND
+-    LOG4CPP_FOUND
+-)
+-endif()
+ 
+ get_filename_component(GNURADIO_RUNTIME_PYTHONPATH
+     ${CMAKE_SOURCE_DIR}/python ABSOLUTE
+diff --git a/gnuradio-runtime/include/gnuradio/CMakeLists.txt b/gnuradio-runtime/include/gnuradio/CMakeLists.txt
+index de58e0240..47e337780 100644
+--- a/gnuradio-runtime/include/gnuradio/CMakeLists.txt
++++ b/gnuradio-runtime/include/gnuradio/CMakeLists.txt
+@@ -17,7 +17,6 @@ install(FILES
+   basic_block.h
+   block.h
+   block_detail.h
+-  block_gateway.h
+   block_registry.h
+   buffer.h
+   constants.h
+diff --git a/gnuradio-runtime/include/gnuradio/block_gateway.h b/gnuradio-runtime/include/gnuradio/block_gateway.h
+deleted file mode 100644
+index 0973c7bac..000000000
+--- a/gnuradio-runtime/include/gnuradio/block_gateway.h
++++ /dev/null
+@@ -1,121 +0,0 @@
+-/* -*- c++ -*- */
+-/*
+- * Copyright 2011-2013,2017,2020 Free Software Foundation, Inc.
+- *
+- * This file is part of GNU Radio
+- *
+- * SPDX-License-Identifier: GPL-3.0-or-later
+- *
+- */
+-
+-#ifndef INCLUDED_RUNTIME_BLOCK_GATEWAY_H
+-#define INCLUDED_RUNTIME_BLOCK_GATEWAY_H
+-
+-#include <gnuradio/api.h>
+-#include <gnuradio/block.h>
+-#include <string>
+-
+-#include <pybind11/pybind11.h> // must be first
+-#include <pybind11/stl.h>
+-namespace py = pybind11;
+-
+-namespace gr {
+-
+-/*!
+- * The gateway block which performs all the magic.
+- *
+- * The gateway provides access to all the gr::block routines.
+- */
+-typedef enum {
+-    GW_BLOCK_GENERAL = 0,
+-    GW_BLOCK_SYNC,
+-    GW_BLOCK_DECIM,
+-    GW_BLOCK_INTERP
+-} gw_block_t;
+-
+-class GR_RUNTIME_API block_gateway : virtual public gr::block
+-{
+-private:
+-    py::handle d_py_handle;
+-
+-public:
+-    // gr::block_gateway::sptr
+-    typedef std::shared_ptr<block_gateway> sptr;
+-
+-    /*!
+-     * Make a new gateway block.
+-     * \param py_handle the pybind11 object with callback
+-     * \param name the name of the block (Ex: "Shirley")
+-     * \param in_sig the input signature for this block
+-     * \param out_sig the output signature for this block
+-     * \return a new gateway block
+-     */
+-    static sptr make(const py::object& py_handle,
+-                     const std::string& name,
+-                     gr::io_signature::sptr in_sig,
+-                     gr::io_signature::sptr out_sig);
+-
+-
+-    // Protected members of gr::block trampolined here for python blocks to use
+-    void _add_item_tag(unsigned int which_output, const tag_t& tag)
+-    {
+-        return gr::block::add_item_tag(which_output, tag);
+-    }
+-
+-    void _add_item_tag(unsigned int which_output,
+-                       uint64_t abs_offset,
+-                       const pmt::pmt_t& key,
+-                       const pmt::pmt_t& value,
+-                       const pmt::pmt_t& srcid = pmt::PMT_F)
+-    {
+-        return gr::block::add_item_tag(which_output, abs_offset, key, value, srcid);
+-    }
+-
+-
+-    std::vector<tag_t>
+-    _get_tags_in_range(unsigned int which_input, uint64_t abs_start, uint64_t abs_end)
+-    {
+-        std::vector<gr::tag_t> tags;
+-        gr::block::get_tags_in_range(tags, which_input, abs_start, abs_end);
+-        return tags;
+-    }
+-
+-    std::vector<tag_t> _get_tags_in_range(unsigned int which_input,
+-                                          uint64_t abs_start,
+-                                          uint64_t abs_end,
+-                                          const pmt::pmt_t& key)
+-    {
+-        std::vector<gr::tag_t> tags;
+-        gr::block::get_tags_in_range(tags, which_input, abs_start, abs_end, key);
+-        return tags;
+-    }
+-
+-    std::vector<tag_t>
+-    _get_tags_in_window(unsigned int which_input, uint64_t rel_start, uint64_t rel_end)
+-    {
+-        std::vector<gr::tag_t> tags;
+-        gr::block::get_tags_in_window(tags, which_input, rel_start, rel_end);
+-        return tags;
+-    }
+-
+-    std::vector<tag_t> _get_tags_in_window(unsigned int which_input,
+-                                           uint64_t rel_start,
+-                                           uint64_t rel_end,
+-                                           const pmt::pmt_t& key)
+-    {
+-        std::vector<gr::tag_t> tags;
+-        gr::block::get_tags_in_window(tags, which_input, rel_start, rel_end, key);
+-        return tags;
+-    }
+-
+-    virtual void set_msg_handler_pybind(pmt::pmt_t which_port,
+-                                        std::string& handler_name) = 0;
+-
+-protected:
+-    bool has_msg_handler(pmt::pmt_t which_port) override = 0;
+-    void dispatch_msg(pmt::pmt_t which_port, pmt::pmt_t msg) override = 0;
+-};
+-
+-} /* namespace gr */
+-
+-#endif /* INCLUDED_RUNTIME_BLOCK_GATEWAY_H */
+diff --git a/gnuradio-runtime/lib/CMakeLists.txt b/gnuradio-runtime/lib/CMakeLists.txt
+index 6d203ea1c..8e4c7608d 100644
+--- a/gnuradio-runtime/lib/CMakeLists.txt
++++ b/gnuradio-runtime/lib/CMakeLists.txt
+@@ -92,12 +92,6 @@ add_library(gnuradio-runtime
+   vmcircbuf_sysv_shm.cc
+   )
+ 
+-if (ENABLE_PYTHON)
+-  target_sources(gnuradio-runtime PRIVATE
+-    block_gateway_impl.cc
+-  )
+-endif()
+-
+ # Messages
+ target_sources(gnuradio-runtime PRIVATE
+   ${CMAKE_CURRENT_SOURCE_DIR}/messages/msg_accepter.cc
+@@ -132,28 +126,10 @@ target_link_libraries(gnuradio-runtime PUBLIC
+   Boost::thread
+   Log4Cpp::log4cpp
+   MPLib::mplib
+-  # INTERFACE/PRIVATE split so users of the library can choose how to link to Python
+-  # (importantly, extension modules can avoid linking against Python and resolve
+-  #  their own Python symbols at runtime through the Python interpreter's linking)
+   PRIVATE
+-    libunwind::libunwind 
++    libunwind::libunwind
+   )
+ 
+-if (ENABLE_PYTHON)
+-target_link_libraries(gnuradio-runtime
+-  INTERFACE
+-    Python::Module
+-  PRIVATE
+-    Python::Python
+-    pybind11::pybind11
+-)
+-endif()
+-# Manually set the pybind11 internal build abi string so that building an
+-# OOT's Python bindings with a different version of the same compiler works.
+-# This relies on the fact that pybind11 is being too strict and that the
+-# ABI does not actually change between compiler versions.
+-target_compile_definitions(gnuradio-runtime PUBLIC PYBIND11_COMPILER_TYPE="" PYBIND11_BUILD_ABI="")
+-
+ target_include_directories(gnuradio-runtime
+   PUBLIC
+     $<INSTALL_INTERFACE:include>
+diff --git a/gnuradio-runtime/lib/block_gateway_impl.cc b/gnuradio-runtime/lib/block_gateway_impl.cc
+deleted file mode 100644
+index 711d95d29..000000000
+--- a/gnuradio-runtime/lib/block_gateway_impl.cc
++++ /dev/null
+@@ -1,73 +0,0 @@
+-/* -*- c++ -*- */
+-/*
+- * Copyright 2013,2020 Free Software Foundation, Inc.
+- *
+- * This file is part of GNU Radio
+- *
+- * SPDX-License-Identifier: GPL-3.0-or-later
+- *
+- */
+-#include "block_gateway_impl.h"
+-#include <pybind11/embed.h>
+-
+-#include <gnuradio/io_signature.h>
+-
+-namespace gr {
+-
+-block_gateway::sptr block_gateway::make(const py::object& p,
+-                                        const std::string& name,
+-                                        gr::io_signature::sptr in_sig,
+-                                        gr::io_signature::sptr out_sig)
+-{
+-    return block_gateway::sptr(new block_gateway_impl(p, name, in_sig, out_sig));
+-}
+-
+-block_gateway_impl::block_gateway_impl(const py::handle& p,
+-                                       const std::string& name,
+-                                       gr::io_signature::sptr in_sig,
+-                                       gr::io_signature::sptr out_sig)
+-    : block(name, in_sig, out_sig)
+-{
+-    _py_handle = p;
+-}
+-
+-void block_gateway_impl::forecast(int noutput_items, gr_vector_int& ninput_items_required)
+-{
+-    py::gil_scoped_acquire acquire;
+-
+-    py::object ret_ninput_items_required =
+-        _py_handle.attr("handle_forecast")(noutput_items, ninput_items_required.size());
+-    ninput_items_required = ret_ninput_items_required.cast<std::vector<int>>();
+-}
+-
+-int block_gateway_impl::general_work(int noutput_items,
+-                                     gr_vector_int& ninput_items,
+-                                     gr_vector_const_void_star& input_items,
+-                                     gr_vector_void_star& output_items)
+-{
+-    py::gil_scoped_acquire acquire;
+-
+-    py::object ret = _py_handle.attr("handle_general_work")(
+-        noutput_items, ninput_items, input_items, output_items);
+-
+-    return ret.cast<int>();
+-    ;
+-}
+-
+-bool block_gateway_impl::start(void)
+-{
+-    py::gil_scoped_acquire acquire;
+-
+-    py::object ret = _py_handle.attr("start")();
+-    return ret.cast<bool>();
+-}
+-
+-bool block_gateway_impl::stop(void)
+-{
+-    py::gil_scoped_acquire acquire;
+-
+-    py::object ret = _py_handle.attr("stop")();
+-    return ret.cast<bool>();
+-}
+-
+-} /* namespace gr */
+diff --git a/gnuradio-runtime/lib/block_gateway_impl.h b/gnuradio-runtime/lib/block_gateway_impl.h
+deleted file mode 100644
+index e03d45518..000000000
+--- a/gnuradio-runtime/lib/block_gateway_impl.h
++++ /dev/null
+@@ -1,85 +0,0 @@
+-/* -*- c++ -*- */
+-/*
+- * Copyright 2013,2020 Free Software Foundation, Inc.
+- *
+- * This file is part of GNU Radio
+- *
+- * SPDX-License-Identifier: GPL-3.0-or-later
+- *
+- */
+-
+-#ifndef INCLUDED_RUNTIME_BLOCK_GATEWAY_IMPL_H
+-#define INCLUDED_RUNTIME_BLOCK_GATEWAY_IMPL_H
+-
+-#include <gnuradio/block_gateway.h>
+-
+-namespace gr {
+-
+-/***********************************************************************
+- * The gr::block gateway implementation class
+- **********************************************************************/
+-class block_gateway_impl : public block_gateway
+-{
+-public:
+-    block_gateway_impl(const py::handle& p,
+-                       const std::string& name,
+-                       gr::io_signature::sptr in_sig,
+-                       gr::io_signature::sptr out_sig);
+-
+-    /*******************************************************************
+-     * Overloads for various scheduler-called functions
+-     ******************************************************************/
+-    void forecast(int noutput_items, gr_vector_int& ninput_items_required) override;
+-
+-    int general_work(int noutput_items,
+-                     gr_vector_int& ninput_items,
+-                     gr_vector_const_void_star& input_items,
+-                     gr_vector_void_star& output_items) override;
+-
+-    bool start(void) override;
+-    bool stop(void) override;
+-    void set_msg_handler_pybind(pmt::pmt_t which_port, std::string& handler_name) override
+-    {
+-        if (msg_queue.find(which_port) == msg_queue.end()) {
+-            throw std::runtime_error(
+-                "attempt to set_msg_handler_pybind() on invalid input message port!");
+-        }
+-        d_msg_handlers_pybind[which_port] = handler_name;
+-    }
+-
+-protected:
+-    // Message handlers back into python using pybind API
+-    typedef std::map<pmt::pmt_t, std::string, pmt::comparator> msg_handlers_pybind_t;
+-    msg_handlers_pybind_t d_msg_handlers_pybind;
+-
+-    bool has_msg_handler(pmt::pmt_t which_port) override
+-    {
+-        if (d_msg_handlers_pybind.find(which_port) != d_msg_handlers_pybind.end()) {
+-            return true;
+-        } else {
+-            return gr::basic_block::has_msg_handler(which_port);
+-        }
+-    }
+-
+-    void dispatch_msg(pmt::pmt_t which_port, pmt::pmt_t msg) override
+-    {
+-        // Is there a handler?
+-        if (d_msg_handlers_pybind.find(which_port) != d_msg_handlers_pybind.end()) {
+-            // d_msg_handlers_pybind[which_port]->calleval(msg); // Yes, invoke it.
+-            py::gil_scoped_acquire acquire;
+-            // std::string handler_name(d_msg_handlers_pybind[which_port]);
+-            py::object ret =
+-                _py_handle.attr(d_msg_handlers_pybind[which_port].c_str())(msg);
+-        } else {
+-            // Pass to generic dispatcher if not found
+-            gr::basic_block::dispatch_msg(which_port, msg);
+-        }
+-    }
+-
+-private:
+-    py::handle _py_handle;
+-};
+-
+-} /* namespace gr */
+-
+-#endif /* INCLUDED_RUNTIME_BLOCK_GATEWAY_H */
+diff --git a/gnuradio-runtime/python/gnuradio/gr/bindings/block_gateway.h b/gnuradio-runtime/python/gnuradio/gr/bindings/block_gateway.h
+new file mode 100644
+index 000000000..d90771c2c
+--- /dev/null
++++ b/gnuradio-runtime/python/gnuradio/gr/bindings/block_gateway.h
+@@ -0,0 +1,118 @@
++/*
++ * Copyright 2020 Free Software Foundation, Inc.
++ *
++ * This file is part of GNU Radio
++ *
++ * SPDX-License-Identifier: GPL-3.0-or-later
++ *
++ */
++
++#ifndef INCLUDED_BLOCK_GATEWAY_H
++#define INCLUDED_BLOCK_GATEWAY_H
++
++#include <gnuradio/block.h>
++#include <gnuradio/io_signature.h>
++#include <gnuradio/types.h>
++#include <pmt/pmt.h>
++
++#include <pybind11/pybind11.h>
++
++#include <map>
++#include <memory>
++#include <string>
++
++namespace py = pybind11;
++
++/*!
++ * The gateway block which performs all the magic.
++ *
++ * The gateway provides access to all the gr::block routines.
++ */
++using gw_block_t = enum {
++    GW_BLOCK_GENERAL = 0,
++    GW_BLOCK_SYNC,
++    GW_BLOCK_DECIM,
++    GW_BLOCK_INTERP
++};
++
++class block_gateway : public gr::block
++{
++public:
++    block_gateway(const py::handle& py_handle,
++                  const std::string& name,
++                  gr::io_signature::sptr in_sig,
++                  gr::io_signature::sptr out_sig);
++
++    // gr::block_gateway::sptr
++    using sptr = std::shared_ptr<block_gateway>;
++
++    /*!
++     * Make a new gateway block.
++     * \param py_handle the pybind11 object with callback
++     * \param name the name of the block (Ex: "Shirley")
++     * \param in_sig the input signature for this block
++     * \param out_sig the output signature for this block
++     * \return a new gateway block
++     */
++    static sptr make(const py::object& py_handle,
++                     const std::string& name,
++                     gr::io_signature::sptr in_sig,
++                     gr::io_signature::sptr out_sig);
++
++    /*******************************************************************
++     * Public versions of gr::block protected methods, necessary because
++     * we need public methods for the python bindings
++     ******************************************************************/
++    void _add_item_tag(unsigned int which_output, const gr::tag_t& tag);
++
++    void _add_item_tag(unsigned int which_output,
++                       uint64_t abs_offset,
++                       const pmt::pmt_t& key,
++                       const pmt::pmt_t& value,
++                       const pmt::pmt_t& srcid);
++
++    std::vector<gr::tag_t>
++    _get_tags_in_range(unsigned int which_input, uint64_t abs_start, uint64_t abs_end);
++
++    std::vector<gr::tag_t> _get_tags_in_range(unsigned int which_input,
++                                              uint64_t abs_start,
++                                              uint64_t abs_end,
++                                              const pmt::pmt_t& key);
++
++    std::vector<gr::tag_t>
++    _get_tags_in_window(unsigned int which_input, uint64_t rel_start, uint64_t rel_end);
++
++    std::vector<gr::tag_t> _get_tags_in_window(unsigned int which_input,
++                                               uint64_t rel_start,
++                                               uint64_t rel_end,
++                                               const pmt::pmt_t& key);
++
++    /*******************************************************************
++     * Overloads for various scheduler-called functions
++     ******************************************************************/
++    void forecast(int noutput_items, gr_vector_int& ninput_items_required) override;
++
++    int general_work(int noutput_items,
++                     gr_vector_int& ninput_items,
++                     gr_vector_const_void_star& input_items,
++                     gr_vector_void_star& output_items) override;
++
++    bool start() override;
++
++    bool stop() override;
++
++    void set_msg_handler_pybind(const pmt::pmt_t& which_port, std::string& handler_name);
++
++private:
++    py::handle d_py_handle;
++
++    // Message handlers back into python using pybind API
++    using msg_handlers_pybind_t = std::map<pmt::pmt_t, std::string, pmt::comparator>;
++    msg_handlers_pybind_t d_msg_handlers_pybind;
++
++    bool has_msg_handler(pmt::pmt_t which_port) override;
++
++    void dispatch_msg(pmt::pmt_t which_port, pmt::pmt_t msg) override;
++};
++
++#endif /* INCLUDED_BLOCK_GATEWAY_H */
+diff --git a/gnuradio-runtime/python/gnuradio/gr/bindings/block_gateway_python.cc b/gnuradio-runtime/python/gnuradio/gr/bindings/block_gateway_python.cc
+index 476ffce6b..661d20027 100644
+--- a/gnuradio-runtime/python/gnuradio/gr/bindings/block_gateway_python.cc
++++ b/gnuradio-runtime/python/gnuradio/gr/bindings/block_gateway_python.cc
+@@ -7,17 +7,157 @@
+  *
+  */
+ 
++#include "block_gateway.h"
++
+ #include <pybind11/complex.h>
+ #include <pybind11/pybind11.h>
+ #include <pybind11/stl.h>
+ 
++#include <memory>
++#include <string>
++
+ namespace py = pybind11;
+ 
+-#include <gnuradio/block_gateway.h>
++block_gateway::block_gateway(const py::handle& py_handle,
++                             const std::string& name,
++                             gr::io_signature::sptr in_sig,
++                             gr::io_signature::sptr out_sig)
++    : gr::block(name, in_sig, out_sig), d_py_handle(py_handle)
++{
++}
++
++block_gateway::sptr block_gateway::make(const py::object& py_handle,
++                                        const std::string& name,
++                                        gr::io_signature::sptr in_sig,
++                                        gr::io_signature::sptr out_sig)
++{
++    return std::make_shared<block_gateway>(py_handle, name, in_sig, out_sig);
++}
++
++void block_gateway::_add_item_tag(unsigned int which_output, const gr::tag_t& tag)
++{
++    return gr::block::add_item_tag(which_output, tag);
++}
++
++void block_gateway::_add_item_tag(unsigned int which_output,
++                                  uint64_t abs_offset,
++                                  const pmt::pmt_t& key,
++                                  const pmt::pmt_t& value,
++                                  const pmt::pmt_t& srcid)
++{
++    return gr::block::add_item_tag(which_output, abs_offset, key, value, srcid);
++}
++
++std::vector<gr::tag_t> block_gateway::_get_tags_in_range(unsigned int which_input,
++                                                         uint64_t abs_start,
++                                                         uint64_t abs_end)
++{
++    std::vector<gr::tag_t> tags;
++    gr::block::get_tags_in_range(tags, which_input, abs_start, abs_end);
++    return tags;
++}
++
++std::vector<gr::tag_t> block_gateway::_get_tags_in_range(unsigned int which_input,
++                                                         uint64_t abs_start,
++                                                         uint64_t abs_end,
++                                                         const pmt::pmt_t& key)
++{
++    std::vector<gr::tag_t> tags;
++    gr::block::get_tags_in_range(tags, which_input, abs_start, abs_end, key);
++    return tags;
++}
++
++std::vector<gr::tag_t> block_gateway::_get_tags_in_window(unsigned int which_input,
++                                                          uint64_t rel_start,
++                                                          uint64_t rel_end)
++{
++    std::vector<gr::tag_t> tags;
++    gr::block::get_tags_in_window(tags, which_input, rel_start, rel_end);
++    return tags;
++}
++
++std::vector<gr::tag_t> block_gateway::_get_tags_in_window(unsigned int which_input,
++                                                          uint64_t rel_start,
++                                                          uint64_t rel_end,
++                                                          const pmt::pmt_t& key)
++{
++    std::vector<gr::tag_t> tags;
++    gr::block::get_tags_in_window(tags, which_input, rel_start, rel_end, key);
++    return tags;
++}
++
++void block_gateway::forecast(int noutput_items, gr_vector_int& ninput_items_required)
++{
++    py::gil_scoped_acquire acquire;
++
++    py::object ret_ninput_items_required =
++        d_py_handle.attr("handle_forecast")(noutput_items, ninput_items_required.size());
++    ninput_items_required = ret_ninput_items_required.cast<std::vector<int>>();
++}
++
++int block_gateway::general_work(int noutput_items,
++                                gr_vector_int& ninput_items,
++                                gr_vector_const_void_star& input_items,
++                                gr_vector_void_star& output_items)
++{
++    py::gil_scoped_acquire acquire;
++
++    py::object ret = d_py_handle.attr("handle_general_work")(
++        noutput_items, ninput_items, input_items, output_items);
++
++    return ret.cast<int>();
++}
++
++bool block_gateway::start()
++{
++    py::gil_scoped_acquire acquire;
++
++    py::object ret = d_py_handle.attr("start")();
++    return ret.cast<bool>();
++}
++
++bool block_gateway::stop()
++{
++    py::gil_scoped_acquire acquire;
++
++    py::object ret = d_py_handle.attr("stop")();
++    return ret.cast<bool>();
++}
++
++void block_gateway::set_msg_handler_pybind(const pmt::pmt_t& which_port,
++                                           std::string& handler_name)
++{
++    if (msg_queue.find(which_port) == msg_queue.end()) {
++        throw std::runtime_error(
++            "attempt to set_msg_handler_pybind() on invalid input message port!");
++    }
++    d_msg_handlers_pybind[which_port] = handler_name;
++}
++
++bool block_gateway::has_msg_handler(pmt::pmt_t which_port)
++{
++    if (d_msg_handlers_pybind.find(which_port) != d_msg_handlers_pybind.end()) {
++        return true;
++    }
++    return gr::block::has_msg_handler(which_port);
++}
++
++void block_gateway::dispatch_msg(pmt::pmt_t which_port, pmt::pmt_t msg)
++{
++    // Is there a handler?
++    if (d_msg_handlers_pybind.find(which_port) != d_msg_handlers_pybind.end()) {
++        // d_msg_handlers_pybind[which_port]->calleval(msg); // Yes, invoke it.
++        py::gil_scoped_acquire acquire;
++        // std::string handler_name(d_msg_handlers_pybind[which_port]);
++        py::object ret = d_py_handle.attr(d_msg_handlers_pybind[which_port].c_str())(msg);
++    } else {
++        // Pass to generic dispatcher if not found
++        gr::block::dispatch_msg(which_port, msg);
++    }
++}
+ 
+ void bind_block_gateway(py::module& m)
+ {
+-    using block_gateway = gr::block_gateway;
+     py::class_<block_gateway, gr::block, gr::basic_block, std::shared_ptr<block_gateway>>(
+         m, "block_gateway")
+ 
+@@ -87,10 +227,10 @@ void bind_block_gateway(py::module& m)
+              py::arg("handler_name"))
+ 
+         ;
+-    py::enum_<gr::gw_block_t>(m, "gw_block_t")
+-        .value("GW_BLOCK_GENERAL", gr::GW_BLOCK_GENERAL)
+-        .value("GW_BLOCK_SYNC", gr::GW_BLOCK_SYNC)
+-        .value("GW_BLOCK_DECIM", gr::GW_BLOCK_DECIM)
+-        .value("GW_BLOCK_INTERP", gr::GW_BLOCK_INTERP)
++    py::enum_<gw_block_t>(m, "gw_block_t")
++        .value("GW_BLOCK_GENERAL", GW_BLOCK_GENERAL)
++        .value("GW_BLOCK_SYNC", GW_BLOCK_SYNC)
++        .value("GW_BLOCK_DECIM", GW_BLOCK_DECIM)
++        .value("GW_BLOCK_INTERP", GW_BLOCK_INTERP)
+         .export_values();
+ }
+-- 
+2.37.3
+

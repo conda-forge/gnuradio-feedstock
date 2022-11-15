@@ -1,0 +1,41 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Ryan Volz <ryan.volz@gmail.com>
+Date: Fri, 4 Nov 2022 14:09:08 -0400
+Subject: [PATCH] qtgui: Remove extraneous includes of <pybind11/embed.h>
+
+None of the declarations in the embed.h header are needed to compile
+these Python bindings.
+
+Signed-off-by: Ryan Volz <ryan.volz@gmail.com>
+---
+ gr-qtgui/python/qtgui/bindings/eye_sink_c_python.cc  | 1 -
+ gr-qtgui/python/qtgui/bindings/time_sink_c_python.cc | 1 -
+ 2 files changed, 2 deletions(-)
+
+diff --git a/gr-qtgui/python/qtgui/bindings/eye_sink_c_python.cc b/gr-qtgui/python/qtgui/bindings/eye_sink_c_python.cc
+index dbf90dc79..7002fb869 100644
+--- a/gr-qtgui/python/qtgui/bindings/eye_sink_c_python.cc
++++ b/gr-qtgui/python/qtgui/bindings/eye_sink_c_python.cc
+@@ -11,7 +11,6 @@
+ 
+ #include <pybind11/buffer_info.h>
+ #include <pybind11/complex.h>
+-#include <pybind11/embed.h>
+ #include <pybind11/pybind11.h>
+ #include <pybind11/pytypes.h>
+ #include <pybind11/stl.h>
+diff --git a/gr-qtgui/python/qtgui/bindings/time_sink_c_python.cc b/gr-qtgui/python/qtgui/bindings/time_sink_c_python.cc
+index 87766d0c0..6c6ac6a59 100644
+--- a/gr-qtgui/python/qtgui/bindings/time_sink_c_python.cc
++++ b/gr-qtgui/python/qtgui/bindings/time_sink_c_python.cc
+@@ -11,7 +11,6 @@
+ 
+ #include <pybind11/buffer_info.h>
+ #include <pybind11/complex.h>
+-#include <pybind11/embed.h>
+ #include <pybind11/pybind11.h>
+ #include <pybind11/pytypes.h>
+ #include <pybind11/stl.h>
+-- 
+2.37.3
+

@@ -10,13 +10,18 @@ source:
   patches:
     - 0001-cmake-Install-python-wrapper-exe-for-scripts-on-Wind.patch
     - 0002-cmake-Don-t-generate-.pyc-and-.pyo-files.patch
-    - 0004-grc-Remove-global_blocks_path-preference-and-use-pre.patch
-    - 0005-filter-python-Drop-unused-args-argument-overriden-by.patch
-    - 0006-cmake-runtime-Manually-set-the-pybind11-internal-bui.patch
-    - 0007-qtgui-Add-missing-include-stdexcept-for-std-runtime_.patch
+    - 0003-grc-Remove-global_blocks_path-preference-and-use-pre.patch
+    - 0004-filter-python-Drop-unused-args-argument-overriden-by.patch
+    - 0005-cmake-runtime-Manually-set-the-pybind11-internal-bui.patch
+    - 0006-qtgui-Add-missing-include-stdexcept-for-std-runtime_.patch
+    - 0007-runtime-Move-block_gateway-from-gnuradio-runtime-int.patch
+    - 0008-qtgui-Remove-extraneous-includes-of-pybind11-embed.h.patch
+    - 0009-qtgui-Remove-all-traces-of-Python-from-include-lib.patch
+    - 0010-grc-Fix-cairo-assertion-failure-by-not-storing-refer.patch
+    - 0011-grc-Don-t-query-and-use-display-scale-factor-in-Draw.patch
 
 build:
-  number: 5
+  number: 6
 
 requirements:
   build:
