@@ -14,15 +14,16 @@ source:
     - 0004-cmake-Don-t-generate-.pyc-and-.pyo-files.patch
     - 0005-cmake-Shorten-swig-command-line-by-removing-duplicat.patch
     - 0006-Use-raw-strings-for-paths-substituted-directly-into-.patch
-    - 0007-Use-an-ImageSurface-rather-than-UI-back-end.patch  # [osx]
-    - 0008-cmake-Move-swath-of-add_definitions-to-gnuradio-runt.patch
-    - 0009-cmake-Fix-codec2-and-MPIR-find-modules-for-Windows-c.patch
-    - 0010-grc-Be-more-informative-when-missing-options-block.patch
-    - 0011-cmake-Pass-extra-arguments-to-GR_PYTHON_INSTALL-to-i.patch
-    - 0012-grc-Remove-global_blocks_path-preference-and-use-pre.patch
+    - 0007-cmake-Move-swath-of-add_definitions-to-gnuradio-runt.patch
+    - 0008-cmake-Fix-codec2-and-MPIR-find-modules-for-Windows-c.patch
+    - 0009-grc-Be-more-informative-when-missing-options-block.patch
+    - 0010-cmake-Pass-extra-arguments-to-GR_PYTHON_INSTALL-to-i.patch
+    - 0011-grc-Remove-global_blocks_path-preference-and-use-pre.patch
+    - 0012-grc-Fix-cairo-assertion-failure-by-not-storing-refer.patch
+    - 0013-grc-Don-t-query-and-use-display-scale-factor-in-Draw.patch
 
 build:
-  number: 7
+  number: 8
 
 requirements:
   build:
