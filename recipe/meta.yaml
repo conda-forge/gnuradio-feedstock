@@ -10,15 +10,20 @@ source:
   patches:
     - 0001-cmake-Install-python-wrapper-exe-for-scripts-on-Wind.patch
     - 0002-cmake-Don-t-generate-.pyc-and-.pyo-files.patch
-    - 0004-grc-Remove-global_blocks_path-preference-and-use-pre.patch
-    - 0005-filter-python-Drop-unused-args-argument-overriden-by.patch
-    - 0006-cmake-runtime-Manually-set-the-pybind11-internal-bui.patch
-    - 0007-qtgui-Add-missing-include-stdexcept-for-std-runtime_.patch
-    - 0008-blocks-Including-missing-vector-in-blockinterleaver.patch
-    - 0009-runtime-make-logging-in-rpcpmtconverters_thift-work-.patch
+    - 0003-grc-Remove-global_blocks_path-preference-and-use-pre.patch
+    - 0004-filter-python-Drop-unused-args-argument-overriden-by.patch
+    - 0005-cmake-runtime-Manually-set-the-pybind11-internal-bui.patch
+    - 0006-qtgui-Add-missing-include-stdexcept-for-std-runtime_.patch
+    - 0007-blocks-Including-missing-vector-in-blockinterleaver.patch
+    - 0008-runtime-make-logging-in-rpcpmtconverters_thift-work-.patch
+    - 0009-runtime-Move-block_gateway-from-gnuradio-runtime-int.patch
+    - 0010-qtgui-Remove-extraneous-includes-of-pybind11-embed.h.patch
+    - 0011-qtgui-Remove-all-traces-of-Python-from-include-lib.patch
+    - 0012-grc-Fix-cairo-assertion-failure-by-not-storing-refer.patch
+    - 0013-grc-Don-t-query-and-use-display-scale-factor-in-Draw.patch
 
 build:
-  number: 6
+  number: 7
 
 requirements:
   build:
