@@ -23,7 +23,7 @@ source:
     - 0013-grc-Don-t-query-and-use-display-scale-factor-in-Draw.patch
 
 build:
-  number: 7
+  number: 8
 
 requirements:
   build:
