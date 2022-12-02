@@ -7,7 +7,7 @@ Package license: GPL-3.0-or-later
 
 Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/gnuradio-feedstock/blob/main/LICENSE.txt)
 
-Summary: GNU Radio core functionality and modules
+Summary: Polymorphic Type (PMT) library, bundled with GNU Radio
 
 Development: https://github.com/gnuradio/gnuradio
 
@@ -216,6 +216,7 @@ Current release info
 | [![Conda Recipe](https://img.shields.io/badge/recipe-gnuradio--core-green.svg)](https://anaconda.org/conda-forge/gnuradio-core) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/gnuradio-core.svg)](https://anaconda.org/conda-forge/gnuradio-core) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/gnuradio-core.svg)](https://anaconda.org/conda-forge/gnuradio-core) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/gnuradio-core.svg)](https://anaconda.org/conda-forge/gnuradio-core) |
 | [![Conda Recipe](https://img.shields.io/badge/recipe-gnuradio--grc-green.svg)](https://anaconda.org/conda-forge/gnuradio-grc) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/gnuradio-grc.svg)](https://anaconda.org/conda-forge/gnuradio-grc) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/gnuradio-grc.svg)](https://anaconda.org/conda-forge/gnuradio-grc) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/gnuradio-grc.svg)](https://anaconda.org/conda-forge/gnuradio-grc) |
 | [![Conda Recipe](https://img.shields.io/badge/recipe-gnuradio--iio-green.svg)](https://anaconda.org/conda-forge/gnuradio-iio) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/gnuradio-iio.svg)](https://anaconda.org/conda-forge/gnuradio-iio) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/gnuradio-iio.svg)](https://anaconda.org/conda-forge/gnuradio-iio) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/gnuradio-iio.svg)](https://anaconda.org/conda-forge/gnuradio-iio) |
+| [![Conda Recipe](https://img.shields.io/badge/recipe-gnuradio--pmt-green.svg)](https://anaconda.org/conda-forge/gnuradio-pmt) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/gnuradio-pmt.svg)](https://anaconda.org/conda-forge/gnuradio-pmt) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/gnuradio-pmt.svg)](https://anaconda.org/conda-forge/gnuradio-pmt) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/gnuradio-pmt.svg)](https://anaconda.org/conda-forge/gnuradio-pmt) |
 | [![Conda Recipe](https://img.shields.io/badge/recipe-gnuradio--qtgui-green.svg)](https://anaconda.org/conda-forge/gnuradio-qtgui) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/gnuradio-qtgui.svg)](https://anaconda.org/conda-forge/gnuradio-qtgui) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/gnuradio-qtgui.svg)](https://anaconda.org/conda-forge/gnuradio-qtgui) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/gnuradio-qtgui.svg)](https://anaconda.org/conda-forge/gnuradio-qtgui) |
 | [![Conda Recipe](https://img.shields.io/badge/recipe-gnuradio--soapy-green.svg)](https://anaconda.org/conda-forge/gnuradio-soapy) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/gnuradio-soapy.svg)](https://anaconda.org/conda-forge/gnuradio-soapy) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/gnuradio-soapy.svg)](https://anaconda.org/conda-forge/gnuradio-soapy) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/gnuradio-soapy.svg)](https://anaconda.org/conda-forge/gnuradio-soapy) |
 | [![Conda Recipe](https://img.shields.io/badge/recipe-gnuradio--uhd-green.svg)](https://anaconda.org/conda-forge/gnuradio-uhd) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/gnuradio-uhd.svg)](https://anaconda.org/conda-forge/gnuradio-uhd) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/gnuradio-uhd.svg)](https://anaconda.org/conda-forge/gnuradio-uhd) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/gnuradio-uhd.svg)](https://anaconda.org/conda-forge/gnuradio-uhd) |
@@ -232,16 +233,16 @@ conda config --add channels conda-forge
 conda config --set channel_priority strict
 ```
 
-Once the `conda-forge` channel has been enabled, `gnuradio, gnuradio-build-deps, gnuradio-core, gnuradio-grc, gnuradio-iio, gnuradio-qtgui, gnuradio-soapy, gnuradio-uhd, gnuradio-video-sdl, gnuradio-zeromq` can be installed with `conda`:
+Once the `conda-forge` channel has been enabled, `gnuradio, gnuradio-build-deps, gnuradio-core, gnuradio-grc, gnuradio-iio, gnuradio-pmt, gnuradio-qtgui, gnuradio-soapy, gnuradio-uhd, gnuradio-video-sdl, gnuradio-zeromq` can be installed with `conda`:
 
 ```
-conda install gnuradio gnuradio-build-deps gnuradio-core gnuradio-grc gnuradio-iio gnuradio-qtgui gnuradio-soapy gnuradio-uhd gnuradio-video-sdl gnuradio-zeromq
+conda install gnuradio gnuradio-build-deps gnuradio-core gnuradio-grc gnuradio-iio gnuradio-pmt gnuradio-qtgui gnuradio-soapy gnuradio-uhd gnuradio-video-sdl gnuradio-zeromq
 ```
 
 or with `mamba`:
 
 ```
-mamba install gnuradio gnuradio-build-deps gnuradio-core gnuradio-grc gnuradio-iio gnuradio-qtgui gnuradio-soapy gnuradio-uhd gnuradio-video-sdl gnuradio-zeromq
+mamba install gnuradio gnuradio-build-deps gnuradio-core gnuradio-grc gnuradio-iio gnuradio-pmt gnuradio-qtgui gnuradio-soapy gnuradio-uhd gnuradio-video-sdl gnuradio-zeromq
 ```
 
 It is possible to list all of the versions of `gnuradio` available on your platform with `conda`:
