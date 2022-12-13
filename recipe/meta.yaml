@@ -485,6 +485,7 @@ outputs:
         - python
         - spdlog
         - uhd
+        - volk
       run:
         - boost-cpp
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
