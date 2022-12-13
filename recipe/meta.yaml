@@ -1,5 +1,7 @@
 {% set tag_version = "3.10.3.0-rc1" %}
 {% set version = tag_version.replace("-", "") %}
+{% set prefix = "Library/" if win else "" %}
+{% set lib = "" if win else "lib" %}
 
 package:
   name: gnuradio
@@ -11,10 +13,17 @@ source:
   patches:
     - 0001-cmake-Install-python-wrapper-exe-for-scripts-on-Wind.patch
     - 0002-cmake-Don-t-generate-.pyc-and-.pyo-files.patch
-    - 0004-grc-Remove-global_blocks_path-preference-and-use-pre.patch
-    - 0005-filter-python-Drop-unused-args-argument-overriden-by.patch
-    - 0006-cmake-runtime-Manually-set-the-pybind11-internal-bui.patch
-    - 0007-qtgui-Add-missing-deque-include-to-spectrumdisplayfo.patch
+    - 0003-grc-Remove-global_blocks_path-preference-and-use-pre.patch
+    - 0004-filter-python-Drop-unused-args-argument-overriden-by.patch
+    - 0005-cmake-runtime-Manually-set-the-pybind11-internal-bui.patch
+    - 0006-qtgui-Add-missing-include-stdexcept-for-std-runtime_.patch
+    - 0007-blocks-Including-missing-vector-in-blockinterleaver.patch
+    - 0008-runtime-make-logging-in-rpcpmtconverters_thift-work-.patch
+    - 0009-runtime-Move-block_gateway-from-gnuradio-runtime-int.patch
+    - 0010-qtgui-Remove-extraneous-includes-of-pybind11-embed.h.patch
+    - 0011-qtgui-Remove-all-traces-of-Python-from-include-lib.patch
+    - 0012-grc-Fix-cairo-assertion-failure-by-not-storing-refer.patch
+    - 0013-grc-Don-t-query-and-use-display-scale-factor-in-Draw.patch
 
 build:
   number: 0
@@ -34,9 +43,6 @@ requirements:
     - cross-python_{{ target_platform }}  # [build_platform != target_platform]
     - pybind11                            # [build_platform != target_platform]
     - numpy                               # [build_platform != target_platform]
-    # libudev CDT needed to link against libusb through uhd on linux CentOS 6
-    # libusb uses the conda-forge libudev package for CentOS 7
-    - {{ cdt('libudev-devel') }}  # [linux and cdt_name=='cos6']
     # below are needed to link with Qt for qtgui
     - {{ cdt('libice') }}  # [linux and not ppc64le]
     - {{ cdt('libselinux') }}  # [linux and not ppc64le]
@@ -59,14 +65,13 @@ requirements:
     - click-plugins
     - codec2
     - fftw
+    - fmt
     - gmp  # [not win]
     - gsl
     # blas needed to link with gsl
     - libcblas  # [linux]
     - libsndfile
     - libthrift  # [not win]
-    # restrict to cos6-compatible libusb (and libudev)
-    - libusb-cos6  # [linux and cdt_name=='cos6']
     - mako
     - mpir  # [win]
     - numpy
@@ -107,6 +112,7 @@ requirements:
 
   run:
   # this is the metapackage that depends on all the subpackages
+    - {{ pin_subpackage('gnuradio-pmt', exact=True) }}
     - {{ pin_subpackage('gnuradio-core', exact=True) }}
     - {{ pin_subpackage('gnuradio-grc', exact=True) }}
     - {{ pin_subpackage('gnuradio-iio', exact=True) }}
@@ -132,6 +138,7 @@ test:
     - gnuradio.uhd
     - gnuradio.video_sdl
     - gnuradio.zeromq
+    - pmt
 
 app:
   entry: gnuradio-companion
@@ -139,6 +146,63 @@ app:
   summary: GNU Radio Companion
 
 outputs:
+  - name: gnuradio-pmt
+    script: install_core.sh  # [not win]
+    script: install_core.bat  # [win]
+    files:
+      - {{ prefix }}bin/{{ lib }}gnuradio-pmt.dll  # [win]
+      - {{ prefix }}include/pmt
+      - {{ prefix }}lib/{{ lib }}gnuradio-pmt*
+      - {{ prefix }}lib/cmake/gnuradio/gnuradio-pmt*.cmake
+      - {{ prefix }}lib/python{{ PY_VER }}/site-packages/pmt  # [unix]
+      - Lib/site-packages/pmt  # [win]
+    build:
+      run_exports:
+        - {{ pin_subpackage('gnuradio-pmt', max_pin='x.x.x') }}
+    requirements:
+      build:
+        - {{ compiler('c') }}
+        - {{ compiler('cxx') }}
+        - cmake
+        # conda-build needs native python to make .pyc files
+        - python  # [build_platform != target_platform]
+      host:
+        - numpy
+        - pybind11
+        - pybind11-abi
+        - python
+        - volk
+      run:
+        - numpy
+        - python
+    test:
+      commands:
+        # verify that headers get installed
+        - test -f $PREFIX/include/pmt/api.h  # [unix]
+        - test -f $PREFIX/include/pmt/pmt_pool.h  # [unix]
+        - test -f $PREFIX/include/pmt/pmt_serial_tags.h  # [unix]
+        - test -f $PREFIX/include/pmt/pmt_sugar.h  # [unix]
+        - test -f $PREFIX/include/pmt/pmt.h  # [unix]
+        - if not exist %LIBRARY_INC%\\pmt\\api.h exit 1  # [win]
+        - if not exist %LIBRARY_INC%\\pmt\\pmt_pool.h exit 1  # [win]
+        - if not exist %LIBRARY_INC%\\pmt\\pmt_serial_tags.h exit 1  # [win]
+        - if not exist %LIBRARY_INC%\\pmt\\pmt_sugar.h exit 1  # [win]
+        - if not exist %LIBRARY_INC%\\pmt\\pmt.h exit 1  # [win]
+
+        # verify that libraries get installed
+        - test -f $PREFIX/lib/libgnuradio-pmt${SHLIB_EXT}  # [unix]
+        - if not exist %LIBRARY_BIN%\\gnuradio-pmt.dll exit 1  # [win]
+        - if not exist %LIBRARY_LIB%\\gnuradio-pmt.lib exit 1  # [win]
+      imports:
+        - pmt
+    about:
+      home: https://gnuradio.org/
+      doc_url: https://gnuradio.org/doc/doxygen/
+      dev_url: https://github.com/gnuradio/gnuradio
+      license: GPL-3.0-or-later
+      license_family: GPL
+      license_file: COPYING
+      summary: Polymorphic Type (PMT) library, bundled with GNU Radio
   - name: gnuradio-core
     script: install_core.sh  # [not win]
     script: install_core.bat  # [win]
@@ -147,6 +211,7 @@ outputs:
         - gr_modtool = gnuradio.modtool.cli.base:cli  # [win]
       run_exports:
         - {{ pin_subpackage('gnuradio-core', max_pin='x.x.x') }}
+        - {{ pin_subpackage('gnuradio-pmt', max_pin='x.x.x') }}
       skip_compile_pyc:
         - '*/templates/*.py'
     requirements:
@@ -161,28 +226,31 @@ outputs:
         - boost-cpp
         - codec2
         - fftw
+        - fmt
         - gmp  # [not win]
+        - {{ pin_subpackage('gnuradio-pmt', exact=True) }}
         - gsl
         - jack  # [linux]
         - libcblas  # [linux]
         - libsndfile
         - libthrift  # [not win]
         - mpir  # [win]
+        - numpy
         - packaging
         - portaudio
         - pybind11
         - pybind11-abi
         - python
-        - numpy
         - spdlog
         - thrift  # [not win]
         - volk
       run:
-        - __osx >={{ MACOSX_DEPLOYMENT_TARGET|default("10.9") }}  # [osx and x86_64]
+        - alsa-plugins  # [linux]
         - boost-cpp
         - click
         - click-plugins
         - fftw
+        - {{ pin_subpackage('gnuradio-pmt', exact=True) }}
         - mako
         - numpy
         - packaging
@@ -237,12 +305,15 @@ outputs:
         - python  # [build_platform != target_platform]
       host:
         - boost-cpp
+        - fmt
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
+        - {{ pin_subpackage('gnuradio-pmt', exact=True) }}
         - gtk3
         - python
         - spdlog
       run:
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
+        - {{ pin_subpackage('gnuradio-pmt', exact=True) }}
         - jsonschema
         - lxml
         - menuinst  # [win]
@@ -283,7 +354,9 @@ outputs:
         - python  # [build_platform != target_platform]
       host:
         - boost-cpp
+        - fmt
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
+        - {{ pin_subpackage('gnuradio-pmt', exact=True) }}
         - libiio
         - libad9361-iio
         - python
@@ -292,6 +365,7 @@ outputs:
       run:
         - boost-cpp
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
+        - {{ pin_subpackage('gnuradio-pmt', exact=True) }}
         - python
     test:
       imports:
@@ -322,7 +396,9 @@ outputs:
         - python  # [build_platform != target_platform]
       host:
         - boost-cpp
+        - fmt
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
+        - {{ pin_subpackage('gnuradio-pmt', exact=True) }}
         - pyqt
         - python
         - qt-main
@@ -331,6 +407,7 @@ outputs:
         - volk
       run:
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
+        - {{ pin_subpackage('gnuradio-pmt', exact=True) }}
         - matplotlib-base
         - menuinst  # [win]
         - pyqt
@@ -375,12 +452,15 @@ outputs:
         - python  # [build_platform != target_platform]
       host:
         - boost-cpp
+        - fmt
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
+        - {{ pin_subpackage('gnuradio-pmt', exact=True) }}
         - python
         - soapysdr
         - spdlog
       run:
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
+        - {{ pin_subpackage('gnuradio-pmt', exact=True) }}
         - python
     test:
       imports:
@@ -410,13 +490,16 @@ outputs:
         - python  # [build_platform != target_platform]
       host:
         - boost-cpp
+        - fmt
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
+        - {{ pin_subpackage('gnuradio-pmt', exact=True) }}
         - python
         - spdlog
         - uhd
       run:
         - boost-cpp
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
+        - {{ pin_subpackage('gnuradio-pmt', exact=True) }}
         - python
     test:
       commands:
@@ -443,12 +526,15 @@ outputs:
         - python  # [build_platform != target_platform]
       host:
         - boost-cpp
+        - fmt
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
+        - {{ pin_subpackage('gnuradio-pmt', exact=True) }}
         - python
         - sdl
         - spdlog
       run:
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
+        - {{ pin_subpackage('gnuradio-pmt', exact=True) }}
         - python
     test:
       imports:
@@ -474,12 +560,15 @@ outputs:
       host:
         - boost-cpp
         - cppzmq
+        - fmt
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
+        - {{ pin_subpackage('gnuradio-pmt', exact=True) }}
         - python
         - spdlog
         - zeromq
       run:
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
+        - {{ pin_subpackage('gnuradio-pmt', exact=True) }}
         - python
         - pyzmq
     test:
@@ -501,7 +590,9 @@ outputs:
         # need to populate host to get complete build string (why?)
         - {{ compiler('c') }}
         - {{ compiler('cxx') }}
+        - fmt
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
+        - spdlog
       run:
         - {{ compiler('c') }}
         - {{ compiler('cxx') }}
@@ -511,7 +602,6 @@ outputs:
         - pip  # [win]
         - pkg-config
         - pybind11
-        - spdlog
       run_constrained:
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
     test:
