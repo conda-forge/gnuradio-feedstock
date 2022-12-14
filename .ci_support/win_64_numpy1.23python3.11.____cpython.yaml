@@ -19,7 +19,7 @@ libiio:
 libsndfile:
 - '1.1'
 numpy:
-- '1.21'
+- '1.23'
 pin_run_as_build:
   boost-cpp:
     max_pin: x.x.x
@@ -31,7 +31,7 @@ pybind11_abi:
 pyqt:
 - '5.15'
 python:
-- 3.10.* *_cpython
+- 3.11.* *_cpython
 qt_main:
 - '5.15'
 soapysdr:

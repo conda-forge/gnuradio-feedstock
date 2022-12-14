@@ -8,15 +8,15 @@ Subject: [PATCH] cmake: Install python wrapper exe for scripts on Windows.
  1 file changed, 33 insertions(+), 1 deletion(-)
 
 diff --git a/cmake/Modules/GrPython.cmake b/cmake/Modules/GrPython.cmake
-index 76ad3f922..9c4626eed 100644
+index 8f113273b..72cde3a49 100644
 --- a/cmake/Modules/GrPython.cmake
 +++ b/cmake/Modules/GrPython.cmake
-@@ -348,12 +348,44 @@ function(GR_PYTHON_INSTALL)
-         foreach(pyfile ${GR_PYTHON_INSTALL_PROGRAMS})
+@@ -358,12 +358,44 @@ function(GR_PYTHON_INSTALL)
              get_filename_component(pyfile_name ${pyfile} NAME)
              get_filename_component(pyfile ${pyfile} ABSOLUTE)
--            string(REPLACE "${CMAKE_SOURCE_DIR}" "${CMAKE_BINARY_DIR}" pyexefile "${pyfile}.exe")
-+            string(REPLACE "${CMAKE_SOURCE_DIR}" "${CMAKE_BINARY_DIR}" pyexefile "${pyfile}.py")
+             string(REPLACE "${PROJECT_SOURCE_DIR}" "${PROJECT_BINARY_DIR}" pyexefile
+-                           "${pyfile}.exe")
++                           "${pyfile}.py")
              list(APPEND python_install_gen_targets ${pyexefile})
  
              get_filename_component(pyexefile_path ${pyexefile} PATH)
@@ -55,8 +55,8 @@ index 76ad3f922..9c4626eed 100644
 +            endif()
 +
              add_custom_command(
-                 OUTPUT ${pyexefile} DEPENDS ${pyfile}
-                 COMMAND ${PYTHON_EXECUTABLE} -c
+                 OUTPUT ${pyexefile}
+                 DEPENDS ${pyfile}
 -- 
-2.35.1
+2.38.1
 
