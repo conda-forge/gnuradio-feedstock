@@ -1,4 +1,4 @@
-{% set version = "3.10.4.0" %}
+{% set version = "3.10.5.0" %}
 {% set prefix = "Library/" if win else "" %}
 {% set lib = "" if win else "lib" %}
 
@@ -8,7 +8,7 @@ package:
 
 source:
   url: https://github.com/gnuradio/gnuradio/archive/refs/tags/v{{ version }}.tar.gz
-  sha256: c6b9f59447a842559b00b3a67b4ca1186e9adb8db742b25400507fedc747f2bd
+  sha256: 04aae0c45e55c8fcaf99829d92db102395c7e10a7ad9910533694806d5ae121a
   patches:
     - 0001-cmake-Install-python-wrapper-exe-for-scripts-on-Wind.patch
     - 0002-cmake-Don-t-generate-.pyc-and-.pyo-files.patch
@@ -25,7 +25,7 @@ source:
     - 0013-grc-Don-t-query-and-use-display-scale-factor-in-Draw.patch
 
 build:
-  number: 8
+  number: 0
 
 requirements:
   build:
