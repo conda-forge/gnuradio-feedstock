@@ -42,5 +42,5 @@ index f7a4fac35..7caf81713 100644
      def _iter_files_in_block_path(self, path=None, ext='yml'):
          """Iterator for block descriptions and category trees"""
 -- 
-2.37.3
+2.38.1
 
