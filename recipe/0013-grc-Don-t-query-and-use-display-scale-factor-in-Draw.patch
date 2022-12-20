@@ -37,5 +37,5 @@ index f17d28ec8..9a6d98c3c 100644
  
      def _auto_scroll(self, event):
 -- 
-2.37.3
+2.38.1
 
