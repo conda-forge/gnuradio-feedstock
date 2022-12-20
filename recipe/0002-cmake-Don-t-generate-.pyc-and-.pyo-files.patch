@@ -8,7 +8,7 @@ Subject: [PATCH] cmake: Don't generate .pyc and .pyo files.
  1 file changed, 2 insertions(+), 6 deletions(-)
 
 diff --git a/cmake/Modules/GrPython.cmake b/cmake/Modules/GrPython.cmake
-index f561df422..60fcd13e8 100644
+index 72cde3a49..355f54f40 100644
 --- a/cmake/Modules/GrPython.cmake
 +++ b/cmake/Modules/GrPython.cmake
 @@ -263,8 +263,6 @@ function(GR_PYTHON_INSTALL)
@@ -42,5 +42,5 @@ index f561df422..60fcd13e8 100644
  endfunction(GR_PYTHON_INSTALL)
  
 -- 
-2.37.3
+2.38.1
 
