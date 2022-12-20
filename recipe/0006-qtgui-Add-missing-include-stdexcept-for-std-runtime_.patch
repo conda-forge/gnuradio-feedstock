@@ -24,5 +24,5 @@ index d24dabf6a..3b1cd914f 100644
  #if QWT_VERSION < 0x060100
  #include <qwt_legend_item.h>
 -- 
-2.37.3
+2.38.1
 
