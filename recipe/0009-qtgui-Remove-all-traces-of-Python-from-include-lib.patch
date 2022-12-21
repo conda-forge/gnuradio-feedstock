@@ -346,5 +346,5 @@ index 94fbc7b82..7a4acf9a0 100644
  QT5_WRAP_CPP(qtgui_moc_sources
      ${qtgui_mod_includedir}/spectrumdisplayform.h
 -- 
-2.37.3
+2.38.1
 

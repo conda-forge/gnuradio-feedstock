@@ -19,9 +19,10 @@ source:
     - 0009-qtgui-Remove-all-traces-of-Python-from-include-lib.patch
     - 0010-grc-Fix-cairo-assertion-failure-by-not-storing-refer.patch
     - 0011-grc-Don-t-query-and-use-display-scale-factor-in-Draw.patch
+    - 0012-filter-python-Fix-polezero_plot.py-compatibility-wit.patch
 
 build:
-  number: 6
+  number: 7
 
 requirements:
   build:
