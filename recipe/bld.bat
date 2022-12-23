@@ -65,7 +65,7 @@ cmake -G "Ninja" ^
     -DENABLE_GRC=ON ^
     -DENABLE_POSTINSTALL=OFF ^
     -DENABLE_PYTHON=ON ^
-    -DENABLE_TESTING=OFF ^
+    -DENABLE_TESTING=ON ^
     ..
 if errorlevel 1 exit 1
 

@@ -63,7 +63,7 @@ cmake_config_args=(
     -DENABLE_GRC=ON
     -DENABLE_POSTINSTALL=OFF
     -DENABLE_PYTHON=ON
-    -DENABLE_TESTING=OFF
+    -DENABLE_TESTING=ON
 )
 
 if [[ $target_platform == linux-ppc64le ]] ; then
