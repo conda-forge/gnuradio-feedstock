@@ -18,7 +18,7 @@ source:
     - 0006-filter-python-Fix-polezero_plot.py-compatibility-wit.patch
 
 build:
-  number: 2
+  number: 3
 
 requirements:
   build:
