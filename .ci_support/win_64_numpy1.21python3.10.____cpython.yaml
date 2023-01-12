@@ -13,7 +13,7 @@ fftw:
 gsl:
 - '2.7'
 libsndfile:
-- '1.1'
+- '1.2'
 numpy:
 - '1.21'
 pin_run_as_build:

@@ -21,7 +21,7 @@ gmp:
 gsl:
 - '2.7'
 libsndfile:
-- '1.1'
+- '1.2'
 libthrift:
 - 0.16.0
 macos_machine:
