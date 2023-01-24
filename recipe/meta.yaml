@@ -16,9 +16,10 @@ source:
     - 0004-filter-python-Drop-unused-args-argument-overriden-by.patch
     - 0005-cmake-runtime-Manually-set-the-pybind11-internal-bui.patch
     - 0006-filter-python-Fix-polezero_plot.py-compatibility-wit.patch
+    - 0007-iio-cmake-revert-libad9361-linkage-back-to-public.patch
 
 build:
-  number: 2
+  number: 3
 
 requirements:
   build:
