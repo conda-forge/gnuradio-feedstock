@@ -41,7 +41,7 @@ sqlite:
 target_platform:
 - osx-arm64
 uhd:
-- 3.15.0
+- 4.4.0
 volk:
 - '3.0'
 zeromq:
