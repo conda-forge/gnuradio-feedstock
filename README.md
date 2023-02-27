@@ -1,13 +1,122 @@
+About gnuradio-feedstock
+========================
+
+Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/gnuradio-feedstock/blob/main/LICENSE.txt)
+
 About gnuradio
-==============
+--------------
 
 Home: https://gnuradio.org/
 
 Package license: GPL-3.0-or-later
 
-Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/gnuradio-feedstock/blob/master/LICENSE.txt)
+Summary: The free and open software radio ecosystem
+
+Development: https://github.com/gnuradio/gnuradio
+
+Documentation: https://gnuradio.org/doc/doxygen/
+
+GNU Radio is a free software development toolkit that provides the signal processing runtime and processing blocks to implement software radios using readily-available, low-cost external RF hardware and commodity processors. It is widely used in hobbyist, academic and commercial environments to support wireless communications research as well as to implement real-world radio systems.
+GNU Radio applications are primarily written using the Python programming language, while the supplied, performance-critical signal processing path is implemented in C++ using processor floating point extensions where available. Thus, the developer is able to implement real-time, high- throughput radio systems in a simple-to-use, rapid-application-development environment.
+
+About gnuradio-core
+-------------------
+
+Home: https://gnuradio.org/
+
+Package license: GPL-3.0-or-later
 
 Summary: GNU Radio core functionality and modules
+
+Development: https://github.com/gnuradio/gnuradio
+
+Documentation: https://gnuradio.org/doc/doxygen/
+About gnuradio-build-deps
+-------------------------
+
+Home: https://gnuradio.org/
+
+Package license: GPL-3.0-or-later
+
+Summary: Meta-package for GNU Radio deps used to manually build OOT modules
+
+Development: https://github.com/gnuradio/gnuradio
+
+Documentation: https://gnuradio.org/doc/doxygen/
+
+Install this meta-package into an environment with `gnuradio` or `gnuradio-core` in order to be able to build out-of-tree modules manually. DO NOT USE THIS IN CONDA RECIPES.
+
+About gnuradio-grc
+------------------
+
+Home: https://gnuradio.org/
+
+Package license: GPL-3.0-or-later
+
+Summary: GNU Radio Companion graphical flowgraph interface
+
+Development: https://github.com/gnuradio/gnuradio
+
+Documentation: https://gnuradio.org/doc/doxygen/
+About gnuradio-qtgui
+--------------------
+
+Home: https://gnuradio.org/
+
+Package license: GPL-3.0-or-later
+
+Summary: GNU Radio QT module providing graphical components
+
+Development: https://github.com/gnuradio/gnuradio
+
+Documentation: https://gnuradio.org/doc/doxygen/
+About gnuradio-soapy
+--------------------
+
+Home: https://gnuradio.org/
+
+Package license: GPL-3.0-or-later
+
+Summary: GNU Radio SoapySDR module for using a variety of SDR devices
+
+Development: https://github.com/gnuradio/gnuradio
+
+Documentation: https://gnuradio.org/doc/doxygen/
+
+This module provides GNU Radio source and sink blocks for a variety of SDR devices using SoapySDR, a generalized C/C++ library which provides abstraction in interfacing with different SDR devices and vendors.
+
+About gnuradio-uhd
+------------------
+
+Home: https://gnuradio.org/
+
+Package license: GPL-3.0-or-later
+
+Summary: GNU Radio UHD module for Ettus USRP radios
+
+Development: https://github.com/gnuradio/gnuradio
+
+Documentation: https://gnuradio.org/doc/doxygen/
+About gnuradio-video-sdl
+------------------------
+
+Home: https://gnuradio.org/
+
+Package license: GPL-3.0-or-later
+
+Summary: GNU Radio SDL module providing video components
+
+Development: https://github.com/gnuradio/gnuradio
+
+Documentation: https://gnuradio.org/doc/doxygen/
+About gnuradio-zeromq
+---------------------
+
+Home: https://gnuradio.org/
+
+Package license: GPL-3.0-or-later
+
+Summary: GNU Radio ZeroMQ module for message passing functionality
 
 Development: https://github.com/gnuradio/gnuradio
 
@@ -24,178 +133,248 @@ Current build status
     <td>
       <details>
         <summary>
-          <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=8568&branchName=master">
-            <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/gnuradio-feedstock?branchName=master">
+          <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=8568&branchName=main">
+            <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/gnuradio-feedstock?branchName=main">
           </a>
         </summary>
         <table>
           <thead><tr><th>Variant</th><th>Status</th></tr></thead>
           <tbody><tr>
+              <td>linux_64_numpy1.20python3.8.____73_pypy</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=8568&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/gnuradio-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_64_numpy1.20python3.8.____73_pypy" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
               <td>linux_64_numpy1.20python3.8.____cpython</td>
               <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=8568&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/gnuradio-feedstock?branchName=master&jobName=linux&configuration=linux%20linux_64_numpy1.20python3.8.____cpython" alt="variant">
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=8568&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/gnuradio-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_64_numpy1.20python3.8.____cpython" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>linux_64_numpy1.20python3.9.____73_pypy</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=8568&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/gnuradio-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_64_numpy1.20python3.9.____73_pypy" alt="variant">
                 </a>
               </td>
             </tr><tr>
               <td>linux_64_numpy1.20python3.9.____cpython</td>
               <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=8568&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/gnuradio-feedstock?branchName=master&jobName=linux&configuration=linux%20linux_64_numpy1.20python3.9.____cpython" alt="variant">
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=8568&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/gnuradio-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_64_numpy1.20python3.9.____cpython" alt="variant">
                 </a>
               </td>
             </tr><tr>
               <td>linux_64_numpy1.21python3.10.____cpython</td>
               <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=8568&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/gnuradio-feedstock?branchName=master&jobName=linux&configuration=linux%20linux_64_numpy1.21python3.10.____cpython" alt="variant">
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=8568&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/gnuradio-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_64_numpy1.21python3.10.____cpython" alt="variant">
                 </a>
               </td>
             </tr><tr>
               <td>linux_64_numpy1.23python3.11.____cpython</td>
               <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=8568&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/gnuradio-feedstock?branchName=master&jobName=linux&configuration=linux%20linux_64_numpy1.23python3.11.____cpython" alt="variant">
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=8568&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/gnuradio-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_64_numpy1.23python3.11.____cpython" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>linux_aarch64_numpy1.20python3.8.____73_pypy</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=8568&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/gnuradio-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_aarch64_numpy1.20python3.8.____73_pypy" alt="variant">
                 </a>
               </td>
             </tr><tr>
               <td>linux_aarch64_numpy1.20python3.8.____cpython</td>
               <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=8568&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/gnuradio-feedstock?branchName=master&jobName=linux&configuration=linux%20linux_aarch64_numpy1.20python3.8.____cpython" alt="variant">
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=8568&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/gnuradio-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_aarch64_numpy1.20python3.8.____cpython" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>linux_aarch64_numpy1.20python3.9.____73_pypy</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=8568&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/gnuradio-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_aarch64_numpy1.20python3.9.____73_pypy" alt="variant">
                 </a>
               </td>
             </tr><tr>
               <td>linux_aarch64_numpy1.20python3.9.____cpython</td>
               <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=8568&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/gnuradio-feedstock?branchName=master&jobName=linux&configuration=linux%20linux_aarch64_numpy1.20python3.9.____cpython" alt="variant">
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=8568&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/gnuradio-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_aarch64_numpy1.20python3.9.____cpython" alt="variant">
                 </a>
               </td>
             </tr><tr>
               <td>linux_aarch64_numpy1.21python3.10.____cpython</td>
               <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=8568&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/gnuradio-feedstock?branchName=master&jobName=linux&configuration=linux%20linux_aarch64_numpy1.21python3.10.____cpython" alt="variant">
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=8568&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/gnuradio-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_aarch64_numpy1.21python3.10.____cpython" alt="variant">
                 </a>
               </td>
             </tr><tr>
               <td>linux_aarch64_numpy1.23python3.11.____cpython</td>
               <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=8568&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/gnuradio-feedstock?branchName=master&jobName=linux&configuration=linux%20linux_aarch64_numpy1.23python3.11.____cpython" alt="variant">
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=8568&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/gnuradio-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_aarch64_numpy1.23python3.11.____cpython" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>linux_ppc64le_numpy1.20python3.8.____73_pypy</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=8568&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/gnuradio-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_ppc64le_numpy1.20python3.8.____73_pypy" alt="variant">
                 </a>
               </td>
             </tr><tr>
               <td>linux_ppc64le_numpy1.20python3.8.____cpython</td>
               <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=8568&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/gnuradio-feedstock?branchName=master&jobName=linux&configuration=linux%20linux_ppc64le_numpy1.20python3.8.____cpython" alt="variant">
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=8568&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/gnuradio-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_ppc64le_numpy1.20python3.8.____cpython" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>linux_ppc64le_numpy1.20python3.9.____73_pypy</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=8568&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/gnuradio-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_ppc64le_numpy1.20python3.9.____73_pypy" alt="variant">
                 </a>
               </td>
             </tr><tr>
               <td>linux_ppc64le_numpy1.20python3.9.____cpython</td>
               <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=8568&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/gnuradio-feedstock?branchName=master&jobName=linux&configuration=linux%20linux_ppc64le_numpy1.20python3.9.____cpython" alt="variant">
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=8568&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/gnuradio-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_ppc64le_numpy1.20python3.9.____cpython" alt="variant">
                 </a>
               </td>
             </tr><tr>
               <td>linux_ppc64le_numpy1.21python3.10.____cpython</td>
               <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=8568&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/gnuradio-feedstock?branchName=master&jobName=linux&configuration=linux%20linux_ppc64le_numpy1.21python3.10.____cpython" alt="variant">
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=8568&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/gnuradio-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_ppc64le_numpy1.21python3.10.____cpython" alt="variant">
                 </a>
               </td>
             </tr><tr>
               <td>linux_ppc64le_numpy1.23python3.11.____cpython</td>
               <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=8568&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/gnuradio-feedstock?branchName=master&jobName=linux&configuration=linux%20linux_ppc64le_numpy1.23python3.11.____cpython" alt="variant">
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=8568&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/gnuradio-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_ppc64le_numpy1.23python3.11.____cpython" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>osx_64_numpy1.20python3.8.____73_pypy</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=8568&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/gnuradio-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_64_numpy1.20python3.8.____73_pypy" alt="variant">
                 </a>
               </td>
             </tr><tr>
               <td>osx_64_numpy1.20python3.8.____cpython</td>
               <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=8568&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/gnuradio-feedstock?branchName=master&jobName=osx&configuration=osx%20osx_64_numpy1.20python3.8.____cpython" alt="variant">
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=8568&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/gnuradio-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_64_numpy1.20python3.8.____cpython" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>osx_64_numpy1.20python3.9.____73_pypy</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=8568&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/gnuradio-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_64_numpy1.20python3.9.____73_pypy" alt="variant">
                 </a>
               </td>
             </tr><tr>
               <td>osx_64_numpy1.20python3.9.____cpython</td>
               <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=8568&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/gnuradio-feedstock?branchName=master&jobName=osx&configuration=osx%20osx_64_numpy1.20python3.9.____cpython" alt="variant">
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=8568&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/gnuradio-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_64_numpy1.20python3.9.____cpython" alt="variant">
                 </a>
               </td>
             </tr><tr>
               <td>osx_64_numpy1.21python3.10.____cpython</td>
               <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=8568&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/gnuradio-feedstock?branchName=master&jobName=osx&configuration=osx%20osx_64_numpy1.21python3.10.____cpython" alt="variant">
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=8568&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/gnuradio-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_64_numpy1.21python3.10.____cpython" alt="variant">
                 </a>
               </td>
             </tr><tr>
               <td>osx_64_numpy1.23python3.11.____cpython</td>
               <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=8568&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/gnuradio-feedstock?branchName=master&jobName=osx&configuration=osx%20osx_64_numpy1.23python3.11.____cpython" alt="variant">
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=8568&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/gnuradio-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_64_numpy1.23python3.11.____cpython" alt="variant">
                 </a>
               </td>
             </tr><tr>
               <td>osx_arm64_numpy1.20python3.8.____cpython</td>
               <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=8568&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/gnuradio-feedstock?branchName=master&jobName=osx&configuration=osx%20osx_arm64_numpy1.20python3.8.____cpython" alt="variant">
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=8568&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/gnuradio-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_arm64_numpy1.20python3.8.____cpython" alt="variant">
                 </a>
               </td>
             </tr><tr>
               <td>osx_arm64_numpy1.20python3.9.____cpython</td>
               <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=8568&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/gnuradio-feedstock?branchName=master&jobName=osx&configuration=osx%20osx_arm64_numpy1.20python3.9.____cpython" alt="variant">
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=8568&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/gnuradio-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_arm64_numpy1.20python3.9.____cpython" alt="variant">
                 </a>
               </td>
             </tr><tr>
               <td>osx_arm64_numpy1.21python3.10.____cpython</td>
               <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=8568&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/gnuradio-feedstock?branchName=master&jobName=osx&configuration=osx%20osx_arm64_numpy1.21python3.10.____cpython" alt="variant">
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=8568&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/gnuradio-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_arm64_numpy1.21python3.10.____cpython" alt="variant">
                 </a>
               </td>
             </tr><tr>
               <td>osx_arm64_numpy1.23python3.11.____cpython</td>
               <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=8568&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/gnuradio-feedstock?branchName=master&jobName=osx&configuration=osx%20osx_arm64_numpy1.23python3.11.____cpython" alt="variant">
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=8568&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/gnuradio-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_arm64_numpy1.23python3.11.____cpython" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>win_64_numpy1.20python3.8.____73_pypy</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=8568&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/gnuradio-feedstock?branchName=main&jobName=win&configuration=win%20win_64_numpy1.20python3.8.____73_pypy" alt="variant">
                 </a>
               </td>
             </tr><tr>
               <td>win_64_numpy1.20python3.8.____cpython</td>
               <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=8568&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/gnuradio-feedstock?branchName=master&jobName=win&configuration=win%20win_64_numpy1.20python3.8.____cpython" alt="variant">
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=8568&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/gnuradio-feedstock?branchName=main&jobName=win&configuration=win%20win_64_numpy1.20python3.8.____cpython" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>win_64_numpy1.20python3.9.____73_pypy</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=8568&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/gnuradio-feedstock?branchName=main&jobName=win&configuration=win%20win_64_numpy1.20python3.9.____73_pypy" alt="variant">
                 </a>
               </td>
             </tr><tr>
               <td>win_64_numpy1.20python3.9.____cpython</td>
               <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=8568&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/gnuradio-feedstock?branchName=master&jobName=win&configuration=win%20win_64_numpy1.20python3.9.____cpython" alt="variant">
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=8568&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/gnuradio-feedstock?branchName=main&jobName=win&configuration=win%20win_64_numpy1.20python3.9.____cpython" alt="variant">
                 </a>
               </td>
             </tr><tr>
               <td>win_64_numpy1.21python3.10.____cpython</td>
               <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=8568&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/gnuradio-feedstock?branchName=master&jobName=win&configuration=win%20win_64_numpy1.21python3.10.____cpython" alt="variant">
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=8568&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/gnuradio-feedstock?branchName=main&jobName=win&configuration=win%20win_64_numpy1.21python3.10.____cpython" alt="variant">
                 </a>
               </td>
             </tr><tr>
               <td>win_64_numpy1.23python3.11.____cpython</td>
               <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=8568&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/gnuradio-feedstock?branchName=master&jobName=win&configuration=win%20win_64_numpy1.23python3.11.____cpython" alt="variant">
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=8568&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/gnuradio-feedstock?branchName=main&jobName=win&configuration=win%20win_64_numpy1.23python3.11.____cpython" alt="variant">
                 </a>
               </td>
             </tr>
