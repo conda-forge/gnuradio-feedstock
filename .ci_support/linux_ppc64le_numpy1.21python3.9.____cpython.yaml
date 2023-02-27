@@ -7,7 +7,7 @@ c_compiler:
 c_compiler_version:
 - '11'
 cdt_name:
-- cos6
+- cos7
 channel_sources:
 - conda-forge
 channel_targets:
@@ -34,16 +34,12 @@ pin_run_as_build:
   python:
     min_pin: x.x
     max_pin: x.x
-pyqt:
-- '5.15'
 python:
-- 3.10.* *_cpython
-qt_main:
-- '5.15'
+- 3.9.* *_cpython
 sqlite:
 - '3'
 target_platform:
-- linux-64
+- linux-ppc64le
 uhd:
 - 3.15.0
 volk:
