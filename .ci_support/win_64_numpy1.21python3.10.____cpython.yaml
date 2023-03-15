@@ -23,7 +23,7 @@ pin_run_as_build:
 pyqt:
 - '5.15'
 python:
-- 3.9.* *_cpython
+- 3.10.* *_cpython
 qt_main:
 - '5.15'
 sqlite:
