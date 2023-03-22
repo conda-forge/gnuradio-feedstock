@@ -23,7 +23,7 @@ gsl:
 macos_machine:
 - arm64-apple-darwin20.0.0
 numpy:
-- '1.23'
+- '1.21'
 pin_run_as_build:
   boost-cpp:
     max_pin: x.x.x
