@@ -35,7 +35,7 @@ libiio:
 libsndfile:
 - '1.2'
 libthrift:
-- 0.18.0
+- 0.18.1
 numpy:
 - '1.23'
 pin_run_as_build:
