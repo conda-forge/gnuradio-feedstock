@@ -23,7 +23,7 @@ gsl:
 libsndfile:
 - '1.2'
 libthrift:
-- 0.18.0
+- 0.18.1
 macos_machine:
 - arm64-apple-darwin20.0.0
 numpy:
