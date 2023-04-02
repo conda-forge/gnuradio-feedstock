@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 
+# Boost flag added as workaround as in https://github.com/conda-forge/boost-cpp-feedstock/pull/135
+# Can remove once Boost is fixed
 if [[ $target_platform == osx* ]] ; then
-    CXXFLAGS="${CXXFLAGS} -D_LIBCPP_DISABLE_AVAILABILITY"
+    CXXFLAGS="${CXXFLAGS} -D_LIBCPP_DISABLE_AVAILABILITY -DBOOST_NO_CXX98_FUNCTION_BASE"
 fi
 
 # Workaround for no std::aligned_alloc with osx-64
