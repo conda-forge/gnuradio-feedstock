@@ -17,7 +17,7 @@ source:
     - 0005-cmake-runtime-Manually-set-the-pybind11-internal-bui.patch
 
 build:
-  number: 0
+  number: 1
 
 requirements:
   build:
@@ -34,21 +34,8 @@ requirements:
     - cross-python_{{ target_platform }}  # [build_platform != target_platform]
     - pybind11                            # [build_platform != target_platform]
     - numpy                               # [build_platform != target_platform]
-    # below are needed to link with Qt for qtgui
-    - {{ cdt('libice') }}  # [linux and not ppc64le]
-    - {{ cdt('libselinux') }}  # [linux and not ppc64le]
-    - {{ cdt('libsm') }}  # [linux and not ppc64le]
-    - {{ cdt('libx11') }}  # [linux and not ppc64le]
-    - {{ cdt('libxau') }}  # [linux and not ppc64le]
-    - {{ cdt('libxcb') }}  # [linux and not ppc64le]
-    - {{ cdt('libxdamage') }}  # [linux and not ppc64le]
-    - {{ cdt('libxext') }}  # [linux and not ppc64le]
-    - {{ cdt('libxfixes') }}  # [linux and not ppc64le]
-    - {{ cdt('libxrender') }}  # [linux and not ppc64le]
-    - {{ cdt('libxxf86vm') }}  # [linux and not ppc64le]
-    - {{ cdt('libuuid') }}  # [linux and not ppc64le]
-    - {{ cdt('mesa-dri-drivers') }}  # [linux and not ppc64le]
-    - {{ cdt('mesa-libgl-devel') }}  # [linux and not ppc64le]
+    - {{ cdt('mesa-dri-drivers') }}  # [linux]
+    - {{ cdt('mesa-libgl-devel') }}  # [linux]
 
   host:
     - boost-cpp
@@ -86,9 +73,9 @@ requirements:
     - libiio
     - libad9361-iio
   # gnuradio.qtgui
-    - pyqt  # [not ppc64le]
-    - qt-main  # [not ppc64le]
-    - qwt  # [not ppc64le]
+    - pyqt
+    - qt-main
+    - qwt
   # gnuradio soapy
     - soapysdr
   # gnuradio.uhd
@@ -105,7 +92,7 @@ requirements:
     - {{ pin_subpackage('gnuradio-core', exact=True) }}
     - {{ pin_subpackage('gnuradio-grc', exact=True) }}
     - {{ pin_subpackage('gnuradio-iio', exact=True) }}
-    - {{ pin_subpackage('gnuradio-qtgui', exact=True) }}  # [not ppc64le]
+    - {{ pin_subpackage('gnuradio-qtgui', exact=True) }}
     - {{ pin_subpackage('gnuradio-soapy', exact=True) }}
     - {{ pin_subpackage('gnuradio-uhd', exact=True) }}
     - {{ pin_subpackage('gnuradio-video-sdl', exact=True) }}
@@ -122,7 +109,7 @@ test:
   imports:
     - gnuradio.gr
     - gnuradio.iio
-    - gnuradio.qtgui  # [not ppc64le]
+    - gnuradio.qtgui
     - gnuradio.soapy
     - gnuradio.uhd
     - gnuradio.video_sdl
@@ -370,7 +357,6 @@ outputs:
         This module provides GNU Radio blocks for using IIO devices, including the PlutoSDR.
   - name: gnuradio-qtgui
     build:
-      skip: true  # [ppc64le]
       entry_points:
         - gr_filter_design = gnuradio.filter.filter_design:main
     script: install_qtgui.sh  # [not win]
