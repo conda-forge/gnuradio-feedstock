@@ -475,6 +475,7 @@ outputs:
         - boost-cpp
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
         - {{ pin_subpackage('gnuradio-pmt', exact=True) }}
+        - pyqt
         - python
     test:
       commands:
