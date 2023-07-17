@@ -1,4 +1,4 @@
-{% set version = "3.10.6.0" %}
+{% set version = "3.10.7.0" %}
 {% set prefix = "Library/" if win else "" %}
 {% set lib = "" if win else "lib" %}
 
@@ -8,7 +8,7 @@ package:
 
 source:
   url: https://github.com/gnuradio/gnuradio/archive/refs/tags/v{{ version }}.tar.gz
-  sha256: c1a8c09f975d224b27dad9c8e2e7fed1f7cde9bc04d30b004afe8e28bb3f45c6
+  sha256: 55156650ada130600c70bc2ab38eee718fc1d23011be548471e888399f207ddc
   patches:
     - 0001-cmake-Install-python-wrapper-exe-for-scripts-on-Wind.patch
     - 0002-cmake-Don-t-generate-.pyc-and-.pyo-files.patch
@@ -17,7 +17,7 @@ source:
     - 0005-cmake-runtime-Manually-set-the-pybind11-internal-bui.patch
 
 build:
-  number: 1
+  number: 0
 
 requirements:
   build:
@@ -359,6 +359,9 @@ outputs:
     build:
       entry_points:
         - gr_filter_design = gnuradio.filter.filter_design:main
+      ignore_run_exports_from:
+        # see comment below in requirements: host
+        - alsa-lib  # [linux]
     script: install_qtgui.sh  # [not win]
     script: install_qtgui.bat  # [win]
     requirements:
@@ -369,6 +372,10 @@ outputs:
         # conda-build needs native python to make .pyc files
         - python  # [build_platform != target_platform]
       host:
+        # alsa-lib dep added only because gnuradio-core and qt-main both depend
+        # on it, and the outputs' run requirements can conflict if we don't
+        # include it in the solve here
+        - alsa-lib  # [linux]
         - boost-cpp
         - fmt
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
@@ -475,6 +482,7 @@ outputs:
         - boost-cpp
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
         - {{ pin_subpackage('gnuradio-pmt', exact=True) }}
+        - pyqt
         - python
     test:
       commands:

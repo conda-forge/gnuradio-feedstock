@@ -3,6 +3,7 @@ About gnuradio-feedstock
 
 Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/gnuradio-feedstock/blob/main/LICENSE.txt)
 
+
 About gnuradio
 --------------
 
@@ -19,6 +20,7 @@ Documentation: https://gnuradio.org/doc/doxygen/
 GNU Radio is a free software development toolkit that provides the signal processing runtime and processing blocks to implement software radios using readily-available, low-cost external RF hardware and commodity processors. It is widely used in hobbyist, academic and commercial environments to support wireless communications research as well as to implement real-world radio systems.
 GNU Radio applications are primarily written using the Python programming language, while the supplied, performance-critical signal processing path is implemented in C++ using processor floating point extensions where available. Thus, the developer is able to implement real-time, high- throughput radio systems in a simple-to-use, rapid-application-development environment.
 
+
 About gnuradio-pmt
 ------------------
 
@@ -31,6 +33,7 @@ Summary: Polymorphic Type (PMT) library, bundled with GNU Radio
 Development: https://github.com/gnuradio/gnuradio
 
 Documentation: https://gnuradio.org/doc/doxygen/
+
 About gnuradio-core
 -------------------
 
@@ -43,6 +46,7 @@ Summary: GNU Radio core functionality and modules
 Development: https://github.com/gnuradio/gnuradio
 
 Documentation: https://gnuradio.org/doc/doxygen/
+
 About gnuradio-build-deps
 -------------------------
 
@@ -58,6 +62,7 @@ Documentation: https://gnuradio.org/doc/doxygen/
 
 Install this meta-package into an environment with `gnuradio` or `gnuradio-core` in order to be able to build out-of-tree modules manually. DO NOT USE THIS IN CONDA RECIPES.
 
+
 About gnuradio-grc
 ------------------
 
@@ -70,6 +75,7 @@ Summary: GNU Radio Companion graphical flowgraph interface
 Development: https://github.com/gnuradio/gnuradio
 
 Documentation: https://gnuradio.org/doc/doxygen/
+
 About gnuradio-iio
 ------------------
 
@@ -85,6 +91,7 @@ Documentation: https://gnuradio.org/doc/doxygen/
 
 This module provides GNU Radio blocks for using IIO devices, including the PlutoSDR.
 
+
 About gnuradio-qtgui
 --------------------
 
@@ -97,6 +104,7 @@ Summary: GNU Radio QT module providing graphical components
 Development: https://github.com/gnuradio/gnuradio
 
 Documentation: https://gnuradio.org/doc/doxygen/
+
 About gnuradio-soapy
 --------------------
 
@@ -112,6 +120,7 @@ Documentation: https://gnuradio.org/doc/doxygen/
 
 This module provides GNU Radio source and sink blocks for a variety of SDR devices using SoapySDR, a generalized C/C++ library which provides abstraction in interfacing with different SDR devices and vendors.
 
+
 About gnuradio-uhd
 ------------------
 
@@ -124,6 +133,7 @@ Summary: GNU Radio UHD module for Ettus USRP radios
 Development: https://github.com/gnuradio/gnuradio
 
 Documentation: https://gnuradio.org/doc/doxygen/
+
 About gnuradio-video-sdl
 ------------------------
 
@@ -136,6 +146,7 @@ Summary: GNU Radio SDL module providing video components
 Development: https://github.com/gnuradio/gnuradio
 
 Documentation: https://gnuradio.org/doc/doxygen/
+
 About gnuradio-zeromq
 ---------------------
 
