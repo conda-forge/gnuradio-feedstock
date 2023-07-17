@@ -359,6 +359,9 @@ outputs:
     build:
       entry_points:
         - gr_filter_design = gnuradio.filter.filter_design:main
+      ignore_run_exports_from:
+        # see comment below in requirements: host
+        - alsa-lib  # [linux]
     script: install_qtgui.sh  # [not win]
     script: install_qtgui.bat  # [win]
     requirements:
@@ -369,6 +372,10 @@ outputs:
         # conda-build needs native python to make .pyc files
         - python  # [build_platform != target_platform]
       host:
+        # alsa-lib dep added only because gnuradio-core and qt-main both depend
+        # on it, and the outputs' run requirements can conflict if we don't
+        # include it in the solve here
+        - alsa-lib  # [linux]
         - boost-cpp
         - fmt
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
