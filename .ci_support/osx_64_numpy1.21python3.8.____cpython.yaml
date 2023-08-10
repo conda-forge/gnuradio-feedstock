@@ -49,7 +49,7 @@ qt_main:
 soapysdr:
 - '0.8'
 spdlog:
-- '1.11'
+- '1.12'
 sqlite:
 - '3'
 target_platform:
