@@ -17,7 +17,7 @@ cxx_compiler_version:
 fftw:
 - '3'
 fmt:
-- '9'
+- '10'
 gmp:
 - '6'
 gsl:
@@ -49,7 +49,7 @@ qt_main:
 soapysdr:
 - '0.8'
 spdlog:
-- '1.11'
+- '1.12'
 sqlite:
 - '3'
 target_platform:
