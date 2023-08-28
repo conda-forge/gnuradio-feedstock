@@ -58,5 +58,5 @@ index 8f113273b..72cde3a49 100644
                  OUTPUT ${pyexefile}
                  DEPENDS ${pyfile}
 -- 
-2.38.1
+2.40.0
 
