@@ -7,7 +7,7 @@ c_compiler:
 c_compiler_version:
 - '12'
 cdt_name:
-- cos7
+- cos6
 channel_sources:
 - conda-forge
 channel_targets:
@@ -33,7 +33,7 @@ libsndfile:
 libthrift:
 - 0.18.1
 numpy:
-- '1.21'
+- '1.22'
 pin_run_as_build:
   boost-cpp:
     max_pin: x.x.x
@@ -55,7 +55,7 @@ spdlog:
 sqlite:
 - '3'
 target_platform:
-- linux-ppc64le
+- linux-64
 uhd:
 - 4.4.0
 volk:

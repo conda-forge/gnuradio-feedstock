@@ -1,5 +1,5 @@
 MACOSX_DEPLOYMENT_TARGET:
-- '10.9'
+- '11.0'
 boost_cpp:
 - 1.78.0
 c_compiler:
@@ -29,9 +29,9 @@ libsndfile:
 libthrift:
 - 0.18.1
 macos_machine:
-- x86_64-apple-darwin13.4.0
+- arm64-apple-darwin20.0.0
 numpy:
-- '1.21'
+- '1.22'
 pin_run_as_build:
   boost-cpp:
     max_pin: x.x.x
@@ -53,7 +53,7 @@ spdlog:
 sqlite:
 - '3'
 target_platform:
-- osx-64
+- osx-arm64
 uhd:
 - 4.4.0
 volk:
