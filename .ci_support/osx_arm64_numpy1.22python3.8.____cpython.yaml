@@ -1,27 +1,19 @@
-BUILD:
-- aarch64-conda_cos7-linux-gnu
-alsa_lib:
-- 1.2.9
+MACOSX_DEPLOYMENT_TARGET:
+- '11.0'
 boost_cpp:
 - 1.78.0
 c_compiler:
-- gcc
+- clang
 c_compiler_version:
-- '12'
-cdt_arch:
-- aarch64
-cdt_name:
-- cos7
+- '15'
 channel_sources:
 - conda-forge
 channel_targets:
 - conda-forge main
 cxx_compiler:
-- gxx
+- clangxx
 cxx_compiler_version:
-- '12'
-docker_image:
-- quay.io/condaforge/linux-anvil-cos7-x86_64
+- '15'
 fftw:
 - '3'
 fmt:
@@ -35,9 +27,11 @@ libiio:
 libsndfile:
 - '1.2'
 libthrift:
-- 0.18.1
+- 0.19.0
+macos_machine:
+- arm64-apple-darwin20.0.0
 numpy:
-- '1.21'
+- '1.22'
 pin_run_as_build:
   boost-cpp:
     max_pin: x.x.x
@@ -49,7 +43,7 @@ pybind11_abi:
 pyqt:
 - '5.15'
 python:
-- 3.10.* *_cpython
+- 3.8.* *_cpython
 qt_main:
 - '5.15'
 soapysdr:
@@ -59,7 +53,7 @@ spdlog:
 sqlite:
 - '3'
 target_platform:
-- linux-aarch64
+- osx-arm64
 uhd:
 - 4.4.0
 volk:
