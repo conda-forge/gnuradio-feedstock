@@ -1,5 +1,5 @@
 alsa_lib:
-- 1.2.9
+- 1.2.10
 boost_cpp:
 - 1.78.0
 c_compiler:
@@ -27,7 +27,7 @@ gsl:
 libcblas:
 - 3.9 *netlib
 numpy:
-- '1.21'
+- '1.22'
 pin_run_as_build:
   boost-cpp:
     max_pin: x.x.x
