@@ -41,7 +41,7 @@ sqlite:
 target_platform:
 - linux-ppc64le
 uhd:
-- 3.15.0
+- 4.5.0
 volk:
 - '3.0'
 zeromq:
