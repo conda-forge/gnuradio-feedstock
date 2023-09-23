@@ -7,7 +7,7 @@ c_compiler:
 c_compiler_version:
 - '15'
 channel_sources:
-- conda-forge
+- conda-forge/label/python_rc,conda-forge
 channel_targets:
 - conda-forge main
 cxx_compiler:
@@ -23,7 +23,7 @@ gsl:
 macos_machine:
 - x86_64-apple-darwin13.4.0
 numpy:
-- '1.22'
+- '1.26'
 pin_run_as_build:
   boost-cpp:
     max_pin: x.x.x
@@ -33,7 +33,7 @@ pin_run_as_build:
 pyqt:
 - '5.15'
 python:
-- 3.10.* *_cpython
+- 3.12.* *_cpython
 qt_main:
 - '5.15'
 sqlite:

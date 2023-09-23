@@ -51,3 +51,4 @@ zip_keys:
   - cxx_compiler_version
 - - python
   - numpy
+  - channel_sources
