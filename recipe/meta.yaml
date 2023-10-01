@@ -18,7 +18,7 @@ source:
     - 0006-Fix-build-with-fmt-10.1.patch
 
 build:
-  number: 5
+  number: 6
 
 requirements:
   build:
@@ -39,7 +39,7 @@ requirements:
     - {{ cdt('mesa-libgl-devel') }}  # [linux]
 
   host:
-    - boost-cpp
+    - libboost-devel
     - click
     - click-plugins
     - codec2
@@ -200,7 +200,7 @@ outputs:
         - python  # [build_platform != target_platform]
       host:
         - alsa-lib  # [linux]
-        - boost-cpp
+        - libboost-devel
         - codec2
         - fftw
         - fmt
@@ -222,7 +222,6 @@ outputs:
         - volk
       run:
         - alsa-plugins  # [linux]
-        - boost-cpp
         - click
         - click-plugins
         - fftw
@@ -280,7 +279,7 @@ outputs:
         # conda-build needs native python to make .pyc files
         - python  # [build_platform != target_platform]
       host:
-        - boost-cpp
+        - libboost-headers
         - fmt
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
         - {{ pin_subpackage('gnuradio-pmt', exact=True) }}
@@ -329,8 +328,9 @@ outputs:
         # conda-build needs native python to make .pyc files
         - python  # [build_platform != target_platform]
       host:
-        - boost-cpp
+        - libboost-devel
         - fmt
+        - gmp  # [linux]
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
         - {{ pin_subpackage('gnuradio-pmt', exact=True) }}
         - libiio
@@ -339,7 +339,6 @@ outputs:
         - spdlog
         - volk
       run:
-        - boost-cpp
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
         - {{ pin_subpackage('gnuradio-pmt', exact=True) }}
         - python
@@ -377,8 +376,9 @@ outputs:
         # on it, and the outputs' run requirements can conflict if we don't
         # include it in the solve here
         - alsa-lib  # [linux]
-        - boost-cpp
+        - libboost-headers
         - fmt
+        - gmp  # [linux]
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
         - {{ pin_subpackage('gnuradio-pmt', exact=True) }}
         - pyqt
@@ -433,8 +433,9 @@ outputs:
         # conda-build needs native python to make .pyc files
         - python  # [build_platform != target_platform]
       host:
-        - boost-cpp
+        - libboost-headers
         - fmt
+        - gmp  # [unix]
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
         - {{ pin_subpackage('gnuradio-pmt', exact=True) }}
         - python
@@ -471,8 +472,9 @@ outputs:
         # conda-build needs native python to make .pyc files
         - python  # [build_platform != target_platform]
       host:
-        - boost-cpp
+        - libboost-devel
         - fmt
+        - gmp  # [linux]
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
         - {{ pin_subpackage('gnuradio-pmt', exact=True) }}
         - python
@@ -480,7 +482,6 @@ outputs:
         - uhd
         - volk
       run:
-        - boost-cpp
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
         - {{ pin_subpackage('gnuradio-pmt', exact=True) }}
         - pyqt
@@ -509,8 +510,9 @@ outputs:
         # conda-build needs native python to make .pyc files
         - python  # [build_platform != target_platform]
       host:
-        - boost-cpp
+        - libboost-headers
         - fmt
+        - gmp  # [linux]
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
         - {{ pin_subpackage('gnuradio-pmt', exact=True) }}
         - python
@@ -542,9 +544,10 @@ outputs:
         # conda-build needs native python to make .pyc files
         - python  # [build_platform != target_platform]
       host:
-        - boost-cpp
+        - libboost-headers
         - cppzmq
         - fmt
+        - gmp  # [linux]
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
         - {{ pin_subpackage('gnuradio-pmt', exact=True) }}
         - python
