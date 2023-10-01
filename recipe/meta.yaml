@@ -330,6 +330,7 @@ outputs:
       host:
         - libboost-devel
         - fmt
+        - gmp  # [linux]
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
         - {{ pin_subpackage('gnuradio-pmt', exact=True) }}
         - libiio
@@ -377,6 +378,7 @@ outputs:
         - alsa-lib  # [linux]
         - libboost-headers
         - fmt
+        - gmp  # [linux]
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
         - {{ pin_subpackage('gnuradio-pmt', exact=True) }}
         - pyqt
@@ -433,6 +435,7 @@ outputs:
       host:
         - libboost-headers
         - fmt
+        - gmp  # [unix]
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
         - {{ pin_subpackage('gnuradio-pmt', exact=True) }}
         - python
@@ -471,6 +474,7 @@ outputs:
       host:
         - libboost-devel
         - fmt
+        - gmp  # [linux]
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
         - {{ pin_subpackage('gnuradio-pmt', exact=True) }}
         - python
@@ -508,6 +512,7 @@ outputs:
       host:
         - libboost-headers
         - fmt
+        - gmp  # [linux]
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
         - {{ pin_subpackage('gnuradio-pmt', exact=True) }}
         - python
@@ -542,6 +547,7 @@ outputs:
         - libboost-headers
         - cppzmq
         - fmt
+        - gmp  # [linux]
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
         - {{ pin_subpackage('gnuradio-pmt', exact=True) }}
         - python
