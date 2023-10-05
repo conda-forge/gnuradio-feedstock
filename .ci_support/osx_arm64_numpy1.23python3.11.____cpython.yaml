@@ -1,11 +1,11 @@
 MACOSX_DEPLOYMENT_TARGET:
-- '10.9'
+- '11.0'
 boost_cpp:
 - '1.82'
 c_compiler:
 - clang
 c_compiler_version:
-- '15'
+- '16'
 channel_sources:
 - conda-forge
 channel_targets:
@@ -13,7 +13,7 @@ channel_targets:
 cxx_compiler:
 - clangxx
 cxx_compiler_version:
-- '15'
+- '16'
 fftw:
 - '3'
 gmp:
@@ -21,9 +21,9 @@ gmp:
 gsl:
 - '2.7'
 macos_machine:
-- x86_64-apple-darwin13.4.0
+- arm64-apple-darwin20.0.0
 numpy:
-- '1.22'
+- '1.23'
 pin_run_as_build:
   boost-cpp:
     max_pin: x.x.x
@@ -39,7 +39,7 @@ qt_main:
 sqlite:
 - '3'
 target_platform:
-- osx-64
+- osx-arm64
 uhd:
 - 3.15.0
 volk:
