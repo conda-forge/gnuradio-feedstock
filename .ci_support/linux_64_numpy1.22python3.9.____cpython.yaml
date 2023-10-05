@@ -1,7 +1,7 @@
 alsa_lib:
 - 1.2.10
 boost_cpp:
-- 1.78.0
+- '1.82'
 c_compiler:
 - gcc
 c_compiler_version:
