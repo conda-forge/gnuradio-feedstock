@@ -1,5 +1,5 @@
 boost_cpp:
-- 1.78.0
+- '1.82'
 c_compiler:
 - vs2019
 channel_sources:
