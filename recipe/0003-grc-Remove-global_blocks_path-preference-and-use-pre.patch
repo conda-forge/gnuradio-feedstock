@@ -141,7 +141,7 @@ index 1dbb13bfa..ccae5c9e7 100644
  default_flow_graph =
  xterm_executable = @GRC_XTERM_EXE@
 diff --git a/grc/gui/Config.py b/grc/gui/Config.py
-index 35d2eefcc..a9dfab50f 100644
+index 5aab9d7b8..51301e79c 100644
 --- a/grc/gui/Config.py
 +++ b/grc/gui/Config.py
 @@ -30,9 +30,8 @@ class Config(CoreConfig):
