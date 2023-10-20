@@ -15,7 +15,6 @@ source:
     - 0003-grc-Remove-global_blocks_path-preference-and-use-pre.patch
     - 0004-filter-python-Drop-unused-args-argument-overriden-by.patch
     - 0005-cmake-runtime-Manually-set-the-pybind11-internal-bui.patch
-    - 0006-Fix-build-with-fmt-10.1.patch
 
 build:
   number: 0

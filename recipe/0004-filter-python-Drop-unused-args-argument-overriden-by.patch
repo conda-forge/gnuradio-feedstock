@@ -24,10 +24,10 @@ index 3647bc4b2..f0020535b 100755
 -filter_design.main(sys.argv)
 +filter_design.main()
 diff --git a/gr-filter/python/filter/design/filter_design.py b/gr-filter/python/filter/design/filter_design.py
-index f6d03b59e..dc40e39c0 100644
+index 4af712ca3..05b08c33d 100644
 --- a/gr-filter/python/filter/design/filter_design.py
 +++ b/gr-filter/python/filter/design/filter_design.py
-@@ -2362,7 +2362,7 @@ def setup_options():
+@@ -2346,7 +2346,7 @@ def setup_options():
      return parser
  
  
@@ -36,7 +36,7 @@ index f6d03b59e..dc40e39c0 100644
      parser = setup_options()
      (options, args) = parser.parse_args()
  
-@@ -2383,7 +2383,7 @@ def launch(args, callback=None, restype=""):
+@@ -2367,7 +2367,7 @@ def launch(args, callback=None, restype=""):
          return gplt
  
  
@@ -45,7 +45,7 @@ index f6d03b59e..dc40e39c0 100644
      parser = setup_options()
      (options, args) = parser.parse_args()
  
-@@ -2395,4 +2395,4 @@ def main(args):
+@@ -2379,4 +2379,4 @@ def main(args):
  
  
  if __name__ == '__main__':
