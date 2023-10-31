@@ -45,8 +45,7 @@ uhd:
 volk:
 - '3.0'
 zeromq:
-- 4.3.4
+- 4.3.5
 zip_keys:
 - - python
   - numpy
-  - channel_sources
