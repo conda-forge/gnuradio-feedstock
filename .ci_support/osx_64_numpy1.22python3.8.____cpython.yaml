@@ -53,7 +53,7 @@ sqlite:
 target_platform:
 - osx-64
 uhd:
-- 4.5.0
+- 4.6.0
 volk:
 - '3.0'
 zeromq:
