@@ -9,7 +9,7 @@ cxx_compiler:
 fftw:
 - '3'
 fmt:
-- '10'
+- '9'
 gsl:
 - '2.7'
 libboost_devel:
@@ -35,7 +35,7 @@ qt_main:
 soapysdr:
 - '0.8'
 spdlog:
-- '1.12'
+- '1.11'
 sqlite:
 - '3'
 target_platform:
