@@ -43,7 +43,7 @@ target_platform:
 uhd:
 - 4.6.0
 volk:
-- '3.0'
+- '3.1'
 zeromq:
 - 4.3.5
 zip_keys:
