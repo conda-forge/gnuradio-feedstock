@@ -1,4 +1,4 @@
-{% set version = "3.10.8.0" %}
+{% set version = "3.10.9.0" %}
 {% set prefix = "Library/" if win else "" %}
 {% set lib = "" if win else "lib" %}
 
@@ -8,7 +8,7 @@ package:
 
 source:
   url: https://github.com/gnuradio/gnuradio/archive/refs/tags/v{{ version }}.tar.gz
-  sha256: a66709939b28f5919e804ba0ff7b8791f7f02180954cc2218367e9f22d262f95
+  sha256: 93f401e2095bc19323c21fadf8fb3d41d32ffc14df35c30e5a34d9abbb22af11
   patches:
     - 0001-cmake-Install-python-wrapper-exe-for-scripts-on-Wind.patch
     - 0002-cmake-Don-t-generate-.pyc-and-.pyo-files.patch
@@ -17,7 +17,7 @@ source:
     - 0005-cmake-runtime-Manually-set-the-pybind11-internal-bui.patch
 
 build:
-  number: 3
+  number: 0
 
 requirements:
   build:
