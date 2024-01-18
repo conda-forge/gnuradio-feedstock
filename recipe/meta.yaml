@@ -1,4 +1,4 @@
-{% set version = "3.10.9.1" %}
+{% set version = "3.10.9.2" %}
 {% set prefix = "Library/" if win else "" %}
 {% set lib = "" if win else "lib" %}
 
@@ -8,7 +8,7 @@ package:
 
 source:
   url: https://github.com/gnuradio/gnuradio/archive/refs/tags/v{{ version }}.tar.gz
-  sha256: bb23d96df8863b181ce642db12458dde3d0441715fabe81ee979cc7bc9f4aed5
+  sha256: 7fa154c423d01494cfa4c739faabad70b97f605238cd3fea8907b345b421fea1
   patches:
     - 0001-cmake-Install-python-wrapper-exe-for-scripts-on-Wind.patch
     - 0002-cmake-Don-t-generate-.pyc-and-.pyo-files.patch
