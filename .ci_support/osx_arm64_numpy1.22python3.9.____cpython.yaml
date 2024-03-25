@@ -27,7 +27,7 @@ libiio:
 libsndfile:
 - '1.2'
 libthrift:
-- 0.19.0
+- 0.20.0
 macos_machine:
 - arm64-apple-darwin20.0.0
 numpy:
