@@ -17,11 +17,12 @@ source:
     - 0005-cmake-runtime-Manually-set-the-pybind11-internal-bui.patch
 
 build:
-  number: 0
+  number: 1
 
 requirements:
   build:
     - {{ compiler('c') }}
+    - {{ stdlib("c") }}
     - {{ compiler('cxx') }}
     - cmake >=3.8
     - git
@@ -138,6 +139,7 @@ outputs:
     requirements:
       build:
         - {{ compiler('c') }}
+        - {{ stdlib("c") }}
         - {{ compiler('cxx') }}
         - cmake
         # conda-build needs native python to make .pyc files
@@ -193,6 +195,7 @@ outputs:
     requirements:
       build:
         - {{ compiler('c') }}
+        - {{ stdlib("c") }}
         - {{ compiler('cxx') }}
         - cmake
         # conda-build needs native python to make .pyc files
@@ -273,6 +276,7 @@ outputs:
     requirements:
       build:
         - {{ compiler('c') }}
+        - {{ stdlib("c") }}
         - {{ compiler('cxx') }}
         - cmake
         # conda-build needs native python to make .pyc files
@@ -322,6 +326,7 @@ outputs:
     requirements:
       build:
         - {{ compiler('c') }}
+        - {{ stdlib("c") }}
         - {{ compiler('cxx') }}
         - cmake
         # conda-build needs native python to make .pyc files
@@ -366,6 +371,7 @@ outputs:
     requirements:
       build:
         - {{ compiler('c') }}
+        - {{ stdlib("c") }}
         - {{ compiler('cxx') }}
         - cmake
         # conda-build needs native python to make .pyc files
@@ -427,6 +433,7 @@ outputs:
     requirements:
       build:
         - {{ compiler('c') }}
+        - {{ stdlib("c") }}
         - {{ compiler('cxx') }}
         - cmake
         # conda-build needs native python to make .pyc files
@@ -466,6 +473,7 @@ outputs:
     requirements:
       build:
         - {{ compiler('c') }}
+        - {{ stdlib("c") }}
         - {{ compiler('cxx') }}
         - cmake
         # conda-build needs native python to make .pyc files
@@ -504,6 +512,7 @@ outputs:
     requirements:
       build:
         - {{ compiler('c') }}
+        - {{ stdlib("c") }}
         - {{ compiler('cxx') }}
         - cmake
         # conda-build needs native python to make .pyc files
@@ -538,6 +547,7 @@ outputs:
     requirements:
       build:
         - {{ compiler('c') }}
+        - {{ stdlib("c") }}
         - {{ compiler('cxx') }}
         - cmake
         # conda-build needs native python to make .pyc files
