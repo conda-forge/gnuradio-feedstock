@@ -1,4 +1,4 @@
-{% set version = "3.10.9.2" %}
+{% set version = "3.10.10.0" %}
 {% set prefix = "Library/" if win else "" %}
 {% set lib = "" if win else "lib" %}
 
@@ -8,7 +8,7 @@ package:
 
 source:
   url: https://github.com/gnuradio/gnuradio/archive/refs/tags/v{{ version }}.tar.gz
-  sha256: 7fa154c423d01494cfa4c739faabad70b97f605238cd3fea8907b345b421fea1
+  sha256: 4202a486bee49ae97672acae559c133b1337e0e89f2d192332e4381d7c6682da
   patches:
     - 0001-cmake-Install-python-wrapper-exe-for-scripts-on-Wind.patch
     - 0002-cmake-Don-t-generate-.pyc-and-.pyo-files.patch
@@ -22,6 +22,7 @@ build:
 requirements:
   build:
     - {{ compiler('c') }}
+    - {{ stdlib("c") }}
     - {{ compiler('cxx') }}
     - cmake >=3.8
     - git
@@ -138,6 +139,7 @@ outputs:
     requirements:
       build:
         - {{ compiler('c') }}
+        - {{ stdlib("c") }}
         - {{ compiler('cxx') }}
         - cmake
         # conda-build needs native python to make .pyc files
@@ -193,6 +195,7 @@ outputs:
     requirements:
       build:
         - {{ compiler('c') }}
+        - {{ stdlib("c") }}
         - {{ compiler('cxx') }}
         - cmake
         # conda-build needs native python to make .pyc files
@@ -273,6 +276,7 @@ outputs:
     requirements:
       build:
         - {{ compiler('c') }}
+        - {{ stdlib("c") }}
         - {{ compiler('cxx') }}
         - cmake
         # conda-build needs native python to make .pyc files
@@ -322,6 +326,7 @@ outputs:
     requirements:
       build:
         - {{ compiler('c') }}
+        - {{ stdlib("c") }}
         - {{ compiler('cxx') }}
         - cmake
         # conda-build needs native python to make .pyc files
@@ -366,6 +371,7 @@ outputs:
     requirements:
       build:
         - {{ compiler('c') }}
+        - {{ stdlib("c") }}
         - {{ compiler('cxx') }}
         - cmake
         # conda-build needs native python to make .pyc files
@@ -427,6 +433,7 @@ outputs:
     requirements:
       build:
         - {{ compiler('c') }}
+        - {{ stdlib("c") }}
         - {{ compiler('cxx') }}
         - cmake
         # conda-build needs native python to make .pyc files
@@ -466,6 +473,7 @@ outputs:
     requirements:
       build:
         - {{ compiler('c') }}
+        - {{ stdlib("c") }}
         - {{ compiler('cxx') }}
         - cmake
         # conda-build needs native python to make .pyc files
@@ -504,6 +512,7 @@ outputs:
     requirements:
       build:
         - {{ compiler('c') }}
+        - {{ stdlib("c") }}
         - {{ compiler('cxx') }}
         - cmake
         # conda-build needs native python to make .pyc files
@@ -538,6 +547,7 @@ outputs:
     requirements:
       build:
         - {{ compiler('c') }}
+        - {{ stdlib("c") }}
         - {{ compiler('cxx') }}
         - cmake
         # conda-build needs native python to make .pyc files
