@@ -4,6 +4,10 @@ c_compiler:
 - clang
 c_compiler_version:
 - '16'
+c_stdlib:
+- macosx_deployment_target
+c_stdlib_version:
+- '10.9'
 channel_sources:
 - conda-forge
 channel_targets:
@@ -27,7 +31,7 @@ libiio:
 libsndfile:
 - '1.2'
 libthrift:
-- 0.19.0
+- 0.20.0
 macos_machine:
 - x86_64-apple-darwin13.4.0
 numpy:
