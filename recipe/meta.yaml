@@ -11,19 +11,18 @@ source:
   sha256: 4202a486bee49ae97672acae559c133b1337e0e89f2d192332e4381d7c6682da
   patches:
     - 0001-cmake-Install-python-wrapper-exe-for-scripts-on-Wind.patch
-    - 0002-cmake-Don-t-generate-.pyc-and-.pyo-files.patch
-    - 0003-grc-Remove-global_blocks_path-preference-and-use-pre.patch
-    - 0004-filter-python-Drop-unused-args-argument-overriden-by.patch
-    - 0005-cmake-runtime-Manually-set-the-pybind11-internal-bui.patch
+    - 0002-grc-Remove-global_blocks_path-preference-and-use-pre.patch
+    - 0003-filter-python-Drop-unused-args-argument-overriden-by.patch
+    - 0004-cmake-runtime-Manually-set-the-pybind11-internal-bui.patch
 
 build:
   number: 0
 
 requirements:
   build:
-    - {{ compiler('c') }}
+    - {{ compiler("c") }}
     - {{ stdlib("c") }}
-    - {{ compiler('cxx') }}
+    - {{ compiler("cxx") }}
     - cmake >=3.8
     - git
     - ninja
@@ -35,8 +34,8 @@ requirements:
     - cross-python_{{ target_platform }}  # [build_platform != target_platform]
     - pybind11                            # [build_platform != target_platform]
     - numpy                               # [build_platform != target_platform]
-    - {{ cdt('mesa-dri-drivers') }}  # [linux]
-    - {{ cdt('mesa-libgl-devel') }}  # [linux]
+    - {{ cdt("mesa-dri-drivers") }}  # [linux]
+    - {{ cdt("mesa-libgl-devel") }}  # [linux]
 
   host:
     - libboost-devel
@@ -138,9 +137,9 @@ outputs:
         - {{ pin_subpackage('gnuradio-pmt', max_pin='x.x.x') }}
     requirements:
       build:
-        - {{ compiler('c') }}
+        - {{ compiler("c") }}
         - {{ stdlib("c") }}
-        - {{ compiler('cxx') }}
+        - {{ compiler("cxx") }}
         - cmake
         # conda-build needs native python to make .pyc files
         - python  # [build_platform != target_platform]
@@ -194,9 +193,9 @@ outputs:
         - '*/templates/*.py'
     requirements:
       build:
-        - {{ compiler('c') }}
+        - {{ compiler("c") }}
         - {{ stdlib("c") }}
-        - {{ compiler('cxx') }}
+        - {{ compiler("cxx") }}
         - cmake
         # conda-build needs native python to make .pyc files
         - python  # [build_platform != target_platform]
@@ -275,9 +274,9 @@ outputs:
         - grcc = gnuradio.grc.compiler:main  # [win]
     requirements:
       build:
-        - {{ compiler('c') }}
+        - {{ compiler("c") }}
         - {{ stdlib("c") }}
-        - {{ compiler('cxx') }}
+        - {{ compiler("cxx") }}
         - cmake
         # conda-build needs native python to make .pyc files
         - python  # [build_platform != target_platform]
@@ -298,6 +297,7 @@ outputs:
         - pygobject
         - python
         - pyyaml
+        - qtpy
     test:
       requires:
         - coreutils  # [not win]
@@ -325,9 +325,9 @@ outputs:
     script: install_iio.bat  # [win]
     requirements:
       build:
-        - {{ compiler('c') }}
+        - {{ compiler("c") }}
         - {{ stdlib("c") }}
-        - {{ compiler('cxx') }}
+        - {{ compiler("cxx") }}
         - cmake
         # conda-build needs native python to make .pyc files
         - python  # [build_platform != target_platform]
@@ -370,9 +370,9 @@ outputs:
     script: install_qtgui.bat  # [win]
     requirements:
       build:
-        - {{ compiler('c') }}
+        - {{ compiler("c") }}
         - {{ stdlib("c") }}
-        - {{ compiler('cxx') }}
+        - {{ compiler("cxx") }}
         - cmake
         # conda-build needs native python to make .pyc files
         - python  # [build_platform != target_platform]
@@ -432,9 +432,9 @@ outputs:
     script: install_soapy.bat  # [win]
     requirements:
       build:
-        - {{ compiler('c') }}
+        - {{ compiler("c") }}
         - {{ stdlib("c") }}
-        - {{ compiler('cxx') }}
+        - {{ compiler("cxx") }}
         - cmake
         # conda-build needs native python to make .pyc files
         - python  # [build_platform != target_platform]
@@ -472,9 +472,9 @@ outputs:
         - uhd_siggen = gnuradio.uhd.uhd_siggen_base:main  # [win]
     requirements:
       build:
-        - {{ compiler('c') }}
+        - {{ compiler("c") }}
         - {{ stdlib("c") }}
-        - {{ compiler('cxx') }}
+        - {{ compiler("cxx") }}
         - cmake
         # conda-build needs native python to make .pyc files
         - python  # [build_platform != target_platform]
@@ -511,9 +511,9 @@ outputs:
     script: install_video_sdl.bat  # [win]
     requirements:
       build:
-        - {{ compiler('c') }}
+        - {{ compiler("c") }}
         - {{ stdlib("c") }}
-        - {{ compiler('cxx') }}
+        - {{ compiler("cxx") }}
         - cmake
         # conda-build needs native python to make .pyc files
         - python  # [build_platform != target_platform]
@@ -546,9 +546,9 @@ outputs:
     script: install_zeromq.bat  # [win]
     requirements:
       build:
-        - {{ compiler('c') }}
+        - {{ compiler("c") }}
         - {{ stdlib("c") }}
-        - {{ compiler('cxx') }}
+        - {{ compiler("cxx") }}
         - cmake
         # conda-build needs native python to make .pyc files
         - python  # [build_platform != target_platform]
@@ -584,14 +584,14 @@ outputs:
     requirements:
       host:
         # need to populate host to get complete build string (why?)
-        - {{ compiler('c') }}
-        - {{ compiler('cxx') }}
+        - {{ compiler("c") }}
+        - {{ compiler("cxx") }}
         - fmt
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
         - spdlog
       run:
-        - {{ compiler('c') }}
-        - {{ compiler('cxx') }}
+        - {{ compiler("c") }}
+        - {{ compiler("cxx") }}
         - cmake
         - ninja
         - numpy {{ numpy }}.*
