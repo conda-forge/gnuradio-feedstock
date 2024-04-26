@@ -14,9 +14,10 @@ source:
     - 0002-grc-Remove-global_blocks_path-preference-and-use-pre.patch
     - 0003-filter-python-Drop-unused-args-argument-overriden-by.patch
     - 0004-cmake-runtime-Manually-set-the-pybind11-internal-bui.patch
+    - 0005-grc-qt-Don-t-error-when-missing-manifests-dir.patch
 
 build:
-  number: 0
+  number: 1
 
 requirements:
   build:
@@ -297,6 +298,7 @@ outputs:
         - pygobject
         - python
         - pyyaml
+        - qdarkstyle
         - qtpy
     test:
       requires:
