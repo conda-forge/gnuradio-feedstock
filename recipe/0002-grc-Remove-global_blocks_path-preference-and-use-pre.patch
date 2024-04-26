@@ -20,7 +20,8 @@ Signed-off-by: Ryan Volz <ryan.volz@gmail.com>
  grc/core/{Constants.py => Constants.py.in} |  2 ++
  grc/grc.conf.in                            |  3 +--
  grc/gui/Config.py                          |  3 +--
- 6 files changed, 27 insertions(+), 19 deletions(-)
+ grc/gui_qt/Config.py                       |  8 ++++----
+ 7 files changed, 31 insertions(+), 23 deletions(-)
  rename grc/core/{Constants.py => Constants.py.in} (97%)
 
 diff --git a/grc/CMakeLists.txt b/grc/CMakeLists.txt
@@ -173,6 +174,40 @@ index 5aab9d7b8..51301e79c 100644
          Constants.update_font_size(self.font_size)
  
          self.parser = configparser.ConfigParser()
+diff --git a/grc/gui_qt/Config.py b/grc/gui_qt/Config.py
+index 28b735773..c953aa8fa 100644
+--- a/grc/gui_qt/Config.py
++++ b/grc/gui_qt/Config.py
+@@ -1,7 +1,8 @@
+ import os
+-from os.path import expanduser, normpath, expandvars, exists
++from os.path import expanduser, normpath, expandvars, exists, join
+ from collections import OrderedDict
+ 
++from . import Constants
+ from ..core.Config import Config as CoreConfig
+ from qtpy import QtCore
+ 
+@@ -13,9 +14,8 @@ class Config(CoreConfig):
+     gui_prefs_file = os.environ.get(
+         'GRC_QT_PREFS_PATH', os.path.expanduser('~/.gnuradio/grc_qt.conf'))
+ 
+-    def __init__(self, install_prefix, *args, **kwargs):
++    def __init__(self, *args, **kwargs):
+         CoreConfig.__init__(self, *args, **kwargs)
+-        self.install_prefix = install_prefix
+         self.qsettings = QtCore.QSettings(self.gui_prefs_file, QtCore.QSettings.IniFormat)
+ 
+     @property
+@@ -28,7 +28,7 @@ class Config(CoreConfig):
+             self.hier_block_lib_dir,
+             os.environ.get('GRC_BLOCKS_PATH', ''),
+             self._gr_prefs.get_string('grc', 'local_blocks_path', ''),
+-            self._gr_prefs.get_string('grc', 'global_blocks_path', ''),
++            normpath(join(self.install_prefix, Constants.GRC_BLOCKS_DIR)),
+             self.qsettings.value('grc/custom_block_paths', ''),
+         )
+ 
 -- 
 2.42.0
 
