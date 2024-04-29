@@ -15,7 +15,7 @@ fmt:
 gsl:
 - '2.7'
 libboost_devel:
-- '1.82'
+- '1.84'
 libiio:
 - '0'
 libsndfile:
