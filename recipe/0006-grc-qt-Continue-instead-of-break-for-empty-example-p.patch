@@ -1,0 +1,28 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Ryan Volz <ryan.volz@gmail.com>
+Date: Thu, 2 May 2024 15:39:56 -0400
+Subject: [PATCH] grc-qt: Continue instead of break for empty example path
+
+Signed-off-by: Ryan Volz <ryan.volz@gmail.com>
+---
+ grc/gui_qt/components/example_browser.py | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/grc/gui_qt/components/example_browser.py b/grc/gui_qt/components/example_browser.py
+index d4a7ca991..46ddd9a3a 100644
+--- a/grc/gui_qt/components/example_browser.py
++++ b/grc/gui_qt/components/example_browser.py
+@@ -253,8 +253,8 @@ class ExampleBrowser(QWidget, base.Component):
+         with Cache(Constants.EXAMPLE_CACHE_FILE, log=False) as cache:
+             for entry in self.platform.config.example_paths:
+                 if entry == '':
+-                    log.error("Empty example path!")
+-                    break
++                    log.info("Empty example path!")
++                    continue
+                 examples_dict[entry] = []
+                 if os.path.isdir(entry):
+                     subdirs = 0
+-- 
+2.42.0
+
