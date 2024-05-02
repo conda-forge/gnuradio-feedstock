@@ -15,9 +15,11 @@ source:
     - 0003-filter-python-Drop-unused-args-argument-overriden-by.patch
     - 0004-cmake-runtime-Manually-set-the-pybind11-internal-bui.patch
     - 0005-grc-qt-Don-t-error-when-missing-manifests-dir.patch
+    - 0006-grc-qt-Continue-instead-of-break-for-empty-example-p.patch
+
 
 build:
-  number: 2
+  number: 4
 
 requirements:
   build:
