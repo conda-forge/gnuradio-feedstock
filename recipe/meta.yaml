@@ -16,10 +16,11 @@ source:
     - 0004-cmake-runtime-Manually-set-the-pybind11-internal-bui.patch
     - 0005-grc-qt-Don-t-error-when-missing-manifests-dir.patch
     - 0006-grc-qt-Continue-instead-of-break-for-empty-example-p.patch
+    - 0007-cmake-remove-maximum-version-for-Qwt-was-6.3.patch
 
 
 build:
-  number: 4
+  number: 5
 
 requirements:
   build:
