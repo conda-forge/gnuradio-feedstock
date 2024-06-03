@@ -23,5 +23,5 @@ index f25f67cd4..5e599e697 100644
              with open(os.path.join(self.manifest_dir, f), 'r', encoding='utf8') as manifest:
                  text = manifest.read()
 -- 
-2.42.0
+2.45.1
 

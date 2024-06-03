@@ -23,5 +23,5 @@ index 8718a6f73..e87c6a20a 100644
      message(STATUS "QWT Version: ${QWT_VERSION}")
      if(NOT QWT_WRONG_VERSION)
 -- 
-2.42.0
+2.45.1
 
