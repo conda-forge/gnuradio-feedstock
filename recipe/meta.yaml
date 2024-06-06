@@ -17,6 +17,7 @@ source:
     - 0005-grc-qt-Don-t-error-when-missing-manifests-dir.patch
     - 0006-grc-qt-Continue-instead-of-break-for-empty-example-p.patch
     - 0007-cmake-remove-maximum-version-for-Qwt-was-6.3.patch
+    - 0008-filter-python-Change-float_-to-float64-for-numpy-2.0.patch
 
 
 build:
