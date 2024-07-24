@@ -14,11 +14,6 @@ source:
     - 0002-grc-Remove-global_blocks_path-preference-and-use-pre.patch
     - 0003-filter-python-Drop-unused-args-argument-overriden-by.patch
     - 0004-cmake-runtime-Manually-set-the-pybind11-internal-bui.patch
-    - 0005-grc-qt-Don-t-error-when-missing-manifests-dir.patch
-    - 0006-grc-qt-Continue-instead-of-break-for-empty-example-p.patch
-    - 0007-cmake-remove-maximum-version-for-Qwt-was-6.3.patch
-    - 0008-filter-python-Change-float_-to-float64-for-numpy-2.0.patch
-
 
 build:
   number: 0

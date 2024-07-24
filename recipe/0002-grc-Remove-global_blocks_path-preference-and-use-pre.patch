@@ -74,7 +74,7 @@ index 135e1acd3..28e8d4e8b 100755
      platform.build_library()
  
 diff --git a/grc/core/Config.py b/grc/core/Config.py
-index 1d823d705..2deb0e9ac 100644
+index b7d52e5fa..3556c70c7 100644
 --- a/grc/core/Config.py
 +++ b/grc/core/Config.py
 @@ -6,7 +6,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
@@ -85,10 +85,10 @@ index 1d823d705..2deb0e9ac 100644
 +from os.path import expanduser, expandvars, exists, normpath, join
  from collections import OrderedDict
  
- from . import Constants
+ from ..main import get_state_directory, get_config_file_path
 @@ -20,9 +20,10 @@ class Config(object):
-     hier_block_lib_dir = os.environ.get(
-         'GRC_HIER_PATH', Constants.DEFAULT_HIER_BLOCK_LIB_DIR)
+ 
+     hier_block_lib_dir = os.environ.get('GRC_HIER_PATH', get_state_directory())
  
 -    def __init__(self, version, version_parts=None, name=None, prefs=None):
 +    def __init__(self, version, install_prefix, version_parts=None, name=None, prefs=None):
@@ -132,24 +132,24 @@ diff --git a/grc/core/Constants.py b/grc/core/Constants.py.in
 similarity index 97%
 rename from grc/core/Constants.py
 rename to grc/core/Constants.py.in
-index 1aac44de8..59af1bb24 100644
+index 2fdabd720..989c4c55c 100644
 --- a/grc/core/Constants.py
 +++ b/grc/core/Constants.py.in
-@@ -21,6 +21,8 @@ BLOCK_DTD = os.path.join(DATA_DIR, 'block.dtd')
+@@ -20,6 +20,8 @@ DATA_DIR = os.path.dirname(__file__)
+ BLOCK_DTD = os.path.join(DATA_DIR, 'block.dtd')
  DEFAULT_FLOW_GRAPH = os.path.join(DATA_DIR, 'default_flow_graph.grc')
- DEFAULT_HIER_BLOCK_LIB_DIR = os.path.expanduser('~/.grc_gnuradio')
  DEFAULT_FLOW_GRAPH_ID = 'default'
 +GRC_BLOCKS_DIR = os.path.normpath("@GRC_BLOCKS_DIR@")
 +GRC_EXAMPLES_DIR = os.path.normpath("@GRC_EXAMPLES_DIR@")
  
- CACHE_FILE = os.path.expanduser('~/.cache/grc_gnuradio/cache_v2.json')
- EXAMPLE_CACHE_FILE = os.path.expanduser('~/.cache/grc_gnuradio/example_cache.json')
+ PROJECT_DEFAULT_DIR = 'gnuradio'
+ GRC_SUBDIR = 'grc'
 diff --git a/grc/grc.conf.in b/grc/grc.conf.in
-index 9e5bf426e..f11f8be9b 100644
+index 24a93a24d..c95b24cc1 100644
 --- a/grc/grc.conf.in
 +++ b/grc/grc.conf.in
 @@ -3,9 +3,8 @@
- # ~/.gnuradio/config.conf
+ # ~/.config/gnuradio/grc.conf
  
  [grc]
 -global_blocks_path = @blocksdir@
@@ -160,12 +160,12 @@ index 9e5bf426e..f11f8be9b 100644
  xterm_executable = @GRC_XTERM_EXE@
  canvas_font_size = 8
 diff --git a/grc/gui/Config.py b/grc/gui/Config.py
-index 5aab9d7b8..51301e79c 100644
+index dac7a5772..d5ec3d63f 100644
 --- a/grc/gui/Config.py
 +++ b/grc/gui/Config.py
 @@ -30,9 +30,8 @@ class Config(CoreConfig):
-     gui_prefs_file = os.environ.get(
-         'GRC_PREFS_PATH', os.path.expanduser('~/.gnuradio/grc.conf'))
+ 
+     gui_prefs_file = os.environ.get('GRC_PREFS_PATH', get_config_file_path())
  
 -    def __init__(self, install_prefix, *args, **kwargs):
 +    def __init__(self, *args, **kwargs):
@@ -175,7 +175,7 @@ index 5aab9d7b8..51301e79c 100644
  
          self.parser = configparser.ConfigParser()
 diff --git a/grc/gui_qt/Config.py b/grc/gui_qt/Config.py
-index 28b735773..c953aa8fa 100644
+index ea54654af..5b376d65f 100644
 --- a/grc/gui_qt/Config.py
 +++ b/grc/gui_qt/Config.py
 @@ -1,7 +1,8 @@
@@ -186,11 +186,11 @@ index 28b735773..c953aa8fa 100644
  
 +from . import Constants
  from ..core.Config import Config as CoreConfig
+ from ..main import get_config_file_path
  from qtpy import QtCore
- 
 @@ -13,9 +14,8 @@ class Config(CoreConfig):
-     gui_prefs_file = os.environ.get(
-         'GRC_QT_PREFS_PATH', os.path.expanduser('~/.gnuradio/grc_qt.conf'))
+ 
+     gui_prefs_file = os.environ.get('GRC_QT_PREFS_PATH', get_config_file_path('grc_qt.conf'))
  
 -    def __init__(self, install_prefix, *args, **kwargs):
 +    def __init__(self, *args, **kwargs):
@@ -209,5 +209,5 @@ index 28b735773..c953aa8fa 100644
          )
  
 -- 
-2.45.1
+2.45.2
 
