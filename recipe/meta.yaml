@@ -16,7 +16,7 @@ source:
     - 0004-cmake-runtime-Manually-set-the-pybind11-internal-bui.patch
 
 build:
-  number: 0
+  number: 1
 
 requirements:
   build:
@@ -49,7 +49,7 @@ requirements:
     - libsndfile
     - libthrift  # [not win]
     - mako
-    - mpir  # [win]
+    - gmp  # [win]
     - numpy
     - packaging
     - pip  # [win]
@@ -211,7 +211,7 @@ outputs:
         - jack  # [linux]
         - libsndfile
         - libthrift  # [not win]
-        - mpir  # [win]
+        - gmp  # [win]
         - numpy
         - packaging
         - portaudio
