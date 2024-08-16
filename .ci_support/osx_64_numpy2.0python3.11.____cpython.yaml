@@ -21,7 +21,7 @@ cxx_compiler_version:
 fftw:
 - '3'
 fmt:
-- '10'
+- '11'
 gmp:
 - '6'
 gsl:
