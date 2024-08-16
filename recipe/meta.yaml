@@ -27,7 +27,7 @@ requirements:
     - git
     - ninja
     - patch  # [osx]
-    - pkg-config  # [not win]
+    - pkg-config
     - thrift-compiler  # [not win]
     # cross-compilation requirements
     - python                              # [build_platform != target_platform]
@@ -44,12 +44,11 @@ requirements:
     - codec2
     - fftw
     - fmt
-    - gmp  # [not win]
+    - gmp
     - gsl
     - libsndfile
     - libthrift  # [not win]
     - mako
-    - mpir  # [win]
     - numpy
     - packaging
     - pip  # [win]
@@ -205,13 +204,12 @@ outputs:
         - codec2
         - fftw
         - fmt
-        - gmp  # [not win]
+        - gmp
         - {{ pin_subpackage('gnuradio-pmt', exact=True) }}
         - gsl
         - jack  # [linux]
         - libsndfile
         - libthrift  # [not win]
-        - mpir  # [win]
         - numpy
         - packaging
         - portaudio
