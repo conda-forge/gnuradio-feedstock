@@ -29,9 +29,9 @@ gmp:
 gsl:
 - '2.7'
 libboost_devel:
-- '1.84'
+- '1.86'
 libboost_headers:
-- '1.84'
+- '1.86'
 libiio:
 - '0'
 libsndfile:
@@ -49,7 +49,7 @@ pybind11_abi:
 pyqt:
 - '5.15'
 python:
-- 3.10.* *_cpython
+- 3.12.* *_cpython
 qt_main:
 - '5.15'
 soapysdr:
@@ -59,7 +59,7 @@ spdlog:
 sqlite:
 - '3'
 target_platform:
-- linux-64
+- linux-ppc64le
 uhd:
 - 4.7.0
 volk:
