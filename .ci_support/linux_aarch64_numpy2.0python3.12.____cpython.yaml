@@ -1,3 +1,5 @@
+BUILD:
+- aarch64-conda_cos7-linux-gnu
 alsa_lib:
 - '1.2'
 c_compiler:
@@ -8,6 +10,8 @@ c_stdlib:
 - sysroot
 c_stdlib_version:
 - '2.17'
+cdt_arch:
+- aarch64
 cdt_name:
 - cos7
 channel_sources:
@@ -49,7 +53,7 @@ pybind11_abi:
 pyqt:
 - '5.15'
 python:
-- 3.11.* *_cpython
+- 3.12.* *_cpython
 qt_main:
 - '5.15'
 soapysdr:
@@ -59,7 +63,7 @@ spdlog:
 sqlite:
 - '3'
 target_platform:
-- linux-64
+- linux-aarch64
 uhd:
 - 4.7.0
 volk:
@@ -73,3 +77,4 @@ zip_keys:
   - cdt_name
 - - python
   - numpy
+  - channel_sources
