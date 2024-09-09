@@ -11,7 +11,7 @@ c_stdlib_version:
 cdt_name:
 - cos7
 channel_sources:
-- conda-forge
+- conda-forge/label/python_rc,conda-forge
 channel_targets:
 - conda-forge main
 cxx_compiler:
@@ -39,7 +39,7 @@ libsndfile:
 libthrift:
 - 0.20.0
 numpy:
-- '2.0'
+- '2'
 pin_run_as_build:
   python:
     min_pin: x.x
@@ -49,7 +49,7 @@ pybind11_abi:
 pyqt:
 - '5.15'
 python:
-- 3.9.* *_cpython
+- 3.13.* *_cp313
 qt_main:
 - '5.15'
 soapysdr:
@@ -59,7 +59,7 @@ spdlog:
 sqlite:
 - '3'
 target_platform:
-- linux-ppc64le
+- linux-64
 uhd:
 - 4.7.0
 volk:
@@ -73,3 +73,4 @@ zip_keys:
   - cdt_name
 - - python
   - numpy
+  - channel_sources

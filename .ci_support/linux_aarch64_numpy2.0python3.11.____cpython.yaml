@@ -53,7 +53,7 @@ pybind11_abi:
 pyqt:
 - '5.15'
 python:
-- 3.10.* *_cpython
+- 3.11.* *_cpython
 qt_main:
 - '5.15'
 soapysdr:
@@ -77,3 +77,4 @@ zip_keys:
   - cdt_name
 - - python
   - numpy
+  - channel_sources

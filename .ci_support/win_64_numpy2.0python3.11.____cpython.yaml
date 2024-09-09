@@ -10,8 +10,6 @@ codec2:
 - '1.0'
 cxx_compiler:
 - vs2022
-cxx_compiler_version:
-- '19.40'
 fftw:
 - '3'
 fmt:
@@ -37,7 +35,7 @@ pybind11_abi:
 pyqt:
 - '5.15'
 python:
-- 3.12.* *_cpython
+- 3.11.* *_cpython
 qt_main:
 - '5.15'
 soapysdr:
@@ -57,3 +55,4 @@ zeromq:
 zip_keys:
 - - python
   - numpy
+  - channel_sources
