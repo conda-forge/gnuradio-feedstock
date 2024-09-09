@@ -10,8 +10,6 @@ codec2:
 - '1.0'
 cxx_compiler:
 - vs2022
-cxx_compiler_version:
-- '19.40'
 fftw:
 - '3'
 fmt:
@@ -19,9 +17,9 @@ fmt:
 gsl:
 - '2.7'
 libboost_devel:
-- '1.84'
+- '1.86'
 libboost_headers:
-- '1.84'
+- '1.86'
 libiio:
 - '0'
 libsndfile:

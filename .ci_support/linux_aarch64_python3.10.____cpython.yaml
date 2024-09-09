@@ -33,9 +33,9 @@ gmp:
 gsl:
 - '2.7'
 libboost_devel:
-- '1.84'
+- '1.86'
 libboost_headers:
-- '1.84'
+- '1.86'
 libiio:
 - '0'
 libsndfile:
