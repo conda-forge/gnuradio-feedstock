@@ -10,8 +10,6 @@ codec2:
 - '1.0'
 cxx_compiler:
 - vs2022
-cxx_compiler_version:
-- '19.40'
 fftw:
 - '3'
 fmt:
