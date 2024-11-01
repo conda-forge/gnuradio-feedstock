@@ -5,7 +5,7 @@ MACOSX_SDK_VERSION:
 c_compiler:
 - clang
 c_compiler_version:
-- '17'
+- '18'
 c_stdlib:
 - macosx_deployment_target
 c_stdlib_version:
@@ -17,7 +17,7 @@ channel_targets:
 cxx_compiler:
 - clangxx
 cxx_compiler_version:
-- '17'
+- '18'
 fftw:
 - '3'
 fmt:
@@ -44,6 +44,8 @@ pin_run_as_build:
   python:
     min_pin: x.x
     max_pin: x.x
+portaudio:
+- '19.7'
 pybind11_abi:
 - '4'
 pyqt:
@@ -51,7 +53,7 @@ pyqt:
 python:
 - 3.9.* *_cpython
 qt_main:
-- '5.15'
+- 5.15.8
 soapysdr:
 - '0.8'
 spdlog:

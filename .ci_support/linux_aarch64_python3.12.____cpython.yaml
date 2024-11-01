@@ -48,6 +48,8 @@ pin_run_as_build:
   python:
     min_pin: x.x
     max_pin: x.x
+portaudio:
+- '19.7'
 pybind11_abi:
 - '4'
 pyqt:
@@ -55,7 +57,7 @@ pyqt:
 python:
 - 3.12.* *_cpython
 qt_main:
-- '5.15'
+- 5.15.8
 soapysdr:
 - '0.8'
 spdlog:
