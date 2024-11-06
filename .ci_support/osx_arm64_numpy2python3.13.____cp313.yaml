@@ -39,7 +39,7 @@ libthrift:
 macos_machine:
 - arm64-apple-darwin20.0.0
 numpy:
-- '2.0'
+- '2'
 pin_run_as_build:
   python:
     min_pin: x.x
@@ -51,9 +51,9 @@ pybind11_abi:
 pyqt:
 - '5.15'
 python:
-- 3.9.* *_cpython
+- 3.13.* *_cp313
 qt_main:
-- 5.15.8
+- '5.15'
 soapysdr:
 - '0.8'
 spdlog:

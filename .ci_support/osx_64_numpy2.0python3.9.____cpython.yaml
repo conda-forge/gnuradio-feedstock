@@ -51,9 +51,9 @@ pybind11_abi:
 pyqt:
 - '5.15'
 python:
-- 3.11.* *_cpython
+- 3.9.* *_cpython
 qt_main:
-- 5.15.8
+- '5.15'
 soapysdr:
 - '0.8'
 spdlog:
