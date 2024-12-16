@@ -40,7 +40,6 @@ requirements:
   host:
     - libboost-devel
     - click
-    - click-plugins
     - codec2
     - fftw
     - fmt
@@ -224,7 +223,6 @@ outputs:
       run:
         - alsa-plugins  # [linux]
         - click
-        - click-plugins
         - fftw
         - {{ pin_subpackage('gnuradio-pmt', exact=True) }}
         - mako
