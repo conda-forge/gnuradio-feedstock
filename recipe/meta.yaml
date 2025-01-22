@@ -586,7 +586,6 @@ outputs:
         - {{ compiler("c") }}
         - {{ compiler("cxx") }}
         - fmt
-        - {{ pin_subpackage('gnuradio-core', exact=True) }}
         - spdlog
       run:
         - {{ compiler("c") }}
