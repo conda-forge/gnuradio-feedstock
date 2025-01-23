@@ -9,7 +9,7 @@ c_stdlib:
 c_stdlib_version:
 - '2.17'
 cdt_name:
-- cos7
+- conda
 channel_sources:
 - conda-forge
 channel_targets:
@@ -19,7 +19,7 @@ cxx_compiler:
 cxx_compiler_version:
 - '13'
 docker_image:
-- quay.io/condaforge/linux-anvil-cos7-x86_64
+- quay.io/condaforge/linux-anvil-x86_64:alma9
 fftw:
 - '3'
 fmt:
@@ -44,8 +44,6 @@ pin_run_as_build:
   python:
     min_pin: x.x
     max_pin: x.x
-portaudio:
-- '19.7'
 pybind11_abi:
 - '4'
 pyqt:
@@ -53,11 +51,11 @@ pyqt:
 python:
 - 3.10.* *_cpython
 qt_main:
-- 5.15.8
+- '5.15'
 soapysdr:
 - '0.8'
 spdlog:
-- '1.14'
+- '1.15'
 sqlite:
 - '3'
 target_platform:
@@ -71,7 +69,5 @@ zeromq:
 zip_keys:
 - - c_compiler_version
   - cxx_compiler_version
-- - c_stdlib_version
-  - cdt_name
 - - python
   - numpy
