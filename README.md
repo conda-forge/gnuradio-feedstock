@@ -21,6 +21,22 @@ GNU Radio is a free software development toolkit that provides the signal proces
 GNU Radio applications are primarily written using the Python programming language, while the supplied, performance-critical signal processing path is implemented in C++ using processor floating point extensions where available. Thus, the developer is able to implement real-time, high- throughput radio systems in a simple-to-use, rapid-application-development environment.
 
 
+About gnuradio-build-deps
+-------------------------
+
+Home: https://gnuradio.org/
+
+Package license: GPL-3.0-or-later
+
+Summary: Meta-package for GNU Radio deps used to manually build OOT modules
+
+Development: https://github.com/gnuradio/gnuradio
+
+Documentation: https://gnuradio.org/doc/doxygen/
+
+Install this meta-package into an environment with `gnuradio` or `gnuradio-core` in order to be able to build out-of-tree modules manually. DO NOT USE THIS IN CONDA RECIPES.
+
+
 About gnuradio-pmt
 ------------------
 
@@ -46,22 +62,6 @@ Summary: GNU Radio core functionality and modules
 Development: https://github.com/gnuradio/gnuradio
 
 Documentation: https://gnuradio.org/doc/doxygen/
-
-About gnuradio-build-deps
--------------------------
-
-Home: https://gnuradio.org/
-
-Package license: GPL-3.0-or-later
-
-Summary: Meta-package for GNU Radio deps used to manually build OOT modules
-
-Development: https://github.com/gnuradio/gnuradio
-
-Documentation: https://gnuradio.org/doc/doxygen/
-
-Install this meta-package into an environment with `gnuradio` or `gnuradio-core` in order to be able to build out-of-tree modules manually. DO NOT USE THIS IN CONDA RECIPES.
-
 
 About gnuradio-grc
 ------------------
