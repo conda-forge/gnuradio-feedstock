@@ -6,14 +6,12 @@ channel_sources:
 - conda-forge
 channel_targets:
 - conda-forge main
-codec2:
-- '1.0'
 cxx_compiler:
 - vs2022
 fftw:
 - '3'
 fmt:
-- '11'
+- '11.0'
 gsl:
 - '2.7'
 libboost_devel:
