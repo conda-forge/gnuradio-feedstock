@@ -45,6 +45,8 @@ requirements:
     - fmt
     - gmp  # [not win]
     - gsl
+    - libblas
+    - libcblas
     - libsndfile
     - libthrift  # [not win]
     - libunwind  # [linux]
@@ -209,6 +211,9 @@ outputs:
         - {{ pin_subpackage('gnuradio-pmt', exact=True) }}
         - gsl
         - jack  # [linux]
+        # blas libs needed by gsl, only end up linked on Linux
+        - libblas  # [linux]
+        - libcblas  # [linux]
         - libsndfile
         - libthrift  # [not win]
         - libunwind  # [linux]
