@@ -47,6 +47,7 @@ requirements:
     - gsl
     - libsndfile
     - libthrift  # [not win]
+    - libunwind  # [linux]
     - mako
     - mpir  # [win]
     - numpy
@@ -210,6 +211,7 @@ outputs:
         - jack  # [linux]
         - libsndfile
         - libthrift  # [not win]
+        - libunwind  # [linux]
         - mpir  # [win]
         - numpy
         - packaging
