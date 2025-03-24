@@ -2,3 +2,6 @@ c_compiler:    # [win]
 - vs2022       # [win]
 cxx_compiler:  # [win]
 - vs2022       # [win]
+
+channel_targets:
+  conda-forge fmt_dev
