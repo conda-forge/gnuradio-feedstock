@@ -2,3 +2,6 @@ c_compiler:    # [win]
 - vs2022       # [win]
 cxx_compiler:  # [win]
 - vs2022       # [win]
+
+channel_sources:
+  conda-forge/label/fmt_dev,conda-forge
