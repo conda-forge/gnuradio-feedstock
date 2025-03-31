@@ -6,6 +6,9 @@ setlocal EnableDelayedExpansion
 :: https://github.com/boostorg/system/issues/32#issuecomment-462912013
 set "CXXFLAGS=%CXXFLAGS% -DHAVE_SNPRINTF"
 
+:: Make sure that fmt uses constexpr
+set "CXXFLAGS=%CXXFLAGS% -DFMT_USE_CONSTEXPR=1"
+
 :: Make a build folder and change to it
 mkdir build
 if errorlevel 1 exit 1

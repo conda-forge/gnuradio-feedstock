@@ -21,7 +21,7 @@ cxx_compiler_version:
 fftw:
 - '3'
 fmt:
-- '11'
+- '11.1'
 gmp:
 - '6'
 gsl:
@@ -29,8 +29,6 @@ gsl:
 libblas:
 - 3.9.* *netlib
 libboost_devel:
-- '1.86'
-libboost_headers:
 - '1.86'
 libcblas:
 - 3.9.* *netlib
