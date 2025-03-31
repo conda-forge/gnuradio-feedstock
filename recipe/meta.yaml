@@ -277,6 +277,11 @@ outputs:
       entry_points:
         - gnuradio-companion = gnuradio.grc.main:main  # [win]
         - grcc = gnuradio.grc.compiler:main  # [win]
+      ignore_run_exports_from:
+        # only boost headers are used for this output, but libboost-devel is
+        # needed as a dependency below so that the host environment solution
+        # accounts for the libboost that will be brought by gnuradio-core
+        - libboost-devel
     requirements:
       build:
         - {{ compiler("c") }}
@@ -286,7 +291,7 @@ outputs:
         # conda-build needs native python to make .pyc files
         - python  # [build_platform != target_platform]
       host:
-        - libboost-headers
+        - libboost-devel
         - fmt
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
         - {{ pin_subpackage('gnuradio-pmt', exact=True) }}
@@ -371,6 +376,10 @@ outputs:
       ignore_run_exports_from:
         # see comment below in requirements: host
         - alsa-lib  # [linux]
+        # only boost headers are used for this output, but libboost-devel is
+        # needed as a dependency below so that the host environment solution
+        # accounts for the libboost that will be brought by gnuradio-core
+        - libboost-devel
     script: install_qtgui.sh  # [not win]
     script: install_qtgui.bat  # [win]
     requirements:
@@ -386,7 +395,7 @@ outputs:
         # on it, and the outputs' run requirements can conflict if we don't
         # include it in the solve here
         - alsa-lib  # [linux]
-        - libboost-headers
+        - libboost-devel
         - fmt
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
         - {{ pin_subpackage('gnuradio-pmt', exact=True) }}
@@ -432,6 +441,12 @@ outputs:
       license_file: COPYING
       summary: GNU Radio QT module providing graphical components
   - name: gnuradio-soapy
+    build:
+      ignore_run_exports_from:
+        # only boost headers are used for this output, but libboost-devel is
+        # needed as a dependency below so that the host environment solution
+        # accounts for the libboost that will be brought by gnuradio-core
+        - libboost-devel
     script: install_soapy.sh  # [not win]
     script: install_soapy.bat  # [win]
     requirements:
@@ -443,7 +458,7 @@ outputs:
         # conda-build needs native python to make .pyc files
         - python  # [build_platform != target_platform]
       host:
-        - libboost-headers
+        - libboost-devel
         - fmt
         - gmp  # [not win]
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
@@ -510,6 +525,12 @@ outputs:
       license_file: COPYING
       summary: GNU Radio UHD module for Ettus USRP radios
   - name: gnuradio-video-sdl
+    build:
+      ignore_run_exports_from:
+        # only boost headers are used for this output, but libboost-devel is
+        # needed as a dependency below so that the host environment solution
+        # accounts for the libboost that will be brought by gnuradio-core
+        - libboost-devel
     script: install_video_sdl.sh  # [not win]
     script: install_video_sdl.bat  # [win]
     requirements:
@@ -521,7 +542,7 @@ outputs:
         # conda-build needs native python to make .pyc files
         - python  # [build_platform != target_platform]
       host:
-        - libboost-headers
+        - libboost-devel
         - fmt
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
         - {{ pin_subpackage('gnuradio-pmt', exact=True) }}
@@ -544,6 +565,12 @@ outputs:
       license_file: COPYING
       summary: GNU Radio SDL module providing video components
   - name: gnuradio-zeromq
+    build:
+      ignore_run_exports_from:
+        # only boost headers are used for this output, but libboost-devel is
+        # needed as a dependency below so that the host environment solution
+        # accounts for the libboost that will be brought by gnuradio-core
+        - libboost-devel
     script: install_zeromq.sh  # [not win]
     script: install_zeromq.bat  # [win]
     requirements:
@@ -555,7 +582,7 @@ outputs:
         # conda-build needs native python to make .pyc files
         - python  # [build_platform != target_platform]
       host:
-        - libboost-headers
+        - libboost-devel
         - cppzmq
         - fmt
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
