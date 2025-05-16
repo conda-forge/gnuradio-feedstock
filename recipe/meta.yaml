@@ -584,22 +584,44 @@ outputs:
       string: {{ (pin_subpackage('gnuradio-core', exact=True) if (pin_subpackage('gnuradio-core', exact=True) is string) else '').partition(' ')[-1].partition(' ')[-1] }}
     requirements:
       host:
-        # need to populate host to get complete build string (why?)
+        # populate host with all dependencies so pin_compatible in run
+        # can get exact version
+        - {{ pin_subpackage('gnuradio-core', exact=True) }}
+        # "build" deps
         - {{ compiler("c") }}
-        - {{ compiler("cxx") }}
-        - fmt
-        - spdlog
-      run:
-        - {{ compiler("c") }}
+        - {{ stdlib("c") }}
         - {{ compiler("cxx") }}
         - cmake
+        - git
         - ninja
-        - numpy {{ numpy }}.*
         - pip  # [win]
         - pkg-config
+        # "host" deps
+        - fmt
+        - libboost-devel
+        - numpy
         - pybind11
-      run_constrained:
+        - spdlog
+        - volk
+      run:
+        # use pin_compatible to exactly match version used in this build
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
+        # "build" deps
+        - {{ pin_compatible(compiler("c"), exact=True) }}
+        - {{ pin_compatible(stdlib("c"), exact=True) }}
+        - {{ pin_compatible(compiler("cxx"), exact=True) }}
+        - {{ pin_compatible("cmake", exact=True) }}
+        - {{ pin_compatible("git", exact=True) }}
+        - {{ pin_compatible("ninja", exact=True) }}
+        - {{ pin_compatible("pip", exact=True) }}  # [win]
+        - {{ pin_compatible("pkg-config", exact=True) }}
+        # "host" deps
+        - {{ pin_compatible("fmt", exact=True) }}
+        - {{ pin_compatible("libboost-devel", exact=True) }}
+        - {{ pin_compatible("numpy", exact=True) }}
+        - {{ pin_compatible("pybind11", exact=True) }}
+        - {{ pin_compatible("spdlog", exact=True) }}
+        - {{ pin_compatible("volk", exact=True) }}
     test:
       commands:
         - cmake --help
