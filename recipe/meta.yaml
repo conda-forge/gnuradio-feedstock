@@ -584,9 +584,9 @@ outputs:
       string: {{ (pin_subpackage('gnuradio-core', exact=True) if (pin_subpackage('gnuradio-core', exact=True) is string) else '').partition(' ')[-1].partition(' ')[-1] }}
     requirements:
       host:
-        # populate host with all dependencies so pin_compatible in run
-        # can get exact version
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
+        # populate host with all dependencies so we can use pin_compatible
+        # in run to restrict based on the version used for this build
         # "build" deps
         - {{ compiler("c") }}
         - {{ stdlib("c") }}
@@ -601,27 +601,32 @@ outputs:
         - libboost-devel
         - numpy
         - pybind11
+        - python
         - spdlog
         - volk
       run:
-        # use pin_compatible to exactly match version used in this build
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
+        # use pin_compatible to match version used in this build but allow for
+        # different build numbers to provide some relief for broken packages
         # "build" deps
-        - {{ pin_compatible(compiler("c"), exact=True) }}
-        - {{ pin_compatible(stdlib("c"), exact=True) }}
-        - {{ pin_compatible(compiler("cxx"), exact=True) }}
-        - {{ pin_compatible("cmake", exact=True) }}
-        - {{ pin_compatible("git", exact=True) }}
-        - {{ pin_compatible("ninja", exact=True) }}
-        - {{ pin_compatible("pip", exact=True) }}  # [win]
-        - {{ pin_compatible("pkg-config", exact=True) }}
+        - {{ pin_compatible(compiler("c"), max_pin="x.x.x.x.x.x") }}
+        - {{ pin_compatible(stdlib("c"), max_pin="x.x.x.x.x.x") }}
+        - {{ pin_compatible(compiler("cxx"), max_pin="x.x.x.x.x.x") }}
+        - {{ pin_compatible("cmake", max_pin="x.x.x.x.x.x") }}
+        - {{ pin_compatible("git", max_pin="x.x.x.x.x.x") }}
+        - {{ pin_compatible("ninja", max_pin="x.x.x.x.x.x") }}
+        - {{ pin_compatible("pip", max_pin="x.x.x.x.x.x") }}  # [win]
+        - {{ pin_compatible("pkg-config", max_pin="x.x.x.x.x.x") }}
         # "host" deps
-        - {{ pin_compatible("fmt", exact=True) }}
-        - {{ pin_compatible("libboost-devel", exact=True) }}
-        - {{ pin_compatible("numpy", exact=True) }}
-        - {{ pin_compatible("pybind11", exact=True) }}
-        - {{ pin_compatible("spdlog", exact=True) }}
-        - {{ pin_compatible("volk", exact=True) }}
+        # not all of these are needed by every gnuradio OOT module, but we want
+        # to cover the most likely cases so it will "just work"
+        - {{ pin_compatible("fmt", max_pin="x.x.x.x.x.x") }}
+        - {{ pin_compatible("libboost-devel", max_pin="x.x.x.x.x.x") }}
+        - {{ pin_compatible("numpy", max_pin="x.x.x.x.x.x") }}
+        - {{ pin_compatible("pybind11", max_pin="x.x.x.x.x.x") }}
+        - {{ pin_compatible("python", max_pin="x.x.x.x.x.x") }}
+        - {{ pin_compatible("spdlog", max_pin="x.x.x.x.x.x") }}
+        - {{ pin_compatible("volk", max_pin="x.x.x.x.x.x") }}
     test:
       commands:
         - cmake --help
