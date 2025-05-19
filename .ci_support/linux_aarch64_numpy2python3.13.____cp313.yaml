@@ -1,27 +1,29 @@
-MACOSX_DEPLOYMENT_TARGET:
-- '11.0'
-MACOSX_SDK_VERSION:
-- '11.0'
+alsa_lib:
+- '1.2'
 c_compiler:
-- clang
+- gcc
 c_compiler_version:
-- '18'
+- '13'
 c_stdlib:
-- macosx_deployment_target
+- sysroot
 c_stdlib_version:
-- '11.0'
+- '2.17'
+cdt_name:
+- conda
 channel_sources:
 - conda-forge
 channel_targets:
 - conda-forge main
 cxx_compiler:
-- clangxx
+- gxx
 cxx_compiler_version:
-- '18'
+- '13'
+docker_image:
+- quay.io/condaforge/linux-anvil-x86_64:alma9
 fftw:
 - '3'
 fmt:
-- '11'
+- '11.0'
 gmp:
 - '6'
 gsl:
@@ -40,10 +42,10 @@ libsndfile:
 - '1.2'
 libthrift:
 - 0.21.0
-macos_machine:
-- arm64-apple-darwin20.0.0
+libunwind:
+- '1.6'
 numpy:
-- '2.0'
+- '2'
 pin_run_as_build:
   python:
     min_pin: x.x
@@ -55,7 +57,7 @@ pybind11_abi:
 pyqt:
 - '5.15'
 python:
-- 3.12.* *_cpython
+- 3.13.* *_cp313
 qt_main:
 - '5.15'
 soapysdr:
@@ -65,7 +67,7 @@ spdlog:
 sqlite:
 - '3'
 target_platform:
-- osx-arm64
+- linux-aarch64
 uhd:
 - 4.8.0
 volk:

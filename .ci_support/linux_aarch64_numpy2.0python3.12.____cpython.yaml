@@ -23,7 +23,7 @@ docker_image:
 fftw:
 - '3'
 fmt:
-- '11'
+- '11.0'
 gmp:
 - '6'
 gsl:
@@ -57,7 +57,7 @@ pybind11_abi:
 pyqt:
 - '5.15'
 python:
-- 3.9.* *_cpython
+- 3.12.* *_cpython
 qt_main:
 - '5.15'
 soapysdr:
@@ -67,7 +67,7 @@ spdlog:
 sqlite:
 - '3'
 target_platform:
-- linux-64
+- linux-aarch64
 uhd:
 - 4.8.0
 volk:
