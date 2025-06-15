@@ -23,7 +23,7 @@ docker_image:
 fftw:
 - '3'
 fmt:
-- '11.0'
+- '11'
 gmp:
 - '6'
 gsl:
@@ -45,7 +45,7 @@ libthrift:
 libunwind:
 - '1.6'
 numpy:
-- '2.0'
+- '2'
 pin_run_as_build:
   python:
     min_pin: x.x
@@ -77,5 +77,3 @@ zeromq:
 zip_keys:
 - - c_compiler_version
   - cxx_compiler_version
-- - python
-  - numpy
