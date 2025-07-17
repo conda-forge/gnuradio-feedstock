@@ -1,31 +1,17 @@
-alsa_lib:
-- '1.2'
 c_compiler:
-- gcc
-c_compiler_version:
-- '13'
+- vs2022
 c_stdlib:
-- sysroot
-c_stdlib_version:
-- '2.17'
-cdt_name:
-- conda
+- vs
 channel_sources:
 - conda-forge
 channel_targets:
 - conda-forge main
 cxx_compiler:
-- gxx
-cxx_compiler_version:
-- '13'
-docker_image:
-- quay.io/condaforge/linux-anvil-x86_64:alma9
+- vs2022
 fftw:
 - '3'
 fmt:
-- '11.0'
-gmp:
-- '6'
+- '11'
 gsl:
 - '2.7'
 libblas:
@@ -40,12 +26,8 @@ libiio:
 - '0'
 libsndfile:
 - '1.2'
-libthrift:
-- 0.21.0
-libunwind:
-- '1.6'
 numpy:
-- '2.0'
+- '2'
 pin_run_as_build:
   python:
     min_pin: x.x
@@ -53,11 +35,11 @@ pin_run_as_build:
 portaudio:
 - '19.7'
 pybind11_abi:
-- '4'
+- '11'
 pyqt:
 - '5.15'
 python:
-- 3.11.* *_cpython
+- 3.9.* *_cpython
 qt_main:
 - '5.15'
 soapysdr:
@@ -67,15 +49,10 @@ spdlog:
 sqlite:
 - '3'
 target_platform:
-- linux-aarch64
+- win-64
 uhd:
 - 4.8.0
 volk:
 - '3.2'
 zeromq:
 - 4.3.5
-zip_keys:
-- - c_compiler_version
-  - cxx_compiler_version
-- - python
-  - numpy

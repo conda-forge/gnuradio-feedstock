@@ -5,7 +5,7 @@ MACOSX_SDK_VERSION:
 c_compiler:
 - clang
 c_compiler_version:
-- '18'
+- '19'
 c_stdlib:
 - macosx_deployment_target
 c_stdlib_version:
@@ -17,11 +17,11 @@ channel_targets:
 cxx_compiler:
 - clangxx
 cxx_compiler_version:
-- '18'
+- '19'
 fftw:
 - '3'
 fmt:
-- '11.0'
+- '11'
 gmp:
 - '6'
 gsl:
@@ -39,11 +39,11 @@ libiio:
 libsndfile:
 - '1.2'
 libthrift:
-- 0.21.0
+- 0.22.0
 macos_machine:
 - arm64-apple-darwin20.0.0
 numpy:
-- '2.0'
+- '2'
 pin_run_as_build:
   python:
     min_pin: x.x
@@ -51,11 +51,11 @@ pin_run_as_build:
 portaudio:
 - '19.7'
 pybind11_abi:
-- '4'
+- '11'
 pyqt:
 - '5.15'
 python:
-- 3.12.* *_cpython
+- 3.13.* *_cp313
 qt_main:
 - '5.15'
 soapysdr:
@@ -75,5 +75,3 @@ zeromq:
 zip_keys:
 - - c_compiler_version
   - cxx_compiler_version
-- - python
-  - numpy
