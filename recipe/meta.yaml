@@ -601,6 +601,7 @@ outputs:
         - libboost-devel
         - numpy
         - pybind11
+        - pybind11-abi
         - python
         - spdlog
         - volk
