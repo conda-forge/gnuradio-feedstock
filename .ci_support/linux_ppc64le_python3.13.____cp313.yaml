@@ -3,7 +3,7 @@ alsa_lib:
 c_compiler:
 - gcc
 c_compiler_version:
-- '13'
+- '14'
 c_stdlib:
 - sysroot
 c_stdlib_version:
@@ -17,7 +17,7 @@ channel_targets:
 cxx_compiler:
 - gxx
 cxx_compiler_version:
-- '13'
+- '14'
 docker_image:
 - quay.io/condaforge/linux-anvil-x86_64:alma9
 fftw:
@@ -41,9 +41,9 @@ libiio:
 libsndfile:
 - '1.2'
 libthrift:
-- 0.21.0
+- 0.22.0
 libunwind:
-- '1.6'
+- '1.8'
 numpy:
 - '2'
 pin_run_as_build:
