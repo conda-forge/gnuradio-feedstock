@@ -58,6 +58,8 @@ requirements:
     - pybind11
     - pybind11-abi
     - python
+    # setuptools pairs with pip
+    - setuptools  # [win]
     - spdlog
     - thrift  # [not win]
     - volk
@@ -596,6 +598,8 @@ outputs:
         - ninja
         - pip  # [win]
         - pkg-config
+        # setuptools pairs with pip
+        - setuptools  # [win]
         # "host" deps
         - fmt
         - libboost-devel
