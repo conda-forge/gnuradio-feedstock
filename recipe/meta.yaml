@@ -317,11 +317,11 @@ outputs:
         - xvfbwrapper  # [linux]
       script: run_grc_test.py
       commands:
-        - grcc "$PREFIX/share/gnuradio/examples/metadata/file_metadata_vector_sink.grc"  # [not win]
-        - python "%PREFIX%\\Library\\bin\\grcc.py" "%PREFIX%\\Library\\share\\gnuradio\\examples\\metadata\\file_metadata_vector_sink.grc"  # [win]
-        - python file_metadata_vector_sink.py  # [not win]
         - if not exist %PREFIX%\\Scripts\\gnuradio-companion.exe exit 1  # [win]
         - if not exist %PREFIX%\\Scripts\\grcc.exe exit 1  # [win]
+        - grcc "$PREFIX/share/gnuradio/examples/metadata/file_metadata_vector_sink.grc"  # [not win]
+        - grcc "%PREFIX%\\Library\\share\\gnuradio\\examples\\metadata\\file_metadata_vector_sink.grc"  # [win]
+        - python file_metadata_vector_sink.py
         - xvfb-run -a -s "-screen 0 1024x768x24" bash -c 'timeout --preserve-status 30 gnuradio-companion "$PREFIX/share/gnuradio/examples/metadata/file_metadata_vector_sink.grc" || [[ $? -eq 143 ]]'  # [linux]
         - timeout --preserve-status 30 gnuradio-companion "$PREFIX/share/gnuradio/examples/metadata/file_metadata_vector_sink.grc" || [[ $? -eq 143 ]]  # [not linux and not win]
         - start gnuradio-companion "%PREFIX%\\Library\\share\\gnuradio\\examples\\metadata\\file_metadata_vector_sink.grc" && ping -n 30 127.0.0.1 >nul && taskkill /im gnuradio-companion.exe /f  # [win]
