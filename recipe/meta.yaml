@@ -16,7 +16,7 @@ source:
     - 0004-cmake-runtime-Manually-set-the-pybind11-internal-bui.patch
 
 build:
-  number: 4
+  number: 5
 
 requirements:
   build:
