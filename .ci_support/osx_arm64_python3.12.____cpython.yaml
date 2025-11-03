@@ -1,24 +1,34 @@
+MACOSX_DEPLOYMENT_TARGET:
+- '11.0'
+MACOSX_SDK_VERSION:
+- '11.0'
 c_compiler:
-- vs2022
+- clang
+c_compiler_version:
+- '19'
 c_stdlib:
-- vs
+- macosx_deployment_target
+c_stdlib_version:
+- '11.0'
 channel_sources:
 - conda-forge
 channel_targets:
 - conda-forge main
 cxx_compiler:
-- vs2022
+- clangxx
+cxx_compiler_version:
+- '19'
 fftw:
 - '3'
 fmt:
-- '11.0'
+- '12.0'
+gmp:
+- '6'
 gsl:
 - '2.7'
 libblas:
 - 3.9.* *netlib
 libboost_devel:
-- '1.86'
-libboost_headers:
 - '1.86'
 libcblas:
 - 3.9.* *netlib
@@ -26,6 +36,10 @@ libiio:
 - '0'
 libsndfile:
 - '1.2'
+libthrift:
+- 0.22.0
+macos_machine:
+- arm64-apple-darwin20.0.0
 numpy:
 - '2'
 pin_run_as_build:
@@ -35,21 +49,21 @@ pin_run_as_build:
 portaudio:
 - '19.7'
 pybind11_abi:
-- '4'
+- '11'
 pyqt:
 - '5.15'
 python:
-- 3.13.* *_cp313
+- 3.12.* *_cpython
 qt_main:
 - '5.15'
 soapysdr:
 - '0.8'
 spdlog:
-- '1.15'
+- '1.16'
 sqlite:
 - '3'
 target_platform:
-- win-64
+- osx-arm64
 uhd:
 - 4.8.0
 volk:
@@ -57,5 +71,5 @@ volk:
 zeromq:
 - 4.3.5
 zip_keys:
-- - python
-  - numpy
+- - c_compiler_version
+  - cxx_compiler_version

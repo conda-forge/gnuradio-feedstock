@@ -6,6 +6,11 @@ setlocal EnableDelayedExpansion
 :: https://github.com/boostorg/system/issues/32#issuecomment-462912013
 set "CXXFLAGS=%CXXFLAGS% -DHAVE_SNPRINTF"
 
+:: With MSVC, including fmt/format.h in multiple compilation units that get
+:: linked together results in multiply-defined symbols
+:: Workaround by ignoring multiple definition
+set "LDFLAGS=%LDFLAGS% /FORCE:MULTIPLE"
+
 :: Make a build folder and change to it
 mkdir build
 if errorlevel 1 exit 1
@@ -32,6 +37,7 @@ cmake -G "Ninja" ^
     -DCMAKE_INSTALL_PREFIX:PATH="%LIBRARY_PREFIX%" ^
     -DCMAKE_PREFIX_PATH:PATH="%LIBRARY_PREFIX%" ^
     -DCMAKE_BUILD_TYPE:STRING=Release ^
+    -DCMAKE_VERBOSE_MAKEFILE=ON ^
     -DPYTHON_EXECUTABLE:PATH="%PYTHON%" ^
     -DBoost_NO_BOOST_CMAKE=ON ^
     -DGR_PYTHON_DIR:PATH="%SP_DIR%" ^

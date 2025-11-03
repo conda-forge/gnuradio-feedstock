@@ -3,7 +3,7 @@ alsa_lib:
 c_compiler:
 - gcc
 c_compiler_version:
-- '13'
+- '14'
 c_stdlib:
 - sysroot
 c_stdlib_version:
@@ -17,13 +17,13 @@ channel_targets:
 cxx_compiler:
 - gxx
 cxx_compiler_version:
-- '13'
+- '14'
 docker_image:
 - quay.io/condaforge/linux-anvil-x86_64:alma9
 fftw:
 - '3'
 fmt:
-- '11.0'
+- '12.0'
 gmp:
 - '6'
 gsl:
@@ -32,8 +32,6 @@ libblas:
 - 3.9.* *netlib
 libboost_devel:
 - '1.86'
-libboost_headers:
-- '1.86'
 libcblas:
 - 3.9.* *netlib
 libiio:
@@ -41,11 +39,11 @@ libiio:
 libsndfile:
 - '1.2'
 libthrift:
-- 0.21.0
+- 0.22.0
 libunwind:
-- '1.6'
+- '1.8'
 numpy:
-- '2.0'
+- '2'
 pin_run_as_build:
   python:
     min_pin: x.x
@@ -53,21 +51,21 @@ pin_run_as_build:
 portaudio:
 - '19.7'
 pybind11_abi:
-- '4'
+- '11'
 pyqt:
 - '5.15'
 python:
-- 3.9.* *_cpython
+- 3.13.* *_cp313
 qt_main:
 - '5.15'
 soapysdr:
 - '0.8'
 spdlog:
-- '1.15'
+- '1.16'
 sqlite:
 - '3'
 target_platform:
-- linux-64
+- linux-aarch64
 uhd:
 - 4.8.0
 volk:
@@ -77,5 +75,3 @@ zeromq:
 zip_keys:
 - - c_compiler_version
   - cxx_compiler_version
-- - python
-  - numpy
