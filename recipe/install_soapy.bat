@@ -3,4 +3,4 @@ setlocal EnableDelayedExpansion
 
 cd build
 cmake -P gr-soapy/cmake_install.cmake
-if errorlevel 1 exit 1
+if %ERRORLEVEL% NEQ 0 exit 1

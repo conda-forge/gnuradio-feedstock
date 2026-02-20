@@ -6,12 +6,12 @@ copy "%RECIPE_DIR%\menus\gnuradio-qtgui.json" "%PREFIX%\Menu"
 
 cd build
 cmake -P gr-qtgui/cmake_install.cmake
-if errorlevel 1 exit 1
+if %ERRORLEVEL% NEQ 0 exit 1
 cmake -P gr-utils/plot_tools/cmake_install.cmake
-if errorlevel 1 exit 1
+if %ERRORLEVEL% NEQ 0 exit 1
 :: install gr-filter apps to add previously-deleted gr_filter_design
 cmake -P gr-filter/apps/cmake_install.cmake
-if errorlevel 1 exit 1
+if %ERRORLEVEL% NEQ 0 exit 1
 
 :: Add workaround for PyQt5 bug that causes directories on PATH with Qt5Core.dll
 :: to be preferred in the DLL search order, breaking library loading when a user
