@@ -56,6 +56,8 @@ python:
 - 3.13.* *_cp313
 qt_main:
 - '5.15'
+qwt:
+- '6.2'
 soapysdr:
 - '0.8'
 spdlog:
