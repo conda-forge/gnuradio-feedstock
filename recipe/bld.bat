@@ -13,9 +13,9 @@ set "LDFLAGS=%LDFLAGS% /FORCE:MULTIPLE"
 
 :: Make a build folder and change to it
 mkdir build
-if errorlevel 1 exit 1
+if %ERRORLEVEL% NEQ 0 exit 1
 cd build
-if errorlevel 1 exit 1
+if %ERRORLEVEL% NEQ 0 exit 1
 
 :: configure
 :: enable gnuradio components explicitly so we get build error when unsatisfied
@@ -73,12 +73,12 @@ cmake -G "Ninja" ^
     -DENABLE_PYTHON=ON ^
     -DENABLE_TESTING=ON ^
     ..
-if errorlevel 1 exit 1
+if %ERRORLEVEL% NEQ 0 exit 1
 
 :: build
 cmake --build . --config Release -- -j%CPU_COUNT%
-if errorlevel 1 exit 1
+if %ERRORLEVEL% NEQ 0 exit 1
 
 :: remove intermediate build outputs to save disk space
 del /s /q "*.obj"
-if errorlevel 1 exit 1
+if %ERRORLEVEL% NEQ 0 exit 1

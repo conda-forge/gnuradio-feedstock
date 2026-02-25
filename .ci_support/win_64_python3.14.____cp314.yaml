@@ -40,6 +40,8 @@ python:
 - 3.14.* *_cp314
 qt_main:
 - '5.15'
+qwt:
+- '6.2'
 soapysdr:
 - '0.8'
 spdlog:
