@@ -288,6 +288,8 @@ outputs:
         # needed as a dependency below so that the host environment solution
         # accounts for the libboost that will be brought by gnuradio-core
         - libboost-devel
+        # only added as a dependency so compatible versions are selected
+        - qt-main
     requirements:
       build:
         - {{ compiler("c") }}
@@ -303,6 +305,8 @@ outputs:
         - {{ pin_subpackage('gnuradio-pmt', exact=True) }}
         - gtk3
         - python
+        # only added as a dependency so compatible versions are selected
+        - qt-main
         - spdlog
       run:
         - {{ pin_subpackage('gnuradio-core', exact=True) }}
