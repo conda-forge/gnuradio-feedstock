@@ -16,7 +16,7 @@ source:
     - 0004-cmake-runtime-Manually-set-the-pybind11-internal-bui.patch
 
 build:
-  number: 8
+  number: 9
 
 requirements:
   build:
@@ -35,8 +35,6 @@ requirements:
     - pybind11                            # [build_platform != target_platform]
     - pybind11 !=3.0.2                    # [build_platform != target_platform]
     - numpy                               # [build_platform != target_platform]
-    - {{ cdt("mesa-dri-drivers") }}  # [linux]
-    - {{ cdt("mesa-libgl-devel") }}  # [linux]
 
   host:
     - libboost-devel
@@ -92,6 +90,7 @@ requirements:
     - cppzmq
     - zeromq
 
+    - libgl-devel                    # [linux]
   run:
   # this is the metapackage that depends on all the subpackages
     - {{ pin_subpackage('gnuradio-pmt', exact=True) }}
