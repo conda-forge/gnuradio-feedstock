@@ -51,7 +51,7 @@ sqlite:
 target_platform:
 - win-64
 uhd:
-- 4.9.0
+- 4.10.0
 volk:
 - '3.3'
 zeromq:
