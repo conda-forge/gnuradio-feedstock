@@ -1,12 +1,7 @@
-azure:
-  free_disk_space: true
-  store_build_artifacts: true
 bot:
   automerge: true
 build_platform:
-  linux_aarch64: linux_64
   linux_ppc64le: linux_64
-  osx_arm64: osx_64
 conda_build:
   error_overlinking: true
   pkg_format: '2'
@@ -14,6 +9,9 @@ conda_forge_output_validation: true
 github:
   branch_name: main
   tooling_branch_name: main
+provider:
+  linux_aarch64: default
+  osx_arm64: default
 test: native_and_emulated
 workflow_settings:
   free_disk_space: quick
