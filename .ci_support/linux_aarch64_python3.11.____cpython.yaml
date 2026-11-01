@@ -1,3 +1,5 @@
+DOCKER_PLATFORM:
+- linux/aarch64
 alsa_lib:
 - '1.2'
 c_compiler:
@@ -37,7 +39,7 @@ libiio:
 libsndfile:
 - '1.2'
 libthrift:
-- 0.22.0
+- 0.25.0
 libunwind:
 - '1.8'
 numpy:
