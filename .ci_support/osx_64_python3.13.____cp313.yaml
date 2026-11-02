@@ -1,5 +1,3 @@
-MACOSX_DEPLOYMENT_TARGET:
-- '11.0'
 MACOSX_SDK_VERSION:
 - '11.0'
 c_compiler:
@@ -37,7 +35,7 @@ libiio:
 libsndfile:
 - '1.2'
 libthrift:
-- 0.22.0
+- 0.25.0
 macos_machine:
 - x86_64-apple-darwin13.4.0
 numpy:
