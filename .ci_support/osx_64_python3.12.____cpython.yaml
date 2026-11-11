@@ -57,7 +57,7 @@ qt_main:
 qwt:
 - '6.2'
 soapysdr:
-- '0.8'
+- '0.9'
 spdlog:
 - '1.17'
 sqlite:
