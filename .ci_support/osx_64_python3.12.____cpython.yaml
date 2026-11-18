@@ -47,7 +47,7 @@ pin_run_as_build:
 portaudio:
 - '19.7'
 pybind11_abi:
-- '11'
+- '12'
 pyqt:
 - '5.15'
 python:
